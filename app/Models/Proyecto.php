@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Proyecto extends Model
+{
+    //
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'nombre',
+        'ubicacion',
+        'coordenadas',
+        'superficie_total_m2',
+        'cantidad_fraccionamientos',
+        'estado_actual',
+        'fecha_inicio',
+        'fecha_fin_estimada',
+        'responsable_proyecto',
+        'observaciones',
+    ];
+
+    public function fraccionamientos()
+    {
+        return $this->hasMany(Fraccionamiento::class);
+    }
+}
