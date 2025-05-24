@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
                 <li>
-                    <a href="{{ route('gestion.proyecto.index') }}" class="waves-effect">
+                    <a href="{{ route('proyectos.index') }}" class="waves-effect">
                         <i class="bx bx-pyramid"></i>
                         <span key="t-chat">Gestion de Proyectos</span>
                     </a>

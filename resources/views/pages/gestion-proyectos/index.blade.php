@@ -22,21 +22,22 @@
 
     @section('content')
 
-    @component('components.breadcrumb')
-    @slot('li_1') Layouts @endslot
-    @slot('title') Gestion de Proyectos @endslot
-    @endcomponent
-
    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <h2> Clientes </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#newOrderModal"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2 addOrder-modal"><i
-                                        class="mdi mdi-plus me-1"></i> Add New Order</button>
+                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('proyectos.create')}}" role="button"><i
+                                    class="mdi mdi-plus me-1"></i> Agregar </a>
                             </div>
                         </div><!-- end col-->
                     </div>

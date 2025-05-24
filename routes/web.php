@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProyectoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,12 +25,15 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 
-Route::prefix('gestion-proyectos')->group(function () {
-     Route::controller(ProyectoController::class)->group(function () {
-            Route::get('/', 'index')->name('gestion.proyecto.index');
-            Route::get('formulario-proyecto', 'create')->name('gestion.proyecto.create');
-     });
-});
+// Route::prefix('gestion-proyectos')->group(function () {
+//      Route::controller(ProyectoController::class)->group(function () {
+//             Route::get('/', 'index')->name('gestion.proyecto.index');
+//             Route::get('formulario-proyecto', 'create')->name('gestion.proyecto.create');
+//      });
+// });
+
+
+Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Preloader') @endsection
+@section('title') Proyecto @endsection
 
 @section('body')
 
@@ -22,18 +22,13 @@
 
     @section('content')
 
-    @component('components.breadcrumb')
-    @slot('li_1') Layouts @endslot
-    @slot('title') Gestion de Proyectos @endslot
-    @endcomponent
-
    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Listado de Proyectos</h4>
-                    <p class="card-title-desc">
+                    <h4 class="card-title">Creación de Proyectos</h4>
+                    {{-- <p class="card-title-desc">
                         Este módulo permite registrar y administrar los distintos proyectos desarrollados por la empresa, como fraccionamientos, urbanizaciones o complejos habitacionales.
                     </p>
     
@@ -68,7 +63,7 @@
                                 <td>$112,000</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>  --}}
                 </div>
             </div>
         </div> <!-- end col -->
