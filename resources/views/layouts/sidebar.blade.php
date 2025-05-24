@@ -8,7 +8,13 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
-
+                <li>
+                    <a href="{{ route('gestion.proyecto.index') }}" class="waves-effect">
+                        <i class="bx bx-pyramid"></i>
+                        <span key="t-chat">Gestion de Proyectos</span>
+                    </a>
+                </li>
+               
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home-circle"></i>

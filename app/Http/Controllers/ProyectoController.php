@@ -6,12 +6,20 @@ use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
+        if (view()->exists('pages.gestion-proyectos.index')) {
+            return view('pages.gestion-proyectos.index');
+        }
+        return abort(404);
     }
 
     /**
@@ -20,6 +28,11 @@ class ProyectoController extends Controller
     public function create()
     {
         //
+        
+        if (view()->exists('pages.gestion-proyectos.create')) {
+            return view('pages.gestion-proyectos.create');
+        }
+        return abort(404);
     }
 
     /**
