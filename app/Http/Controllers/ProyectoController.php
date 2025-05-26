@@ -18,7 +18,7 @@ class ProyectoController extends Controller
     public function index()
     {
         if (view()->exists('pages.gestion-proyectos.index')) {
-            $proyectos = Proyecto::select('id','nombre', 'ubicacion', 'estado_actual')
+            $proyectos = Proyecto::select('id','nombre', 'ubicacion', 'estado_actual', 'cantidad_fraccionamientos')
                      ->orderByDesc('id')
                      ->get();
             return view('pages.gestion-proyectos.index', compact('proyectos'));
@@ -148,5 +148,11 @@ class ProyectoController extends Controller
             Log::error('Error al eliminar el cliente: ' . $th->getMessage());
             return redirect()->back()->with('error', 'No se pudo eliminar el proyecto. Intenta más tarde.');
         }
+    }
+
+    public function fraccionamientos(string $id){
+        $proyecto = Proyecto::find($id);
+        $fraccionamiento = $proyecto->fraccionamientos;
+        dd("Estos son los fraccionamientos", $fraccionamiento);
     }
 }

@@ -46,13 +46,14 @@
                     @if ($proyectos->isEmpty())
                         <p>No hay proyectos registrados.</p>
                     @else
-                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Ubicación</th>
                                     <th>Estado Actual</th>
                                     <th>Responsable Proyecto</th>
+                                    <th># Fraccionamientos</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -63,6 +64,13 @@
                                         <td>{{$proyecto->ubicacion}}</td>
                                         <td>{{$proyecto->estado_actual}}</td>
                                         <td>{{$proyecto->ubicacion}}</td>
+                                        <td>
+                                            <a href="{{ route('proyecto.fraccionamientos', $proyecto->id) }}" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
+                                                {{$proyecto->cantidad_fraccionamientos}} <i class="bi bi-eye"></i>
+                                            </a>
+
+                                            
+                                        </td>
                                         <td>
                                             <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar

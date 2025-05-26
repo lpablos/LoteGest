@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyectoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,9 +34,8 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 // });
 
 
-Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
-
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::resource('proyectos', ProyectoController::class);
+Route::get('proyecto/{proyecto}/fraccionamientos', [ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
