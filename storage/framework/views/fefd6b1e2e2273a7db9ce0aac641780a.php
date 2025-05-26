@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-<?php echo app('translator')->get('translation.Login'); ?>
+    Inicio de Sesión
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -19,7 +19,7 @@
         <div class="container-fluid p-0">
             <div class="row g-0">
 
-                <div class="col-xl-9">
+                <div class="col-xl-8">
                     <div class="auth-full-bg pt-lg-5 p-4">
                         <div class="w-100">
                             <div class="bg-overlay"></div>
@@ -77,7 +77,7 @@
                 </div>
                 <!-- end col -->
 
-                <div class="col-xl-3">
+                <div class="col-xl-4">
                     <div class="auth-full-page-content p-md-5 p-4">
                         <div class="w-100">
 
@@ -91,8 +91,8 @@
                                 <div class="my-auto">
 
                                     <div>
-                                        <h5 class="text-primary">Welcome Back !</h5>
-                                        <p class="text-muted">Sign in to continue to Skote.</p>
+                                        <h5 class="text-primary"> Bienvenido !</h5>
+                                        <p class="text-muted"> Inicia sesión para continuar a Arquitectos. </p>
                                     </div>
 
                                     <div class="mt-4">
@@ -125,7 +125,7 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="mb-3">
                                                 <div class="float-end">
                                                     <?php if(Route::has('password.request')): ?>
-                                                    <a href="<?php echo e(route('password.request')); ?>" class="text-muted">Forgot password?</a>
+                                                        <a href="<?php echo e(route('password.request')); ?>" class="text-muted"> ¿Olvidaste tu contraseña? </a>
                                                     <?php endif; ?>
                                                 </div>
                                                 <label class="form-label">Password <span class="text-danger">*</span></label>
@@ -160,44 +160,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
-                                                <label class="form-check-label" for="remember">
-                                                    Remember me
-                                                </label>
-                                            </div>
-
                                             <div class="mt-3 d-grid">
-                                                <button class="btn btn-primary waves-effect waves-light" type="submit">Log
-                                                    In</button>
-                                            </div>
-
-                                            <div class="mt-4 text-center">
-                                                <h5 class="font-size-14 mb-3">Sign in with</h5>
-
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-primary text-white border-primary">
-                                                            <i class="mdi mdi-facebook"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-info text-white border-info">
-                                                            <i class="mdi mdi-twitter"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-danger text-white border-danger">
-                                                            <i class="mdi mdi-google"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <button class="btn btn-primary waves-effect waves-light" type="submit"> Acceder </button>
                                             </div>
                                         </form>
-                                        <div class="mt-5 text-center">
-                                            <p>Don't have an account ? <a href="<?php echo e(url('register')); ?>" class="fw-medium text-primary"> Signup now </a> </p>
-                                        </div>
                                     </div>
                                 </div>
 

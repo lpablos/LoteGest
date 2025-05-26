@@ -30,7 +30,7 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Clientes </h2>
+                                    <h2> Proyectos </h2>
                                 </div>
                             </div>
                         </div>
@@ -41,38 +41,46 @@
                             </div>
                         </div><!-- end col-->
                     </div>
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </thead>
-
-
-                        <tbody>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
+                    @include('pages.gestion-proyectos.mensajes.alertas')
+                    @if ($proyectos->isEmpty())
+                        <p>No hay proyectos registrados.</p>
+                    @else
+                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Ubicación</th>
+                                    <th>Estado Actual</th>
+                                    <th>Responsable Proyecto</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($proyectos as $proyecto)
+                                    <tr>
+                                        <td>{{$proyecto->nombre}}</td>
+                                        <td>{{$proyecto->ubicacion}}</td>
+                                        <td>{{$proyecto->estado_actual}}</td>
+                                        <td>{{$proyecto->ubicacion}}</td>
+                                        <td>
+                                            <a href="{{ route('proyectos.edit', $proyecto->id) }}" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                                Editar
+                                            </a>
+                                            <form action="{{ route('proyectos.destroy', $proyecto->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este proyecto?')">
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                            
+                                        </td>                                       
+                                    </tr>
+                                @endforeach                            
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </div> <!-- end col -->

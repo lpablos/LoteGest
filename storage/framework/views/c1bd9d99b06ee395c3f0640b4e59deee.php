@@ -20,58 +20,65 @@
 
     <?php $__env->startSection('content'); ?>
 
-    <?php $__env->startComponent('components.breadcrumb'); ?>
-    <?php $__env->slot('li_1'); ?> Layouts <?php $__env->endSlot(); ?>
-    <?php $__env->slot('title'); ?> Gestion de Proyectos <?php $__env->endSlot(); ?>
-    <?php echo $__env->renderComponent(); ?>
-
    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
-                    <h4 class="card-title">Listado de Proyectos</h4>
                     <div class="row mb-2">
-                        <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <h2> Proyectos </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#newOrderModal"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2 addOrder-modal"><i
-                                        class="mdi mdi-plus me-1"></i> Add New Order</button>
+                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyectos.create')); ?>" role="button"><i
+                                    class="mdi mdi-plus me-1"></i> Agregar </a>
                             </div>
                         </div><!-- end col-->
                     </div>
-                    <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </thead>
-
-
-                        <tbody>
-                            <tr>
-                                <td>Michael Bruce</td>
-                                <td>Javascript Developer</td>
-                                <td>Singapore</td>
-                                <td>29</td>
-                                <td>2011/06/27</td>
-                                <td>$183,000</td>
-                            </tr>
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
+                    <?php echo $__env->make('pages.gestion-proyectos.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <?php if($proyectos->isEmpty()): ?>
+                        <p>No hay proyectos registrados.</p>
+                    <?php else: ?>
+                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Ubicación</th>
+                                    <th>Estado Actual</th>
+                                    <th>Responsable Proyecto</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proyecto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td><?php echo e($proyecto->nombre); ?></td>
+                                        <td><?php echo e($proyecto->ubicacion); ?></td>
+                                        <td><?php echo e($proyecto->estado_actual); ?></td>
+                                        <td><?php echo e($proyecto->ubicacion); ?></td>
+                                        <td>
+                                            <a href="<?php echo e(route('proyectos.edit', $proyecto->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                                Editar
+                                            </a>
+                                            <form action="<?php echo e(route('proyectos.destroy', $proyecto->id)); ?>" method="POST" style="display:inline;">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
+                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este proyecto?')">
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                            
+                                        </td>                                       
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                            
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
                 </div>
             </div>
         </div> <!-- end col -->

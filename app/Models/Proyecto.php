@@ -14,10 +14,11 @@ class Proyecto extends Model
     protected $fillable = [
         'nombre',
         'ubicacion',
-        'coordenadas',
+        'latitud',
+        'longitud',
         'superficie_total_m2',
         'cantidad_fraccionamientos',
-        'estado_actual',
+        'Planificado',
         'fecha_inicio',
         'fecha_fin_estimada',
         'responsable_proyecto',

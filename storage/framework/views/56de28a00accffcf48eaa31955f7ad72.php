@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
                 <li>
-                    <a href="<?php echo e(route('gestion.proyecto.index')); ?>" class="waves-effect">
+                    <a href="<?php echo e(route('proyectos.index')); ?>" class="waves-effect">
                         <i class="bx bx-pyramid"></i>
                         <span key="t-chat">Gestion de Proyectos</span>
                     </a>
