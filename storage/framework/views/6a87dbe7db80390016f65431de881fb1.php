@@ -29,15 +29,16 @@
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
                                     <h3> Proyecto </h3>
-                                    <h3><?php echo e($proyecto->nombre); ?></h3>
+                                    <h4>"<?php echo e($proyecto->nombre); ?>"</h4>
                                     <h6>Fraccionamientos Asociados</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyectos.create')); ?>" role="button"><i
+                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyecto.fraccionamientos.create', $proyecto->id)); ?>" role="button"><i
                                     class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <a href="<?php echo e(route('proyectos.index')); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
                             </div>
                         </div><!-- end col-->
                     </div>
@@ -53,7 +54,7 @@
                                     <th>Ubicación</th>
                                     <th>Estado Actual</th>
                                     <th>Responsable Proyecto</th>
-                                    <th># Fraccionamientos</th>
+                                    <th># Lotes</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -68,8 +69,6 @@
                                             <a href="" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
                                                 <?php echo e($fraccionamiento->cantidad_lotes); ?> <i class="bi bi-eye"></i>
                                             </a>
-
-                                            
                                         </td>
                                         <td>
                                             <a href="<?php echo e(route('proyectos.edit', $fraccionamiento->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
@@ -82,7 +81,6 @@
                                                     Eliminar
                                                 </button>
                                             </form>
-                                            
                                         </td>                                       
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                            

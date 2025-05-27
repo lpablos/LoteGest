@@ -153,11 +153,7 @@ class ProyectoController extends Controller
     public function fraccionamientos(string $id){
         $proyecto = Proyecto::find($id);
         $fraccionamientos = $proyecto->fraccionamientos;
-        //dd("Esto tiene", $fraccionamientos);
         if (view()->exists('pages.gestion-proyectos.fraccionamientos')) {
-            $proyectos = Proyecto::select('id','nombre', 'ubicacion', 'estado_actual', 'cantidad_fraccionamientos')
-                     ->orderByDesc('id')
-                     ->get();
             return view('pages.gestion-proyectos.fraccionamientos', compact('proyecto','fraccionamientos'));
         }
         return abort(404);

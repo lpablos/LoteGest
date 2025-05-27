@@ -38,9 +38,9 @@
 <div class="col-md-6">
     <label for="estado_actual" class="form-label">Estado Actual</label>
     <select class="form-select" id="estado_actual" name="estado_actual" required>
-        <option value="Planificado" <?php echo e(old('estado_actual', optional($proyecto)->estado_actual) == 'Planificado' ? 'selected' : ''); ?>>Planificado</option>
-        <option value="En desarrollo" <?php echo e(old('estado_actual', optional($proyecto)->estado_actual) == 'En desarrollo' ? 'selected' : ''); ?>>En desarrollo</option>
-        <option value="Finalizado" <?php echo e(old('estado_actual', optional($proyecto)->estado_actual) == 'Finalizado' ? 'selected' : ''); ?>>Finalizado</option>
+        <option value="Planificado" <?php echo e(old('estado_actual', isset($proyecto) ? $proyecto->estado_actual : '') == 'Planificado' ? 'selected' : ''); ?>>Planificado</option>
+        <option value="Planificado" <?php echo e(old('estado_actual', isset($proyecto) ? $proyecto->estado_actual : '') == 'En desarrollo' ? 'selected' : ''); ?>>En desarrollo</option>
+        <option value="Planificado" <?php echo e(old('estado_actual', isset($proyecto) ? $proyecto->estado_actual : '') == 'Finalizado' ? 'selected' : ''); ?>>Finalizado</option>
     </select>
 </div>
 

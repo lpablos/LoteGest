@@ -27,6 +27,7 @@ class Proyecto extends Model
 
     public function fraccionamientos()
     {
-        return $this->hasMany(Fraccionamiento::class);
+        // return $this->hasMany(Fraccionamiento::class);
+           return $this->hasMany(Fraccionamiento::class)->orderByDesc('nombre');
     }
 }

@@ -27,8 +27,8 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Creación de Proyectos</h4>
-                    @include('pages.gestion-proyectos.mensajes.alertas')
+                    <h4 class="card-title">Creación de Fraccionamiento</h4>
+                    @include('pages.gestion-fraccionamiento.mensajes.alertas')
                     <div class="text-end">
                         <a href="{{ url()->previous() }}"
                         class="btn btn-info rounded-pill mb-2"
@@ -37,10 +37,10 @@
                             <i class="bx bx-rotate-left"></i>
                         </a>
                     </div>
-                    <form action="{{ route('proyectos.store') }}" method="POST">
+                    <form action="{{ route('fraccionamiento.store') }}" method="POST">
                         @csrf
                         <div class="row g-3">
-                            @include('pages.gestion-proyectos.formulario.inputs-proyectos')
+                            @include('pages.gestion-fraccionamiento.formulario.inputs-fraccionamiento')
                             <!-- Botón de enviar -->
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
