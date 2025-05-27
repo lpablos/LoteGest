@@ -30,56 +30,54 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h3> Proyecto </h3>
+                                    <h4> Proyecto </h4>
                                     <h4>"{{ $proyecto->nombre}}"</h4>
-                                    <h6>Fraccionamientos Asociados</h6>
+                                    <h5> Fraccionamiento </h5>
+                                    <h5>"{{ $fraccionamiento->nombre}}"</h5>
+                                    <h6>lotes Asociados</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('proyecto.fraccionamientos.create', $proyecto->id)}}" role="button"><i
+                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="" role="button"><i
                                     class="mdi mdi-plus me-1"></i> Agregar </a>
                                 <a href="{{ route('proyectos.index') }}" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
                             </div>
                         </div><!-- end col-->
                     </div>
                     
-                    @include('pages.gestion-proyectos.mensajes.alertas')
-                    @if ($fraccionamientos->isEmpty())
+                    @include('pages.gestion-fraccionamiento.mensajes.alertas')
+                    @if ($lotes->isEmpty())
                         <p>No hay proyectos registrados.</p>
                     @else
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Estado Actual</th>
-                                    <th>Responsable Proyecto</th>
-                                    <th># Lotes</th>
+                                    <th># Lote</th>
+                                    <th>Superficie m²</th>
+                                    <th>disponible</th>
+                                    <th>Uso</th>
+                                    <th>Estado legal</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($fraccionamientos as $fraccionamiento)
+                                @foreach ($lotes as $lote)
                                     <tr>
-                                        <td>{{$fraccionamiento->nombre}}</td>
-                                        <td>{{$fraccionamiento->superficie_m2}}</td>
-                                        <td>{{$fraccionamiento->uso_predominante}}</td>
-                                        <td>{{$fraccionamiento->etapa}}</td>
+                                         <td>{{$lote->numero_lote}}</td>
+                                        <td>{{$lote->superficie_m2}}</td>
+                                        <td>{{$lote->disponible}}</td>
+                                        <td>{{$lote->uso}}</td>
+                                        <td>{{$lote->estado_legal}}</td>                                       
                                         <td>
-                                            <a href="{{ route('proyecto.fraccionamientos.lotes', $fraccionamiento->id)}}" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
-                                                {{$fraccionamiento->cantidad_lotes}} <i class="bi bi-eye"></i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('fraccionamiento.edit', $fraccionamiento->id) }}" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                            <a href="" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar
                                             </a>
-                                            <form action="{{ route('fraccionamiento.destroy', $fraccionamiento->id) }}" method="POST" style="display:inline;">
+                                            <form action="" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este fraccionamiento?')">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este lote?')">
                                                     Eliminar
                                                 </button>
                                             </form>

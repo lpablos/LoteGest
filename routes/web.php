@@ -40,6 +40,7 @@ Route::resource('proyectos', ProyectoController::class);
 Route::get('proyecto/{proyecto}/fraccionamientos', [ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');
 Route::resource('fraccionamiento', FraccionamientoController::class);
 Route::get('proyecto-fraccionamiento/{proyecto}/create', [FraccionamientoController::class, 'createFraccionamiento'])->name('proyecto.fraccionamientos.create');
+Route::get('proyecto-fraccionamiento/{fraccionamiento}/lote', [FraccionamientoController::class, 'lotes'])->name('proyecto.fraccionamientos.lotes');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);

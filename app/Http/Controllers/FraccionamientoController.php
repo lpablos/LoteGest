@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
+use App\Models\Proyecto;
 use Illuminate\Support\Facades\Log;
 
 class FraccionamientoController extends Controller
@@ -145,6 +146,18 @@ class FraccionamientoController extends Controller
         $proyecto_id = $id;
         if (view()->exists('pages.gestion-fraccionamiento.create')) {
             return view('pages.gestion-fraccionamiento.create',compact('proyecto_id'));
+        }
+        return abort(404);
+    }
+
+
+    public function lotes(string $id){
+        $fraccionamiento = Fraccionamiento::find($id);
+        $proyecto = Proyecto::find($fraccionamiento->proyecto_id);
+        $lotes = $fraccionamiento->lotes;
+        //dd("Estas en el listado de lotes del proyecto y su fraccionamieto", $lotes);
+        if (view()->exists('pages.gestion-fraccionamiento.lotes')) {
+            return view('pages.gestion-fraccionamiento.lotes', compact('lotes','fraccionamiento','proyecto'));
         }
         return abort(404);
     }
