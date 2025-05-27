@@ -141,9 +141,10 @@ class ProyectoController extends Controller
      */
     public function destroy(string $id)
     {
-        $proyecto = Proyecto::find($id);
         try {
-            return view('pages.gestion-proyectos.edit', compact('proyecto'));
+            $proyecto = Proyecto::find($id);
+            $proyecto->delete();
+            return redirect()->route('proyectos.index')->with('success', 'Proyecto eliminado');
         } catch (\Throwable $th) {
             Log::error('Error al eliminar el cliente: ' . $th->getMessage());
             return redirect()->back()->with('error', 'No se pudo eliminar el proyecto. Intenta más tarde.');

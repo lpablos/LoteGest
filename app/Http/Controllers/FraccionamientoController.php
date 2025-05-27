@@ -78,7 +78,13 @@ class FraccionamientoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
+        $fraccionamiento = Fraccionamiento::find($id);
+        
+        if (view()->exists('pages.gestion-fraccionamiento.edit')) {
+            return view('pages.gestion-fraccionamiento.edit', compact('fraccionamiento'));
+        }
+        return abort(404);
     }
 
     /**
@@ -87,6 +93,33 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validated = $request->validate([
+            'proyecto' => ['required', 'exists:proyectos,id'],
+            'nombre' => ['required', 'string', 'max:255'],
+            'superficie_m2' => ['required', 'numeric', 'min:0'],
+            'cantidad_lotes' => ['required', 'integer', 'min:0'],
+            'uso_predominante' => ['required', 'in:Habitacional,Comercial,Mixto'],
+            'etapa' => ['nullable', 'string', 'max:255'],
+            'servicios_disponibles' => ['nullable', 'array'],
+            'servicios_disponibles.*' => ['string', 'max:100'],
+            'observaciones' => ['nullable', 'string'],
+        ]);
+        try {
+            $fraccionamiento = Fraccionamiento::find($id);
+            $fraccionamiento->proyecto_id = $validated['proyecto'];
+            $fraccionamiento->nombre = $validated['nombre'];
+            $fraccionamiento->superficie_m2 = $validated['superficie_m2'];
+            $fraccionamiento->cantidad_lotes = $validated['cantidad_lotes'];
+            $fraccionamiento->uso_predominante = $validated['uso_predominante'];
+            $fraccionamiento->etapa = $validated['etapa'];
+            $fraccionamiento->servicios_disponibles = $request->input('servicios_disponibles');
+            $fraccionamiento->observaciones = $validated['observaciones'];
+            $fraccionamiento->save();
+            return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', 'Se actualizo correctamente el fraccionamiento');
+        } catch (\Throwable $th) {
+            Log::error('Error al guardar fraccionamiento: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No se pudo guardar el fraccionamiento. Intenta más tarde.');
+        }
     }
 
     /**
@@ -95,13 +128,23 @@ class FraccionamientoController extends Controller
     public function destroy(string $id)
     {
         //
+        try {
+            $fraccionamiento = Fraccionamiento::find($id);            
+            $proyecto_id = $fraccionamiento->proyecto_id;
+            $fraccionamiento->delete();
+            return redirect()->route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id])->with('success', 'Fraccionamiento eliminado correctamente');
+        } catch (\Throwable $th) {
+            Log::error('Error al eliminar el fraccionamiento: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No se pudo eliminar el fraccionamiento. Intenta más tarde.');
+        }
     }
 
     public function createFraccionamiento(string $id)
     {
-        $proyecto = $id;
+        
+        $proyecto_id = $id;
         if (view()->exists('pages.gestion-fraccionamiento.create')) {
-            return view('pages.gestion-fraccionamiento.create',compact('proyecto'));
+            return view('pages.gestion-fraccionamiento.create',compact('proyecto_id'));
         }
         return abort(404);
     }

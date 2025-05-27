@@ -1,8 +1,6 @@
-@extends('layouts.master')
+<?php $__env->startSection('title'); ?> Proyecto <?php $__env->stopSection(); ?>
 
-@section('title') Proyecto @endsection
-
-@section('body')
+<?php $__env->startSection('body'); ?>
 
 <body data-sidebar="dark">
     <!-- Loader -->
@@ -18,9 +16,9 @@
             </div>
         </div>
     </div>
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @section('content')
+    <?php $__env->startSection('content'); ?>
 
    <div class="row">
         <div class="col-12">
@@ -28,20 +26,20 @@
                 <div class="card-body">
 
                     <h4 class="card-title">Detalle de Proyecto</h4>
-                    @include('pages.gestion-fraccionamiento.mensajes.alertas')
+                    <?php echo $__env->make('pages.gestion-fraccionamiento.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <div class="text-end">
-                        <a href="{{ url()->previous() }}"
+                        <a href="<?php echo e(url()->previous()); ?>"
                         class="btn btn-info rounded-pill mb-2"
                         data-bs-toggle="tooltip"
                         title="Volver a la página anterior">
                             <i class="bx bx-rotate-left"></i>
                         </a>
                     </div>
-                    <form action="{{ route('fraccionamiento.update', $fraccionamiento->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
+                    <form action="<?php echo e(route('fraccionamiento.update', $fraccionamiento->id)); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PUT'); ?>
                         <div class="row g-3">
-                            @include('pages.gestion-fraccionamiento.formulario.inputs-fraccionamiento')
+                            <?php echo $__env->make('pages.gestion-fraccionamiento.formulario.inputs-fraccionamiento', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                             <!-- Botón de enviar -->
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -55,7 +53,8 @@
     </div> <!-- end row -->
    
 
-    @endsection
-    @section('script')
+    <?php $__env->stopSection(); ?>
+    <?php $__env->startSection('script'); ?>
    
-    @endsection
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamiento/edit.blade.php ENDPATH**/ ?>

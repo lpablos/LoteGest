@@ -14,7 +14,12 @@
                         <span key="t-chat">Gestion de Proyectos</span>
                     </a>
                 </li>
-               
+               <li>
+                    <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Personas </span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home-circle"></i>

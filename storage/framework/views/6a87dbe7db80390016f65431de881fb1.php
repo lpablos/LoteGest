@@ -71,13 +71,13 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="<?php echo e(route('proyectos.edit', $fraccionamiento->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                            <a href="<?php echo e(route('fraccionamiento.edit', $fraccionamiento->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar
                                             </a>
-                                            <form action="<?php echo e(route('proyectos.destroy', $fraccionamiento->id)); ?>" method="POST" style="display:inline;">
+                                            <form action="<?php echo e(route('fraccionamiento.destroy', $fraccionamiento->id)); ?>" method="POST" style="display:inline;">
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('DELETE'); ?>
-                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este proyecto?')">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este fraccionamiento?')">
                                                     Eliminar
                                                 </button>
                                             </form>
