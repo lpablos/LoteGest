@@ -68,7 +68,7 @@
                                         <td><?php echo e($lote->uso); ?></td>
                                         <td><?php echo e($lote->estado_legal); ?></td>                                       
                                         <td>
-                                            <a href="" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                            <a href="<?php echo e(route('lote.edit', $lote->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar
                                             </a>
                                             <form action="" method="POST" style="display:inline;">

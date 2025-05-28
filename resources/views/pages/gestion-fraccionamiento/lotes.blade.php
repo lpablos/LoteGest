@@ -70,7 +70,7 @@
                                         <td>{{$lote->uso}}</td>
                                         <td>{{$lote->estado_legal}}</td>                                       
                                         <td>
-                                            <a href="" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                            <a href="{{ route('lote.edit', $lote->id) }}" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar
                                             </a>
                                             <form action="" method="POST" style="display:inline;">
