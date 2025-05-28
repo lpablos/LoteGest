@@ -135,7 +135,14 @@ class LoteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $lote = Lote::find($id);       
+            $lote->delete();
+            return redirect()->back()->with('success', 'Lote eliminado correctamente');
+        } catch (\Throwable $th) {
+            Log::error('Error al eliminar el Lote: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No se pudo eliminar el Lote. Intenta más tarde.');
+        }
     }
 
      public function createLote(string $id)

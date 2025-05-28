@@ -34,7 +34,7 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-    <label for="uso" class="form-label">Uso :: {{$lote->uso}}</label>
+    <label for="uso" class="form-label">Uso</label>
     <select class="form-select" id="uso" name="uso" required>
         <option value="Habitacional" selected>Habitacional</option>
         <option value="Comercial" {{ old('uso', isset($lote) ? $lote->uso : '') == 'Comercial' ? 'selected' : '' }}>Comercial</option>
@@ -43,7 +43,7 @@
     </select>
     </div>
     <div class="col-md-6">
-    <label for="estado_legal" class="form-label">Estado Legal * :: {{$lote->estado_legal}}</label>
+    <label for="estado_legal" class="form-label">Estado Legal *</label>
     <select class="form-select" id="estado_legal" name="estado_legal" required>
         <option value="Escriturado" {{ old('estado_legal', isset($lote) ? $lote->estado_legal : '') == 'Escriturado' ? 'selected' : '' }}>Escriturado</option>
         <option value="En proceso" {{ old('estado_legal', isset($lote) ? $lote->estado_legal : '') == 'En proceso' ? 'selected' : '' }}>En proceso</option>

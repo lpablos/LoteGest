@@ -34,7 +34,7 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-    <label for="uso" class="form-label">Uso :: <?php echo e($lote->uso); ?></label>
+    <label for="uso" class="form-label">Uso</label>
     <select class="form-select" id="uso" name="uso" required>
         <option value="Habitacional" selected>Habitacional</option>
         <option value="Comercial" <?php echo e(old('uso', isset($lote) ? $lote->uso : '') == 'Comercial' ? 'selected' : ''); ?>>Comercial</option>
@@ -43,7 +43,7 @@
     </select>
     </div>
     <div class="col-md-6">
-    <label for="estado_legal" class="form-label">Estado Legal * :: <?php echo e($lote->estado_legal); ?></label>
+    <label for="estado_legal" class="form-label">Estado Legal *</label>
     <select class="form-select" id="estado_legal" name="estado_legal" required>
         <option value="Escriturado" <?php echo e(old('estado_legal', isset($lote) ? $lote->estado_legal : '') == 'Escriturado' ? 'selected' : ''); ?>>Escriturado</option>
         <option value="En proceso" <?php echo e(old('estado_legal', isset($lote) ? $lote->estado_legal : '') == 'En proceso' ? 'selected' : ''); ?>>En proceso</option>
