@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Lote;
 
 class LoteController extends Controller
 {
@@ -27,7 +28,42 @@ class LoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validated = $request->validate([
+            'fraccionamiento_id'=> ['required', 'string', 'max:255'],
+            'numero_lote' => ['required', 'string', 'max:255'],
+            'superficie_m2' => ['required', 'numeric', 'min:0'],
+            'frente_m' => ['required', 'numeric', 'min:0'],
+            'fondo_m' => ['required', 'numeric', 'min:0'],
+            'orientacion' => ['nullable', 'string', 'max:255'],
+            'disponible' => ['required', 'boolean'],
+            'precio_m2' => ['nullable', 'numeric', 'min:0'],
+            'precio_total' => ['nullable', 'numeric', 'min:0'],
+            'uso' => ['required', 'in:Habitacional,Comercial,Mixto,Otro'],
+            'estado_legal' => ['required', 'in:Escriturado,En proceso,Reservado,En trámite'],
+            'observaciones' => ['nullable', 'string'],
+        ]);
+        
+        try {
+            $lote = new Lote();
+            $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
+            $lote->numero_lote = $validated['numero_lote'];
+            $lote->superficie_m2 = $validated['superficie_m2'];
+            $lote->frente_m = $validated['frente_m'];
+            $lote->fondo_m = $validated['fondo_m'];
+            $lote->orientacion = $validated['orientacion'];
+            $lote->disponible = $validated['disponible'];
+            $lote->precio_m2 = $validated['precio_m2'];
+            $lote->precio_total = $validated['precio_total'];
+            $lote->uso = $validated['uso'];
+            $lote->estado_legal = $validated['estado_legal'];
+            $lote->observaciones = $validated['observaciones'];
+            $lote->save();
+            return redirect()->route('proyecto.fraccionamientos.lotes',['fraccionamiento' =>$validated['fraccionamiento_id']])->with('success', 'Se registro correctamente el lote '.$validated['numero_lote']);
+        } catch (\Throwable $th) {
+            Log::error('Error al guardar lote: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No se pudo guardar el lote. Intenta más tarde.');
+        }
     }
 
     /**

@@ -1,19 +1,19 @@
   <div class="row mb-3">
     <div class="col-md-4">
-    <label for="numero_lote" class="form-label">Número de Lote</label>
+    <label for="numero_lote" class="form-label">Número de Lote *</label>
     <input type="text" class="form-control" id="numero_lote" name="numero_lote" required>
     </div>
     <div class="col-md-4">
-    <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-    <input type="number" class="form-control" id="superficie_m2" name="superficie_m2" step="0.01" required>
+    <label for="superficie_m2" class="form-label">Superficie (m²) *</label>
+    <input type="number" class="form-control" id="superficie_m2" name="superficie_m2" min="1" step="0.01" required>
     </div>
     <div class="col-md-2">
-    <label for="frente_m" class="form-label">Frente (m)</label>
-    <input type="number" class="form-control" id="frente_m" name="frente_m" step="0.01" required>
+    <label for="frente_m" class="form-label">Frente (m) *</label>
+    <input type="number" class="form-control" id="frente_m" name="frente_m" step="0.01" min="1" required>
     </div>
     <div class="col-md-2">
-    <label for="fondo_m" class="form-label">Fondo (m)</label>
-    <input type="number" class="form-control" id="fondo_m" name="fondo_m" step="0.01" required>
+    <label for="fondo_m" class="form-label">Fondo (m) *</label>
+    <input type="number" class="form-control" id="fondo_m" name="fondo_m" step="0.01" min="1" required>
     </div>
 </div>
 
@@ -43,7 +43,7 @@
     </select>
     </div>
     <div class="col-md-6">
-    <label for="estado_legal" class="form-label">Estado Legal</label>
+    <label for="estado_legal" class="form-label">Estado Legal *</label>
     <select class="form-select" id="estado_legal" name="estado_legal" required>
         <option value="Escriturado">Escriturado</option>
         <option value="En proceso" selected>En proceso</option>
@@ -65,4 +65,8 @@
     <label class="form-check-label" for="disponible">
     Disponible
     </label>
+</div>
+
+<div>
+    <div><input type="hidden" name="fraccionamiento_id" value="{{$fraccionamiento_id}}"></div>
 </div>

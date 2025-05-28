@@ -35,7 +35,7 @@
                             <i class="bx bx-rotate-left"></i>
                         </a>
                     </div>
-                    <form action="<?php echo e(route('fraccionamiento.store')); ?>" method="POST">
+                    <form action="<?php echo e(route('lote.store')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                         <div class="row g-3">
                             <?php echo $__env->make('pages.gestion-lotes.formulario.inputs-lote', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>

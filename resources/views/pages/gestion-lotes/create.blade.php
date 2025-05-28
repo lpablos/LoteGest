@@ -37,7 +37,7 @@
                             <i class="bx bx-rotate-left"></i>
                         </a>
                     </div>
-                    <form action="{{ route('fraccionamiento.store') }}" method="POST">
+                    <form action="{{ route('lote.store') }}" method="POST">
                         @csrf
                         <div class="row g-3">
                             @include('pages.gestion-lotes.formulario.inputs-lote')
