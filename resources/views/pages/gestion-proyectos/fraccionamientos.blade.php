@@ -27,16 +27,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h3> Proyecto </h3>
-                                    <h4>"{{ $proyecto->nombre}}"</h4>
+                                    <h3> Proyecto: "{{ $proyecto->nombre}}"</h3>
                                     <h6>Fraccionamientos Asociados</h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <div class="text-sm-end">
                                 <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('proyecto.fraccionamientos.create', $proyecto->id)}}" role="button"><i
                                     class="mdi mdi-plus me-1"></i> Agregar </a>

@@ -28,19 +28,18 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h4> Proyecto </h4>
-                                    <h4>"<?php echo e($proyecto->nombre); ?>"</h4>
-                                    <h5> Fraccionamiento </h5>
-                                    <h5>"<?php echo e($fraccionamiento->nombre); ?>"</h5>
+                                    <h4> Proyecto: "<?php echo e($proyecto->nombre); ?>" </h4>
+                                    <h5> Fraccionamiento: "<?php echo e($fraccionamiento->nombre); ?>"</h5>
                                     <h6>lotes Asociados</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="" role="button"><i
-                                    class="mdi mdi-plus me-1"></i> Agregar </a>
-                                <a href="<?php echo e(route('proyectos.index')); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
+                                <a href="<?php echo e(route('fraccionamiento.lote.create', ['fraccionamiento' => $fraccionamiento->id])); ?>" class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="" role="button">
+                                    <i class="mdi mdi-plus me-1"></i> Agregar
+                                </a>
+                                <a href="<?php echo e(route('proyecto.fraccionamientos', ['proyecto' => $proyecto->id])); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
                             </div>
                         </div><!-- end col-->
                     </div>

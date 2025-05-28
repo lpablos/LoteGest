@@ -61,4 +61,14 @@ class LoteController extends Controller
     {
         //
     }
+
+     public function createLote(string $id)
+    {
+        // Este id Es para ponerlo ne le hide del form y asocarlo el lote al fraccionamiento        
+        $fraccionamiento_id = $id;
+        if (view()->exists('pages.gestion-lotes.create')) {
+            return view('pages.gestion-lotes.create',compact('fraccionamiento_id'));
+        }
+        return abort(404);
+    }
 }
