@@ -30,10 +30,10 @@
                     <h4 class="card-title">Creación de Fraccionamiento</h4>
                     @include('pages.gestion-fraccionamiento.mensajes.alertas')
                     <div class="text-end">
-                     <a href="{{ route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id]) }}" 
-                        class="btn btn-info rounded-pill mb-2">
-                            <i class="bx bx-rotate-left"></i> Volver a Fraccionamientos
-                    </a>
+                        <a href="{{ route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id]) }}" 
+                            class="btn btn-info rounded-pill mb-2">
+                                <i class="bx bx-rotate-left"></i> Volver a Fraccionamientos
+                        </a>
                     </div>
                     <form action="{{ route('fraccionamiento.store') }}" method="POST">
                         @csrf
