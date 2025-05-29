@@ -18,9 +18,10 @@ class ProyectoController extends Controller
     public function index()
     {
         if (view()->exists('pages.gestion-proyectos.index')) {
-            $proyectos = Proyecto::select('id','nombre', 'ubicacion', 'estado_actual', 'cantidad_fraccionamientos')
-                     ->orderByDesc('id')
-                     ->get();
+            $proyectos = Proyecto::withCount('fraccionamientos')
+                            ->select('id', 'nombre', 'ubicacion', 'estado_actual', 'cantidad_fraccionamientos')
+                            ->orderByDesc('id')
+                            ->get();
             return view('pages.gestion-proyectos.index', compact('proyectos'));
         }
         return abort(404);

@@ -62,9 +62,12 @@
                                         <td><?php echo e($proyecto->ubicacion); ?></td>
                                         <td><?php echo e($proyecto->estado_actual); ?></td>
                                         <td><?php echo e($proyecto->ubicacion); ?></td>
-                                        <td>
-                                            <a href="<?php echo e(route('proyecto.fraccionamientos', $proyecto->id)); ?>" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
-                                                <?php echo e($proyecto->cantidad_fraccionamientos); ?> <i class="bi bi-eye"></i>
+                                        <td>                                         
+                                            <a href="<?php echo e(route('proyecto.fraccionamientos', $proyecto->id)); ?>" 
+                                                class="btn btn-outline-primary btn-sm" 
+                                                title="Ver fraccionamientos">
+                                                    <?php echo e($proyecto->fraccionamientos->count()); ?> de <?php echo e($proyecto->cantidad_fraccionamientos); ?> registrados 
+                                                    <i class="bi bi-eye"></i>
                                             </a>
 
                                             

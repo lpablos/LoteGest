@@ -30,4 +30,13 @@ class Proyecto extends Model
         // return $this->hasMany(Fraccionamiento::class);
            return $this->hasMany(Fraccionamiento::class)->orderByDesc('nombre');
     }
+
+    protected $appends = ['cantidad_fraccionamientos_registros'];
+
+    public function getCantidadFraccionamientoRegistrosAttribute()
+    {
+        return $this->fraccionamientos()->count();
+    }
+
+   
 }

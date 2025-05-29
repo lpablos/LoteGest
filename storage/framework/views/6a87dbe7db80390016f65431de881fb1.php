@@ -37,7 +37,7 @@
                             <div class="text-sm-end">
                                 <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyecto.fraccionamientos.create', $proyecto->id)); ?>" role="button"><i
                                     class="mdi mdi-plus me-1"></i> Agregar </a>
-                                <a href="<?php echo e(route('proyectos.index')); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
+                                <a href="<?php echo e(route('proyectos.index')); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"><i class="bx bx-rotate-left"></i> Volver a proyectos</a>
                             </div>
                         </div><!-- end col-->
                     </div>

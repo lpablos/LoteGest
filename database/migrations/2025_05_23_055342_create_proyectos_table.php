@@ -22,7 +22,7 @@ return new class extends Migration
             $table->enum('estado_actual', ['Planificado', 'En desarrollo', 'Finalizado'])->default('Planificado');
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin_estimada')->nullable();
-            // $table->string('responsable_proyecto')->nullable();
+            $table->string('responsable_proyecto')->nullable();
             $table->text('observaciones')->nullable();
             $table->softDeletes(); 
             $table->timestamps();
