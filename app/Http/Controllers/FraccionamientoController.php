@@ -57,7 +57,7 @@ class FraccionamientoController extends Controller
             $fraccionamiento->servicios_disponibles = $request->input('servicios_disponibles');
             $fraccionamiento->observaciones = $validated['observaciones'];
             $fraccionamiento->save();
-            return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', 'Se registro correctamente el fraccionamiento');
+            return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', "Se registro correctamente el fraccionamiento '{$fraccionamiento->nombre}'");
         } catch (\Throwable $th) {
             Log::error('Error al guardar cliente: ' . $th->getMessage());
             return redirect()->back()->with('error', 'No se pudo guardar el fraccionamiento. Intenta más tarde.');

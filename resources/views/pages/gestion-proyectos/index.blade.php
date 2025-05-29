@@ -66,9 +66,9 @@
                                         <td>{{$proyecto->ubicacion}}</td>
                                         <td>                                         
                                             <a href="{{ route('proyecto.fraccionamientos', $proyecto->id) }}" 
-                                                class="btn btn-outline-primary btn-sm" 
+                                                class="btn btn-info btn-sm btn-rounded waves-effect waves-light" 
                                                 title="Ver fraccionamientos">
-                                                    {{ $proyecto->fraccionamientos->count() }} de {{ $proyecto->cantidad_fraccionamientos }} registrados 
+                                                    {{ $proyecto->cantidad_fraccionamientos }} de {{ $proyecto->fraccionamientos->count() }} registrados 
                                                     <i class="bi bi-eye"></i>
                                             </a>
 

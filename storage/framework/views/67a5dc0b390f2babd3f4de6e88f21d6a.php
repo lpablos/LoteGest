@@ -28,12 +28,10 @@
                     <h4 class="card-title">Creación de Fraccionamiento</h4>
                     <?php echo $__env->make('pages.gestion-fraccionamiento.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <div class="text-end">
-                        <a href="<?php echo e(url()->previous()); ?>"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
-                        </a>
+                     <a href="<?php echo e(route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id])); ?>" 
+                        class="btn btn-info rounded-pill mb-2">
+                            <i class="bx bx-rotate-left"></i> Volver a Fraccionamientos
+                    </a>
                     </div>
                     <form action="<?php echo e(route('fraccionamiento.store')); ?>" method="POST">
                         <?php echo csrf_field(); ?>

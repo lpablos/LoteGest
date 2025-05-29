@@ -28,23 +28,27 @@
                         <div class="col-sm-6">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h3> Proyecto: "<?php echo e($proyecto->nombre); ?>"</h3>
-                                    <h6>Fraccionamientos Asociados</h6>
+                                    <h4> Proyecto: "<?php echo e($proyecto->nombre); ?>"</h4>
+                                    <h6>Lista de Fraccionamientos Registrados (<?php echo e($proyecto->fraccionamientos->count()); ?> de <?php echo e($proyecto->cantidad_fraccionamientos); ?> registrados )</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyecto.fraccionamientos.create', $proyecto->id)); ?>" role="button"><i
-                                    class="mdi mdi-plus me-1"></i> Agregar </a>
                                 <a href="<?php echo e(route('proyectos.index')); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"><i class="bx bx-rotate-left"></i> Volver a proyectos</a>
+                                <?php if($proyecto->cantidad_fraccionamientos > $proyecto->fraccionamientos->count()): ?>
+                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyecto.fraccionamientos.create', $proyecto->id)); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <?php endif; ?>
                             </div>
                         </div><!-- end col-->
                     </div>
-                    
+                    <p class="text-center">
+                        
+
+                    </p>
                     <?php echo $__env->make('pages.gestion-proyectos.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <?php if($fraccionamientos->isEmpty()): ?>
-                        <p>No hay proyectos registrados.</p>
+                        <p class="text-center">No Hay Fraccionamientos Registrados.</p>
                     <?php else: ?>
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>
@@ -65,8 +69,10 @@
                                         <td><?php echo e($fraccionamiento->uso_predominante); ?></td>
                                         <td><?php echo e($fraccionamiento->etapa); ?></td>
                                         <td>
-                                            <a href="<?php echo e(route('proyecto.fraccionamientos.lotes', $fraccionamiento->id)); ?>" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
-                                                <?php echo e($fraccionamiento->cantidad_lotes); ?> <i class="bi bi-eye"></i>
+                                            <a href="<?php echo e(route('proyecto.fraccionamientos.lotes', $fraccionamiento->id)); ?>" 
+                                                class="btn btn-info btn-sm btn-rounded waves-effect waves-light" 
+                                                title="Ver fraccionamientos">
+                                                <?php echo e($fraccionamiento-> cantidad_lotes); ?> de <?php echo e($fraccionamiento->lotes->count()); ?> registrados 
                                             </a>
                                         </td>
                                         <td>

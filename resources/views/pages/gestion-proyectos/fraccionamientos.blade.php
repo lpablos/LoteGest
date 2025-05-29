@@ -30,23 +30,27 @@
                         <div class="col-sm-6">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h3> Proyecto: "{{ $proyecto->nombre}}"</h3>
-                                    <h6>Fraccionamientos Asociados</h6>
+                                    <h4> Proyecto: "{{ $proyecto->nombre}}"</h4>
+                                    <h6>Lista de Fraccionamientos Registrados ({{ $proyecto->fraccionamientos->count() }} de {{ $proyecto->cantidad_fraccionamientos }} registrados )</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('proyecto.fraccionamientos.create', $proyecto->id)}}" role="button"><i
-                                    class="mdi mdi-plus me-1"></i> Agregar </a>
                                 <a href="{{ route('proyectos.index') }}" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"><i class="bx bx-rotate-left"></i> Volver a proyectos</a>
+                                @if($proyecto->cantidad_fraccionamientos > $proyecto->fraccionamientos->count())
+                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('proyecto.fraccionamientos.create', $proyecto->id)}}" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                @endif
                             </div>
                         </div><!-- end col-->
                     </div>
-                    
+                    <p class="text-center">
+                        
+
+                    </p>
                     @include('pages.gestion-proyectos.mensajes.alertas')
                     @if ($fraccionamientos->isEmpty())
-                        <p>No hay proyectos registrados.</p>
+                        <p class="text-center">No Hay Fraccionamientos Registrados.</p>
                     @else
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>
@@ -67,8 +71,10 @@
                                         <td>{{$fraccionamiento->uso_predominante}}</td>
                                         <td>{{$fraccionamiento->etapa}}</td>
                                         <td>
-                                            <a href="{{ route('proyecto.fraccionamientos.lotes', $fraccionamiento->id)}}" class="btn btn-outline-primary btn-sm" title="Ver fraccionamientos">
-                                                {{$fraccionamiento->cantidad_lotes}} <i class="bi bi-eye"></i>
+                                            <a href="{{ route('proyecto.fraccionamientos.lotes', $fraccionamiento->id)}}" 
+                                                class="btn btn-info btn-sm btn-rounded waves-effect waves-light" 
+                                                title="Ver fraccionamientos">
+                                                {{ $fraccionamiento-> cantidad_lotes }} de {{ $fraccionamiento->lotes->count() }} registrados 
                                             </a>
                                         </td>
                                         <td>

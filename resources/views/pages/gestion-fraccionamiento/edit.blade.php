@@ -30,11 +30,9 @@
                     <h4 class="card-title">Detalle de Proyecto</h4>
                     @include('pages.gestion-fraccionamiento.mensajes.alertas')
                     <div class="text-end">
-                        <a href="{{ url()->previous() }}"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
+                        <a href="{{ route('proyecto.fraccionamientos', ['proyecto' => $fraccionamiento->proyecto_id]) }}" 
+                            class="btn btn-info rounded-pill mb-2">
+                                <i class="bx bx-rotate-left"></i> Volver a Fraccionamientos
                         </a>
                     </div>
                     <form action="{{ route('fraccionamiento.update', $fraccionamiento->id) }}" method="POST">
