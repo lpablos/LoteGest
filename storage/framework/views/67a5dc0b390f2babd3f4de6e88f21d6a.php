@@ -25,26 +25,18 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Creación de Proyectos</h4>
-                    <?php echo $__env->make('pages.gestion-proyectos.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <!-- <div class="text-end">
-                        <a href="<?php echo e(url()->previous()); ?>"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
-                        </a>
-                    </div> -->
-                     <div class="text-end">
-                        <a href="<?php echo e(route('proyectos.index')); ?>" 
+                    <h4 class="card-title">Creación de Fraccionamiento</h4>
+                    <?php echo $__env->make('pages.gestion-fraccionamiento.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <div class="text-end">
+                        <a href="<?php echo e(route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id])); ?>" 
                             class="btn btn-info rounded-pill mb-2">
-                                <i class="bx bx-rotate-left"></i> Volver a Proyectos
+                                <i class="bx bx-rotate-left"></i> Volver a Fraccionamientos
                         </a>
                     </div>
-                    <form action="<?php echo e(route('proyectos.store')); ?>" method="POST">
+                    <form action="<?php echo e(route('fraccionamiento.store')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                         <div class="row g-3">
-                            <?php echo $__env->make('pages.gestion-proyectos.formulario.inputs-proyectos', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php echo $__env->make('pages.gestion-fraccionamiento.formulario.inputs-fraccionamiento', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                             <!-- Botón de enviar -->
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
@@ -62,4 +54,4 @@
     <?php $__env->startSection('script'); ?>
    
     <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-proyectos/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamiento/create.blade.php ENDPATH**/ ?>

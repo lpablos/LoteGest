@@ -14,10 +14,11 @@ class Proyecto extends Model
     protected $fillable = [
         'nombre',
         'ubicacion',
-        'coordenadas',
+        'latitud',
+        'longitud',
         'superficie_total_m2',
         'cantidad_fraccionamientos',
-        'estado_actual',
+        'Planificado',
         'fecha_inicio',
         'fecha_fin_estimada',
         'responsable_proyecto',
@@ -26,6 +27,16 @@ class Proyecto extends Model
 
     public function fraccionamientos()
     {
-        return $this->hasMany(Fraccionamiento::class);
+        // return $this->hasMany(Fraccionamiento::class);
+           return $this->hasMany(Fraccionamiento::class)->orderByDesc('nombre');
     }
+
+    protected $appends = ['cantidad_fraccionamientos_registros'];
+
+    public function getCantidadFraccionamientoRegistrosAttribute()
+    {
+        return $this->fraccionamientos()->count();
+    }
+
+   
 }

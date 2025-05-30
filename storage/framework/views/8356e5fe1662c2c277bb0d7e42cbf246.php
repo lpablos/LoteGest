@@ -28,62 +28,58 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Proyectos </h2>
+                                    <h4> Proyecto: "<?php echo e($proyecto->nombre); ?>" </h4>
+                                    <h5> Fraccionamiento: "<?php echo e($fraccionamiento->nombre); ?>"</h5>
+                                    <h6>Lista de Lotes Registrados (<?php echo e($fraccionamiento->lotes->count()); ?> de <?php echo e($fraccionamiento->cantidad_lotes); ?> registrados)</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('proyectos.create')); ?>" role="button"><i
-                                    class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <a href="<?php echo e(route('proyecto.fraccionamientos',['proyecto'=>$proyecto->id])); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"><i class="bx bx-rotate-left"></i> Volver a Fraccionamientos</a>
+
+                                <?php if($fraccionamiento->cantidad_lotes > $fraccionamiento->lotes->count()): ?>
+                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('fraccionamiento.lote.create', ['fraccionamiento' => $fraccionamiento->id])); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <?php endif; ?>
+                                
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
                     
-                    <?php echo $__env->make('pages.gestion-proyectos.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <?php if($proyectos->isEmpty()): ?>
-                        <p>No hay proyectos registrados.</p>
+                    <?php echo $__env->make('pages.gestion-fraccionamiento.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <?php if($lotes->isEmpty()): ?>
+                        <p class="text-center">No hay proyectos registrados.</p>
                     <?php else: ?>
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Estado Actual</th>
-                                    <th>Responsable Proyecto</th>
-                                    <th># Fraccionamientos</th>
+                                    <th># Lote</th>
+                                    <th>Superficie m²</th>
+                                    <th>disponible</th>
+                                    <th>Uso</th>
+                                    <th>Estado legal</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proyecto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($proyecto->nombre); ?></td>
-                                        <td><?php echo e($proyecto->ubicacion); ?></td>
-                                        <td><?php echo e($proyecto->estado_actual); ?></td>
-                                        <td><?php echo e($proyecto->ubicacion); ?></td>
-                                        <td>                                         
-                                            <a href="<?php echo e(route('proyecto.fraccionamientos', $proyecto->id)); ?>" 
-                                                class="btn btn-info btn-sm btn-rounded waves-effect waves-light" 
-                                                title="Ver fraccionamientos">
-                                                    <?php echo e($proyecto->cantidad_fraccionamientos); ?> de <?php echo e($proyecto->fraccionamientos->count()); ?> registrados 
-                                                    <i class="bi bi-eye"></i>
-                                            </a>
-
-                                            
-                                        </td>
+                                         <td><?php echo e($lote->numero_lote); ?></td>
+                                        <td><?php echo e($lote->superficie_m2); ?></td>
+                                        <td><?php echo e($lote->disponible); ?></td>
+                                        <td><?php echo e($lote->uso); ?></td>
+                                        <td><?php echo e($lote->estado_legal); ?></td>                                       
                                         <td>
-                                            <a href="<?php echo e(route('proyectos.edit', $proyecto->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                            <a href="<?php echo e(route('lote.edit', $lote->id)); ?>" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
                                                 Editar
                                             </a>
-                                            <form action="<?php echo e(route('proyectos.destroy', $proyecto->id)); ?>" method="POST" style="display:inline;">
+                                            <form action="<?php echo e(route('lote.destroy', $lote->id)); ?>" method="POST" style="display:inline;">
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('DELETE'); ?>
-                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este proyecto?')">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-rounded" onclick="return confirm('¿Estás seguro de que deseas eliminar este lote?')">
                                                     Eliminar
                                                 </button>
                                             </form>
-                                            
                                         </td>                                       
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                            
@@ -121,4 +117,4 @@
     <!-- Datatable init js -->
     <script src="<?php echo e(URL::asset('build/js/pages/datatables.init.js')); ?>"></script>
     <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-proyectos/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamiento/lotes.blade.php ENDPATH**/ ?>

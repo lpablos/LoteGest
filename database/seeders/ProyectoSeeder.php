@@ -24,7 +24,7 @@ class ProyectoSeeder extends Seeder
             'estado_actual' => 'En desarrollo',
             'fecha_inicio' => '2025-01-01',
             'fecha_fin_estimada' => '2025-12-31',
-            'responsable_proyecto' => 'Inversiones del Valle S.A.',
+            //'responsable_proyecto' => 'Inversiones del Valle S.A.',
             'observaciones' => 'Proyecto residencial de nivel medio',
         ]);
 
@@ -38,7 +38,7 @@ class ProyectoSeeder extends Seeder
             'estado_actual' => 'Planificado',
             'fecha_inicio' => '2025-06-01',
             'fecha_fin_estimada' => '2026-06-01',
-            'responsable_proyecto' => 'Grupo Constructor Alfa',
+            //'responsable_proyecto' => 'Grupo Constructor Alfa',
             'observaciones' => 'Fraccionamiento industrial con alta demanda',
         ]);
     }
