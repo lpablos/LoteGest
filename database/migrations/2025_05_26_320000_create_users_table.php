@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->foreign("estatus_id")->references("id")->on("cat_estatus");
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

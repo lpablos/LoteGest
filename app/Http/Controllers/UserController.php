@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use DB, Session;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -14,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         if (view()->exists('pages.usuario.index')) {
-            $usuarios = User::leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
+            $usuarios = User::withTrashed()->leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
                             ->leftJoin('roles', 'users.role_id', 'roles.id')
                             ->select(
                                 'users.id',
@@ -28,7 +31,7 @@ class UserController extends Controller
                                 'roles.nombre as rol',
                             )->orderByDesc('id')
                             ->get();
-
+                                // dd( $usuarios);
             return view('pages.usuario.index', compact('usuarios'));
         }
         return abort(404);
@@ -53,7 +56,50 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'primer_apellido' => 'required',
+            'email' => 'required',
+            'rol_id' => 'required'
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'Campos obligatorios incompletos');
+            return redirect()->route('usuarios.create');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $usuario = new User();
+
+            $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+            $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+            $usuario->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
+            $usuario->email = $request->email;
+            $usuario->email_verified_at = now();
+            $usuario->password = Hash::make("12345678");
+            $usuario->dob = '2024-04-01';
+            $usuario->avatar = 'images/avatar-1.jpg';
+            $usuario->role_id = $request->rol_id;
+            $usuario->fecha_registro = now();
+            $usuario->estatus_id = 1;
+            $usuario->save();
+
+            DB::commit();
+
+            Session::flash('success', '¡Usuario registrado!');
+            return redirect()->route('usuarios.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
@@ -69,7 +115,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = User::withTrashed()->select('id', 'nombre', 'primer_apellido', 'segundo_apellido', 'email', 'role_id', 'estatus_id')->where('id', $id)->first();
+        $roles = Role::select('id', 'nombre')->get();
+
+        return view('pages.usuario.edit', compact('usuario', 'roles'));
     }
 
     /**
@@ -77,14 +126,78 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($id);
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'primer_apellido' => 'required',
+            'email' => 'required',
+            'rol_id' => 'required'
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'Campos obligatorios incompletos');
+            return redirect()->route('usuarios.create');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $usuario = User::find($id);
+            if ($usuario) {
+                $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+                $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+                $usuario->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
+                $usuario->email = $request->email;
+                if ($request->password != null) {
+                    $usuario->password = Hash::make($request->password);
+                }
+                $usuario->role_id = $request->rol_id;
+                $usuario->save();
+    
+                DB::commit();
+    
+                Session::flash('success', '¡Usuario actualizado!');
+            } else {
+                Session::flash('error', '¡Usuario NO encontrado!');
+            }
+            return redirect()->route('usuarios.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $usuario = User::withTrashed()->where('id', $id)->first();
+        $estatus = 0;
+
+        if ($usuario != null) {
+            if ($usuario->estatus_id == 1) {
+                $estatus = 2;
+                $msg = '¡Usuario desactivado!';
+                $usuario->delete();
+            } else {
+                $estatus = 1;
+                $usuario->deleted_at = null;
+                $msg = '¡Usuario activado!';
+            }
+            $usuario->estatus_id = $estatus;
+            $usuario->save();
+
+            if ($usuario) {
+                return response()->json(['code' => 200, 'msg' => $msg]);
+            }
+            return response()->json(['code' => 400, 'msg' => 'Ocurrió un error']);
+        }
+        return response()->json(['code' => 400, 'msg' => 'Rol no encontrado']);
     }
 }

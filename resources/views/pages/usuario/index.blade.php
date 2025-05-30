@@ -35,8 +35,6 @@
                             </div>
                         </div><!-- end col-->
                     </div>
-                    
-
                     <table id="datatable-usuario" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -53,7 +51,7 @@
                                     <td>{{ $usuario->nombre }}</td>
                                     <td>{{ $usuario->rol }}</td>
                                     <td> {{ Carbon\Carbon::parse($usuario->fecha_registro)->format('d-m-Y') }} </td>
-                                    <td>@if($usuario->estatus_id == 1) <span class="badge bg-success font-size-12"> {{ $usuario->estatus }} </span> @else <span class="badge bg-success font-size-12"> $usuario->estatus </span>@endif</td>
+                                    <td>@if($usuario->estatus_id == 1) <span class="badge bg-success font-size-12"> {{ $usuario->estatus }} </span> @else <span class="badge bg-danger font-size-12"> {{ $usuario->estatus }}</span>@endif</td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +59,15 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li><a href="{{ route('usuarios.edit', ['usuario' => $usuario->id]) }}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
-                                                <li><a class="dropdown-item cambiarEstado" style="cursor: pointer;" data-id="{{ $usuario->id }}"><i class="mdi mdi-trash-can font-size-16 text-danger me-1"></i> Deshabilitar </a></li>
+                                                <li>
+                                                    <a class="dropdown-item des_activar_usuario" style="cursor: pointer;" data-id="{{ $usuario->id }}" data-estatus="{{ $usuario->estatus_id }}">
+                                                        @if ($usuario->estatus_id == 1)
+                                                            <i class="bx bx-down-arrow-alt font-size-16 text-danger me-1"></i> Desactivar
+                                                        @else
+                                                            <i class="bx bx-up-arrow-alt font-size-16 text-success me-1"></i> Activar
+                                                        @endif
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>
@@ -129,11 +135,18 @@
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
 
-            //Ajax
-            $('.eliminarSede').click(function () {
+           //Ajax
+            $('.des_activar_usuario').click(function () {
                 var id = $(this).attr('data-id');
+                var estatus = $(this).attr('data-estatus');
+                var estado = '';
+                if(estatus == 1){
+                    estado = 'desactivar';
+                } else {
+                    estado = 'activar';
+                }
                 Swal.fire({
-                    title: '¿Seguro de eliminar esta sede?',
+                    title: '¿Seguro de '+estado+' este usuario?',
                     showCancelButton: true,
                     confirmButtonText: 'Aceptar',
                     showLoaderOnConfirm: true,
@@ -142,9 +155,7 @@
                     preConfirm: function (email) {
                         return new Promise(function (resolve, reject) {
                             setTimeout(function () {
-                            
-                                    resolve()
-                                
+                                resolve()
                             }, 2000)
                         })
                     },
@@ -153,14 +164,14 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'delete',
-                            url: 'sede/'+id,
+                            url: '/usuarios/'+id,
                             success: function (data) {
                                 if (data.code == 200) {
                                     toastr.options = {
                                         "closeButton" : false,
                                         "progressBar" : false
                                     }
-                                    toastr.success("Sede eliminada");
+                                    toastr.success(data.msg);
                                     setTimeout(function(){
                                         window.location.reload();
                                     }, 2000);

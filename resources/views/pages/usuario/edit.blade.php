@@ -21,8 +21,9 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form action="{{ route('usuarios.store') }}" method="post"  enctype="multipart/form-data">
-            @csrf
+            <form method="POST" action="{{ route('usuarios.update', ['usuario' => $usuario->id]) }}">
+                @method('PUT')
+                @csrf
                 <div class="card">
                     <div class="card-body">
                        <div class="row col-md-12">
@@ -30,28 +31,33 @@
                             <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
                             <div class="col-md-3 mb-4">
                                 <label for="nombre"> Nombre(s)(*) </label>
-                                <input type="text" class="form-control form-control-sm" name="nombre" placeholder="Ingresa el nombre" style="text-transform:lowercase" required>
+                                <input type="text" class="form-control form-control-sm" name="nombre" value="{{ $usuario->nombre }}" style="text-transform:lowercase" required>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="primer_apellido"> Primer Apellido (*) </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido" placeholder="Ingresa el primer apellido" style="text-transform:lowercase" required>
+                                <input type="text" class="form-control form-control-sm" name="primer_apellido" value="{{ $usuario->primer_apellido }}" style="text-transform:lowercase" required>
                             </div>
                             <div class="col-md-3 b-4">
                                 <label for="segundo_apellido"> Segundo Apellido</label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
+                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" value="{{ $usuario->segundo_apellido }}" style="text-transform:lowercase">
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="email"> Correo Electrónico (*) </label>
-                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" required>
+                                <input type="email" class="form-control form-control-sm" name="email" value="{{ $usuario->email }}" style="text-transform:lowercase" required>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="rol_id"> Rol (*) </label>
                                 <select class="form-select form-select-sm" name="rol_id" style="cursor: pointer;" required>
                                     <option value="" selected disabled> Selecciona una opción </option>
                                     @foreach ($roles as $rol)
-                                        <option value="{{ $rol->id }}">- {{ $rol->nombre }}</option>
+                                        <option value="{{ $rol->id }}" @if ($usuario->role_id == $rol->id) selected @endif>- {{ $rol->nombre }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="password"> Contraseña </label>
+                                <input type="password" class="form-control form-control-sm" name="password">
+                                <small style="color: red">Sólo si se desea modificar</small>
                             </div>
                         </div>
                     </div>
