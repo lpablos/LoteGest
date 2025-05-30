@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB, Session;
 use App\Models\CatEstatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CatEstatusController extends Controller
 {
@@ -12,7 +14,9 @@ class CatEstatusController extends Controller
      */
     public function index()
     {
-        //
+        $estatus = CatEstatus::select('id', 'nombre', 'descripcion')->get();
+        
+        return view('pages.estatus.index', compact('estatus'));
     }
 
     /**
@@ -20,7 +24,7 @@ class CatEstatusController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +32,38 @@ class CatEstatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', '¡Campos obligatorios incompletos!');
+            return redirect()->route('estatus.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $estatus = new CatEstatus();
+            $estatus->nombre = \Helper::capitalizeFirst($request->nombre, "1");
+            $estatus->descripcion = $request->descripcion;
+            $estatus->save();
+
+            DB::commit();
+
+            Session::flash('success', '¡Estatus registrado!');
+            return redirect()->route('estatus.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
@@ -50,9 +85,44 @@ class CatEstatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CatEstatus $catEstatus)
+    public function update(Request $request, $catEstatus)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'descripcion' => 'required'
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', '¡Campos obligatorios incompletos!');
+            return redirect()->route('estatus.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $estatus = CatEstatus::find($catEstatus);
+            if ($estatus) {
+                $estatus->nombre = \Helper::capitalizeFirst($request->nombre, "1");
+                $estatus->descripcion = $request->descripcion;
+                $estatus->save();
+    
+                DB::commit();
+    
+                Session::flash('success', '¡Estatus actualizado!');
+            } else {
+                Session::flash('error', '¡Estatus no encontrado!');
+            }
+            return redirect()->route('estatus.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**

@@ -37,6 +37,8 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 
 
 Route::resource('usuarios', App\Http\Controllers\UserController::class);
+Route::resource('perfiles', App\Http\Controllers\RoleController::class);
+Route::resource('estatus', App\Http\Controllers\CatEstatusController::class);
 Route::resource('proyectos', ProyectoController::class);
 Route::get('proyecto/{proyecto}/fraccionamientos', [ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');//Listdo de fraccionamientos
 Route::resource('fraccionamiento', FraccionamientoController::class);

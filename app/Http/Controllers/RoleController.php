@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Session;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -12,7 +15,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::select('id', 'nombre')->get();
+        
+        return view('pages.roles.index', compact('roles'));
     }
 
     /**
@@ -28,7 +33,40 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+        ];
+
+        $messages = [
+            'nombre.required'   => 'El nombre del perfil es obligatorio',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'El nombre del perfil es obligatorio');
+            return redirect()->route('perfiles.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $rol = new Role();
+            $rol->nombre = $nombre = \Helper::capitalizeFirst($request->nombre, "1");
+            $rol->save();
+
+            DB::commit();
+            Session::flash('success', 'Rol registrado');
+
+            return redirect()->route('perfiles.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
@@ -50,9 +88,46 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $role)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+        ];
+
+        $messages = [
+            'nombre.required'   => 'El nombre del perfil es obligatorio',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'El nombre del perfil es obligatorio');
+            return redirect()->route('perfiles.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $rol = Role::find($role);
+            if ($rol) {
+                $rol->nombre = $nombre = \Helper::capitalizeFirst($request->nombre, "1");
+                $rol->save();
+    
+                DB::commit();
+                Session::flash('success', '¡Rol actualizado!');
+            } else {
+                Session::flash('error', '¡Rol no encontrado!');
+            }
+
+            return redirect()->route('perfiles.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**

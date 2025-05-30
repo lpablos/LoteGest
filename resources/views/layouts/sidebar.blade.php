@@ -14,12 +14,49 @@
                         <span key="t-chat">Gestion de Proyectos</span>
                     </a>
                 </li>
-               <li>
-                    <a href="{{ route('usuarios.index') }}" class="waves-effect">
-                        <i class="bx bx-user"></i>
-                        <span key="t-chat"> Personas </span>
-                    </a>
-                </li>
+                 {{--  @if (Auth::user()?->role_id == 1 || Auth::user()?->role_id == 2)  --}}
+                    <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
+                    <li>
+                        <a href="{{ route('usuarios.index') }}" class="waves-effect">
+                            <i class="bx bx-user"></i>
+                            <span key="t-chat"> Personas </span>
+                        </a>
+                    </li>
+                    {{--  @if (Auth::user()?->role_id == 1)  --}}
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-receipt"></i>
+                                <span key="t-dashboards"> Catálogos </span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
+                                <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
+                                {{--  <li><a href="{{ route('municipio.index') }}" key="t-full-calendar"> Municipios </a></li>
+                                <li><a href="{{ route('localidades.index') }}" key="t-full-calendar"> Localidades </a></li>
+                                <li><a href="{{ route('tipo-de-construccion.index') }}" key="t-full-calendar"> Tipos de Construcción </a></li>
+                                <li><a href="{{ route('tipo-de-avaluos.index') }}" key="t-full-calendar"> Tipos de Avalúos </a></li>
+                                <li><a href="{{ route('tipo-de-suelo.index') }}" key="t-full-calendar"> Tipos de Suelo </a></li>
+                                <li><a href="{{ route('estados-de-la-republica.index') }}" key="t-full-calendar"> Estados de la República </a></li>
+                                <li><a href="{{ route('esquinas.index') }}" key="t-full-calendar"> Esquinas </a></li>
+                                <li><a href="{{ route('uma.index') }}" key="t-full-calendar"> UMA </a></li>
+                                <li><a href="{{ route('uso-de-predio.index') }}" key="t-full-calendar"> Uso de Predio </a></li>
+                                <li><a href="{{ route('tipo-de-uso-de-predio.index') }}" key="t-full-calendar"> Tipo de Uso de Predio </a></li>
+                                <li><a href="{{ route('tipo-de-fraccionamiento.index') }}" key="t-full-calendar"> Tipo de Fraccionamiento </a></li>  --}}
+                            </ul>
+                        </li>
+                        {{--  <li>
+                            <a href="{{ route('padron-urbano.index') }}">
+                                <i class="bx bx-group"></i>
+                                <span> Predios Urbanos</span>
+                            </a>
+                        </li>  --}}
+                    {{--  @endif  --}}
+                {{--  @endif  --}}
+                
+
+                
+
+                <li class="menu-title" key="t-backend">@lang('translation.backend')</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home-circle"></i>
@@ -82,8 +119,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="menu-title" key="t-backend">@lang('translation.backend')</li>
                 <li>
                     <a href="yajra-datatable" class="waves-effect">
                         <i class="bx bx-list-ul"></i>

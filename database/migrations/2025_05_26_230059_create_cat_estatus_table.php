@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cat_estatus', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('descripcion');
             $table->timestamps();
         });
     }

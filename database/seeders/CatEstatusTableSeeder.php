@@ -13,11 +13,8 @@ class CatEstatusTableSeeder extends Seeder
     public function run(): void
     {
         \DB::table('cat_estatus')->insert([
-            ['nombre' => "Activo"],
-            ['nombre' => "Inactivo"],
-            ['nombre' => "En Desarrollo"],
-            ['nombre' => "Planificado"],
-            ['nombre' => "Cancelado"],
+            ['nombre' => "Activo", 'descripcion' => "Indica que se encuentra activo"],
+            ['nombre' => "Inactivo", 'descripcion' => "Indica que se encuentra inactivo"]
         ]);
     }
 }
