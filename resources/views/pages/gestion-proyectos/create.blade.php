@@ -29,12 +29,10 @@
 
                     <h4 class="card-title">Creación de Proyectos</h4>
                     @include('pages.gestion-proyectos.mensajes.alertas')
-                    <div class="text-end">
-                        <a href="{{ url()->previous() }}"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
+                     <div class="text-end">
+                        <a href="{{ route('proyectos.index') }}" 
+                            class="btn btn-info rounded-pill mb-2">
+                                <i class="bx bx-rotate-left"></i> Volver a Proyectos
                         </a>
                     </div>
                     <form action="{{ route('proyectos.store') }}" method="POST">

@@ -29,15 +29,15 @@
 
                     <h4 class="card-title">Alta de Lote</h4>
                     @include('pages.gestion-lotes.mensajes.alertas')
+                    
                     <div class="text-end">
-                        <a href="{{ url()->previous() }}"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
+                        <a href="{{ route('proyecto.fraccionamientos.lotes', ['fraccionamiento' =>$fraccionamiento_id]) }}" class="btn btn-info rounded-pill mb-2">
+                            <i class="bx bx-rotate-left"></i> Volver a Lotes
                         </a>
                     </div>
-                    <form action="{{ route('lote.store') }}" method="POST">
+
+
+                    <form action="{{ route('lote.store') }}" method="POST" class="mt-2">
                         @csrf
                         <div class="row g-3">
                             @include('pages.gestion-lotes.formulario.inputs-lote')

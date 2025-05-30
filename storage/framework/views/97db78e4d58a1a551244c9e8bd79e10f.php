@@ -27,15 +27,15 @@
 
                     <h4 class="card-title">Alta de Lote</h4>
                     <?php echo $__env->make('pages.gestion-lotes.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    
                     <div class="text-end">
-                        <a href="<?php echo e(url()->previous()); ?>"
-                        class="btn btn-info rounded-pill mb-2"
-                        data-bs-toggle="tooltip"
-                        title="Volver a la página anterior">
-                            <i class="bx bx-rotate-left"></i>
+                        <a href="<?php echo e(route('proyecto.fraccionamientos.lotes', ['fraccionamiento' =>$fraccionamiento_id])); ?>" class="btn btn-info rounded-pill mb-2">
+                            <i class="bx bx-rotate-left"></i> Volver a Lotes
                         </a>
                     </div>
-                    <form action="<?php echo e(route('lote.store')); ?>" method="POST">
+
+
+                    <form action="<?php echo e(route('lote.store')); ?>" method="POST" class="mt-2">
                         <?php echo csrf_field(); ?>
                         <div class="row g-3">
                             <?php echo $__env->make('pages.gestion-lotes.formulario.inputs-lote', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>

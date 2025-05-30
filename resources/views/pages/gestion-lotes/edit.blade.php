@@ -29,12 +29,18 @@
 
                     <h4 class="card-title">Detalle de Proyecto</h4>
                     @include('pages.gestion-lotes.mensajes.alertas')
-                    <div class="text-end">
+                    <!-- <div class="text-end">
                         <a href="{{ url()->previous() }}"
                         class="btn btn-info rounded-pill mb-2"
                         data-bs-toggle="tooltip"
                         title="Volver a la página anterior">
                             <i class="bx bx-rotate-left"></i>
+                        </a>
+                    </div> -->
+
+                    <div class="text-end">
+                        <a href="{{ route('proyecto.fraccionamientos.lotes', ['fraccionamiento' =>$lote->fraccionamiento_id]) }}" class="btn btn-info rounded-pill mb-2">
+                            <i class="bx bx-rotate-left"></i> Volver a Lotes
                         </a>
                     </div>
                     <form action="{{ route('lote.update', $lote->id) }}" method="POST">

@@ -30,23 +30,25 @@
                                 <div class="position-relative">
                                     <h4> Proyecto: "<?php echo e($proyecto->nombre); ?>" </h4>
                                     <h5> Fraccionamiento: "<?php echo e($fraccionamiento->nombre); ?>"</h5>
-                                    <h6>lotes Asociados</h6>
+                                    <h6>Lista de Lotes Registrados (<?php echo e($fraccionamiento->lotes->count()); ?> de <?php echo e($fraccionamiento->cantidad_lotes); ?> registrados)</h6>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a href="<?php echo e(route('fraccionamiento.lote.create', ['fraccionamiento' => $fraccionamiento->id])); ?>" class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="" role="button">
-                                    <i class="mdi mdi-plus me-1"></i> Agregar
-                                </a>
-                                <a href="<?php echo e(route('proyecto.fraccionamientos', ['proyecto' => $proyecto->id])); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"> <i class="bx bx-rotate-left"></i></a>
+                                <a href="<?php echo e(route('proyecto.fraccionamientos',['proyecto'=>$proyecto->id])); ?>" class="btn btn-info rounded-pill mb-2" data-bs-toggle="tooltip" title="Volver a los proyectos"><i class="bx bx-rotate-left"></i> Volver a Fraccionamientos</a>
+
+                                <?php if($fraccionamiento->cantidad_lotes > $fraccionamiento->lotes->count()): ?>
+                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('fraccionamiento.lote.create', ['fraccionamiento' => $fraccionamiento->id])); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <?php endif; ?>
+                                
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
                     
                     <?php echo $__env->make('pages.gestion-fraccionamiento.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <?php if($lotes->isEmpty()): ?>
-                        <p>No hay proyectos registrados.</p>
+                        <p class="text-center">No hay proyectos registrados.</p>
                     <?php else: ?>
                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100 text-center">
                             <thead>

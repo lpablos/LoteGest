@@ -27,12 +27,18 @@
 
                     <h4 class="card-title">Creación de Proyectos</h4>
                     <?php echo $__env->make('pages.gestion-proyectos.mensajes.alertas', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <div class="text-end">
+                    <!-- <div class="text-end">
                         <a href="<?php echo e(url()->previous()); ?>"
                         class="btn btn-info rounded-pill mb-2"
                         data-bs-toggle="tooltip"
                         title="Volver a la página anterior">
                             <i class="bx bx-rotate-left"></i>
+                        </a>
+                    </div> -->
+                     <div class="text-end">
+                        <a href="<?php echo e(route('proyectos.index')); ?>" 
+                            class="btn btn-info rounded-pill mb-2">
+                                <i class="bx bx-rotate-left"></i> Volver a Proyectos
                         </a>
                     </div>
                     <form action="<?php echo e(route('proyectos.store')); ?>" method="POST">

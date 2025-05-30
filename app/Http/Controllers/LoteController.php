@@ -44,7 +44,6 @@ class LoteController extends Controller
             'estado_legal' => ['required', 'in:Escriturado,En proceso,Reservado,En trámite'],
             'observaciones' => ['nullable', 'string'],
         ]);
-        
         try {
             $lote = new Lote();
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
@@ -53,7 +52,7 @@ class LoteController extends Controller
             $lote->frente_m = $validated['frente_m'];
             $lote->fondo_m = $validated['fondo_m'];
             $lote->orientacion = $validated['orientacion'];
-            $lote->disponible = $validated['disponible']?:false;
+            $lote->disponible = $validated['disponible'] ?? false;
             $lote->precio_m2 = $validated['precio_m2'];
             $lote->precio_total = $validated['precio_total'];
             $lote->uso = $validated['uso'];
