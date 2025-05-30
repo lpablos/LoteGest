@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             // LoteSeeder::class,
             CatEstatusTableSeeder::class,
             UserTableSeeder::class,
+            CatEstatusProyectoTableSeeder::class
         ]);
     }
 }

@@ -30,6 +30,7 @@
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
+                                <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
                                 <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
                                 {{--  <li><a href="{{ route('municipio.index') }}" key="t-full-calendar"> Municipios </a></li>
                                 <li><a href="{{ route('localidades.index') }}" key="t-full-calendar"> Localidades </a></li>

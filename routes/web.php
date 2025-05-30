@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProyectoController;
-use App\Http\Controllers\FraccionamientoController;
-use App\Http\Controllers\LoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,13 +36,17 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 Route::resource('usuarios', App\Http\Controllers\UserController::class);
 Route::resource('perfiles', App\Http\Controllers\RoleController::class);
 Route::resource('estatus', App\Http\Controllers\CatEstatusController::class);
-Route::resource('proyectos', ProyectoController::class);
-Route::get('proyecto/{proyecto}/fraccionamientos', [ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');//Listdo de fraccionamientos
-Route::resource('fraccionamiento', FraccionamientoController::class);
-Route::get('proyecto-fraccionamiento/{proyecto}/create', [FraccionamientoController::class, 'createFraccionamiento'])->name('proyecto.fraccionamientos.create');
-Route::get('proyecto-fraccionamiento/{fraccionamiento}/lote', [FraccionamientoController::class, 'lotes'])->name('proyecto.fraccionamientos.lotes'); // listado de lotes
-Route::resource('lote', LoteController::class);
-Route::get('fraccionamiento-lote/{fraccionamiento}/create', [LoteController::class, 'createLote'])->name('fraccionamiento.lote.create');
+Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
+Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoController::class);
+
+
+
+Route::get('proyecto/{proyecto}/fraccionamientos', [App\Http\Controllers\ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');//Listdo de fraccionamientos
+Route::resource('fraccionamiento', App\Http\Controllers\FraccionamientoController::class);
+Route::get('proyecto-fraccionamiento/{proyecto}/create', [App\Http\Controllers\FraccionamientoController::class, 'createFraccionamiento'])->name('proyecto.fraccionamientos.create');
+Route::get('proyecto-fraccionamiento/{fraccionamiento}/lote', [App\Http\Controllers\FraccionamientoController::class, 'lotes'])->name('proyecto.fraccionamientos.lotes'); // listado de lotes
+Route::resource('lote', App\Http\Controllers\LoteController::class);
+Route::get('fraccionamiento-lote/{fraccionamiento}/create', [App\Http\Controllers\LoteController::class, 'createLote'])->name('fraccionamiento.lote.create');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
