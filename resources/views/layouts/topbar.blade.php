@@ -384,7 +384,7 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('build/images/users/avatar-1.jpg') }}"
                     alt="Header Avatar">
-                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
+                <span class="d-none d-xl-inline-block ms-1" key="t-henry">@if (Auth::check()){{ ucfirst(Auth::user()->name) }} @endif </span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end">
@@ -421,7 +421,7 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-body">
                 <form method="POST" id="change-password">
                     @csrf
-                    <input type="hidden" value="{{ Auth::user()->id }}" id="data_id">
+                    @if (Auth::check()) <input type="hidden" value="{{ Auth::user()->id }}" id="data_id">@endif
                     <div class="mb-3">
                         <label for="current_password">Current Password <span class="text-danger">*</span></label>
                         <input id="current-password" type="password"
@@ -446,10 +446,11 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="text-danger" id="password_confirmError" data-ajax-feedback="password-confirm"></div>
                     </div>
 
-                    <div class="mt-3 d-grid">
-                        <button class="btn btn-primary waves-effect waves-light UpdatePassword" data-id="{{ Auth::user()->id }}"
-                            type="submit">Update Password</button>
-                    </div>
+                    @if (Auth::check())
+                        <div class="mt-3 d-grid">
+                            <button class="btn btn-primary waves-effect waves-light UpdatePassword" data-id="{{ Auth::user()->id }}" type="submit">Update Password</button>
+                        </div>
+                    @endif
                 </form>
             </div>
         </div><!-- /.modal-content -->
