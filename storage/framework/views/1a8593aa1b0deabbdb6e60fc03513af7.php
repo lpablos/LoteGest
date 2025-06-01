@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-    Usuarios
+    Estatus de Proyectos
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -23,47 +23,76 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Usuarios </h2>
+                                    <h2> Estatus de Proyectos </h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                 <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('usuarios.create')); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#add_estatus_proyecto"
+                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2"><i
+                                        class="mdi mdi-plus me-1"></i> Agregar</button>
                             </div>
                         </div><!-- end col-->
                     </div>
-                    
-
-                    <table id="datatable-usuario" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th> Nombre </th>
-                                <th> Rol </th>
-                                <th> Fecha alta </th>
-                                <th> Estatus </th>
+                                <th> Descripción </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $usuarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $estatusProyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusProyectos): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td><?php echo e($usuario->nombre); ?></td>
-                                    <td><?php echo e($usuario->rol); ?></td>
-                                    <td> <?php echo e(Carbon\Carbon::parse($usuario->fecha_registro)->format('d-m-Y')); ?> </td>
-                                    <td><?php if($usuario->estatus_id == 1): ?> <span class="badge bg-success font-size-12"> <?php echo e($usuario->estatus); ?> </span> <?php else: ?> <span class="badge bg-success font-size-12"> $usuario->estatus </span><?php endif; ?></td>
+                                    <td><?php echo e($estatusProyectos->nombre); ?></td>
+                                    <td><?php echo e($estatusProyectos->descripcion); ?></td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="mdi mdi-dots-vertical font-size-18"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
-                                                <li><a href="<?php echo e(route('usuarios.edit', ['usuario' => $usuario->id])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
-                                                <li><a class="dropdown-item cambiarEstado" style="cursor: pointer;" data-id="<?php echo e($usuario->id); ?>"><i class="mdi mdi-trash-can font-size-16 text-danger me-1"></i> Deshabilitar </a></li>
+                                                <li><a href="#editEstatusProyecto(<?php echo e($estatusProyectos->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($estatusProyectos->id); ?>"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="editEstatusProyecto(<?php echo e($estatusProyectos->id); ?>)" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editSede"> Editar Estatus de Proyecto</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" action="<?php echo e(route('estatus-proyectos.update', ['estatus_proyecto' => $estatusProyectos->id])); ?>" autocomplete="off">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('PUT'); ?>
+                                                    <div class="row col-md-12">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="nombre" class="col-form-label"> Nombre </label>
+                                                            <input type="text" class="form-control form-control-sm" name="nombre" onkeyup="javascript:this.value=this.value.toLowerCase();" required value="<?php echo e($estatusProyectos->nombre); ?>">
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="descripcion" class="col-form-label"> Descripción </label>
+                                                            <input type="text" class="form-control form-control-sm" name="descripcion" required value="<?php echo e($estatusProyectos->descripcion); ?>">
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- end modal body -->
+                                        </div>
+                                        <!-- end modal-content -->
+                                    </div>
+                                    <!-- end modal-dialog -->
+                                </div>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
@@ -71,7 +100,7 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    
+    <?php echo $__env->make('pages.cat_estatus_proyecto.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->
@@ -107,7 +136,7 @@
             });
         
             //Buttons examples
-            var table = $('#datatable-usuario').DataTable({
+            var table = $('#datatable-estatus-proyecto').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "Sin resultados",
@@ -123,55 +152,9 @@
                 lengthChange: true
             });
         
-            table.buttons().container().appendTo('#datatable-usuario_wrapper .col-md-6:eq(0)');
+            table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
-
-            //Ajax
-            $('.eliminarSede').click(function () {
-                var id = $(this).attr('data-id');
-                Swal.fire({
-                    title: '¿Seguro de eliminar esta sede?',
-                    showCancelButton: true,
-                    confirmButtonText: 'Aceptar',
-                    showLoaderOnConfirm: true,
-                    confirmButtonColor: "#556ee6",
-                    cancelButtonColor: "#f46a6a",
-                    preConfirm: function (email) {
-                        return new Promise(function (resolve, reject) {
-                            setTimeout(function () {
-                            
-                                    resolve()
-                                
-                            }, 2000)
-                        })
-                    },
-                    allowOutsideClick: false
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'delete',
-                            url: 'sede/'+id,
-                            success: function (data) {
-                                if (data.code == 200) {
-                                    toastr.options = {
-                                        "closeButton" : false,
-                                        "progressBar" : false
-                                    }
-                                    toastr.success("Sede eliminada");
-                                    setTimeout(function(){
-                                        window.location.reload();
-                                    }, 2000);
-                                }
-
-                            },
-                            error: function (data) {
-                                // console.log(data);
-                            }
-                        });
-                    }
-                })
-            });
         });
     </script>
     <?php if(Session::has('success')): ?>
@@ -194,6 +177,4 @@
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
-
-
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/usuario/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cat_estatus_proyecto/index.blade.php ENDPATH**/ ?>

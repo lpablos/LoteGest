@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Proyecto;
+use App\Models\CatEstatusProyecto;
 use Illuminate\Support\Facades\Log;
+use DB, Session;
 
 class ProyectoController extends Controller
 {
@@ -18,11 +20,10 @@ class ProyectoController extends Controller
     public function index()
     {
         if (view()->exists('pages.gestion-proyectos.index')) {
-            $proyectos = Proyecto::withCount('fraccionamientos')
-                            ->select('id', 'nombre', 'ubicacion', 'estado_actual', 'cantidad_fraccionamientos')
-                            ->orderByDesc('id')
+            $proyectos = Proyecto::orderByDesc('id')
                             ->get();
-            return view('pages.gestion-proyectos.index', compact('proyectos'));
+            $estatus = CatEstatusProyecto::all();
+            return view('pages.gestion-proyectos.index', compact('proyectos','estatus'));
         }
         return abort(404);
     }
@@ -43,34 +44,28 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
-            'ubicacion' => 'nullable|string|max:255',
-            'latitud' => 'nullable|numeric|between:-90,90',
-            'longitud' => 'nullable|numeric|between:-180,180',
-            'superficie_total_m2' => 'required|numeric|min:0',
-            'cantidad_fraccionamientos' => 'required|integer|min:1',
-            'estado_actual' => 'required|in:Planificado,En desarrollo,Finalizado',
             'fecha_inicio' => 'nullable|date',
-            'fecha_fin_estimada' => 'nullable|date|after_or_equal:fecha_inicio',
             'responsable_proyecto' => 'nullable|string|max:255',
+            'clave' => 'required|string|max:100|unique:proyectos,clave',
             'observaciones' => 'nullable|string',
+            'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
         ]);
-        try {
+        DB::beginTransaction();
+        try {            
             $proyecto = new Proyecto();
             $proyecto->nombre = $validated['nombre'];
-            $proyecto->ubicacion = $validated['ubicacion'];
-            $proyecto->latitud = $validated['latitud'];
-            $proyecto->longitud = $validated['longitud'];
-            $proyecto->superficie_total_m2 = $validated['superficie_total_m2'];
-            $proyecto->cantidad_fraccionamientos = $validated['cantidad_fraccionamientos'];
-            $proyecto->estado_actual = $validated['estado_actual'];
             $proyecto->fecha_inicio = $validated['fecha_inicio'];
-            $proyecto->fecha_fin_estimada = $validated['fecha_fin_estimada'];
             $proyecto->responsable_proyecto = $validated['responsable_proyecto'];
+            $proyecto->clave = $validated['clave'];
             $proyecto->observaciones = $validated['observaciones'];
+            $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id'];            
             $proyecto->save();
-            return redirect()->route('proyectos.index')->with('success', 'Se registro correctamente');
+            DB::commit();
+            Session::flash('success', 'Proyecto fue registrado');
+            return redirect()->route('proyectos.index');
         } catch (\Throwable $th) {
             Log::error('Error al guardar cliente: ' . $th->getMessage());
             return redirect()->back()->with('error', 'No se pudo guardar el proyecto. Intenta más tarde.');

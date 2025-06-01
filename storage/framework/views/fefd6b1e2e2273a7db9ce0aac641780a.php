@@ -128,7 +128,7 @@ unset($__errorArgs, $__bag); ?>
                                                         <a href="<?php echo e(route('password.request')); ?>" class="text-muted"> ¿Olvidaste tu contraseña? </a>
                                                     <?php endif; ?>
                                                 </div>
-                                                <label class="form-label">Password <span class="text-danger">*</span></label>
+                                                <label class="form-label"> Contraseña <span class="text-danger">*</span></label>
                                                 <div class="input-group auth-pass-inputgroup <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

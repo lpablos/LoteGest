@@ -14,12 +14,35 @@
                         <span key="t-chat">Gestion de Proyectos</span>
                     </a>
                 </li>
-               <li>
-                    <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
-                        <i class="bx bx-user"></i>
-                        <span key="t-chat"> Personas </span>
-                    </a>
-                </li>
+                 
+                    <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
+                    <li>
+                        <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
+                            <i class="bx bx-user"></i>
+                            <span key="t-chat"> Personas </span>
+                        </a>
+                    </li>
+                    
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-receipt"></i>
+                                <span key="t-dashboards"> Catálogos </span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="<?php echo e(route('estatus.index')); ?>" key="t-tui-calendar"> Estatus </a></li>
+                                <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
+                                <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
+                                
+                            </ul>
+                        </li>
+                        
+                    
+                
+                
+
+                
+
+                <li class="menu-title" key="t-backend"><?php echo app('translator')->get('translation.backend'); ?></li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home-circle"></i>
@@ -82,8 +105,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="menu-title" key="t-backend"><?php echo app('translator')->get('translation.backend'); ?></li>
                 <li>
                     <a href="yajra-datatable" class="waves-effect">
                         <i class="bx bx-list-ul"></i>

@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleTableSeeder::class,
-            // ProyectoSeeder::class,
+            CatEstatusProyectoTableSeeder::class,
             // FraccionamientoSeeder::class,
             // LoteSeeder::class,
             CatEstatusTableSeeder::class,
             UserTableSeeder::class,
-            CatEstatusProyectoTableSeeder::class
+            ProyectoSeeder::class,
         ]);
     }
 }

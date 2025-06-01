@@ -13,30 +13,31 @@ class Proyecto extends Model
 
     protected $fillable = [
         'nombre',
-        'ubicacion',
-        'latitud',
-        'longitud',
-        'superficie_total_m2',
-        'cantidad_fraccionamientos',
-        'Planificado',
         'fecha_inicio',
-        'fecha_fin_estimada',
         'responsable_proyecto',
+        'clave',
         'observaciones',
+        'estatus_proyecto_id',
     ];
 
-    public function fraccionamientos()
+     public function estatus()
     {
+        return $this->belongsTo(CatEstatusProyecto::class, 'estatus_proyecto_id','id');
+    }
+
+    // public function fraccionamientos()
+    // {
+
         // return $this->hasMany(Fraccionamiento::class);
-           return $this->hasMany(Fraccionamiento::class)->orderByDesc('nombre');
-    }
+        //    return $this->hasMany(Fraccionamiento::class)->orderByDesc('nombre');
+    // }
 
-    protected $appends = ['cantidad_fraccionamientos_registros'];
+    // protected $appends = ['cantidad_fraccionamientos_registros'];
 
-    public function getCantidadFraccionamientoRegistrosAttribute()
-    {
-        return $this->fraccionamientos()->count();
-    }
+    // public function getCantidadFraccionamientoRegistrosAttribute()
+    // {
+    //     return $this->fraccionamientos()->count();
+    // }
 
    
 }
