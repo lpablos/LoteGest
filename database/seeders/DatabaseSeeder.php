@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CatEstatusTableSeeder::class,
             UserTableSeeder::class,
             ProyectoSeeder::class,
+            CatEstatusDisponibilidadTableSeeder::class
         ]);
     }
 }
