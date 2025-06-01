@@ -15,7 +15,7 @@ class Proyecto extends Model
         'nombre',
         'fecha_inicio',
         'responsable_proyecto',
-        'clave',
+        // 'clave',
         'observaciones',
         'estatus_proyecto_id',
     ];

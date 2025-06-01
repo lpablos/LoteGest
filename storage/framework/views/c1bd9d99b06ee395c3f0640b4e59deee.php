@@ -46,7 +46,6 @@
                                 <th> Fecha Inicio </th>
                                 <th> Responsable </th>
                                 <th> Clave </th>
-                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
@@ -56,7 +55,6 @@
                                         <td><?php echo e($proy->nombre); ?></td>
                                         <td><?php echo e($proy->fecha_inicio); ?></td>
                                         <td><?php echo e($proy->responsable_proyecto); ?></td>
-                                        <td><?php echo e($proy->clave); ?></td>
                                         <td><?php echo e($proy->estatus->nombre); ?></td>      
                                         <td>
                                             <div class="dropdown">

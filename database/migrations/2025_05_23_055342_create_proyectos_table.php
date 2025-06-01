@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->date('fecha_inicio')->nullable();
             $table->string('responsable_proyecto')->nullable();
-            $table->string('clave')->unique();
+            // $table->string('clave')->unique();
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('estatus_proyecto_id');
             $table->foreign('estatus_proyecto_id')

@@ -7,6 +7,7 @@ use App\Models\Proyecto;
 use App\Models\CatEstatusProyecto;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
+use App\Helpers\Helper;
 
 class ProyectoController extends Controller
 {
@@ -48,19 +49,19 @@ class ProyectoController extends Controller
             'nombre' => 'required|string|max:255',
             'fecha_inicio' => 'nullable|date',
             'responsable_proyecto' => 'nullable|string|max:255',
-            'clave' => 'required|string|max:100|unique:proyectos,clave',
+            // 'clave' => 'required|string|max:100|unique:proyectos,clave',
             'observaciones' => 'nullable|string',
             'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
         ]);
         DB::beginTransaction();
         try {            
             $proyecto = new Proyecto();
-            $proyecto->nombre = $validated['nombre'];
-            $proyecto->fecha_inicio = $validated['fecha_inicio'];
-            $proyecto->responsable_proyecto = $validated['responsable_proyecto'];
-            $proyecto->clave = $validated['clave'];
-            $proyecto->observaciones = $validated['observaciones'];
-            $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id'];            
+            $proyecto->nombre =  Helper::capitalizeFirst($validated['nombre']);
+            $proyecto->fecha_inicio =  $validated['fecha_inicio'];
+            $proyecto->responsable_proyecto =  Helper::capitalizeFirst($validated['responsable_proyecto']);
+            // $proyecto->clave =  Helper::capitalizeFirst($validated['clave']);
+            $proyecto->observaciones =  Helper::capitalizeFirst($validated['observaciones']);
+            $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id']; 
             $proyecto->save();
             DB::commit();
             Session::flash('success', 'Proyecto fue registrado');

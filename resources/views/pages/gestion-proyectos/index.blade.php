@@ -48,7 +48,6 @@
                                 <th> Fecha Inicio </th>
                                 <th> Responsable </th>
                                 <th> Clave </th>
-                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
@@ -58,7 +57,6 @@
                                         <td>{{$proy->nombre}}</td>
                                         <td>{{$proy->fecha_inicio}}</td>
                                         <td>{{$proy->responsable_proyecto}}</td>
-                                        <td>{{$proy->clave}}</td>
                                         <td>{{$proy->estatus->nombre}}</td>      
                                         <td>
                                             <div class="dropdown">

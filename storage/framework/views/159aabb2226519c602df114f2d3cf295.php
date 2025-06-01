@@ -20,18 +20,6 @@
     </div>
 
     <div class="col-md-6">
-        <label for="clave" class="form-label">Clave del Proyecto *</label>
-        <input type="text" class="form-control" id="clave" name="clave"
-            value="<?php echo e(isset($proy) ? $proy->clave : ''); ?>"
-            <?php echo e(isset($proy) ? 'readonly' : ''); ?>
-
-            required>
-
-    </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-md-6">
         <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto *</label>
         <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required>
             <option value="">-- Selecciona --</option>
@@ -45,6 +33,7 @@
         </select>
     </div>
 </div>
+
 
 <div class="mb-3">
     <label for="observaciones" class="form-label">Observaciones</label>
