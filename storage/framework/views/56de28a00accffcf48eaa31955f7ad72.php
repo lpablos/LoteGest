@@ -8,12 +8,27 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
+            
+
+                
+
                 <li>
-                    <a href="<?php echo e(route('proyectos.index')); ?>" class="waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-pyramid"></i>
-                        <span key="t-chat">Gestion de Proyectos</span>
+                        <span key="t-dashboards">Gestion de Proyectos</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="<?php echo e(route('proyectos.index')); ?>" key="t-default">Proyectos</a></li>
+                        <li><a href="dashboard-saas" key="t-saas">Fraccionamientos</a></li>
+                        <li><a href="dashboard-crypto" key="t-crypto"><?php echo app('translator')->get('translation.Crypto'); ?></a></li>
+                        <li><a href="dashboard-blog" key="t-blog"><?php echo app('translator')->get('translation.Blog'); ?></a></li>
+                        <li><a href="dashboard-job"><?php echo app('translator')->get('translation.Jobs'); ?></a></li>
+                    </ul>
                 </li>
+
+
+
+
                  
                     <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
                     <li>

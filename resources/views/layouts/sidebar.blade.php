@@ -8,12 +8,27 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
+            
+
+                
+
                 <li>
-                    <a href="{{ route('proyectos.index') }}" class="waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-pyramid"></i>
-                        <span key="t-chat">Gestion de Proyectos</span>
+                        <span key="t-dashboards">Gestion de Proyectos</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('proyectos.index') }}" key="t-default">Proyectos</a></li>
+                        <li><a href="dashboard-saas" key="t-saas">Fraccionamientos</a></li>
+                        <li><a href="dashboard-crypto" key="t-crypto">@lang('translation.Crypto')</a></li>
+                        <li><a href="dashboard-blog" key="t-blog">@lang('translation.Blog')</a></li>
+                        <li><a href="dashboard-job">@lang('translation.Jobs')</a></li>
+                    </ul>
                 </li>
+
+
+
+
                  {{--  @if (Auth::user()?->role_id == 1 || Auth::user()?->role_id == 2)  --}}
                     <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
                     <li>

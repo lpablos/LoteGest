@@ -36,8 +36,9 @@
                                         <i class="mdi mdi-plus me-1"></i> Agregar
                                 </button>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
+                    <?php echo $__env->make('pages.gestion-proyectos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -50,13 +51,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                              <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proyecto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proy): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td><?php echo e($proyecto->nombre); ?></td>
-                                        <td><?php echo e($proyecto->fecha_inicio); ?></td>
-                                        <td><?php echo e($proyecto->responsable_proyecto); ?></td>
-                                        <td><?php echo e($proyecto->clave); ?></td>
-                                        <td><?php echo e($proyecto->estatus->nombre); ?></td>      
+                                        <td><?php echo e($proy->nombre); ?></td>
+                                        <td><?php echo e($proy->fecha_inicio); ?></td>
+                                        <td><?php echo e($proy->responsable_proyecto); ?></td>
+                                        <td><?php echo e($proy->clave); ?></td>
+                                        <td><?php echo e($proy->estatus->nombre); ?></td>      
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,7 +65,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-menu-start">
                                                     <li>
-                                                        <a href="#editEstatusProyecto(<?php echo e($proyecto->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($proyecto->id); ?>">
+                                                        <a href="#editEstatusProyecto(<?php echo e($proy->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($proy->id); ?>">
                                                             <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                         </a>
                                                     </li>
@@ -80,7 +81,7 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    <?php echo $__env->make('pages.gestion-proyectos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+   
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->

@@ -1,34 +1,41 @@
+<?php echo e(isset($proy)); ?>
+
 <div class="row mb-3">
+
     <div class="col-md-6">
-        <label for="nombre" class="form-label">Nombre del Proyecto</label>
-        <input type="text" class="form-control" id="nombre" name="nombre" required>
+        <label for="nombre" class="form-label">Nombre del Proyecto *</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo e(isset($proy) ? $proy->nombre : ''); ?>" required>
     </div>
 
     <div class="col-md-6">
         <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio">
+        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="<?php echo e(isset($proy) ? $proy->fecha_inicio : ''); ?>">
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-md-6">
         <label for="responsable_proyecto" class="form-label">Responsable del Proyecto</label>
-        <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto">
+        <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value="<?php echo e(isset($proy) ? $proy->responsable_proyecto : ''); ?>">
     </div>
 
     <div class="col-md-6">
-        <label for="clave" class="form-label">Clave del Proyecto</label>
-        <input type="text" class="form-control" id="clave" name="clave" required>
+        <label for="clave" class="form-label">Clave del Proyecto *</label>
+        <input type="text" class="form-control" id="clave" name="clave" value="<?php echo e(isset($proy) ? $proy->clave : ''); ?>" required>
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto</label>
+        <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto *</label>
         <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required>
             <option value="">-- Selecciona --</option>
             <?php $__currentLoopData = $estatus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
+                <option value="<?php echo e($item->id); ?>"
+                    <?php echo e(isset($proy) && $proy->estatus_proyecto_id == $item->id ? 'selected' : ''); ?>>
+                    <?php echo e($item->nombre); ?>
+
+                </option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>
@@ -36,6 +43,6 @@
 
 <div class="mb-3">
     <label for="observaciones" class="form-label">Observaciones</label>
-    <textarea class="form-control" id="observaciones" name="observaciones" rows="4"></textarea>
+    <textarea class="form-control" id="observaciones" name="observaciones" rows="4"><?php echo e(isset($proy) ? $proy->observaciones : ''); ?></textarea>
 </div>
 <?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-proyectos/formulario/proyecto.blade.php ENDPATH**/ ?>

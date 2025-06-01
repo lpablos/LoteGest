@@ -1,4 +1,4 @@
- <div class="modal fade" id="editEstatusProyecto({{ $proyecto->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+ <div class="modal fade" id="editEstatusProyecto({{ $proy->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('estatus-proyectos.update', ['estatus_proyecto' => $proyecto->id]) }}" autocomplete="off">
+                <form method="POST" action="{{ route('estatus-proyectos.update', ['estatus_proyecto' => $proy->id]) }}" autocomplete="off">
                     @csrf
                     @method('PUT')
                     @include('pages.gestion-proyectos.formulario.proyecto')

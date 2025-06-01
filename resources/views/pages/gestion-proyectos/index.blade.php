@@ -38,8 +38,9 @@
                                         <i class="mdi mdi-plus me-1"></i> Agregar
                                 </button>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
+                    @include('pages.gestion-proyectos.modal.add')
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -52,13 +53,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                              @foreach ($proyectos as $proyecto)
+                              @foreach ($proyectos as $proy)
                                     <tr>
-                                        <td>{{$proyecto->nombre}}</td>
-                                        <td>{{$proyecto->fecha_inicio}}</td>
-                                        <td>{{$proyecto->responsable_proyecto}}</td>
-                                        <td>{{$proyecto->clave}}</td>
-                                        <td>{{$proyecto->estatus->nombre}}</td>      
+                                        <td>{{$proy->nombre}}</td>
+                                        <td>{{$proy->fecha_inicio}}</td>
+                                        <td>{{$proy->responsable_proyecto}}</td>
+                                        <td>{{$proy->clave}}</td>
+                                        <td>{{$proy->estatus->nombre}}</td>      
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,7 +67,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-menu-start">
                                                     <li>
-                                                        <a href="#editEstatusProyecto({{ $proyecto->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $proyecto->id }}">
+                                                        <a href="#editEstatusProyecto({{ $proy->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $proy->id }}">
                                                             <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                         </a>
                                                     </li>
@@ -82,7 +83,7 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    @include('pages.gestion-proyectos.modal.add')
+   
 @endsection
 @section('script')
     <!-- Required datatable js -->
