@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="<?php echo e(route('estatus-proyectos.update', ['estatus_proyecto' => $proy->id])); ?>" autocomplete="off">
+                <form method="POST" action="<?php echo e(route('proyectos.update', ['proyecto' => $proy->id])); ?>" autocomplete="off">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
                     <?php echo $__env->make('pages.gestion-proyectos.formulario.proyecto', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>

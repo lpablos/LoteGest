@@ -21,7 +21,12 @@
 
     <div class="col-md-6">
         <label for="clave" class="form-label">Clave del Proyecto *</label>
-        <input type="text" class="form-control" id="clave" name="clave" value="<?php echo e(isset($proy) ? $proy->clave : ''); ?>" required>
+        <input type="text" class="form-control" id="clave" name="clave"
+            value="<?php echo e(isset($proy) ? $proy->clave : ''); ?>"
+            <?php echo e(isset($proy) ? 'readonly' : ''); ?>
+
+            required>
+
     </div>
 </div>
 

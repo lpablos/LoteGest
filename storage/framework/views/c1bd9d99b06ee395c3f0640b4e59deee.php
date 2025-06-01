@@ -156,6 +156,17 @@
             toastr.warning("<?php echo e(session('error')); ?>");
         </script>
     <?php endif; ?>
+    <?php if($errors->any()): ?>
+        <script>
+            toastr.options = {
+                "closeButton" : false,
+                "progressBar" : true
+            };
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                toastr.error("<?php echo e($error); ?>");
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </script>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-proyectos/index.blade.php ENDPATH**/ ?>

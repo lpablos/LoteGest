@@ -158,4 +158,15 @@
             toastr.warning("{{ session('error') }}");
         </script>
     @endif
+    @if ($errors->any())
+        <script>
+            toastr.options = {
+                "closeButton" : false,
+                "progressBar" : true
+            };
+            @foreach ($errors->all() as $error)
+                toastr.error("{{ $error }}");
+            @endforeach
+        </script>
+    @endif
 @endsection
