@@ -55,7 +55,7 @@
                               @foreach ($proyectos as $proy)
                                     <tr>
                                         <td>{{$proy->nombre}}</td>
-                                        <td>{{$proy->fecha_inicio}}</td>
+                                        <td> {{ Carbon\Carbon::parse($proy->fecha_inicio)->format('d-m-Y') }} </td>
                                         <td>{{$proy->responsable_proyecto}}</td>
                                         <td>{{$proy->estatus->nombre}}</td>      
                                         <td>
