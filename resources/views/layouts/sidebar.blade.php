@@ -1,17 +1,11 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
-
     <div data-simplebar class="h-100">
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
-            
-
-                
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-pyramid"></i>
@@ -25,53 +19,38 @@
                         <li><a href="dashboard-job">@lang('translation.Jobs')</a></li>
                     </ul>
                 </li>
-                    <li>
-                        <a href="{{ route('cliente.index') }}" class="waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-chat"> Clientes </span>
-                        </a>
-                    </li>
-
-
-
-                 {{--  @if (Auth::user()?->role_id == 1 || Auth::user()?->role_id == 2)  --}}
-                    <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
-                    <li>
-                        <a href="{{ route('usuarios.index') }}" class="waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-chat"> Personas </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-receipt"></i>
-                            <span key="t-dashboards"> Catálogos </span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
-                            <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
-                            <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
-                            <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{{ route('configuracion.index') }}" class="waves-effect">
-                            <i class="bx bx-cog"></i>
-                            <span key="t-chat"> Configuración </span>
-                        </a>
-                    </li>
-                        {{--  <li>
-                            <a href="{{ route('padron-urbano.index') }}">
-                                <i class="bx bx-group"></i>
-                                <span> Predios Urbanos</span>
-                            </a>
-                        </li>  --}}
-                    {{--  @endif  --}}
-                {{--  @endif  --}}
-                
-
-                
-
+                <li>
+                    <a href="{{ route('cliente.index') }}" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Clientes </span>
+                    </a>
+                </li>
+                <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
+                <li>
+                    <a href="{{ route('usuarios.index') }}" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Personas </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-receipt"></i>
+                        <span key="t-dashboards"> Catálogos </span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
+                        <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
+                        <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
+                        <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ route('configuracion.index') }}" class="waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-chat"> Configuración </span>
+                    </a>
+                </li>
+            <div style="display: none">    
                 <li class="menu-title" key="t-backend">@lang('translation.backend')</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -86,7 +65,6 @@
                         <li><a href="dashboard-job">@lang('translation.Jobs')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                     <span class="badge rounded-pill bg-danger float-end" key="t-hot">@lang('translation.hot')</span>
@@ -141,9 +119,7 @@
                         <span key="t-yajra-datatable">@lang('translation.yajra-datatable')</span>
                     </a>
                 </li>
-
                 <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-calendar"></i>
@@ -154,21 +130,18 @@
                         <li><a href="calendar-full" key="t-full-calendar">@lang('translation.Full_Calendar')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="chat" class="waves-effect">
                         <i class="bx bx-chat"></i>
                         <span key="t-chat">@lang('translation.Chat')</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="apps-filemanager" class="waves-effect">
                         <i class="bx bx-file"></i>
                         <span key="t-file-manager">@lang('translation.File_Manager')</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-store"></i>
@@ -187,7 +160,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-bitcoin"></i>
@@ -203,7 +175,6 @@
                         <li><a href="crypto-ico-landing" key="t-ico">@lang('translation.ICO_Landing')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-envelope"></i>
@@ -227,7 +198,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-receipt"></i>
@@ -239,7 +209,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-briefcase-alt-2"></i>
@@ -253,7 +222,6 @@
                         <li><a href="projects-create" key="t-create-new">@lang('translation.Create_New')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-task"></i>
@@ -265,7 +233,6 @@
                         <li><a href="tasks-create" key="t-create-task">@lang('translation.Create_Task')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-user-detail"></i>
@@ -277,7 +244,6 @@
                         <li><a href="contacts-profile" key="t-profile">@lang('translation.Profile')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-detail"></i>
@@ -289,7 +255,6 @@
                         <li><a href="blog-details" key="t-blog-details">@lang('translation.Blog_Details')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect has-arrow">
                              <i class="bx bx-briefcase-alt"></i>
@@ -310,9 +275,7 @@
                         </li>
                     </ul>
                 </li>
-
                 <li class="menu-title" key="t-pages">@lang('translation.Pages')</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-user-circle"></i>
@@ -343,7 +306,6 @@
                                 key="t-two-step-verification-2">@lang('translation.Two_step_verification') 2</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-file"></i>
@@ -360,9 +322,7 @@
                         <li><a href="pages-500" key="t-error-500">@lang('translation.Error_500')</a></li>
                     </ul>
                 </li>
-
                 <li class="menu-title" key="t-components">@lang('translation.Components')</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-tone"></i>
@@ -395,7 +355,6 @@
                         <li><a href="ui-utilities">@lang('translation.Utilities')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="bx bxs-eraser"></i>
@@ -416,7 +375,6 @@
                         <li><a href="form-mask" key="t-form-mask">@lang('translation.Form_Mask')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-list-ul"></i>
@@ -431,7 +389,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-bar-chart-alt-2"></i>
@@ -448,7 +405,6 @@
                                 key="t-sparkline-charts">@lang('translation.Sparkline_Charts')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-aperture"></i>
@@ -462,7 +418,6 @@
                         <li><a href="icons-fontawesome" key="t-font-awesome">@lang('translation.Font_awesome')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-map"></i>
@@ -474,7 +429,6 @@
                         <li><a href="maps-leaflet" key="t-l-maps">@lang('translation.Leaflet_Maps')</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-share-alt"></i>
@@ -494,10 +448,8 @@
                         </li>
                     </ul>
                 </li>
-
+            </div>
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
-<!-- Left Sidebar End -->
