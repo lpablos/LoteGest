@@ -19,13 +19,18 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="<?php echo e(route('proyectos.index')); ?>" key="t-default">Proyectos</a></li>
-                        <li><a href="dashboard-saas" key="t-saas">Fraccionamientos</a></li>
+                        <li><a href="<?php echo e(route('fraccionamiento.index')); ?>" key="t-saas">Fraccionamientos</a></li>
                         <li><a href="dashboard-crypto" key="t-crypto"><?php echo app('translator')->get('translation.Crypto'); ?></a></li>
                         <li><a href="dashboard-blog" key="t-blog"><?php echo app('translator')->get('translation.Blog'); ?></a></li>
                         <li><a href="dashboard-job"><?php echo app('translator')->get('translation.Jobs'); ?></a></li>
                     </ul>
                 </li>
-
+                    <li>
+                        <a href="<?php echo e(route('cliente.index')); ?>" class="waves-effect">
+                            <i class="bx bx-user"></i>
+                            <span key="t-chat"> Clientes </span>
+                        </a>
+                    </li>
 
 
 
@@ -37,19 +42,24 @@
                             <span key="t-chat"> Personas </span>
                         </a>
                     </li>
-                    
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                <i class="bx bx-receipt"></i>
-                                <span key="t-dashboards"> Catálogos </span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="<?php echo e(route('estatus.index')); ?>" key="t-tui-calendar"> Estatus </a></li>
-                                <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
-                                <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
-                                
-                            </ul>
-                        </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-receipt"></i>
+                            <span key="t-dashboards"> Catálogos </span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="<?php echo e(route('estatus.index')); ?>" key="t-tui-calendar"> Estatus </a></li>
+                            <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
+                            <li><a href="<?php echo e(route('estatus-disponibilidad.index')); ?>" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
+                            <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="<?php echo e(route('configuracion.index')); ?>" class="waves-effect">
+                            <i class="bx bx-cog"></i>
+                            <span key="t-chat"> Configuración </span>
+                        </a>
+                    </li>
                         
                     
                 

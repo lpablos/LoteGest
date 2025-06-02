@@ -17,4 +17,9 @@ class CatEstatusProyecto extends Model
         'nombre',
         'descripcion',
     ];
+
+     public function proyectos()
+    {
+        return $this->hasMany(Proyecto::class);
+    }
 }

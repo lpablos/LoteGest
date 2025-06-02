@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('fraccionamientos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('proyecto_id')->constrained('proyectos')->cascadeOnDelete();
-            $table->string('nombre');
-            $table->decimal('superficie_m2', 12, 2);
-            $table->integer('cantidad_lotes')->default(0);
-            $table->enum('uso_predominante', ['Habitacional', 'Comercial', 'Mixto']);
-            $table->string('etapa')->nullable();
-            $table->json('servicios_disponibles')->nullable(); // agua, luz, drenaje, etc.
+            $table->string('nombre')->nullable();
+            $table->string('imagen')->nullable();
+            $table->string('reponsable')->nullable(); // ¿"responsable" era la intención?
+            $table->string('propietaria')->nullable();
+            $table->string('predio_urbano')->nullable();
+            $table->decimal('superficie', 10, 2)->nullable();
+            $table->string('ubicacion')->nullable();
             $table->text('observaciones')->nullable();
+            $table->unsignedBigInteger('proyecto_id');
+            $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade');
             $table->softDeletes(); 
             $table->timestamps();
         });

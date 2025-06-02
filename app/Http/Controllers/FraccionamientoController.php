@@ -15,6 +15,12 @@ class FraccionamientoController extends Controller
     public function index()
     {
         //
+        $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
+        $proyectos=Proyecto::all();
+        if (view()->exists('pages.gestion-fraccionamientos.index')) {
+            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','proyectos'));
+        }
+        return abort(404);
     }
 
     /**

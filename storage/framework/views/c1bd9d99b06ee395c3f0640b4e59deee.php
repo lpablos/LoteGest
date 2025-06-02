@@ -53,7 +53,7 @@
                               <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proy): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($proy->nombre); ?></td>
-                                        <td><?php echo e($proy->fecha_inicio); ?></td>
+                                        <td> <?php echo e(Carbon\Carbon::parse($proy->fecha_inicio)->format('d-m-Y')); ?> </td>
                                         <td><?php echo e($proy->responsable_proyecto); ?></td>
                                         <td><?php echo e($proy->estatus->nombre); ?></td>      
                                         <td>

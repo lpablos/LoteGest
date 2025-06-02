@@ -1,12 +1,12 @@
-<div class="modal fade" id="add_estatus_proyecto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="add_estatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo estatus de proyecto</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo estatus</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="<?php echo e(route('estatus-proyectos.store')); ?>" autocomplete="off">
+                <form method="POST" action="<?php echo e(route('estatus.store')); ?>" autocomplete="off">
                     <?php echo csrf_field(); ?>
                     <div class="row col-md-12">
                         <div class="col-md-12 mb-3">
@@ -26,4 +26,4 @@
             </div>
         </div>
     </div>
-</div><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cat_estatus_proyecto/add.blade.php ENDPATH**/ ?>
+</div><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/estatus/add.blade.php ENDPATH**/ ?>

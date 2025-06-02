@@ -23,84 +23,67 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Estatus de Proyectos </h2>
+                                    <h2> Fraccionamientos </h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#add_estatus_proyecto"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2"><i
-                                        class="mdi mdi-plus me-1"></i> Agregar</button>
+                                <button type="button" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#add_proyecto"
+                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2">
+                                        <i class="mdi mdi-plus me-1"></i> Agregar
+                                </button>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
-                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
+                    <?php echo $__env->make('pages.gestion-fraccionamientos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100 text-center">
                         <thead>
                             <tr>
                                 <th> Nombre </th>
-                                <th> Descripción </th>
+                                <th> Responsable </th>
+                                <th> Propietaria </th>
+                                <th> Predio Urbano </th>
+                                <th> Superficie </th>
+                                <th> # Manzanas </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $estatusProyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusProyectos): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr>
-                                    <td><?php echo e($estatusProyectos->nombre); ?></td>
-                                    <td><?php echo e($estatusProyectos->descripcion); ?></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-start">
-                                                <li><a href="#editEstatusProyecto(<?php echo e($estatusProyectos->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($estatusProyectos->id); ?>"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <div class="modal fade" id="editEstatusProyecto(<?php echo e($estatusProyectos->id); ?>)" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editSede"> Editar Estatus de Proyecto</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              <?php $__currentLoopData = $fraccionamientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fracc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td><?php echo e($fracc->nombre); ?></td>
+                                        <td><?php echo e($fracc->reponsable); ?></td>
+                                        <td><?php echo e($fracc->propietaria); ?></td>
+                                        <td><?php echo e($fracc->predio_urbano); ?></td> 
+                                        <td><?php echo e($fracc->superficie); ?></td>      
+                                        <td><?php echo e($fracc->manzanas->count()); ?></td>      
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-start">
+                                                    <li>
+                                                        <a href="#editEstatusProyecto(<?php echo e($fracc->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($fracc->id); ?>">
+                                                            <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="modal-body">
-                                                <form method="POST" action="<?php echo e(route('estatus-proyectos.update', ['estatus_proyecto' => $estatusProyectos->id])); ?>" autocomplete="off">
-                                                    <?php echo csrf_field(); ?>
-                                                    <?php echo method_field('PUT'); ?>
-                                                    <div class="row col-md-12">
-                                                        <div class="col-md-12 mb-3">
-                                                            <label for="nombre" class="col-form-label"> Nombre </label>
-                                                            <input type="text" class="form-control form-control-sm" name="nombre" onkeyup="javascript:this.value=this.value.toLowerCase();" required value="<?php echo e($estatusProyectos->nombre); ?>">
-                                                        </div>
-                                                        <div class="col-md-12 mb-3">
-                                                            <label for="descripcion" class="col-form-label"> Descripción </label>
-                                                            <input type="text" class="form-control form-control-sm" name="descripcion" required value="<?php echo e($estatusProyectos->descripcion); ?>">
-                                                        </div>
-                                                       
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- end modal body -->
-                                        </div>
-                                        <!-- end modal-content -->
-                                    </div>
-                                    <!-- end modal-dialog -->
-                                </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </td> 
+                                        <?php echo $__env->make('pages.gestion-fraccionamientos.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                            
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>           
                         </tbody>
                     </table>
                 </div>
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    <?php echo $__env->make('pages.cat_estatus_proyecto.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+   
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->
@@ -175,6 +158,17 @@
             toastr.warning("<?php echo e(session('error')); ?>");
         </script>
     <?php endif; ?>
+    <?php if($errors->any()): ?>
+        <script>
+            toastr.options = {
+                "closeButton" : false,
+                "progressBar" : true
+            };
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                toastr.error("<?php echo e($error); ?>");
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </script>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cat_estatus_proyecto/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/index.blade.php ENDPATH**/ ?>

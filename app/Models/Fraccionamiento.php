@@ -11,27 +11,24 @@ class Fraccionamiento extends Model
     use HasFactory, SoftDeletes;
     //
     protected $fillable = [
-        'proyecto_id',
         'nombre',
-        'superficie_m2',
-        'cantidad_lotes',
-        'uso_predominante',
-        'etapa',
-        'servicios_disponibles',
+        'imagen',
+        'reponsable',
+        'propietaria',
+        'predio_urbano',
+        'superficie',
+        'ubicacion',
+        'proyecto_id',
         'observaciones',
-    ];
-
-    protected $casts = [
-        'servicios_disponibles' => 'array',
     ];
 
     public function proyecto()
     {
-        return $this->belongsTo(Proyecto::class);
+        return $this->belongsTo(Proyecto::class,'proyecto_id','id');
     }
 
-    public function lotes()
+    public function manzanas()
     {
-        return $this->hasMany(Lote::class);
+        return $this->hasMany(Manzana::class);
     }
 }
