@@ -1,7 +1,7 @@
  <div class="row mb-3">
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control">
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
         </div>
 
         <div class="col-md-6">
@@ -12,13 +12,13 @@
 
     <div class="row mb-3">
         <div class="col-md-6">
-            <label for="responsable" class="form-label">Responsable</label>
-            <input type="text" name="responsable" id="responsable" class="form-control">
+            <label for="reponsable" class="form-label">Responsable</label>
+            <input type="text" name="reponsable" id="reponsable" class="form-control" required>
         </div>
 
         <div class="col-md-6">
             <label for="propietaria" class="form-label">Propietaria</label>
-            <input type="text" name="propietaria" id="propietaria" class="form-control">
+            <input type="text" name="propietaria" id="propietaria" class="form-control" required>
         </div>
     </div>
 

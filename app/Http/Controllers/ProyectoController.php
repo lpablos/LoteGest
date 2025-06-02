@@ -69,7 +69,7 @@ class ProyectoController extends Controller
         } catch (\Throwable $th) {
             Log::error('Error guardar proyecto: ' . $th->getMessage());
             DB::rollBack();
-            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+            return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
         }
     }
 

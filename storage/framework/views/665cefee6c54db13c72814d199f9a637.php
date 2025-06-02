@@ -31,7 +31,7 @@
                             <div class="text-sm-end">
                                 <button type="button" 
                                     data-bs-toggle="modal" 
-                                    data-bs-target="#add_proyecto"
+                                    data-bs-target="#add_fraccionamiento"
                                     class="btn btn-success btn-rounded waves-effect waves-light mb-2">
                                         <i class="mdi mdi-plus me-1"></i> Agregar
                                 </button>
