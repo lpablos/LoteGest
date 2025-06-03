@@ -47,7 +47,7 @@
                                 <th> Nombre </th>
                                 <th> Responsable </th>
                                 <th> Propietaria </th>
-                                <th> Predio Urbano </th>
+                                <th> Proyecto </th>
                                 <th> Superficie </th>
                                 <th> # Manzanas </th>
                                 <th> Acciones </th>
@@ -59,7 +59,7 @@
                                         <td>{{$fracc->nombre}}</td>
                                         <td>{{$fracc->reponsable}}</td>
                                         <td>{{$fracc->propietaria}}</td>
-                                        <td>{{$fracc->predio_urbano}}</td> 
+                                        <td>{{$fracc->proyecto->nombre}}</td> 
                                         <td>{{$fracc->superficie}}</td>      
                                         <td>{{$fracc->manzanas->count()}}</td>      
                                         <td>

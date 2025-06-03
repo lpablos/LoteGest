@@ -45,7 +45,7 @@
                                 <th> Nombre </th>
                                 <th> Responsable </th>
                                 <th> Propietaria </th>
-                                <th> Predio Urbano </th>
+                                <th> Proyecto </th>
                                 <th> Superficie </th>
                                 <th> # Manzanas </th>
                                 <th> Acciones </th>
@@ -57,7 +57,7 @@
                                         <td><?php echo e($fracc->nombre); ?></td>
                                         <td><?php echo e($fracc->reponsable); ?></td>
                                         <td><?php echo e($fracc->propietaria); ?></td>
-                                        <td><?php echo e($fracc->predio_urbano); ?></td> 
+                                        <td><?php echo e($fracc->proyecto->nombre); ?></td> 
                                         <td><?php echo e($fracc->superficie); ?></td>      
                                         <td><?php echo e($fracc->manzanas->count()); ?></td>      
                                         <td>
