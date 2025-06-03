@@ -126,7 +126,7 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        
+        dd("Esto es lo que se pasa", $request->all());
         $validated = $request->validate([
             'nombre'          => 'required|string|max:255',
             'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp',
@@ -156,7 +156,16 @@ class FraccionamientoController extends Controller
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->proyecto_id = $validated['proyecto_id'];
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            $fraccionamiento->save();
+            // $fraccionamiento->save();
+            //   foreach ($request->manzanas as $manzana) {
+            //     $fraccionamiento->manzanas()->create([
+            //         'num_lotes' => $manzana['num_lotes'],
+            //         'colinda_norte' => $manzana['colinda_norte'],
+            //         'colinda_sur' => $manzana['colinda_sur'],
+            //         'colinda_este' => $manzana['colinda_este'],
+            //         'colinda_oeste' => $manzana['colinda_oeste'],
+            //     ]);
+            // }
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue registrado');
             return redirect()->route('fraccionamiento.index');
@@ -165,34 +174,6 @@ class FraccionamientoController extends Controller
             DB::rollBack();
             return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
         }
-   
-        // $validated = $request->validate([
-        //     'proyecto' => ['required', 'exists:proyectos,id'],
-        //     'nombre' => ['required', 'string', 'max:255'],
-        //     'superficie_m2' => ['required', 'numeric', 'min:0'],
-        //     'cantidad_lotes' => ['required', 'integer', 'min:0'],
-        //     'uso_predominante' => ['required', 'in:Habitacional,Comercial,Mixto'],
-        //     'etapa' => ['nullable', 'string', 'max:255'],
-        //     'servicios_disponibles' => ['nullable', 'array'],
-        //     'servicios_disponibles.*' => ['string', 'max:100'],
-        //     'observaciones' => ['nullable', 'string'],
-        // ]);
-        // try {
-        //     $fraccionamiento = Fraccionamiento::find($id);
-        //     $fraccionamiento->proyecto_id = $validated['proyecto'];
-        //     $fraccionamiento->nombre = $validated['nombre'];
-        //     $fraccionamiento->superficie_m2 = $validated['superficie_m2'];
-        //     $fraccionamiento->cantidad_lotes = $validated['cantidad_lotes'];
-        //     $fraccionamiento->uso_predominante = $validated['uso_predominante'];
-        //     $fraccionamiento->etapa = $validated['etapa'];
-        //     $fraccionamiento->servicios_disponibles = $request->input('servicios_disponibles');
-        //     $fraccionamiento->observaciones = $validated['observaciones'];
-        //     $fraccionamiento->save();
-        //     return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', 'Se actualizo correctamente el fraccionamiento');
-        // } catch (\Throwable $th) {
-        //     Log::error('Error al guardar fraccionamiento: ' . $th->getMessage());
-        //     return redirect()->back()->with('error', 'No se pudo guardar el fraccionamiento. Intenta más tarde.');
-        // }
     }
 
     /**

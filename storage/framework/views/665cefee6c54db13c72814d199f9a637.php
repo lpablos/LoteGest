@@ -182,7 +182,7 @@
 
 <?php $__env->startPush('scripts'); ?>
 <script>
-     let manzanaIndexes = {};
+ let manzanaIndexes = window.manzanaIndexes || {};
 
     function agregarManzana(fraccId) {
         if (!(fraccId in manzanaIndexes)) {
@@ -223,6 +223,7 @@
         container.appendChild(card);
         manzanaIndexes[fraccId]++;
     }
+    
 </script>
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/index.blade.php ENDPATH**/ ?>

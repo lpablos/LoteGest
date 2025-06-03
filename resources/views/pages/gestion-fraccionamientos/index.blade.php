@@ -184,7 +184,7 @@
 
 @push('scripts')
 <script>
-     let manzanaIndexes = {};
+ let manzanaIndexes = window.manzanaIndexes || {};
 
     function agregarManzana(fraccId) {
         if (!(fraccId in manzanaIndexes)) {
@@ -225,5 +225,6 @@
         container.appendChild(card);
         manzanaIndexes[fraccId]++;
     }
+    
 </script>
 @endpush

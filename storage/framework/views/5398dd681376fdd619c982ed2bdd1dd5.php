@@ -63,11 +63,47 @@
 <div class="mb-3">
     <label class="form-label">Manzanas</label>
 
-    <div id="manzanas-container-<?php echo e(isset($fracc) ? $fracc->id : 'create'); ?>" class="row"></div>
+   <?php
+        $fraccId = $fracc->id ?? 'nuevo';
+        $manzanas = old('manzanas', $fracc->manzanas ?? []);
+    ?>
+
+    <div id="manzanas-container-<?php echo e($fraccId); ?>">
+        <?php $index = 0; ?>
+        <?php $__currentLoopData = old('manzanas', $fracc->manzanas ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $manzana): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <div class="card p-3 mb-3 border rounded position-relative">
+                <button type="button" class="btn-close position-absolute end-0 top-0 m-2" onclick="this.parentElement.remove()" aria-label="Eliminar"></button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="form-label"># Manzana</label>
+                        <input type="number" name="manzanas[<?php echo e($index); ?>][num_lotes]" class="form-control" value="<?php echo e($manzana['num_lotes'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Colinda Norte</label>
+                        <input type="text" name="manzanas[<?php echo e($index); ?>][colinda_norte]" class="form-control" value="<?php echo e($manzana['colinda_norte'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Colinda Sur</label>
+                        <input type="text" name="manzanas[<?php echo e($index); ?>][colinda_sur]" class="form-control" value="<?php echo e($manzana['colinda_sur'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Colinda Este</label>
+                        <input type="text" name="manzanas[<?php echo e($index); ?>][colinda_este]" class="form-control" value="<?php echo e($manzana['colinda_este'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Colinda Oeste</label>
+                        <input type="text" name="manzanas[<?php echo e($index); ?>][colinda_oeste]" class="form-control" value="<?php echo e($manzana['colinda_oeste'] ?? ''); ?>">
+                    </div>
+                </div>
+            </div>
+            <?php $index++; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </div>
+
 
     <div class="col-12 text-center mt-2">
-        <button type="button" class="btn btn-sm btn-primary"
-            onclick="agregarManzana(<?php echo e(isset($fracc) ? $fracc->id : "'create'"); ?>)">
+       <button type="button" class="btn btn-sm btn-primary"
+            onclick="agregarManzana('<?php echo e(isset($fracc) ? $fracc->id : 'nuevo'); ?>')">
             Agregar Manzana
         </button>
     </div>
@@ -79,6 +115,11 @@
     <textarea name="observaciones" id="observaciones<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-control" rows="3"> <?php echo e(isset($fracc)? $fracc->observaciones:''); ?> </textarea>
 </div>
 
-
+<?php $__env->startPush('scripts'); ?>
+    <script>
+        window.manzanaIndexes = window.manzanaIndexes || {};
+        window.manzanaIndexes["<?php echo e($fraccId); ?>"] = <?php echo e(count(old('manzanas', $fracc->manzanas ?? []))); ?>;
+    </script>
+<?php $__env->stopPush(); ?>
 
 <?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/formulario/fraccionamiento.blade.php ENDPATH**/ ?>
