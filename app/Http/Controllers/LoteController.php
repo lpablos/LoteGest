@@ -13,7 +13,12 @@ class LoteController extends Controller
      */
     public function index()
     {
-        //
+        
+        if (view()->exists('pages.gestion-lotes.index')) {
+            $lotes = [];
+            return view('pages.gestion-lotes.index', compact('lotes'));
+        }
+        return abort(404);
     }
 
     /**

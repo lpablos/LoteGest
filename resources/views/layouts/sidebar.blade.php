@@ -14,9 +14,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('proyectos.index') }}" key="t-default">Proyectos</a></li>
                         <li><a href="{{ route('fraccionamiento.index') }}" key="t-saas">Fraccionamientos</a></li>
-                        <li><a href="dashboard-crypto" key="t-crypto">@lang('translation.Crypto')</a></li>
-                        <li><a href="dashboard-blog" key="t-blog">@lang('translation.Blog')</a></li>
-                        <li><a href="dashboard-job">@lang('translation.Jobs')</a></li>
+                        <li><a href="{{ route('lote.index') }}" key="t-crypto">Lotes</a></li>
                     </ul>
                 </li>
                 <li>

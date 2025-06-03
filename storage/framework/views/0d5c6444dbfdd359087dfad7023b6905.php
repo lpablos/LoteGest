@@ -1,0 +1,1 @@
+<p>Pendiente formulario </p><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-lotes/formulario/proyecto.blade.php ENDPATH**/ ?>

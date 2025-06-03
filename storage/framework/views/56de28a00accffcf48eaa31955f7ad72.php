@@ -14,9 +14,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="<?php echo e(route('proyectos.index')); ?>" key="t-default">Proyectos</a></li>
                         <li><a href="<?php echo e(route('fraccionamiento.index')); ?>" key="t-saas">Fraccionamientos</a></li>
-                        <li><a href="dashboard-crypto" key="t-crypto"><?php echo app('translator')->get('translation.Crypto'); ?></a></li>
-                        <li><a href="dashboard-blog" key="t-blog"><?php echo app('translator')->get('translation.Blog'); ?></a></li>
-                        <li><a href="dashboard-job"><?php echo app('translator')->get('translation.Jobs'); ?></a></li>
+                        <li><a href="<?php echo e(route('lote.index')); ?>" key="t-crypto">Lotes</a></li>
                     </ul>
                 </li>
                 <li>
