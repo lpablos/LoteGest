@@ -138,6 +138,14 @@
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+
+            // ----------------------
+
+          
+
+
+
+
         });
     </script>
     <?php if(Session::has('success')): ?>
@@ -171,4 +179,50 @@
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
+
+<?php $__env->startPush('scripts'); ?>
+<script>
+     let manzanaIndexes = {};
+
+    function agregarManzana(fraccId) {
+        if (!(fraccId in manzanaIndexes)) {
+            manzanaIndexes[fraccId] = 0;
+        }
+
+        const index = manzanaIndexes[fraccId];
+        const container = document.getElementById(`manzanas-container-${fraccId}`);
+
+        const card = document.createElement('div');
+        card.classList.add('card', 'p-3', 'mb-3', 'border', 'rounded', 'position-relative');
+        card.innerHTML = `
+            <button type="button" class="btn-close position-absolute end-0 top-0 m-2" onclick="this.parentElement.remove()" aria-label="Eliminar"></button>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label"># Manzana</label>
+                    <input type="number" name="manzanas[${index}][num_lotes]" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Colinda Norte</label>
+                    <input type="text" name="manzanas[${index}][colinda_norte]" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Colinda Sur</label>
+                    <input type="text" name="manzanas[${index}][colinda_sur]" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Colinda Este</label>
+                    <input type="text" name="manzanas[${index}][colinda_este]" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Colinda Oeste</label>
+                    <input type="text" name="manzanas[${index}][colinda_oeste]" class="form-control">
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+        manzanaIndexes[fraccId]++;
+    }
+</script>
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/index.blade.php ENDPATH**/ ?>

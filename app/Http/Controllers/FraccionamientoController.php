@@ -57,15 +57,17 @@ class FraccionamientoController extends Controller
         ]);
          DB::beginTransaction();
         try {
-            if ($request->hasFile('imagen')) {
-                $file = $request->file('imagen');
-                $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
-                $path = $file->storeAs('fraccionamientos', $filename, 'public');
-                $validated['imagen'] = $path;
+            if (isset($validated['imagen'])) {
+                if ($request->hasFile('imagen')) {
+                    $file = $request->file('imagen');
+                    $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                    $path = $file->storeAs('fraccionamientos', $filename, 'public');
+                    $validated['imagen'] = $path;
+                } 
             }
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
-            $fraccionamiento->imagen = $validated['imagen'];
+            $fraccionamiento->imagen = $validated['imagen'] ?? null;
             $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->predio_urbano = Helper::capitalizeFirst($validated['predio_urbano']);
@@ -74,6 +76,16 @@ class FraccionamientoController extends Controller
             $fraccionamiento->proyecto_id = $validated['proyecto_id'];
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
+
+            foreach ($request->manzanas as $manzana) {
+                $fraccionamiento->manzanas()->create([
+                    'num_lotes' => $manzana['num_lotes'],
+                    'colinda_norte' => $manzana['colinda_norte'],
+                    'colinda_sur' => $manzana['colinda_sur'],
+                    'colinda_este' => $manzana['colinda_este'],
+                    'colinda_oeste' => $manzana['colinda_oeste'],
+                ]);
+            }
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue registrado');
             return redirect()->route('fraccionamiento.index');
