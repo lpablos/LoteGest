@@ -1,16 +1,25 @@
- <div class="row mb-3">
+<?php if(isset($fracc)): ?>
+    <div class="row mb-3">
+        <div class="col-md-12 text-center">
+            <img src="<?php echo e(asset('storage/' . $fracc->imagen)); ?>" alt="Imagen del fraccionamiento" width="700">
+            <p><?php echo e((isset($fracc) && $fracc->imagen !== ' ') ? $fracc->imagen : ''); ?></p>
+        </div>
+    </div>
+<?php endif; ?>
+
+<div class="row mb-3">
     <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>
         <input type="text" name="nombre" id="nombre" class="form-control" required value="<?php echo e(isset($fracc)? $fracc->nombre:''); ?>">
     </div>
 
     <div class="col-md-6">
-        <label for="imagen" class="form-label">Imagen <?php echo e((isset($fracc) && $fracc->imagen !== ' ') ? $fracc->imagen : ''); ?></label>
+        <label for="imagen" class="form-label">Imagen </label>
         <input type="file" name="imagen" id="imagen" class="form-control">
     </div>
-    </div>
+</div>
 
-    <div class="row mb-3">
+<div class="row mb-3">
     <div class="col-md-6">
         <label for="reponsable" class="form-label">Responsable</label>
         <input type="text" name="reponsable" id="reponsable" class="form-control" required value="<?php echo e(isset($fracc)? $fracc->reponsable:''); ?>">

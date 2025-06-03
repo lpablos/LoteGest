@@ -1,17 +1,11 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
-
     <div data-simplebar class="h-100">
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
-            
-
-                
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-pyramid"></i>
@@ -25,48 +19,38 @@
                         <li><a href="dashboard-job"><?php echo app('translator')->get('translation.Jobs'); ?></a></li>
                     </ul>
                 </li>
-                    <li>
-                        <a href="<?php echo e(route('cliente.index')); ?>" class="waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-chat"> Clientes </span>
-                        </a>
-                    </li>
-
-
-
-                 
-                    <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
-                    <li>
-                        <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-chat"> Personas </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-receipt"></i>
-                            <span key="t-dashboards"> Catálogos </span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="<?php echo e(route('estatus.index')); ?>" key="t-tui-calendar"> Estatus </a></li>
-                            <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
-                            <li><a href="<?php echo e(route('estatus-disponibilidad.index')); ?>" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
-                            <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="<?php echo e(route('configuracion.index')); ?>" class="waves-effect">
-                            <i class="bx bx-cog"></i>
-                            <span key="t-chat"> Configuración </span>
-                        </a>
-                    </li>
-                        
-                    
-                
-                
-
-                
-
+                <li>
+                    <a href="<?php echo e(route('cliente.index')); ?>" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Clientes </span>
+                    </a>
+                </li>
+                <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
+                <li>
+                    <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Personas </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-receipt"></i>
+                        <span key="t-dashboards"> Catálogos </span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="<?php echo e(route('estatus.index')); ?>" key="t-tui-calendar"> Estatus </a></li>
+                        <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
+                        <li><a href="<?php echo e(route('estatus-disponibilidad.index')); ?>" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
+                        <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('configuracion.index')); ?>" class="waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-chat"> Configuración </span>
+                    </a>
+                </li>
+            <div style="display: none">    
                 <li class="menu-title" key="t-backend"><?php echo app('translator')->get('translation.backend'); ?></li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -81,7 +65,6 @@
                         <li><a href="dashboard-job"><?php echo app('translator')->get('translation.Jobs'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                     <span class="badge rounded-pill bg-danger float-end" key="t-hot"><?php echo app('translator')->get('translation.hot'); ?></span>
@@ -136,9 +119,7 @@
                         <span key="t-yajra-datatable"><?php echo app('translator')->get('translation.yajra-datatable'); ?></span>
                     </a>
                 </li>
-
                 <li class="menu-title" key="t-apps"><?php echo app('translator')->get('translation.Apps'); ?></li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-calendar"></i>
@@ -149,21 +130,18 @@
                         <li><a href="calendar-full" key="t-full-calendar"><?php echo app('translator')->get('translation.Full_Calendar'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="chat" class="waves-effect">
                         <i class="bx bx-chat"></i>
                         <span key="t-chat"><?php echo app('translator')->get('translation.Chat'); ?></span>
                     </a>
                 </li>
-
                 <li>
                     <a href="apps-filemanager" class="waves-effect">
                         <i class="bx bx-file"></i>
                         <span key="t-file-manager"><?php echo app('translator')->get('translation.File_Manager'); ?></span>
                     </a>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-store"></i>
@@ -182,7 +160,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-bitcoin"></i>
@@ -198,7 +175,6 @@
                         <li><a href="crypto-ico-landing" key="t-ico"><?php echo app('translator')->get('translation.ICO_Landing'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-envelope"></i>
@@ -222,7 +198,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-receipt"></i>
@@ -234,7 +209,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-briefcase-alt-2"></i>
@@ -248,7 +222,6 @@
                         <li><a href="projects-create" key="t-create-new"><?php echo app('translator')->get('translation.Create_New'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-task"></i>
@@ -260,7 +233,6 @@
                         <li><a href="tasks-create" key="t-create-task"><?php echo app('translator')->get('translation.Create_Task'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-user-detail"></i>
@@ -272,7 +244,6 @@
                         <li><a href="contacts-profile" key="t-profile"><?php echo app('translator')->get('translation.Profile'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-detail"></i>
@@ -284,7 +255,6 @@
                         <li><a href="blog-details" key="t-blog-details"><?php echo app('translator')->get('translation.Blog_Details'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect has-arrow">
                              <i class="bx bx-briefcase-alt"></i>
@@ -305,9 +275,7 @@
                         </li>
                     </ul>
                 </li>
-
                 <li class="menu-title" key="t-pages"><?php echo app('translator')->get('translation.Pages'); ?></li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-user-circle"></i>
@@ -338,7 +306,6 @@
                                 key="t-two-step-verification-2"><?php echo app('translator')->get('translation.Two_step_verification'); ?> 2</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-file"></i>
@@ -355,9 +322,7 @@
                         <li><a href="pages-500" key="t-error-500"><?php echo app('translator')->get('translation.Error_500'); ?></a></li>
                     </ul>
                 </li>
-
                 <li class="menu-title" key="t-components"><?php echo app('translator')->get('translation.Components'); ?></li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-tone"></i>
@@ -390,7 +355,6 @@
                         <li><a href="ui-utilities"><?php echo app('translator')->get('translation.Utilities'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="bx bxs-eraser"></i>
@@ -411,7 +375,6 @@
                         <li><a href="form-mask" key="t-form-mask"><?php echo app('translator')->get('translation.Form_Mask'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-list-ul"></i>
@@ -426,7 +389,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-bar-chart-alt-2"></i>
@@ -443,7 +405,6 @@
                                 key="t-sparkline-charts"><?php echo app('translator')->get('translation.Sparkline_Charts'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-aperture"></i>
@@ -457,7 +418,6 @@
                         <li><a href="icons-fontawesome" key="t-font-awesome"><?php echo app('translator')->get('translation.Font_awesome'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-map"></i>
@@ -469,7 +429,6 @@
                         <li><a href="maps-leaflet" key="t-l-maps"><?php echo app('translator')->get('translation.Leaflet_Maps'); ?></a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-share-alt"></i>
@@ -489,11 +448,9 @@
                         </li>
                     </ul>
                 </li>
-
+            </div>
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
-<!-- Left Sidebar End -->
 <?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/layouts/sidebar.blade.php ENDPATH**/ ?>
