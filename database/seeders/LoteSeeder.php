@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Lote;
+use App\Models\Manzana;
+use App\Models\CatEstatus;
+use Illuminate\Support\Str;
 
 class LoteSeeder extends Seeder
 {
@@ -13,118 +16,31 @@ class LoteSeeder extends Seeder
      */
     public function run(): void
     {
-         // Lotes para fraccionamiento_id = 1 (Palmas I)
-        Lote::create([
-            'fraccionamiento_id' => 1,
-            'numero_lote' => 'A1',
-            'superficie_m2' => 200,
-            'frente_m' => 10,
-            'fondo_m' => 20,
-            'orientacion' => 'Norte',
-            'disponible' => true,
-            'precio_m2' => 1200,
-            'precio_total' => 240000,
-            'uso' => 'Habitacional',
-            'estado_legal' => 'Escriturado',
-        ]);
+        // Asegúrate de tener manzanas y estatus existentes
+        $manzanas = Manzana::all();
+        $estatuses = CatEstatus::all();
 
-        Lote::create([
-            'fraccionamiento_id' => 1,
-            'numero_lote' => 'A2',
-            'superficie_m2' => 180,
-            'frente_m' => 9,
-            'fondo_m' => 20,
-            'orientacion' => 'Sur',
-            'disponible' => true,
-            'precio_m2' => 1200,
-            'precio_total' => 216000,
-            'uso' => 'Habitacional',
-            'estado_legal' => 'En trámite',
-        ]);
+        if ($manzanas->isEmpty() || $estatuses->isEmpty()) {
+            $this->command->warn('No hay manzanas o estatus en la base de datos. Seeder cancelado.');
+            return;
+        }
 
-        Lote::create([
-            'fraccionamiento_id' => 1,
-            'numero_lote' => 'A3',
-            'superficie_m2' => 220,
-            'frente_m' => 11,
-            'fondo_m' => 20,
-            'orientacion' => 'Este',
-            'disponible' => false,
-            'precio_m2' => 1150,
-            'precio_total' => 253000,
-            'uso' => 'Habitacional',
-            'estado_legal' => 'Reservado',
-        ]);
+        foreach ($manzanas as $manzana) {
+            $cantidadLotes = rand(5, 15); // Crea entre 5 y 15 lotes por manzana
 
-        Lote::create([
-            'fraccionamiento_id' => 1,
-            'numero_lote' => 'A4',
-            'superficie_m2' => 210,
-            'frente_m' => 10.5,
-            'fondo_m' => 20,
-            'orientacion' => 'Oeste',
-            'disponible' => true,
-            'precio_m2' => 1180,
-            'precio_total' => 247800,
-            'uso' => 'Habitacional',
-            'estado_legal' => 'Escriturado',
-        ]);
-
-        // Lotes para fraccionamiento_id = 2 (Industrial Norte A)
-        Lote::create([
-            'fraccionamiento_id' => 2,
-            'numero_lote' => 'B5',
-            'superficie_m2' => 1500,
-            'frente_m' => 30,
-            'fondo_m' => 50,
-            'orientacion' => 'Este',
-            'disponible' => false,
-            'precio_m2' => 900,
-            'precio_total' => 1350000,
-            'uso' => 'Comercial',
-            'estado_legal' => 'Reservado',
-        ]);
-
-        Lote::create([
-            'fraccionamiento_id' => 2,
-            'numero_lote' => 'B6',
-            'superficie_m2' => 1600,
-            'frente_m' => 32,
-            'fondo_m' => 50,
-            'orientacion' => 'Norte',
-            'disponible' => true,
-            'precio_m2' => 950,
-            'precio_total' => 1520000,
-            'uso' => 'Comercial',
-            'estado_legal' => 'Escriturado',
-        ]);
-
-        Lote::create([
-            'fraccionamiento_id' => 2,
-            'numero_lote' => 'B7',
-            'superficie_m2' => 1400,
-            'frente_m' => 28,
-            'fondo_m' => 50,
-            'orientacion' => 'Sur',
-            'disponible' => true,
-            'precio_m2' => 910,
-            'precio_total' => 1274000,
-            'uso' => 'Comercial',
-            'estado_legal' => 'En trámite',
-        ]);
-
-        Lote::create([
-            'fraccionamiento_id' => 2,
-            'numero_lote' => 'B8',
-            'superficie_m2' => 1700,
-            'frente_m' => 34,
-            'fondo_m' => 50,
-            'orientacion' => 'Oeste',
-            'disponible' => false,
-            'precio_m2' => 930,
-            'precio_total' => 1581000,
-            'uso' => 'Comercial',
-            'estado_legal' => 'Reservado',
-        ]);
+            for ($i = 0; $i < $cantidadLotes; $i++) {
+                Lote::create([
+                    'frente_m' => rand(5, 20) + rand(0, 99) / 100,
+                    'fondo_m' => rand(10, 30) + rand(0, 99) / 100,
+                    'superficie_m2' => rand(100, 300) + rand(0, 99) / 100,
+                    'precio_contado' => rand(50000, 100000),
+                    'precio_credito' => rand(110000, 150000),
+                    'plano' => 'plano_' . Str::random(5) . '.pdf',
+                    'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ' . $manzana->id,
+                    'manzana_id' => $manzana->id,
+                    'cat_estatus_id' => $estatuses->random()->id,
+                ]);
+            }
+        }
     }
 }

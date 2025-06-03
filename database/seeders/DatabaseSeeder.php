@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CatEstatusDisponibilidadTableSeeder::class,
             FraccionamientoSeeder::class,
             ManzaSeeder::class,
+            LoteSeeder::class,
         ]);
     }
 }

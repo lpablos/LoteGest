@@ -12,22 +12,24 @@ class Lote extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'fraccionamiento_id',
-        'numero_lote',
-        'superficie_m2',
         'frente_m',
         'fondo_m',
-        'orientacion',
-        'disponible',
-        'precio_m2',
-        'precio_total',
-        'uso',
-        'estado_legal',
+        'superficie_m2',
+        'precio_contado',
+        'precio_credito',
+        'plano',
         'observaciones',
+        'manzana_id',
+        'cat_estatus_id',
     ];
 
-    public function fraccionamiento()
+    public function manzana()
     {
-        return $this->belongsTo(Fraccionamiento::class);
+        return $this->belongsTo(Manzana::class,'manzana_id','id');
+    }
+
+    public function estatu()
+    {
+        return $this->belongsTo(CatEstatus::class,'cat_estatus_id','id');
     }
 }

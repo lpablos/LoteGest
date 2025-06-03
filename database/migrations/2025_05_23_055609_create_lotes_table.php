@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fraccionamiento_id')->constrained('fraccionamientos')->cascadeOnDelete();
-            $table->string('numero_lote');
-            $table->decimal('superficie_m2', 10, 2);
-            $table->decimal('frente_m', 8, 2);
-            $table->decimal('fondo_m', 8, 2);
-            $table->string('orientacion')->nullable();
-            $table->boolean('disponible')->default(true);
-            $table->decimal('precio_m2', 10, 2)->nullable();
-            $table->decimal('precio_total', 12, 2)->nullable();
-            $table->enum('uso', ['Habitacional', 'Comercial', 'Mixto', 'Otro'])->default('Habitacional');
-            $table->enum('estado_legal', ['Escriturado', 'En proceso', 'Reservado','En trámite'])->default('En proceso');
+            $table->decimal('frente_m', 8, 2)->nullable();
+            $table->decimal('fondo_m', 8, 2)->nullable();
+            $table->decimal('superficie_m2', 10, 2)->nullable();
+            $table->decimal('precio_contado', 12, 2)->nullable();
+            $table->decimal('precio_credito', 12, 2)->nullable();
+            $table->string('plano')->nullable();
             $table->text('observaciones')->nullable();
+            $table->unsignedBigInteger('manzana_id');
+            $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
+            $table->unsignedBigInteger('cat_estatus_id');
+            $table->foreign('cat_estatus_id')->references('id')->on('cat_estatus')->onDelete('restrict');
             $table->softDeletes(); 
             $table->timestamps();
         });
