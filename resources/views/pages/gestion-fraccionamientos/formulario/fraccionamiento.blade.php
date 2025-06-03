@@ -5,7 +5,7 @@
     </div>
 
     <div class="col-md-6">
-        <label for="imagen" class="form-label">Imagen</label>
+        <label for="imagen" class="form-label">Imagen {{ (isset($fracc) && $fracc->imagen !== ' ') ? $fracc->imagen : '' }}</label>
         <input type="file" name="imagen" id="imagen" class="form-control">
     </div>
     </div>

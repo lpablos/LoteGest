@@ -114,33 +114,73 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        
         $validated = $request->validate([
-            'proyecto' => ['required', 'exists:proyectos,id'],
-            'nombre' => ['required', 'string', 'max:255'],
-            'superficie_m2' => ['required', 'numeric', 'min:0'],
-            'cantidad_lotes' => ['required', 'integer', 'min:0'],
-            'uso_predominante' => ['required', 'in:Habitacional,Comercial,Mixto'],
-            'etapa' => ['nullable', 'string', 'max:255'],
-            'servicios_disponibles' => ['nullable', 'array'],
-            'servicios_disponibles.*' => ['string', 'max:100'],
-            'observaciones' => ['nullable', 'string'],
+            'nombre'          => 'required|string|max:255',
+            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'reponsable'      => 'nullable|string|max:255', 
+            'propietaria'     => 'nullable|string|max:255',
+            'predio_urbano'   => 'nullable|string|max:255',
+            'superficie'      => 'nullable|numeric|min:0',
+            'ubicacion'       => 'nullable|string|max:255',
+            'observaciones'   => 'nullable|string',
+            'proyecto_id'     => 'required|exists:proyectos,id',
         ]);
+         DB::beginTransaction();
         try {
+            if ($request->hasFile('imagen')) {
+                $file = $request->file('imagen');
+                $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                $path = $file->storeAs('fraccionamientos', $filename, 'public');
+                $validated['imagen'] = $path;
+            }
             $fraccionamiento = Fraccionamiento::find($id);
-            $fraccionamiento->proyecto_id = $validated['proyecto'];
-            $fraccionamiento->nombre = $validated['nombre'];
-            $fraccionamiento->superficie_m2 = $validated['superficie_m2'];
-            $fraccionamiento->cantidad_lotes = $validated['cantidad_lotes'];
-            $fraccionamiento->uso_predominante = $validated['uso_predominante'];
-            $fraccionamiento->etapa = $validated['etapa'];
-            $fraccionamiento->servicios_disponibles = $request->input('servicios_disponibles');
-            $fraccionamiento->observaciones = $validated['observaciones'];
+            $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
+            $fraccionamiento->imagen = $validated['imagen'];
+            $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
+            $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
+            $fraccionamiento->predio_urbano = Helper::capitalizeFirst($validated['predio_urbano']);
+            $fraccionamiento->superficie = $validated['superficie'];
+            $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
+            $fraccionamiento->proyecto_id = $validated['proyecto_id'];
+            $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
-            return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', 'Se actualizo correctamente el fraccionamiento');
+            DB::commit();
+            Session::flash('success', 'Fraccionamiento fue registrado');
+            return redirect()->route('fraccionamiento.index');
         } catch (\Throwable $th) {
-            Log::error('Error al guardar fraccionamiento: ' . $th->getMessage());
-            return redirect()->back()->with('error', 'No se pudo guardar el fraccionamiento. Intenta más tarde.');
+            Log::error('Error guardar Fraccionamiento: ' . $th->getMessage());
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
         }
+   
+        // $validated = $request->validate([
+        //     'proyecto' => ['required', 'exists:proyectos,id'],
+        //     'nombre' => ['required', 'string', 'max:255'],
+        //     'superficie_m2' => ['required', 'numeric', 'min:0'],
+        //     'cantidad_lotes' => ['required', 'integer', 'min:0'],
+        //     'uso_predominante' => ['required', 'in:Habitacional,Comercial,Mixto'],
+        //     'etapa' => ['nullable', 'string', 'max:255'],
+        //     'servicios_disponibles' => ['nullable', 'array'],
+        //     'servicios_disponibles.*' => ['string', 'max:100'],
+        //     'observaciones' => ['nullable', 'string'],
+        // ]);
+        // try {
+        //     $fraccionamiento = Fraccionamiento::find($id);
+        //     $fraccionamiento->proyecto_id = $validated['proyecto'];
+        //     $fraccionamiento->nombre = $validated['nombre'];
+        //     $fraccionamiento->superficie_m2 = $validated['superficie_m2'];
+        //     $fraccionamiento->cantidad_lotes = $validated['cantidad_lotes'];
+        //     $fraccionamiento->uso_predominante = $validated['uso_predominante'];
+        //     $fraccionamiento->etapa = $validated['etapa'];
+        //     $fraccionamiento->servicios_disponibles = $request->input('servicios_disponibles');
+        //     $fraccionamiento->observaciones = $validated['observaciones'];
+        //     $fraccionamiento->save();
+        //     return redirect()->route('proyecto.fraccionamientos',['proyecto' =>$validated['proyecto']])->with('success', 'Se actualizo correctamente el fraccionamiento');
+        // } catch (\Throwable $th) {
+        //     Log::error('Error al guardar fraccionamiento: ' . $th->getMessage());
+        //     return redirect()->back()->with('error', 'No se pudo guardar el fraccionamiento. Intenta más tarde.');
+        // }
     }
 
     /**
