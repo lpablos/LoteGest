@@ -12,7 +12,7 @@
     <?php if(isset($lote)): ?>
         <div class="col-md-4">
             <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-            <input type="number" step="0.01" name="superficie_m2" id="superficie_m2" class="form-control" required>
+            <input type="number" step="0.01" name="superficie_m2" id="superficie_m2" class="form-control">
         </div>        
     <?php endif; ?>
 

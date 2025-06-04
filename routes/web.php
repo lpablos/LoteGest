@@ -45,12 +45,6 @@ Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoCont
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
 
 
-
-// Route::get('proyecto/{proyecto}/fraccionamientos', [App\Http\Controllers\ProyectoController::class, 'fraccionamientos'])->name('proyecto.fraccionamientos');//Listdo de fraccionamientos
-// Route::get('proyecto-fraccionamiento/{proyecto}/create', [App\Http\Controllers\FraccionamientoController::class, 'createFraccionamiento'])->name('proyecto.fraccionamientos.create');
-// Route::get('proyecto-fraccionamiento/{fraccionamiento}/lote', [App\Http\Controllers\FraccionamientoController::class, 'lotes'])->name('proyecto.fraccionamientos.lotes'); // listado de lotes
-// Route::get('fraccionamiento-lote/{fraccionamiento}/create', [App\Http\Controllers\LoteController::class, 'createLote'])->name('fraccionamiento.lote.create');
-
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 

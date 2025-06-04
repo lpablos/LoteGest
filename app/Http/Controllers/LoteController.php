@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Lote;
 use App\Models\Fraccionamiento;
 use App\Models\CatEstatus;
-
 use Illuminate\Support\Facades\Log;
+use DB, Session;
+use App\Helpers\Helper;
 
 class LoteController extends Controller
 {
@@ -45,38 +46,40 @@ class LoteController extends Controller
     {
         
         $validated = $request->validate([
-            'fraccionamiento_id'=> ['required', 'string', 'max:255'],
-            'numero_lote' => ['required', 'string', 'max:255'],
-            'superficie_m2' => ['required', 'numeric', 'min:0'],
-            'frente_m' => ['required', 'numeric', 'min:0'],
-            'fondo_m' => ['required', 'numeric', 'min:0'],
-            'orientacion' => ['nullable', 'string', 'max:255'],
-            'disponible' => ['nullable', 'boolean'],
-            'precio_m2' => ['nullable', 'numeric', 'min:0'],
-            'precio_total' => ['nullable', 'numeric', 'min:0'],
-            'uso' => ['required', 'in:Habitacional,Comercial,Mixto,Otro'],
-            'estado_legal' => ['required', 'in:Escriturado,En proceso,Reservado,En trámite'],
-            'observaciones' => ['nullable', 'string'],
+            'frente_m'         => ['nullable', 'numeric', 'min:0'],
+            'fondo_m'          => ['nullable', 'numeric', 'min:0'],
+            'precio_contado'   => ['nullable', 'numeric', 'min:0'],
+            'precio_credito'   => ['nullable', 'numeric', 'min:0'],
+            'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'observaciones'    => ['nullable', 'string'],
+            'manzana_id'       => ['required', 'exists:manzanas,id'],
+            'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
         ]);
+        DB::beginTransaction();
         try {
+            if ($request->hasFile('plano')) {
+                $file = $request->file('plano');
+                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                $path = $file->storeAs('plano', $filename, 'public');
+                $validated['plano'] = $path;
+            }
             $lote = new Lote();
-            $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
-            $lote->numero_lote = $validated['numero_lote'];
-            $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->frente_m = $validated['frente_m'];
             $lote->fondo_m = $validated['fondo_m'];
-            $lote->orientacion = $validated['orientacion'];
-            $lote->disponible = $validated['disponible'] ?? false;
-            $lote->precio_m2 = $validated['precio_m2'];
-            $lote->precio_total = $validated['precio_total'];
-            $lote->uso = $validated['uso'];
-            $lote->estado_legal = $validated['estado_legal'];
+            $lote->superficie_m2 = $validated['frente_m'] * $validated['fondo_m'];
+            $lote->precio_contado = $validated['precio_contado'];
+            $lote->precio_credito = $validated['precio_credito'];
+            $lote->plano = $validated['plano'];
             $lote->observaciones = $validated['observaciones'];
-            $lote->save();
-            return redirect()->route('proyecto.fraccionamientos.lotes',['fraccionamiento' =>$validated['fraccionamiento_id']])->with('success', 'Se registro correctamente el lote '.$validated['numero_lote']);
+            $lote->manzana_id = $validated['manzana_id'];
+            $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            DB::commit();
+            Session::flash('success', 'Lote fue registrado');
+            return back();
         } catch (\Throwable $th) {
-            Log::error('Error al guardar lote: ' . $th->getMessage());
-            return redirect()->back()->with('error', 'No se pudo guardar el lote. Intenta más tarde.');
+            Log::error('Error guardar el lote: ' . $th->getMessage());
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
         }
     }
 
