@@ -29,52 +29,93 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end">
-                                <button type="button" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#add_proyecto"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2">
-                                        <i class="mdi mdi-plus me-1"></i> Agregar
-                                </button>
+                        @if (isset($fracc))
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+                                    <button type="button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#add_proyecto"
+                                        class="btn btn-success btn-rounded waves-effect waves-light mb-2">
+                                            <i class="mdi mdi-plus me-1"></i> Agregar
+                                    </button>
+                                </div>
                             </div>
+                        @endif
+                    </div>
+                    
+                    @if (isset($fracc))
+                        @include('pages.gestion-lotes.modal.add')
+                    @endif
+
+                   <div class="container d-flex justify-content-center mt-5">
+                        <div class="col-md-6">
+                            <form method="GET" action="{{ route('lote.index') }}">
+                                <div class="mb-3">
+                                    <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
+                                    <select class="form-select" id="fraccionamiento" name="identy" required>
+                                        <option value="" disabled {{ old('identy', $identy ?? '') == '' ? 'selected' : '' }}>Selecciona un fraccionamiento</option>
+                                        @foreach ($fraccionamientos as $fraccc)
+                                            <option value="{{ $fraccc->id }}" {{ (old('identy', $identy ?? '') == $fraccc->id) ? 'selected' : '' }}>
+                                                {{ $fraccc->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    @include('pages.gestion-lotes.modal.add')
+                           
+                           
+
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
-                                <th> Fecha Inicio </th>
-                                <th> Responsable </th>
-                                <th> Clave </th>
+                                <th> Frente (m) </th>
+                                <th> Fondo (m) </th>
+                                <th> Superficie (m2) </th>
+                                <th> Precio Contado </th>
+                                <th> Precio Credito </th>
+                                <th> Manzana </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                              @foreach ($lotes as $lote)
-                                    <tr>
-                                        <td>{{$lote->nombre}}</td>
-                                        <td> {{ Carbon\Carbon::parse($lote->fecha_inicio)->format('d-m-Y') }} </td>
-                                        <td>{{$lote->responsable_proyecto}}</td>
-                                        <td>{{$lote->estatus->nombre}}</td>      
-                                        <td>
-                                            <div class="dropdown">
-                                                <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-start">
-                                                    <li>
-                                                        <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
-                                                            <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td> 
-                                        @include('pages.gestion-lotes.modal.edit')                             
-                                    </tr>
-                                @endforeach           
+                            @if ($fracc && $fracc->manzanas->isNotEmpty())
+                                @foreach ($fracc->manzanas as $manzana)
+                                
+                                    @foreach ($manzana->lotes as $lote)
+                                        <tr>
+                                            <td>{{ $lote->frente_m }}</td>
+                                            <td>{{ $lote->fondo_m }} </td>
+                                            <td>{{ $lote->superficie_m2 }}</td>
+                                            <td>{{ $lote->precio_contado }}</td>      
+                                            <td>{{ $lote->precio_credito }}</td>   
+                                            <td>{{ $lote->manzana->num_lotes }}</td>      
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-start">
+                                                        <li>
+                                                            <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
+                                                                <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td> 
+                                            @if (isset($fracc))
+                                                @include('pages.gestion-lotes.modal.edit')                             
+                                            @endif
+                                        </tr>                                       
+                                    @endforeach 
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

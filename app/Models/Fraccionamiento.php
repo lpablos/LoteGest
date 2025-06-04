@@ -31,4 +31,5 @@ class Fraccionamiento extends Model
     {
         return $this->hasMany(Manzana::class);
     }
+    
 }

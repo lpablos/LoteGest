@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lote;
+use App\Models\Fraccionamiento;
+use App\Models\CatEstatus;
+
 use Illuminate\Support\Facades\Log;
 
 class LoteController extends Controller
@@ -11,12 +14,18 @@ class LoteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         
         if (view()->exists('pages.gestion-lotes.index')) {
-            $lotes = [];
-            return view('pages.gestion-lotes.index', compact('lotes'));
+            $identy = $request->input('identy'); 
+            $fraccionamientos = Fraccionamiento::orderBy('nombre', 'desc')->get();
+            $fracc = $identy
+                ? $fraccionamientos->firstWhere('id', $identy)
+                : null;
+            $estatus = CatEstatus::all();
+
+            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus'));
         }
         return abort(404);
     }

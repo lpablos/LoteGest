@@ -9,12 +9,12 @@
         <label for="fondo_m" class="form-label">Fondo (m)</label>
         <input type="number" step="0.01" name="fondo_m" id="fondo_m" class="form-control" required>
     </div>
-    @if (isset($lote))
+    <?php if(isset($lote)): ?>
         <div class="col-md-4">
             <label for="superficie_m2" class="form-label">Superficie (m²)</label>
             <input type="number" step="0.01" name="superficie_m2" id="superficie_m2" class="form-control" required>
         </div>        
-    @endif
+    <?php endif; ?>
 
     <div class="col-md-6">
         <label for="precio_contado" class="form-label">Precio Contado</label>
@@ -35,9 +35,9 @@
         <label for="manzana_id" class="form-label">Manzana</label>
         <select name="manzana_id" id="manzana_id" class="form-select" required>
             <option value="" selected disabled>Selecciona una manzana</option>
-            @foreach($fracc->manzanas as $manzana)
-                <option value="{{ $manzana->id }}">Manzana {{ $manzana->num_lotes }}</option>
-            @endforeach
+            <?php $__currentLoopData = $fracc->manzanas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $manzana): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($manzana->id); ?>">Manzana <?php echo e($manzana->num_lotes); ?></option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>
 
@@ -45,9 +45,9 @@
         <label for="cat_estatus_id" class="form-label">Estatus</label>
         <select name="cat_estatus_id" id="cat_estatus_id" class="form-select" required>
             <option value="" selected disabled>Selecciona un estatus</option>
-            @foreach($estatus as $estatusItem)
-                <option value="{{ $estatusItem->id }}">{{ $estatusItem->nombre }}</option>
-            @endforeach
+            <?php $__currentLoopData = $estatus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($estatusItem->id); ?>"><?php echo e($estatusItem->nombre); ?></option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>
 
@@ -55,4 +55,4 @@
         <label for="observaciones" class="form-label">Observaciones</label>
         <textarea name="observaciones" id="observaciones" rows="3" class="form-control"></textarea>
     </div>
-</div>
+</div><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-lotes/formulario/proyecto.blade.php ENDPATH**/ ?>
