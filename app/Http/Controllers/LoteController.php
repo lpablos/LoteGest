@@ -73,6 +73,7 @@ class LoteController extends Controller
             $lote->observaciones = $validated['observaciones'];
             $lote->manzana_id = $validated['manzana_id'];
             $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            $lote->save();
             DB::commit();
             Session::flash('success', 'Lote fue registrado');
             return back();
@@ -110,39 +111,42 @@ class LoteController extends Controller
     public function update(Request $request, string $id)
     {
         
-        $validated = $request->validate([
-            'fraccionamiento_id'=> ['required', 'string', 'max:255'],
-            'numero_lote' => ['required', 'string', 'max:255'],
-            'superficie_m2' => ['required', 'numeric', 'min:0'],
-            'frente_m' => ['required', 'numeric', 'min:0'],
-            'fondo_m' => ['required', 'numeric', 'min:0'],
-            'orientacion' => ['nullable', 'string', 'max:255'],
-            'disponible' => ['nullable', 'boolean'],
-            'precio_m2' => ['nullable', 'numeric', 'min:0'],
-            'precio_total' => ['nullable', 'numeric', 'min:0'],
-            'uso' => ['required', 'in:Habitacional,Comercial,Mixto,Otro'],
-            'estado_legal' => ['required', 'in:Escriturado,En proceso,Reservado,En trámite'],
-            'observaciones' => ['nullable', 'string'],
-        ]);      
-        
+       $validated = $request->validate([
+            'frente_m'         => ['nullable', 'numeric', 'min:0'],
+            'fondo_m'          => ['nullable', 'numeric', 'min:0'],
+            'precio_contado'   => ['nullable', 'numeric', 'min:0'],
+            'precio_credito'   => ['nullable', 'numeric', 'min:0'],
+            'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'observaciones'    => ['nullable', 'string'],
+            'manzana_id'       => ['required', 'exists:manzanas,id'],
+            'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
+        ]);
+        DB::beginTransaction();
         try {
+            if ($request->hasFile('plano')) {
+                $file = $request->file('plano');
+                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                $path = $file->storeAs('plano', $filename, 'public');
+                $validated['plano'] = $path ?? null;
+            }
             $lote = Lote::find($id);
-            $lote->numero_lote = $validated['numero_lote'];
-            $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->frente_m = $validated['frente_m'];
             $lote->fondo_m = $validated['fondo_m'];
-            $lote->orientacion = $validated['orientacion'];
-            $lote->disponible = $request->has('disponible');
-            $lote->precio_m2 = $validated['precio_m2'];
-            $lote->precio_total = $validated['precio_total'];
-            $lote->uso = $validated['uso'];
-            $lote->estado_legal = $validated['estado_legal'];
+            $lote->superficie_m2 = $validated['frente_m'] * $validated['fondo_m'];
+            $lote->precio_contado = $validated['precio_contado'];
+            $lote->precio_credito = $validated['precio_credito'];
+            $lote->plano = $validated['plano'] ?? null;
             $lote->observaciones = $validated['observaciones'];
+            $lote->manzana_id = $validated['manzana_id'];
+            $lote->cat_estatus_id = $validated['cat_estatus_id'];
             $lote->save();
-            return redirect()->route('proyecto.fraccionamientos.lotes',['fraccionamiento' =>$validated['fraccionamiento_id']])->with('success', 'Se actualizado correctamente el lote '.$lote->numero_lote);
+            DB::commit();
+            Session::flash('success', 'Lote fue actualizado');
+            return back();
         } catch (\Throwable $th) {
-            Log::error('Error al guardar lote: ' . $th->getMessage());
-            return redirect()->back()->with('error', 'No se pudo guardar el lote. Intenta más tarde.');
+            Log::error('Error actualizar el lote: ' . $th->getMessage());
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
         }
     }
 

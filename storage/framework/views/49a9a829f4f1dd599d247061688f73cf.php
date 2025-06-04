@@ -28,7 +28,7 @@
 
     <div class="col-md-6">
         <label for="plano" class="form-label">Plano (Archivo)</label>
-        <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value="<?php echo e(isset($lote)? $lote->plano : ''); ?>" class="form-control">
+        <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value="<?php echo e(isset($lote)? $lote->plano : null); ?>" class="form-control">
     </div>
 
     <div class="col-md-6">
