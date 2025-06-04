@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form method="POST" action="{{ route('lote.store') }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
-                    @include('pages.gestion-lotes.formulario.proyecto')
+                    @include('pages.gestion-lotes.formulario.lote')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>

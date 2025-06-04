@@ -95,22 +95,22 @@
                                             <td>{{ $lote->precio_contado }}</td>      
                                             <td>{{ $lote->precio_credito }}</td>   
                                             <td>{{ $lote->manzana->num_lotes }}</td>      
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu dropdown-menu-start">
-                                                        <li>
-                                                            <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
-                                                                <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td> 
-                                            @if (isset($fracc))
-                                                @include('pages.gestion-lotes.modal.edit')                             
+                                           <td>
+                                            <div class="dropdown">
+                                                <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-start">
+                                                    <li>
+                                                        <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
+                                                            <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td> 
+                                        @if (isset($fracc))
+                                                @include('pages.gestion-lotes.modal.edit')                                    
                                             @endif
                                         </tr>                                       
                                     @endforeach 

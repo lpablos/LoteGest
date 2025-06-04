@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form method="POST" action="<?php echo e(route('lote.store')); ?>" autocomplete="off" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
-                    <?php echo $__env->make('pages.gestion-lotes.formulario.proyecto', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <?php echo $__env->make('pages.gestion-lotes.formulario.lote', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>

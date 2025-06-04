@@ -2,14 +2,14 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editSede"> Editar Lote</h5>
+                <h5 class="modal-title" id="editSede"> Editar Proyecto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('proyectos.update', ['proyecto' => $lote->id]) }}" autocomplete="off" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('lote.update', ['lote' => $lote->id]) }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    @include('pages.gestion-lotes.formulario.proyecto')
+                    @include('pages.gestion-lotes.formulario.lote')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
