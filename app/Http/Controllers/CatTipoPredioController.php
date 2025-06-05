@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB, Session;
 use App\Models\CatTipoPredio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +45,7 @@ class CatTipoPredioController extends Controller
         $validator = Validator::make($input, $rules, $messages);
 
         if ($validator->fails()) {
-            Session::flash('error', 'El nombre del perfil es obligatorio');
+            Session::flash('error', 'El nombre es obligatorio');
             return redirect()->route('tipo-de-predios.index');
         }
 
@@ -53,7 +54,7 @@ class CatTipoPredioController extends Controller
         try {
 
             $catTipoPredio = new CatTipoPredio();
-            $catTipoPredio->nombre = $nombre = \Helper::capitalizeFirst($request->nombre, "1");
+            $catTipoPredio->nombre = \Helper::capitalizeFirst($request->nombre, "1");
             $catTipoPredio->save();
 
             DB::commit();
@@ -86,9 +87,45 @@ class CatTipoPredioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CatTipoPredio $catTipoPredio)
+    public function update(Request $request, $catTipoPredio)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+        ];
+
+        $messages = [
+            'nombre.required'   => 'El nombre es obligatorio',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'El nombre es obligatorio');
+            return redirect()->route('tipo-de-predios.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $catTipoPredio = CatTipoPredio::find($catTipoPredio);
+            if ($catTipoPredio) {
+                $catTipoPredio->nombre = \Helper::capitalizeFirst($request->nombre, "1");
+                $catTipoPredio->save();
+    
+                DB::commit();
+                Session::flash('success', '¡Tipo de predio registrado!');
+            } else {
+                Session::flash('error', '¡El predio no está registrado!');
+            }
+            return redirect()->route('tipo-de-predios.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**

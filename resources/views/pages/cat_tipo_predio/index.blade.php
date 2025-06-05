@@ -25,7 +25,7 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Tpo de predios </h2>
+                                    <h2> Tipo de predios </h2>
                                 </div>
                             </div>
                         </div>
@@ -63,11 +63,11 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editSede"> Editar Estatus del fraccionamiento </h5>
+                                                <h5 class="modal-title" id="editSede"> Editar tipo de predio </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" action="{{ route('estatus-proyectos.update', ['estatus_proyecto' => $tipoDePredio->id]) }}" autocomplete="off">
+                                                <form method="POST" action="{{ route('tipo-de-predios.update', ['tipo_de_predio' => $tipoDePredio->id]) }}" autocomplete="off">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="row col-md-12">
