@@ -33,8 +33,13 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="predio_urbano" class="form-label">Predio Urbano</label>
-        <input type="text" name="predio_urbano" id="predio_urbano<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-control" value="<?php echo e(isset($fracc)? $fracc->predio_urbano:''); ?>">
+        <label for="predio_urbano" class="form-label">Tipo de Predio</label>
+        <select name="" id=""  class="form-select">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <!-- <input type="text" name="predio_urbano" id="predio_urbano<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-control" value="<?php echo e(isset($fracc)? $fracc->predio_urbano:''); ?>"> -->
     </div>
 
     <div class="col-md-6">

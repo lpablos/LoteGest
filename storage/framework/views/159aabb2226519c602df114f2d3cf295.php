@@ -1,4 +1,3 @@
-<?php echo e(isset($proy)); ?>
 
 <div class="row mb-3">
 
