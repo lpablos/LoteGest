@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cat_estatus_disponibilidad', function (Blueprint $table) {
+        Schema::create('cat_tipo_predios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('color');
-            $table->string('descripcion');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cat_estatus_disponibilidad');
+        Schema::dropIfExists('cat_tipo_predios');
     }
 };

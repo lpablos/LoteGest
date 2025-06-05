@@ -47,7 +47,7 @@
                                 <th> Nombre </th>
                                 <th> Fecha Inicio </th>
                                 <th> Responsable </th>
-                                <th> Clave </th>
+                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>

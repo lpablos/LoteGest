@@ -20,8 +20,8 @@
 
     <div class="col-md-6">
         <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto *</label>
-        <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required>
-            <option value="">-- Selecciona --</option>
+        <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required style="cursor: pointer;">
+            <option value=""> Selecciona una opción </option>
             @foreach($estatus as $item)
                 <option value="{{ $item->id }}"
                     {{ isset($proy) && $proy->estatus_proyecto_id == $item->id ? 'selected' : '' }}>

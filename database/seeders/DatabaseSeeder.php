@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             FraccionamientoSeeder::class,
             ManzaSeeder::class,
             LoteSeeder::class,
+            CatTipoPredioTableSeeder::class
         ]);
     }
 }
