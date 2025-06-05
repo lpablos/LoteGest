@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CatTipoPredio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CatTipoPredioController extends Controller
 {
@@ -12,7 +13,9 @@ class CatTipoPredioController extends Controller
      */
     public function index()
     {
-        //
+        $tipoDePredios = CatTipoPredio::all();
+
+        return view('pages.cat_tipo_predio.index', compact('tipoDePredios'));
     }
 
     /**
@@ -28,7 +31,40 @@ class CatTipoPredioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+        ];
+
+        $messages = [
+            'nombre.required'   => 'El nombre es obligatorio',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'El nombre del perfil es obligatorio');
+            return redirect()->route('tipo-de-predios.index');
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $catTipoPredio = new CatTipoPredio();
+            $catTipoPredio->nombre = $nombre = \Helper::capitalizeFirst($request->nombre, "1");
+            $catTipoPredio->save();
+
+            DB::commit();
+            Session::flash('success', '¡Tipo de predio registrado!');
+
+            return redirect()->route('tipo-de-predios.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**

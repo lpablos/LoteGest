@@ -40,6 +40,7 @@
                         <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
                         <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
                         <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
+                        <li><a href="{{ route('tipo-de-predios.index') }}" key="t-tui-calendar"> Tipo de Predios </a></li>
                     </ul>
                 </li>
                 <li>
