@@ -1,5 +1,14 @@
  <div class="row g-3">
 
+    @if(isset($lote) && !empty($lote->plano) )
+        <div class="row mb-3">
+            <div class="col-md-12 text-center">
+                <img src="{{ asset('storage/' . $lote->plano) }}" alt="Imagen del lote" width="300px">
+                <p>{{ (isset($lote) && $lote->plano !== ' ') ? $lote->plano : '' }}</p>
+            </div>
+        </div>
+    @endif
+
     <div class="col-md-4">
         <label for="frente_m" class="form-label">Frente (m)</label>
         <input type="number" step="0.01" name="frente_m" id="frente_m{{$lote->id ?? ''}}" class="form-control"  value="{{ isset($lote)? $lote->frente_m : ''}}" required>
@@ -28,7 +37,7 @@
 
     <div class="col-md-6">
         <label for="plano" class="form-label">Plano (Archivo)</label>
-        <input type="file" name="plano" id="plano{{$lote->id ?? ''}}" value="{{ isset($lote)? $lote->plano : null}}" class="form-control">
+        <input type="file" name="plano" id="plano{{$lote->id ?? ''}}" value= class="form-control">
     </div>
 
     <div class="col-md-6">
