@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Lote;
 use App\Models\Fraccionamiento;
 use App\Models\CatEstatus;
+use App\Models\CatEstatusDisponibilidad;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
@@ -25,6 +26,7 @@ class LoteController extends Controller
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null;
             $estatus = CatEstatus::all();
+            $estatus = CatEstatusDisponibilidad::all();
 
             return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus'));
         }
@@ -46,14 +48,15 @@ class LoteController extends Controller
     {
         
         $validated = $request->validate([
-            'frente_m'         => ['nullable', 'numeric', 'min:0'],
-            'fondo_m'          => ['nullable', 'numeric', 'min:0'],
+            'num_lote'         => ['required', 'string'],
+            'medidas_m'        => ['required', 'string'],
             'precio_contado'   => ['nullable', 'numeric', 'min:0'],
             'precio_credito'   => ['nullable', 'numeric', 'min:0'],
             'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'observaciones'    => ['nullable', 'string'],
             'manzana_id'       => ['required', 'exists:manzanas,id'],
             'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
+            'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
         ]);
         DB::beginTransaction();
         try {
@@ -64,8 +67,9 @@ class LoteController extends Controller
                 $validated['plano'] = $path;
             }
             $lote = new Lote();
-            $lote->frente_m = $validated['frente_m'];
-            $lote->fondo_m = $validated['fondo_m'];
+            $lote->num_lote = $validated['num_lote'];
+            // $lote->frente_m = $validated['frente_m'];
+            // $lote->fondo_m = $validated['fondo_m'];
             $lote->superficie_m2 = $validated['frente_m'] * $validated['fondo_m'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
@@ -73,6 +77,7 @@ class LoteController extends Controller
             $lote->observaciones = $validated['observaciones'];
             $lote->manzana_id = $validated['manzana_id'];
             $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
             $lote->save();
             DB::commit();
             Session::flash('success', 'Lote fue registrado');

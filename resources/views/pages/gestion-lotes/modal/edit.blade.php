@@ -1,5 +1,5 @@
  <div class="modal fade" id="editEstatusProyecto({{ $lote->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editSede"> Editar Lote</h5>

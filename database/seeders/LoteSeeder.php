@@ -30,8 +30,10 @@ class LoteSeeder extends Seeder
 
             for ($i = 0; $i < $cantidadLotes; $i++) {
                 Lote::create([
-                    'frente_m' => rand(5, 20) + rand(0, 99) / 100,
-                    'fondo_m' => rand(10, 30) + rand(0, 99) / 100,
+                    'num_lote'=> rand(5, 20),
+                    // 'frente_m' => rand(5, 20) + rand(0, 99) / 100,
+                    // 'fondo_m' => rand(10, 30) + rand(0, 99) / 100,
+                    'medidas_m' => '5 m Ancho * 7 m Fondo',
                     'superficie_m2' => rand(100, 300) + rand(0, 99) / 100,
                     'precio_contado' => rand(50000, 100000),
                     'precio_credito' => rand(110000, 150000),
@@ -39,6 +41,7 @@ class LoteSeeder extends Seeder
                     'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ' . $manzana->id,
                     'manzana_id' => $manzana->id,
                     'cat_estatus_id' => $estatuses->random()->id,
+                    'cat_estatus_disponibilidad_id' => 1,
                 ]);
             }
         }

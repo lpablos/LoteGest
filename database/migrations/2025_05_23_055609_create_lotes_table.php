@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->decimal('frente_m', 8, 2)->nullable();
-            $table->decimal('fondo_m', 8, 2)->nullable();
+            $table->integer('num_lote');
+            // $table->decimal('frente_m', 8, 2)->nullable();
+            // $table->decimal('fondo_m', 8, 2)->nullable();
+            $table->string('medidas_m');
             $table->decimal('superficie_m2', 10, 2)->nullable();
             $table->decimal('precio_contado', 12, 2)->nullable();
             $table->decimal('precio_credito', 12, 2)->nullable();
@@ -24,6 +26,8 @@ return new class extends Migration
             $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
             $table->unsignedBigInteger('cat_estatus_id');
             $table->foreign('cat_estatus_id')->references('id')->on('cat_estatus')->onDelete('restrict');
+            $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
+            $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
             $table->softDeletes(); 
             $table->timestamps();
         });

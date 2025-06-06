@@ -73,8 +73,7 @@
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Frente (m) </th>
-                                <th> Fondo (m) </th>
+                                <th> num_lote</th>
                                 <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
@@ -88,8 +87,7 @@
                                 
                                     <?php $__currentLoopData = $manzana->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td><?php echo e($lote->frente_m); ?></td>
-                                            <td><?php echo e($lote->fondo_m); ?> </td>
+                                            <td><?php echo e($lote->num_lote); ?></td>
                                             <td><?php echo e($lote->superficie_m2); ?></td>
                                             <td><?php echo e($lote->precio_contado); ?></td>      
                                             <td><?php echo e($lote->precio_credito); ?></td>   

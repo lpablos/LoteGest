@@ -74,8 +74,7 @@
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Frente (m) </th>
-                                <th> Fondo (m) </th>
+                                <th> num_lote</th>
                                 <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
@@ -89,8 +88,7 @@
                                 
                                     @foreach ($manzana->lotes as $lote)
                                         <tr>
-                                            <td>{{ $lote->frente_m }}</td>
-                                            <td>{{ $lote->fondo_m }} </td>
+                                            <td>{{ $lote->num_lote }}</td>
                                             <td>{{ $lote->superficie_m2 }}</td>
                                             <td>{{ $lote->precio_contado }}</td>      
                                             <td>{{ $lote->precio_credito }}</td>   
