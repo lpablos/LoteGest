@@ -1,12 +1,12 @@
 
 <div class="row mb-3">
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         <label for="nombre" class="form-label">Nombre del Proyecto *</label>
-        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ isset($proy) ? $proy->nombre : '' }}" required>
+        <input type="text" class="form-control" id="nombre" name="nombre" style="text-transform:lowercase" value="{{ isset($proy) ? $proy->nombre : '' }}" required>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
         <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{ isset($proy) ? $proy->fecha_inicio : '' }}">
     </div>
@@ -15,7 +15,7 @@
 <div class="row mb-3">
     <div class="col-md-12">
         <label for="responsable_proyecto" class="form-label">Responsable del Proyecto</label>
-        <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value="{{ isset($proy) ? $proy->responsable_proyecto : '' }}">
+        <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" style="text-transform:lowercase" value="{{ isset($proy) ? $proy->responsable_proyecto : '' }}">
     </div>
 
   

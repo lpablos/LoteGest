@@ -63,7 +63,7 @@ class ProyectoController extends Controller
             // $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id']; 
             $proyecto->save();
             DB::commit();
-            Session::flash('success', 'Proyecto fue registrado');
+            Session::flash('success', '¡Proyecto registrado!');
             return redirect()->route('proyectos.index');
         } catch (\Throwable $th) {
             Log::error('Error guardar proyecto: ' . $th->getMessage());

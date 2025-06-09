@@ -34,9 +34,10 @@
 <div class="row mb-3">
     <div class="col-md-6">
         <label for="predio_urbano" class="form-label">Tipo de Predio</label>
-        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select">
+        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select" style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
             @foreach ($tpPredio as $predio)
-                <option value="{{ $predio->id }}">{{ $predio->nombre }}</option>
+                <option value="{{ $predio->id }}">- {{ $predio->nombre }}</option>
             @endforeach
         </select>
         <!-- <input type="text" name="predio_urbano" id="predio_urbano{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->predio_urbano:''}}"> -->
@@ -56,9 +57,10 @@
 
     <div class="col-md-6">
         <label for="proyecto_id" class="form-label">Proyecto</label>
-        <select name="proyecto_id" id="proyecto_id{{isset($fracc)? $fracc->id:''}}" class="form-select">
+        <select name="proyecto_id" id="proyecto_id{{isset($fracc)? $fracc->id:''}}" class="form-select" style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
             @foreach ($proyectos as $proyecto)
-                <option value="{{ $proyecto->id }}">{{ $proyecto->nombre }}</option>
+                <option value="{{ $proyecto->id }}">- {{ $proyecto->nombre }}</option>
             @endforeach
         </select>
     </div>
