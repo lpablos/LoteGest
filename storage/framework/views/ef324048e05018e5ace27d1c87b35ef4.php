@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-    Estatus de Proyectos
+    Clientes
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -23,61 +23,35 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Proyectos </h2>
+                                    <h2> Clientes </h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <button type="button" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#add_proyecto"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2">
-                                        <i class="mdi mdi-plus me-1"></i> Agregar
-                                </button>
+                                 <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('cliente.create')); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
                             </div>
-                        </div>
+                        </div><!-- end col-->
                     </div>
-                    <?php echo $__env->make('pages.gestion-proyectos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th> Nombre </th>
-                                <th> Fecha Inicio </th>
-                                <th> Responsable </th>
+                                <th> Fecha alta </th>
+                                <th> Corredor </th>
+                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                              <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proy): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <tr>
-                                        <td><?php echo e($proy->nombre); ?></td>
-                                        <td> <?php echo e(Carbon\Carbon::parse($proy->fecha_inicio)->format('d-m-Y')); ?> </td>
-                                        <td><?php echo e($proy->responsable_proyecto); ?></td>     
-                                        <td>
-                                            <div class="dropdown">
-                                                <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-start">
-                                                    <li>
-                                                        <a href="#editEstatusProyecto(<?php echo e($proy->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($proy->id); ?>">
-                                                            <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td> 
-                                        <?php echo $__env->make('pages.gestion-proyectos.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                            
-                                    </tr>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>           
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-   
+    
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->
@@ -113,7 +87,7 @@
             });
         
             //Buttons examples
-            var table = $('#datatable-estatus-proyecto').DataTable({
+            var table = $('#datatable-cliente').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "Sin resultados",
@@ -129,9 +103,60 @@
                 lengthChange: true
             });
         
-            table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
+            table.buttons().container().appendTo('#datatable-cliente_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+
+           //Ajax
+            $('.des_activar_usuario').click(function () {
+                var id = $(this).attr('data-id');
+                var estatus = $(this).attr('data-estatus');
+                var estado = '';
+                if(estatus == 1){
+                    estado = 'desactivar';
+                } else {
+                    estado = 'activar';
+                }
+                Swal.fire({
+                    title: '¿Seguro de '+estado+' este usuario?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Aceptar',
+                    showLoaderOnConfirm: true,
+                    confirmButtonColor: "#556ee6",
+                    cancelButtonColor: "#f46a6a",
+                    preConfirm: function (email) {
+                        return new Promise(function (resolve, reject) {
+                            setTimeout(function () {
+                                resolve()
+                            }, 2000)
+                        })
+                    },
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'delete',
+                            url: '/usuarios/'+id,
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    toastr.options = {
+                                        "closeButton" : false,
+                                        "progressBar" : false
+                                    }
+                                    toastr.success(data.msg);
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 2000);
+                                }
+
+                            },
+                            error: function (data) {
+                                // console.log(data);
+                            }
+                        });
+                    }
+                })
+            });
         });
     </script>
     <?php if(Session::has('success')): ?>
@@ -152,17 +177,8 @@
             toastr.warning("<?php echo e(session('error')); ?>");
         </script>
     <?php endif; ?>
-    <?php if($errors->any()): ?>
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            };
-            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                toastr.error("<?php echo e($error); ?>");
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </script>
-    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-proyectos/index.blade.php ENDPATH**/ ?>
+
+
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cliente/index.blade.php ENDPATH**/ ?>

@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('responsable_proyecto')->nullable();
             // $table->string('clave')->unique();
             $table->text('observaciones')->nullable();
-            $table->unsignedBigInteger('estatus_proyecto_id');
-            $table->foreign('estatus_proyecto_id')
-                ->references('id')
-                ->on('cat_estatus_proyectos')
-                ->onDelete('restrict');
+            // $table->unsignedBigInteger('estatus_proyecto_id');
+            // $table->foreign('estatus_proyecto_id')
+            //     ->references('id')
+            //     ->on('cat_estatus_proyectos')
+            //     ->onDelete('restrict');
             $table->softDeletes(); 
             $table->timestamps();
         });

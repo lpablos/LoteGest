@@ -13,23 +13,12 @@
 </div>
 
 <div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label for="responsable_proyecto" class="form-label">Responsable del Proyecto</label>
         <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value="{{ isset($proy) ? $proy->responsable_proyecto : '' }}">
     </div>
 
-    <div class="col-md-6">
-        <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto *</label>
-        <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required style="cursor: pointer;">
-            <option value=""> Selecciona una opción </option>
-            @foreach($estatus as $item)
-                <option value="{{ $item->id }}"
-                    {{ isset($proy) && $proy->estatus_proyecto_id == $item->id ? 'selected' : '' }}>
-                    {{ $item->nombre }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+  
 </div>
 
 

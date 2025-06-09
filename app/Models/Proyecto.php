@@ -17,13 +17,13 @@ class Proyecto extends Model
         'responsable_proyecto',
         // 'clave',
         'observaciones',
-        'estatus_proyecto_id',
+        // 'estatus_proyecto_id',
     ];
 
-     public function estatus()
-    {
-        return $this->belongsTo(CatEstatusProyecto::class, 'estatus_proyecto_id','id');
-    }
+    // public function estatus()
+    // {
+    //     return $this->belongsTo(CatEstatusProyecto::class, 'estatus_proyecto_id','id');
+    // }
 
     // public function fraccionamientos()
     // {

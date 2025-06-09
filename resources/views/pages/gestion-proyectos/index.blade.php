@@ -47,7 +47,6 @@
                                 <th> Nombre </th>
                                 <th> Fecha Inicio </th>
                                 <th> Responsable </th>
-                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
@@ -56,8 +55,7 @@
                                     <tr>
                                         <td>{{$proy->nombre}}</td>
                                         <td> {{ Carbon\Carbon::parse($proy->fecha_inicio)->format('d-m-Y') }} </td>
-                                        <td>{{$proy->responsable_proyecto}}</td>
-                                        <td>{{$proy->estatus->nombre}}</td>      
+                                        <td>{{$proy->responsable_proyecto}}</td>     
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

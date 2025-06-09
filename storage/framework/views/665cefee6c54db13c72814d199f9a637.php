@@ -39,10 +39,10 @@
                         </div>
                     </div>
                     <?php echo $__env->make('pages.gestion-fraccionamientos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100 text-center">
+                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
+                                <th> Fraccionamiento </th>
                                 <th> Responsable </th>
                                 <th> Propietaria </th>
                                 <th> Proyecto </th>

@@ -40,6 +40,7 @@
                         <li><a href="<?php echo e(route('estatus-proyectos.index')); ?>" key="t-tui-calendar"> Estatus Proyecto </a></li>
                         <li><a href="<?php echo e(route('estatus-disponibilidad.index')); ?>" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
                         <li><a href="<?php echo e(route('perfiles.index')); ?>" key="t-tui-calendar"> Perfiles </a></li>
+                        <li><a href="<?php echo e(route('tipo-de-predios.index')); ?>" key="t-tui-calendar"> Tipo de Predios </a></li>
                     </ul>
                 </li>
                 <li>

@@ -23,8 +23,7 @@ class ProyectoController extends Controller
         if (view()->exists('pages.gestion-proyectos.index')) {
             $proyectos = Proyecto::orderByDesc('id')
                             ->get();
-            $estatus = CatEstatusProyecto::all();
-            return view('pages.gestion-proyectos.index', compact('proyectos','estatus'));
+            return view('pages.gestion-proyectos.index', compact('proyectos'));
         }
         return abort(404);
     }
@@ -51,7 +50,7 @@ class ProyectoController extends Controller
             'responsable_proyecto' => 'nullable|string|max:255',
             // 'clave' => 'required|string|max:100|unique:proyectos,clave',
             'observaciones' => 'nullable|string',
-            'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
+            // 'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
         ]);
         DB::beginTransaction();
         try {            
@@ -61,7 +60,7 @@ class ProyectoController extends Controller
             $proyecto->responsable_proyecto =  Helper::capitalizeFirst($validated['responsable_proyecto']);
             // $proyecto->clave =  Helper::capitalizeFirst($validated['clave']);
             $proyecto->observaciones =  Helper::capitalizeFirst($validated['observaciones']);
-            $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id']; 
+            // $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id']; 
             $proyecto->save();
             DB::commit();
             Session::flash('success', 'Proyecto fue registrado');
@@ -105,7 +104,7 @@ class ProyectoController extends Controller
             'responsable_proyecto' => 'nullable|string|max:255',
             // 'clave' => 'required|string|max:100|unique:proyectos,clave',
             'observaciones' => 'nullable|string',
-            'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
+            // 'estatus_proyecto_id' => 'required|exists:cat_estatus_proyectos,id',
         ]);
         DB::beginTransaction();
         try {            
@@ -114,7 +113,7 @@ class ProyectoController extends Controller
             $proyecto->fecha_inicio = $validated['fecha_inicio'];
             $proyecto->responsable_proyecto = $validated['responsable_proyecto'];
             $proyecto->observaciones = $validated['observaciones'];
-            $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id'];            
+            // $proyecto->estatus_proyecto_id = $validated['estatus_proyecto_id'];     s       
             $proyecto->save();
             DB::commit();
             Session::flash('success', 'Proyecto fue actualizado');

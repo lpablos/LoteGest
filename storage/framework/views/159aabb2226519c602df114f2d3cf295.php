@@ -13,24 +13,12 @@
 </div>
 
 <div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label for="responsable_proyecto" class="form-label">Responsable del Proyecto</label>
         <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value="<?php echo e(isset($proy) ? $proy->responsable_proyecto : ''); ?>">
     </div>
 
-    <div class="col-md-6">
-        <label for="estatus_proyecto_id" class="form-label">Estatus del Proyecto *</label>
-        <select class="form-select" id="estatus_proyecto_id" name="estatus_proyecto_id" required>
-            <option value="">-- Selecciona --</option>
-            <?php $__currentLoopData = $estatus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($item->id); ?>"
-                    <?php echo e(isset($proy) && $proy->estatus_proyecto_id == $item->id ? 'selected' : ''); ?>>
-                    <?php echo e($item->nombre); ?>
-
-                </option>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </select>
-    </div>
+  
 </div>
 
 
