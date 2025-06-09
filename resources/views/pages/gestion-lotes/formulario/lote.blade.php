@@ -9,8 +9,8 @@
         </div>
     @endif
      <div class="col-md-10">
-        <label for="frente_m" class="form-label">Medidas (m)</label>
-        <input type="text" step="0.01" name="frente_m" id="frente_m{{$lote->id ?? ''}}" class="form-control"  value="{{ isset($lote)? $lote->frente_m : ''}}" required>
+        <label for="medidas_m" class="form-label">Medidas (m)</label>
+        <input type="text" step="0.01" name="medidas_m" id="medidas_m{{$lote->id ?? ''}}" class="form-control"  value="{{ isset($lote)? $lote->medidas_m : ''}}" required>
     </div>
 
     <!-- <div class="col-md-4">
@@ -73,10 +73,10 @@
         <label for="cat_estatus_id" class="form-label">Estatus Disponibilidad</label>
         <select name="cat_estatus_id" id="cat_estatus_id{{ $lote->id ?? '' }}" class="form-select" required>
             <option value="" selected disabled>Selecciona un estatus</option>
-            @foreach($estatus as $estatusItem)
-                <option value="{{ $estatusItem->id }}"
-                    {{ isset($lote) && $lote->cat_estatus_id == $estatusItem->id ? 'selected' : '' }}>
-                    {{ $estatusItem->nombre }}
+            @foreach($estatusDisponibilidad as $estatusItemDispo)
+                <option value="{{ $estatusItemDispo->id }}"
+                    {{ isset($lote) && $lote->cat_estatus_id == $estatusItemDispo->id ? 'selected' : '' }}>
+                    {{ $estatusItemDispo->nombre }}
                 </option>
             @endforeach
         </select>

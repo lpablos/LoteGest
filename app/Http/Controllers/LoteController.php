@@ -26,9 +26,9 @@ class LoteController extends Controller
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null;
             $estatus = CatEstatus::all();
-            $estatus = CatEstatusDisponibilidad::all();
+            $estatusDisponibilidad = CatEstatusDisponibilidad::all();
 
-            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus'));
+            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus','estatusDisponibilidad'));
         }
         return abort(404);
     }
@@ -50,6 +50,7 @@ class LoteController extends Controller
         $validated = $request->validate([
             'num_lote'         => ['required', 'string'],
             'medidas_m'        => ['required', 'string'],
+            'superficie_m2'    => ['required', 'numeric', 'min:1'],
             'precio_contado'   => ['nullable', 'numeric', 'min:0'],
             'precio_credito'   => ['nullable', 'numeric', 'min:0'],
             'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
@@ -68,9 +69,11 @@ class LoteController extends Controller
             }
             $lote = new Lote();
             $lote->num_lote = $validated['num_lote'];
+            $lote->medidas_m = $validated['medidas_m'];
+            
             // $lote->frente_m = $validated['frente_m'];
             // $lote->fondo_m = $validated['fondo_m'];
-            $lote->superficie_m2 = $validated['frente_m'] * $validated['fondo_m'];
+            $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
             $lote->plano = $validated['plano'];
