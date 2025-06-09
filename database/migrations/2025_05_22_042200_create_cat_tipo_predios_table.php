@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cat_tipo_predios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

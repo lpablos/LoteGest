@@ -20,6 +20,7 @@ class Fraccionamiento extends Model
         'ubicacion',
         'proyecto_id',
         'observaciones',
+        'tipo_predios_id',
     ];
 
     public function proyecto()
@@ -30,6 +31,11 @@ class Fraccionamiento extends Model
     public function manzanas()
     {
         return $this->hasMany(Manzana::class);
+    }
+
+     public function predio()
+    {
+        return $this->belongsTo(CatTipoPredio::class,'tipo_predios_id','id');
     }
     
 }
