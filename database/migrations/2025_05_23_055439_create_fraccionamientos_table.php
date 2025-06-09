@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('imagen')->nullable();
             $table->string('reponsable')->nullable(); // ¿"responsable" era la intención?
             $table->string('propietaria')->nullable();
-            $table->string('predio_urbano')->nullable();
             $table->decimal('superficie', 10, 2)->nullable();
             $table->string('ubicacion')->nullable();
             $table->text('observaciones')->nullable();

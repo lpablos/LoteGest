@@ -198,8 +198,8 @@
             <button type="button" class="btn-close position-absolute end-0 top-0 m-2" onclick="this.parentElement.remove()" aria-label="Eliminar"></button>
             <div class="row">
                 <div class="col-md-2">
-                    <label class="form-label"># Manzana</label>
-                    <input type="number" name="manzanas[${index}][num_lotes]" class="form-control">
+                    <label class="form-label"># Manzana (*)</label>
+                    <input type="number" name="manzanas[${index}][num_lotes]" class="form-control" required>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Colinda Norte</label>

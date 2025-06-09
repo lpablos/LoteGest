@@ -15,7 +15,6 @@ class Fraccionamiento extends Model
         'imagen',
         'reponsable',
         'propietaria',
-        'predio_urbano',
         'superficie',
         'ubicacion',
         'proyecto_id',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
 use App\Models\Proyecto;
+use App\Models\CatTipoPredio;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
@@ -19,8 +20,9 @@ class FraccionamientoController extends Controller
         //
         $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
         $proyectos=Proyecto::all();
+        $tpPredio = CatTipoPredio::all();
         if (view()->exists('pages.gestion-fraccionamientos.index')) {
-            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','proyectos'));
+            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','proyectos','tpPredio'));
         }
         return abort(404);
     }
@@ -49,13 +51,16 @@ class FraccionamientoController extends Controller
             'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'reponsable'      => 'nullable|string|max:255', 
             'propietaria'     => 'nullable|string|max:255',
-            'predio_urbano'   => 'nullable|string|max:255',
             'superficie'      => 'nullable|numeric|min:0',
             'ubicacion'       => 'nullable|string|max:255',
             'observaciones'   => 'nullable|string',
             'proyecto_id'     => 'required|exists:proyectos,id',
+            'tipo_predios_id' => 'required|exists:proyectos,id',
+            'manzanas'        => 'required|array|min:1',
+            
+            
         ]);
-         DB::beginTransaction();
+        DB::beginTransaction();
         try {
             if (isset($validated['imagen'])) {
                 if ($request->hasFile('imagen')) {
@@ -70,10 +75,10 @@ class FraccionamientoController extends Controller
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
             $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
-            $fraccionamiento->predio_urbano = Helper::capitalizeFirst($validated['predio_urbano']);
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->proyecto_id = $validated['proyecto_id'];
+            $fraccionamiento->tipo_predios_id = $validated['tipo_predios_id'];
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
 
@@ -126,17 +131,18 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        dd("Esto es lo que se pasa", $request->all());
+        // dd("Esto es lo que se pasa", $request->all());
         $validated = $request->validate([
             'nombre'          => 'required|string|max:255',
             'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'reponsable'      => 'nullable|string|max:255', 
             'propietaria'     => 'nullable|string|max:255',
-            'predio_urbano'   => 'nullable|string|max:255',
+            
             'superficie'      => 'nullable|numeric|min:0',
             'ubicacion'       => 'nullable|string|max:255',
             'observaciones'   => 'nullable|string',
             'proyecto_id'     => 'required|exists:proyectos,id',
+            'tipo_predios_id'     => 'required|exists:proyectos,id',
         ]);
          DB::beginTransaction();
         try {
@@ -151,12 +157,12 @@ class FraccionamientoController extends Controller
             $fraccionamiento->imagen = $validated['imagen'];
             $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
-            $fraccionamiento->predio_urbano = Helper::capitalizeFirst($validated['predio_urbano']);
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->proyecto_id = $validated['proyecto_id'];
+            $fraccionamiento->tipo_predios_id = $validated['tipo_predios_id'];
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            // $fraccionamiento->save();
+            $fraccionamiento->save();
             //   foreach ($request->manzanas as $manzana) {
             //     $fraccionamiento->manzanas()->create([
             //         'num_lotes' => $manzana['num_lotes'],

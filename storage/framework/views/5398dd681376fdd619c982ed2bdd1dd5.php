@@ -34,10 +34,10 @@
 <div class="row mb-3">
     <div class="col-md-6">
         <label for="predio_urbano" class="form-label">Tipo de Predio</label>
-        <select name="" id=""  class="form-select">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select">
+            <?php $__currentLoopData = $tpPredio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $predio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($predio->id); ?>"><?php echo e($predio->nombre); ?></option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
         <!-- <input type="text" name="predio_urbano" id="predio_urbano<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-control" value="<?php echo e(isset($fracc)? $fracc->predio_urbano:''); ?>"> -->
     </div>
@@ -66,7 +66,8 @@
 
 
 <div class="mb-3">
-    <label class="form-label">Manzanas</label>
+    <label class="form-label">Manzanas (*)</label>
+    <small class="text-muted d-block">Debe agregar al menos una manzana</small>
 
    <?php
         $fraccId = $fracc->id ?? 'nuevo';
