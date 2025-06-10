@@ -92,7 +92,7 @@
                                             <td>{{ $lote->superficie_m2 }}</td>
                                             <td>{{ $lote->precio_contado }}</td>      
                                             <td>{{ $lote->precio_credito }}</td>   
-                                            <td>{{ $lote->manzana->num_lotes }}</td>      
+                                            <td>Manza {{ $lote->manzana->num_manzana }}</td>      
                                            <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

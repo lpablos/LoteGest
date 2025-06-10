@@ -12,6 +12,15 @@
         <label for="medidas_m" class="form-label">Medidas (m)</label>
         <input type="text" step="0.01" name="medidas_m" id="medidas_m{{$lote->id ?? ''}}" class="form-control"  value="{{ isset($lote)? $lote->medidas_m : ''}}" required>
     </div>
+     <div class="col-md-2">
+        <label for="superficie_m2" class="form-label">Superficie (m²)</label>
+        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? ''}}" value="{{ isset($lote)? $lote->superficie_m2 : ''}}" class="form-control" {{ isset($lote) ? 'readonly' : '' }}>
+    </div>  
+
+    <div class="col-md-4">
+        <label for="num_lote" class="form-label"># Lote</label>
+        <input type="number" step="0.01" name="num_lote" id="num_lote{{$lote->id ?? ''}}" class="form-control"  value="{{ isset($lote)? $lote->num_lote : ''}}" required>
+    </div>
 
     <!-- <div class="col-md-4">
         <label for="frente_m" class="form-label">Frente (m)</label>
@@ -23,10 +32,7 @@
         <input type="number" step="0.01" name="fondo_m" id="fondo_m{{$lote->id ?? ''}}" class="form-control" value="{{ isset($lote)? $lote->fondo_m : ''}}" required>
     </div> -->
     
-    <div class="col-md-2">
-        <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? ''}}" value="{{ isset($lote)? $lote->superficie_m2 : ''}}" class="form-control" {{ isset($lote) ? 'readonly' : '' }}>
-    </div>        
+         
     
 
     <div class="col-md-4">
@@ -50,7 +56,7 @@
             @foreach($fracc->manzanas as $manzana)
                 <option value="{{ $manzana->id }}"
                     {{ isset($lote) && $lote->manzana_id == $manzana->id ? 'selected' : '' }}>
-                    Manzana {{ $manzana->num_lotes }}
+                    Manzana {{ $manzana->num_manzana }}
                 </option>
             @endforeach
         </select>
@@ -93,6 +99,6 @@
 
     <div class="col-md-12">
         <label for="observaciones" class="form-label">Observaciones</label>
-        <textarea name="observaciones" id="observaciones{{ $lote->id ?? '' }}" rows="3" class="form-control"></textarea>
+        <textarea name="observaciones" id="observaciones{{ $lote->id ?? '' }}" rows="3" class="form-control">{{ $lote->observaciones ?? '' }}</textarea>
     </div>
 </div>

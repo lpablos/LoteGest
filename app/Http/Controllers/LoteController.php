@@ -70,7 +70,7 @@ class LoteController extends Controller
             'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
             'user_corredor_id' => ['required'],
         ]);
-        dd("Paso ", $validated);
+        
         DB::beginTransaction();
         try {
             if ($request->hasFile('plano')) {
@@ -82,9 +82,6 @@ class LoteController extends Controller
             $lote = new Lote();
             $lote->num_lote = $validated['num_lote'];
             $lote->medidas_m = $validated['medidas_m'];
-            
-            // $lote->frente_m = $validated['frente_m'];
-            // $lote->fondo_m = $validated['fondo_m'];
             $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
@@ -133,15 +130,17 @@ class LoteController extends Controller
     {
         
        $validated = $request->validate([
-            'frente_m'         => ['nullable', 'numeric', 'min:0'],
-            'fondo_m'          => ['nullable', 'numeric', 'min:0'],
+            'num_lote'         => ['required', 'string'],
+            'medidas_m'        => ['required', 'string'],
+            'superficie_m2'    => ['required', 'numeric', 'min:1'],
             'precio_contado'   => ['nullable', 'numeric', 'min:0'],
             'precio_credito'   => ['nullable', 'numeric', 'min:0'],
             'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'observaciones'    => ['nullable', 'string'],
             'manzana_id'       => ['required', 'exists:manzanas,id'],
             'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
-            'user_corredor_id' => ['required', 'exists:user,id'],
+            'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
+            'user_corredor_id' => ['required'],
         ]);
         DB::beginTransaction();
         try {
@@ -151,16 +150,18 @@ class LoteController extends Controller
                 $path = $file->storeAs('plano', $filename, 'public');
                 $validated['plano'] = $path ?? null;
             }
+
             $lote = Lote::find($id);
-            $lote->frente_m = $validated['frente_m'];
-            $lote->fondo_m = $validated['fondo_m'];
-            $lote->superficie_m2 = $validated['frente_m'] * $validated['fondo_m'];
+            $lote->num_lote = $validated['num_lote'];
+            $lote->medidas_m = $validated['medidas_m'];
+            $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
-            $lote->plano = $validated['plano'] ?? null;
+            $lote->plano = $validated['plano'];
             $lote->observaciones = $validated['observaciones'];
             $lote->manzana_id = $validated['manzana_id'];
             $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
             $lote->user_corredor_id = $validated['user_corredor_id'];
             $lote->save();
             DB::commit();

@@ -91,7 +91,7 @@
                                             <td><?php echo e($lote->superficie_m2); ?></td>
                                             <td><?php echo e($lote->precio_contado); ?></td>      
                                             <td><?php echo e($lote->precio_credito); ?></td>   
-                                            <td><?php echo e($lote->manzana->num_lotes); ?></td>      
+                                            <td>Manza <?php echo e($lote->manzana->num_manzana); ?></td>      
                                            <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

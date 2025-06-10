@@ -37,7 +37,7 @@ class LoteSeeder extends Seeder
                     'superficie_m2' => rand(100, 300) + rand(0, 99) / 100,
                     'precio_contado' => rand(50000, 100000),
                     'precio_credito' => rand(110000, 150000),
-                    'plano' => 'plano_' . Str::random(5) . '.pdf',
+                    // 'plano' => 'plano_' . Str::random(5) . '.pdf',
                     'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ' . $manzana->id,
                     'manzana_id' => $manzana->id,
                     'cat_estatus_id' => $estatuses->random()->id,
