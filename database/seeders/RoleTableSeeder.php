@@ -16,8 +16,7 @@ class RoleTableSeeder extends Seeder
             ['nombre' => "Director"],
             ['nombre' => "Auditor"],
             ['nombre' => "Administrador"],
-            ['nombre' => "Corredor"],
-            ['nombre' => "Cliente"]
+            ['nombre' => "Corredor"]
         ]);
     }
 }

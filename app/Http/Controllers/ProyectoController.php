@@ -21,8 +21,9 @@ class ProyectoController extends Controller
     public function index()
     {
         if (view()->exists('pages.gestion-proyectos.index')) {
-            $proyectos = Proyecto::orderByDesc('id')
-                            ->get();
+            
+            $proyectos = Proyecto::select('id', 'nombre', 'fecha_inicio', 'responsable_proyecto')->orderBy('id', 'ASC')->get();
+            
             return view('pages.gestion-proyectos.index', compact('proyectos'));
         }
         return abort(404);

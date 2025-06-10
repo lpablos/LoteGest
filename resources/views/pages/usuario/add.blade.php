@@ -25,7 +25,16 @@
             @csrf
                 <div class="card">
                     <div class="card-body">
-                       <div class="row col-md-12">
+                        <div class="col-md-3 mb-4">
+                            <label for="rol_id"> Rol (*) </label>
+                            <select class="form-select form-select-sm" id="rol_id" name="rol_id" style="cursor: pointer;" required>
+                                <option value="" selected disabled> Selecciona una opción </option>
+                                @foreach ($roles as $rol)
+                                    <option value="{{ $rol->id }}">- {{ $rol->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="row col-md-12" id="formAdminDirAudi" style="display: none;">
                             <h4 class="card-title text-center"> Datos Personales </h4>
                             <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
                             <div class="col-md-3 mb-4">
@@ -36,7 +45,7 @@
                                 <label for="primer_apellido"> Primer Apellido (*) </label>
                                 <input type="text" class="form-control form-control-sm" name="primer_apellido" placeholder="Ingresa el primer apellido" style="text-transform:lowercase" required>
                             </div>
-                            <div class="col-md-3 b-4">
+                            <div class="col-md-3 mb-4">
                                 <label for="segundo_apellido"> Segundo Apellido</label>
                                 <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
                             </div>
@@ -45,18 +54,77 @@
                                 <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" required>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <label for="rol_id"> Rol (*) </label>
-                                <select class="form-select form-select-sm" name="rol_id" style="cursor: pointer;" required>
-                                    <option value="" selected disabled> Selecciona una opción </option>
-                                    @foreach ($roles as $rol)
-                                        <option value="{{ $rol->id }}">- {{ $rol->nombre }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="telefono"> Teléfono </label>
+                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
+                            </div>
+                             <div class="col-md-3 mb-4" id="edad" style="display: none">
+                                <label for="edad"> Edad </label>
+                                <input type="number" class="form-control form-control-sm" name="edad" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3)" minlength="3" maxlength="3" required>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="imagen"> Imagen de perfil </label>
+                                <input type="file" name="imagen" class="form-control from-control-sm">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="domicilio"> Domicilio </label>
+                                <input type="text" class="form-control form-control-sm" name="domicilio" placeholder="Ingresa la información">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="enfermedades"> Enfermedades/Alergias</label>
+                                <input type="text" class="form-control form-control-sm" name="enfermedades" placeholder="Ingresa la información">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" style="cursor: pointer;">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="tipo_sangre"> Tipo de sangre </label>
+                                <input type="text" class="form-control form-control-sm" name="tipo_sangre" placeholder="Ingresa la información">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="fecha_inicio_laboral">Fecha de inicio laboral </label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_inicio_laboral" name="fecha_inicio_laboral">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="antiguedad"> Antigüedad Laboral </label>
+                                <input type="text" class="form-control form-control-sm" name="antiguedad" readOnly>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="num_contacto">Número de contacto </label>
+                                <input type="number" class="form-control form-control-sm" name="num_contacto" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="parentesco"> Parentesco </label>
+                                <input type="text" class="form-control form-control-sm" name="parentesco" style="text-transform:lowercase">
                             </div>
                         </div>
+                        {{--  <div class="row col-md-12" id="formCorredor" style="display: none;">
+                            <h4 class="card-title text-center"> Datos Personales </h4>
+                            <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
+                            <div class="col-md-3 mb-4">
+                                <label for="nombreCorredor"> Nombre(s)(*) </label>
+                                <input type="text" class="form-control form-control-sm" id="nombreCorredor" name="nombreCorredor" placeholder="Ingresa el nombre" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="primer_apellido_corredor"> Primer Apellido (*) </label>
+                                <input type="text" class="form-control form-control-sm" name="primer_apellido_corredor" placeholder="Ingresa el primer apellido" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="segundo_apellido_corredor"> Segundo Apellido</label>
+                                <input type="text" class="form-control form-control-sm" name="segundo_apellido_corredor" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="email_corredor"> Correo Electrónico (*) </label>
+                                <input type="email" class="form-control form-control-sm" name="email_corredor" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="telefono_corredor"> Teléfono </label>
+                                <input type="number" class="form-control form-control-sm" name="telefono_corredor" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
+                            </div>
+                        </div>  --}}
                     </div>
                 </div>
-                <div class="card">
+                <div class="card" style="display: none;">
                     <div class="card-body">
                        <div class="row col-md-12">
                             <h4 class="card-title text-center mb-4"> Configuración de Permisos (EN DESARROLLO)</h4>
@@ -131,7 +199,7 @@
                     </div> <!-- end col -->
                     <div class="col-sm-6">
                         <div class="text-end">
-                            <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
+                            <button type="submit" class="btn btn-success" onClick="validarForm()"><i class="mdi mdi-check me-1"></i> Guardar </button>
                         </div>
                     </div> 
                 </div>
@@ -161,6 +229,45 @@
 
     <!-- form advanced init -->
     <script src="{{ URL::asset('build/js/pages/form-advanced.init.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+
+            // Se declara el token global para las peticiones que se vayan a realizar
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+
+        function validarForm() {
+            var rol = document.getElementById("rol_id").value;
+            if(rol == 4) {
+                var nombreCorredor = $('#nombreCorredor').val();
+                var primer_apellido_corredor = $('primer_apellido_corredor').val;
+                var segundo_apellido_corredor = $('segundo_apellido_corredor').val;
+                var email_corredor = $('email_corredor').val;
+                var telefono_corredor = $('telefono_corredor').val;
+                var data = {nombre : nombreCorredor}
+
+                $.post("{{ route('usuario.corredor') }}", {data: data}, function( data ) {
+                    alert();    
+                });
+                
+            }
+        }   
+    </script>
+    <script>
+        $('#rol_id').on('change', function() {
+            if(this.value == 1 || this.value == 2 || this.value == 3){
+                $('#formAdminDirAudi').css('display', '');
+                $('#formCorredor').css('display','none');
+            }  else if (this.value == 4){
+                $('#formAdminDirAudi').css('display','none');
+                $('#formCorredor').css('display','');
+            }
+        });
+    </script>
     @if(Session::has('success'))
         <script>
             toastr.options = {

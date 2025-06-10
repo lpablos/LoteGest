@@ -32,7 +32,7 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 //      });
 // });
 
-
+Route::post('guarda-corredor', [App\Http\Controllers\UserController::class, 'storeCorredor'])->name('usuario.corredor');
 Route::resource('lote', App\Http\Controllers\LoteController::class);
 Route::resource('usuarios', App\Http\Controllers\UserController::class);
 Route::resource('perfiles', App\Http\Controllers\RoleController::class);

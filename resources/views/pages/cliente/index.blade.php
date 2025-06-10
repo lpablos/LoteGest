@@ -39,6 +39,7 @@
                         <thead>
                             <tr>
                                 <th> Nombre </th>
+                                <th> Núm. cliente </th>
                                 <th> Fecha alta </th>
                                 <th> Corredor </th>
                                 <th> Estatus </th>
@@ -46,7 +47,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @foreach ($clientes as $cliente)
+                                <tr>
+                                    <td>{{ $cliente->nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}</td>
+                                    <td> ZAC-CARMAL-25 </td>
+                                    <td> {{ Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y') }} </td>
+                                    <td> SIN INFORMACIÓN </td>
+                                    <td> SIN INFORMACIÓN </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

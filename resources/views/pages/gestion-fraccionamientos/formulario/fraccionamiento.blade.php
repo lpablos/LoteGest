@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-md-6">
-        <label for="propietaria" class="form-label">Propietaria</label>
+        <label for="propietaria" class="form-label"> Propietario (a)</label>
         <input type="text" name="propietaria" id="propietaria{{isset($fracc)? $fracc->id:''}}" class="form-control" required value="{{isset($fracc)? $fracc->propietaria:''}}">
     </div>
 </div>

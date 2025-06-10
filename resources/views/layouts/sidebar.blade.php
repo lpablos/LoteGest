@@ -27,7 +27,7 @@
                 <li>
                     <a href="{{ route('usuarios.index') }}" class="waves-effect">
                         <i class="bx bx-user"></i>
-                        <span key="t-chat"> Personas </span>
+                        <span key="t-chat"> Personal </span>
                     </a>
                 </li>
                 <li>

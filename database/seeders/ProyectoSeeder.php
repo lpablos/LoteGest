@@ -16,8 +16,8 @@ class ProyectoSeeder extends Seeder
     {
         //
         Proyecto::create([
-            'nombre' => 'Fraccionamiento El Mirador',
-            'fecha_inicio' => Carbon::parse('2024-11-01'),
+            'nombre' => 'Xalapa',
+            'fecha_inicio' => Carbon::parse('2025-05-19'),
             'responsable_proyecto' => 'Lic. Rodrigo Chávez',
             // 'clave' => 'FRACC-001',
             'observaciones' => 'Ubicado al sur de la ciudad, con lotes residenciales y comerciales.',

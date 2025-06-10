@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $input = $request->all();
 
         $rules = [
@@ -100,6 +100,10 @@ class UserController extends Controller
             DB::rollBack();
             return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
         }
+    }
+
+    public function storeCorredor($data) {
+        dd($data);
     }
 
     /**

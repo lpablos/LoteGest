@@ -44,33 +44,32 @@
                                 <label for="telefono"> Teléfono </label>
                                 <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
                             </div>
-                            <div class="col-md-3 b-4">
-                                <label for="segundo_apellido"> Dirección </label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa la dirección completa" style="text-transform:lowercase">
+                             <div class="col-md-3 mb-4">
+                                <label for="fecha_nacimiento">Fecha de nacimiento </label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="email"> Correo Electrónico (*) </label>
                                 <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" required>
                             </div>
-                            <div class="col-md-3 b-4">
-                                <label for="segundo_apellido"> INE </label>
-                                <input class="form-control" type="file" name="fileContrato" id="fileContrato" accept="image/*" capture required>
+                            <div class="col-md-3 mb-4">
+                                <label for="num_contacto">Número de contacto </label>
+                                <input type="number" class="form-control form-control-sm" name="num_contacto" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
                             </div>
                             <div class="col-md-3 mb-4">
-                                <label for="rol_id"> Corredor (*) </label>
-                                <select class="form-select form-select-sm" name="rol_id" style="cursor: pointer;" required>
-                                    <option value="" selected disabled> Selecciona una opción </option>
-                                    @foreach ($corredores as $corredor)
-                                        <option value="{{ $corredor->id }}">- {{ $corredor->nombre }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="parentesco"> Parentesco </label>
+                                <input type="text" class="form-control form-control-sm" name="parentesco" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 b-4">
+                                <label for="fileINE"> Identificación INE</label>
+                                <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture required>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
+                        <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
                     </div> <!-- end col -->
                     <div class="col-sm-6">
                         <div class="text-end">

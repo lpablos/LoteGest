@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use DB, Session;
 use App\Models\User;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
@@ -14,7 +15,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        return view('pages.cliente.index');
+        $clientes = Cliente::select('id', 'nombre', 'primer_apellido', 'segundo_apellido', 'created_at')->get();
+
+        return view('pages.cliente.index', compact('clientes'));
     }
 
     /**
@@ -36,7 +39,57 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'primer_apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+            'fileIne'=> 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'Campos obligatorios incompletos');
+            return redirect()->route('cliente.create');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $cliente = new Cliente();
+
+            $cliente->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+            $cliente->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+            $cliente->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
+            $cliente->telefono = ($request->telefono == null) ? "Sin Información" : $request->telefono ;
+            $cliente->fecha_nacimiento = $request->fecha_nacimiento;
+            $cliente->email = $request->email;
+            $cliente->num_contacto = ($request->num_contacto == null) ? "Sin Información" : $request->num_contacto;
+            $cliente->parentesco = ($request->parentesco == null) ? "Sin Información" : $request->parentesco;
+            if ($request->hasFile('fileIne')) {
+                    $file = $request->file('fileIne');
+                    $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
+                    $path = $file->storeAs('cliente', $filename, 'public');
+            } else {
+                $path = null;
+            }
+            $cliente->url_ine = $path;
+            $cliente->save();
+
+            DB::commit();
+
+            Session::flash('success', '¡Cliente registrado!');
+            return redirect()->route('cliente.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            dd($e);
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
@@ -52,7 +105,11 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        if (view()->exists('pages.cliente.edit')) {
+
+            return view('pages.cliente.edit', compact('cliente'));
+        }
+        return abort(404);
     }
 
     /**
@@ -60,7 +117,58 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $input = $request->all();
+
+        $rules = [
+            'nombre' => 'required',
+            'primer_apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+            'num_contacto' => 'required',
+            'parentesco' => 'required',
+            'fileIne'=> 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            Session::flash('error', 'Campos obligatorios incompletos');
+            return redirect()->route('cliente.create');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $cliente = Cliente::find($cliente->id);
+
+            $cliente->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+            $cliente->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+            $cliente->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
+            $cliente->telefono = ($request->telefono == null) ? "Sin Información" : $request->telefono ;
+            $cliente->fecha_nacimiento = $request->fecha_nacimiento;
+            $cliente->email = $request->email;
+            $cliente->num_contacto = ($request->num_contacto == null) ? "Sin Información" : $request->num_contacto;
+            $cliente->parentesco = ($request->parentesco == null) ? "Sin Información" : $request->parentesco;
+            if ($request->hasFile('fileIne')) {
+                    $file = $request->file('fileIne');
+                    $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
+                    $path = $file->storeAs('cliente', $filename, 'public');
+            } else {
+                $path = null;
+            }
+            $cliente->url_ine = $path;
+            $cliente->save();
+
+            DB::commit();
+
+            Session::flash('success', '¡Cliente actualizado!');
+            return redirect()->route('cliente.index');
+
+        }catch (\PDOException $e){
+            DB::rollBack();
+            dd($e);
+            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+        }
     }
 
     /**
