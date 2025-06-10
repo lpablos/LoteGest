@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB, Session;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UsuarioDatosPersonales;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -56,15 +57,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $input = $request->all();
-
-        $rules = [
-            'nombre' => 'required',
-            'primer_apellido' => 'required',
-            'email' => 'required',
-            'rol_id' => 'required'
-        ];
+        
+        if ($request->rol_id = 1 || $request->rol_id = 2 || $request->rol_id = 3) {
+            $rules = [
+                'nombre' => 'required',
+                'primer_apellido' => 'required',
+                'email' => 'required',
+                'telefono' => 'required',
+                'fecha_nacimiento' => 'required',
+                'fecha_inicio_laboral' => 'required'
+            ];    
+        }
+        
+        if ($request->rol_id = 4) {
+            // dd('d');
+                $rules = [
+                    'nombre' => 'required',
+                    'primer_apellido' => 'required',
+                    'email' => 'required',
+                    'telefono' => 'required'
+                ];
+        }
 
         $validator = Validator::make($input, $rules);
 
@@ -77,7 +92,6 @@ class UserController extends Controller
 
         try {
             $usuario = new User();
-
             $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
             $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
             $usuario->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
@@ -85,11 +99,26 @@ class UserController extends Controller
             $usuario->email_verified_at = now();
             $usuario->password = Hash::make("12345678");
             $usuario->dob = '2024-04-01';
-            $usuario->avatar = 'images/avatar-1.jpg';
+            $usuario->avatar = ($request->imagenPerfil == null) ? 'SIN INFORMACIÓN' : $request->imagenPerfil;
             $usuario->role_id = $request->rol_id;
             $usuario->fecha_registro = now();
             $usuario->estatus_id = 1;
             $usuario->save();
+
+            $datosPersonales = new UsuarioDatosPersonales();
+            $datosPersonales->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono ;
+            $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
+            $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
+            $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
+            $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
+            $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
+            $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
+            $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
+            $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
+            $datosPersonales->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo ;
+            $datosPersonales->usuario_id = $usuario->id;
+            $datosPersonales->save();
+            
 
             DB::commit();
 
@@ -98,12 +127,9 @@ class UserController extends Controller
 
         }catch (\PDOException $e){
             DB::rollBack();
+            dd($e);
             return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
         }
-    }
-
-    public function storeCorredor($data) {
-        dd($data);
     }
 
     /**
