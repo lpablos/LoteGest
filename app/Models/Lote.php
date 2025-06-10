@@ -24,6 +24,7 @@ class Lote extends Model
         'manzana_id',
         'cat_estatus_id',
         'cat_estatus_disponibilidad_id',
+        'user_corredor_id',
     ];
 
     public function manzana()
@@ -39,5 +40,10 @@ class Lote extends Model
     public function disponibilidad()
     {
         return $this->belongsTo(CatEstatusDisponibilidad::class,'cat_estatus_disponibilidad_id','id');
+    }
+
+    public function corredor()
+    {
+        return $this->belongsTo(User::class,'user_corredor_id','id');
     }
 }

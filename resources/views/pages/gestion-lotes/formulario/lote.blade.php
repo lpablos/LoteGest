@@ -47,7 +47,6 @@
     <div class="col-md-4">
         <label for="manzana_id" class="form-label">Manzana</label>
         <select name="manzana_id" id="manzana_id{{ $lote->id ?? '' }}" class="form-select" required>
-            <option value="" selected disabled>Selecciona una manzana</option>
             @foreach($fracc->manzanas as $manzana)
                 <option value="{{ $manzana->id }}"
                     {{ isset($lote) && $lote->manzana_id == $manzana->id ? 'selected' : '' }}>
@@ -60,7 +59,6 @@
     <div class="col-md-4">
         <label for="cat_estatus_id" class="form-label">Estatus</label>
         <select name="cat_estatus_id" id="cat_estatus_id{{ $lote->id ?? '' }}" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
             @foreach($estatus as $estatusItem)
                 <option value="{{ $estatusItem->id }}"
                     {{ isset($lote) && $lote->cat_estatus_id == $estatusItem->id ? 'selected' : '' }}>
@@ -70,9 +68,8 @@
         </select>
     </div>
     <div class="col-md-4">
-        <label for="cat_estatus_id" class="form-label">Estatus Disponibilidad</label>
-        <select name="cat_estatus_id" id="cat_estatus_id{{ $lote->id ?? '' }}" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
+        <label for="cat_estatus_disponibilidad_id" class="form-label">Estatus Disponibilidad</label>
+        <select name="cat_estatus_disponibilidad_id" id="cat_estatus_disponibilidad_id{{ $lote->id ?? '' }}" class="form-select" required>
             @foreach($estatusDisponibilidad as $estatusItemDispo)
                 <option value="{{ $estatusItemDispo->id }}"
                     {{ isset($lote) && $lote->cat_estatus_id == $estatusItemDispo->id ? 'selected' : '' }}>
@@ -83,13 +80,12 @@
     </div>
 
     <div class="col-md-6">
-        <label for="cat_estatus_id" class="form-label">Corredor</label>
-        <select name="cat_estatus_id" id="cat_estatus_id{{ $lote->id ?? '' }}" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
-            @foreach($estatus as $estatusItem)
-                <option value="{{ $estatusItem->id }}"
-                    {{ isset($lote) && $lote->cat_estatus_id == $estatusItem->id ? 'selected' : '' }}>
-                    {{ $estatusItem->nombre }}
+        <label for="user_corredor_id" class="form-label">Corredor(*)</label>
+        <select name="user_corredor_id" id="user_corredor_id{{ $lote->id ?? '' }}" class="form-select" required>
+            @foreach($corredores as $corredor)
+                <option value="{{ $corredor->id }}"
+                    {{ isset($lote) && $lote->user_corredor_id == $corredor->id ? 'selected' : '' }}>
+                    {{ $corredor->nombre_completo }}
                 </option>
             @endforeach
         </select>

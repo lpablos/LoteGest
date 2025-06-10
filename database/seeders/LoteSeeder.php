@@ -42,6 +42,7 @@ class LoteSeeder extends Seeder
                     'manzana_id' => $manzana->id,
                     'cat_estatus_id' => $estatuses->random()->id,
                     'cat_estatus_disponibilidad_id' => 1,
+                    'user_corredor_id' => 1
                 ]);
             }
         }

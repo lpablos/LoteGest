@@ -28,6 +28,8 @@ return new class extends Migration
             $table->foreign('cat_estatus_id')->references('id')->on('cat_estatus')->onDelete('restrict');
             $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
             $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
+             $table->unsignedBigInteger('user_corredor_id')->nullable();
+            $table->foreign('user_corredor_id')->references('id')->on('users')->onDelete('restrict');
             $table->softDeletes(); 
             $table->timestamps();
         });

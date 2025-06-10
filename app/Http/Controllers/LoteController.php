@@ -7,6 +7,7 @@ use App\Models\Lote;
 use App\Models\Fraccionamiento;
 use App\Models\CatEstatus;
 use App\Models\CatEstatusDisponibilidad;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
@@ -22,13 +23,22 @@ class LoteController extends Controller
         if (view()->exists('pages.gestion-lotes.index')) {
             $identy = $request->input('identy'); 
             $fraccionamientos = Fraccionamiento::orderBy('nombre', 'desc')->get();
+            
+            
+            $corredores = User::leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
+                            ->leftJoin('roles', 'users.role_id', 'roles.id')
+                            ->select(
+                                'users.*',
+                            )->orderByDesc('id')
+                            ->where('roles.nombre', 'corredor')
+                            ->get();
             $fracc = $identy
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null;
             $estatus = CatEstatus::all();
             $estatusDisponibilidad = CatEstatusDisponibilidad::all();
 
-            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus','estatusDisponibilidad'));
+            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus','estatusDisponibilidad', 'corredores'));
         }
         return abort(404);
     }
@@ -58,7 +68,9 @@ class LoteController extends Controller
             'manzana_id'       => ['required', 'exists:manzanas,id'],
             'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
             'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
+            'user_corredor_id' => ['required'],
         ]);
+        dd("Paso ", $validated);
         DB::beginTransaction();
         try {
             if ($request->hasFile('plano')) {
@@ -81,6 +93,7 @@ class LoteController extends Controller
             $lote->manzana_id = $validated['manzana_id'];
             $lote->cat_estatus_id = $validated['cat_estatus_id'];
             $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
+            $lote->user_corredor_id = $validated['user_corredor_id'];
             $lote->save();
             DB::commit();
             Session::flash('success', 'Lote fue registrado');
@@ -128,6 +141,7 @@ class LoteController extends Controller
             'observaciones'    => ['nullable', 'string'],
             'manzana_id'       => ['required', 'exists:manzanas,id'],
             'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
+            'user_corredor_id' => ['required', 'exists:user,id'],
         ]);
         DB::beginTransaction();
         try {
@@ -147,6 +161,7 @@ class LoteController extends Controller
             $lote->observaciones = $validated['observaciones'];
             $lote->manzana_id = $validated['manzana_id'];
             $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            $lote->user_corredor_id = $validated['user_corredor_id'];
             $lote->save();
             DB::commit();
             Session::flash('success', 'Lote fue actualizado');

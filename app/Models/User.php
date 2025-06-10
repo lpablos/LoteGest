@@ -18,11 +18,15 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name',
+        'id',
+        'nombre',
+        'primer_apellido',
+        'segundo_apellido',
         'email',
         'password',
         'dob', 
         'avatar',
+        'fecha_registro',
     ];
 
     /**
@@ -43,4 +47,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['nombre_completo'];
+
+    public function getNombreCompletoAttribute(){
+        return collect([
+            $this->nombre,
+            $this->primer_apellido,
+            $this->segundo_apellido,
+        ])->filter()->join(' ');
+    }
+
 }

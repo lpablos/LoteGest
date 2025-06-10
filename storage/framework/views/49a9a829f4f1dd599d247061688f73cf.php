@@ -47,7 +47,6 @@
     <div class="col-md-4">
         <label for="manzana_id" class="form-label">Manzana</label>
         <select name="manzana_id" id="manzana_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <option value="" selected disabled>Selecciona una manzana</option>
             <?php $__currentLoopData = $fracc->manzanas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $manzana): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($manzana->id); ?>"
                     <?php echo e(isset($lote) && $lote->manzana_id == $manzana->id ? 'selected' : ''); ?>>
@@ -61,7 +60,6 @@
     <div class="col-md-4">
         <label for="cat_estatus_id" class="form-label">Estatus</label>
         <select name="cat_estatus_id" id="cat_estatus_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
             <?php $__currentLoopData = $estatus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($estatusItem->id); ?>"
                     <?php echo e(isset($lote) && $lote->cat_estatus_id == $estatusItem->id ? 'selected' : ''); ?>>
@@ -72,9 +70,8 @@
         </select>
     </div>
     <div class="col-md-4">
-        <label for="cat_estatus_id" class="form-label">Estatus Disponibilidad</label>
-        <select name="cat_estatus_id" id="cat_estatus_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
+        <label for="cat_estatus_disponibilidad_id" class="form-label">Estatus Disponibilidad</label>
+        <select name="cat_estatus_disponibilidad_id" id="cat_estatus_disponibilidad_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
             <?php $__currentLoopData = $estatusDisponibilidad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusItemDispo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($estatusItemDispo->id); ?>"
                     <?php echo e(isset($lote) && $lote->cat_estatus_id == $estatusItemDispo->id ? 'selected' : ''); ?>>
@@ -86,13 +83,12 @@
     </div>
 
     <div class="col-md-6">
-        <label for="cat_estatus_id" class="form-label">Corredor</label>
-        <select name="cat_estatus_id" id="cat_estatus_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <option value="" selected disabled>Selecciona un estatus</option>
-            <?php $__currentLoopData = $estatus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($estatusItem->id); ?>"
-                    <?php echo e(isset($lote) && $lote->cat_estatus_id == $estatusItem->id ? 'selected' : ''); ?>>
-                    <?php echo e($estatusItem->nombre); ?>
+        <label for="user_corredor_id" class="form-label">Corredor(*)</label>
+        <select name="user_corredor_id" id="user_corredor_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
+            <?php $__currentLoopData = $corredores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $corredor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($corredor->id); ?>"
+                    <?php echo e(isset($lote) && $lote->user_corredor_id == $corredor->id ? 'selected' : ''); ?>>
+                    <?php echo e($corredor->nombre_completo); ?>
 
                 </option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

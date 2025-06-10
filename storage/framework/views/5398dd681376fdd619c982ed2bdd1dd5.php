@@ -34,9 +34,10 @@
 <div class="row mb-3">
     <div class="col-md-6">
         <label for="predio_urbano" class="form-label">Tipo de Predio</label>
-        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select">
+        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select" style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
             <?php $__currentLoopData = $tpPredio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $predio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($predio->id); ?>"><?php echo e($predio->nombre); ?></option>
+                <option value="<?php echo e($predio->id); ?>">- <?php echo e($predio->nombre); ?></option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
         <!-- <input type="text" name="predio_urbano" id="predio_urbano<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-control" value="<?php echo e(isset($fracc)? $fracc->predio_urbano:''); ?>"> -->
@@ -56,9 +57,10 @@
 
     <div class="col-md-6">
         <label for="proyecto_id" class="form-label">Proyecto</label>
-        <select name="proyecto_id" id="proyecto_id<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-select">
+        <select name="proyecto_id" id="proyecto_id<?php echo e(isset($fracc)? $fracc->id:''); ?>" class="form-select" style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
             <?php $__currentLoopData = $proyectos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $proyecto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($proyecto->id); ?>"><?php echo e($proyecto->nombre); ?></option>
+                <option value="<?php echo e($proyecto->id); ?>">- <?php echo e($proyecto->nombre); ?></option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>
@@ -82,7 +84,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <label class="form-label"># Manzana</label>
-                        <input type="number" name="manzanas[<?php echo e($index); ?>][num_lotes]" class="form-control" value="<?php echo e($manzana['num_lotes'] ?? ''); ?>">
+                        <input type="number" name="manzanas[<?php echo e($index); ?>][num_manzana]" class="form-control" value="<?php echo e($manzana['num_manzana'] ?? ''); ?>">
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Colinda Norte</label>

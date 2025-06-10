@@ -16,7 +16,7 @@ class ManzaSeeder extends Seeder
          $manzanas = [
             // Fraccionamiento 1
             [
-                'num_lotes' => 10,
+                'num_manzana' => 10,
                 'colinda_norte' => 'Calle 1',
                 'colinda_sur' => 'Calle 2',
                 'colinda_este' => 'Parque A',
@@ -24,7 +24,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 1,
             ],
             [
-                'num_lotes' => 12,
+                'num_manzana' => 12,
                 'colinda_norte' => 'Av. Robles',
                 'colinda_sur' => 'Calle Sauce',
                 'colinda_este' => 'Escuela',
@@ -32,7 +32,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 1,
             ],
             [
-                'num_lotes' => 8,
+                'num_manzana' => 8,
                 'colinda_norte' => 'Calle F',
                 'colinda_sur' => 'Calle G',
                 'colinda_este' => 'Terreno baldío',
@@ -42,7 +42,7 @@ class ManzaSeeder extends Seeder
 
             // Fraccionamiento 2
             [
-                'num_lotes' => 15,
+                'num_manzana' => 15,
                 'colinda_norte' => 'Jardín',
                 'colinda_sur' => 'Zona industrial',
                 'colinda_este' => 'Calle 3',
@@ -50,7 +50,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 2,
             ],
             [
-                'num_lotes' => 11,
+                'num_manzana' => 11,
                 'colinda_norte' => 'Cancha',
                 'colinda_sur' => 'Piscina',
                 'colinda_este' => 'Av. Central',
@@ -58,7 +58,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 2,
             ],
             [
-                'num_lotes' => 9,
+                'num_manzana' => 9,
                 'colinda_norte' => 'Mercado',
                 'colinda_sur' => 'Callejón Los Pinos',
                 'colinda_este' => 'Iglesia',
@@ -68,7 +68,7 @@ class ManzaSeeder extends Seeder
 
             // Fraccionamiento 3
             [
-                'num_lotes' => 14,
+                'num_manzana' => 14,
                 'colinda_norte' => 'Hospital',
                 'colinda_sur' => 'Universidad',
                 'colinda_este' => 'Estación de bus',
@@ -76,7 +76,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 3,
             ],
             [
-                'num_lotes' => 7,
+                'num_manzana' => 7,
                 'colinda_norte' => 'Río Verde',
                 'colinda_sur' => 'Campo de fútbol',
                 'colinda_este' => 'Granero',
@@ -84,7 +84,7 @@ class ManzaSeeder extends Seeder
                 'fraccionamiento_id' => 3,
             ],
             [
-                'num_lotes' => 16,
+                'num_manzana' => 16,
                 'colinda_norte' => 'Calle 9',
                 'colinda_sur' => 'Calle 10',
                 'colinda_este' => 'Residencias El Bosque',

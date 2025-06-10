@@ -11,7 +11,7 @@ class Manzana extends Model
     protected $table = 'manzanas';
 
     protected $fillable = [
-        'num_lotes',
+        'num_manzana',
         'colinda_norte',
         'colinda_sur',
         'colinda_este',

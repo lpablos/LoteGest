@@ -84,7 +84,7 @@ class FraccionamientoController extends Controller
 
             foreach ($request->manzanas as $manzana) {
                 $fraccionamiento->manzanas()->create([
-                    'num_lotes' => $manzana['num_lotes'],
+                    'num_manzana' => $manzana['num_manzana'],
                     'colinda_norte' => $manzana['colinda_norte'],
                     'colinda_sur' => $manzana['colinda_sur'],
                     'colinda_este' => $manzana['colinda_este'],
@@ -165,7 +165,7 @@ class FraccionamientoController extends Controller
             $fraccionamiento->save();
             //   foreach ($request->manzanas as $manzana) {
             //     $fraccionamiento->manzanas()->create([
-            //         'num_lotes' => $manzana['num_lotes'],
+            //         'num_manzana' => $manzana['num_manzana'],
             //         'colinda_norte' => $manzana['colinda_norte'],
             //         'colinda_sur' => $manzana['colinda_sur'],
             //         'colinda_este' => $manzana['colinda_este'],

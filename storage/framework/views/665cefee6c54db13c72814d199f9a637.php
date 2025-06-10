@@ -199,7 +199,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <label class="form-label"># Manzana (*)</label>
-                    <input type="number" name="manzanas[${index}][num_lotes]" class="form-control" required>
+                    <input type="number" name="manzanas[${index}][num_manzana]" class="form-control" required>
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Colinda Norte</label>

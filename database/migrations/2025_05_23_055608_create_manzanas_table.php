@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('manzanas', function (Blueprint $table) {
             $table->id();
-            $table->integer('num_lotes')->nullable();
+            $table->integer('num_manzana')->nullable();
             $table->string('colinda_norte')->nullable();
             $table->string('colinda_sur')->nullable();
             $table->string('colinda_este')->nullable();

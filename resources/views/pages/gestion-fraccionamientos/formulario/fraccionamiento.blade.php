@@ -84,7 +84,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <label class="form-label"># Manzana</label>
-                        <input type="number" name="manzanas[{{ $index }}][num_lotes]" class="form-control" value="{{ $manzana['num_lotes'] ?? '' }}">
+                        <input type="number" name="manzanas[{{ $index }}][num_manzana]" class="form-control" value="{{ $manzana['num_manzana'] ?? '' }}">
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Colinda Norte</label>
