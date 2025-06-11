@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->date('dob');
             $table->date('fecha_registro');
+            $table->string('seudonimo')->nullable();
+            $table->string('telefono')->nullable();
             $table->text('avatar')->nullable();
             $table->unsignedBigInteger("role_id")->nullable();
             $table->foreign("role_id")->references("id")->on("roles");

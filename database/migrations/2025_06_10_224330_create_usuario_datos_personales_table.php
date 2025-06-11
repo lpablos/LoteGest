@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('usuario_datos_personales', function (Blueprint $table) {
 
             $table->id();
-            $table->string('telefono')->nullable();
             $table->string('edad')->nullable();
             $table->string('domicilio')->nullable();
             $table->text('enfermedades')->nullable();
@@ -23,7 +22,6 @@ return new class extends Migration
             $table->date('fecha_laboral')->nullable();
             $table->string('num_contacto')->nullable();
             $table->string('parentesco')->nullable();
-            $table->string('seudonimo')->nullable();
             $table->unsignedBigInteger("usuario_id")->nullable();
             $table->foreign("usuario_id")->references("id")->on("users");
             $table->timestamps();

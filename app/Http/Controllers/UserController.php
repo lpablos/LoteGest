@@ -18,7 +18,9 @@ class UserController extends Controller
     public function index()
     {
         if (view()->exists('pages.usuario.index')) {
-            $usuarios = User::withTrashed()->leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
+            $usuarios = User::withTrashed()
+                            ->leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
+                            ->leftJoin('usuario_datos_personales as udp', 'users.id', 'udp.usuario_id', )
                             ->leftJoin('roles', 'users.role_id', 'roles.id')
                             ->select(
                                 'users.id',
@@ -28,6 +30,7 @@ class UserController extends Controller
                                 'users.email',
                                 'users.fecha_registro',
                                 'users.estatus_id',
+                                'users.updated_at',
                                 'cat_estatus.nombre as estatus',
                                 'roles.nombre as rol',
                             )->orderByDesc('id')
@@ -57,29 +60,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $input = $request->all();
-        
-        if ($request->rol_id = 1 || $request->rol_id = 2 || $request->rol_id = 3) {
-            $rules = [
-                'nombre' => 'required',
-                'primer_apellido' => 'required',
-                'email' => 'required',
-                'telefono' => 'required',
-                'fecha_nacimiento' => 'required',
-                'fecha_inicio_laboral' => 'required'
-            ];    
-        }
-        
-        if ($request->rol_id = 4) {
-            // dd('d');
-                $rules = [
-                    'nombre' => 'required',
-                    'primer_apellido' => 'required',
-                    'email' => 'required',
-                    'telefono' => 'required'
-                ];
-        }
+
+        $rules = [
+            'nombre' => 'required',
+            'primer_apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+        ];
 
         $validator = Validator::make($input, $rules);
 
@@ -102,11 +90,12 @@ class UserController extends Controller
             $usuario->avatar = ($request->imagenPerfil == null) ? 'SIN INFORMACIÓN' : $request->imagenPerfil;
             $usuario->role_id = $request->rol_id;
             $usuario->fecha_registro = now();
+            $usuario->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono;
+            $usuario->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo;
             $usuario->estatus_id = 1;
             $usuario->save();
 
             $datosPersonales = new UsuarioDatosPersonales();
-            $datosPersonales->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono ;
             $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
             $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
             $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
@@ -115,7 +104,6 @@ class UserController extends Controller
             $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
             $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
             $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
-            $datosPersonales->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo ;
             $datosPersonales->usuario_id = $usuario->id;
             $datosPersonales->save();
             
@@ -145,7 +133,27 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $usuario = User::withTrashed()->select('id', 'nombre', 'primer_apellido', 'segundo_apellido', 'email', 'role_id', 'estatus_id')->where('id', $id)->first();
+        $usuario = User::withTrashed()->leftJoin('usuario_datos_personales as udp', 'users.id', 'udp.usuario_id', )
+                                    ->select(
+                                                'users.id',
+                                                'users.nombre',
+                                                'users.primer_apellido',
+                                                'users.segundo_apellido',
+                                                'users.email',
+                                                'users.role_id',
+                                                'users.estatus_id',
+                                                'users.telefono',
+                                                'users.seudonimo',
+                                                'udp.edad',
+                                                'udp.domicilio',
+                                                'udp.enfermedades',
+                                                'udp.fecha_nacimiento',
+                                                'udp.tipo_sangre',
+                                                'udp.fecha_laboral',
+                                                'udp.num_contacto',
+                                                'udp.parentesco',
+                                            )->where('users.id', $id)->first();
+        // dd($usuario);
         $roles = Role::select('id', 'nombre')->get();
 
         return view('pages.usuario.edit', compact('usuario', 'roles'));
@@ -156,21 +164,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($id);
+        // dd($request->all());
         $input = $request->all();
 
         $rules = [
             'nombre' => 'required',
             'primer_apellido' => 'required',
             'email' => 'required',
-            'rol_id' => 'required'
+            'telefono' => 'required'
         ];
 
         $validator = Validator::make($input, $rules);
 
         if ($validator->fails()) {
             Session::flash('error', 'Campos obligatorios incompletos');
-            return redirect()->route('usuarios.create');
+            return redirect()->route('usuarios.edit',["usuario" => $id]);
         }
 
         DB::beginTransaction();
@@ -185,8 +193,22 @@ class UserController extends Controller
                 if ($request->password != null) {
                     $usuario->password = Hash::make($request->password);
                 }
-                $usuario->role_id = $request->rol_id;
+                $usuario->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono ;
+                $usuario->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo ;
                 $usuario->save();
+
+                if ($usuario->role_id != 4) {
+                    $datosPersonales = UsuarioDatosPersonales::find($id);
+                    $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
+                    $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
+                    $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
+                    $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
+                    $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
+                    $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
+                    $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
+                    $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
+                    $datosPersonales->save();
+                }
     
                 DB::commit();
     
@@ -198,6 +220,7 @@ class UserController extends Controller
 
         }catch (\PDOException $e){
             DB::rollBack();
+            dd($e);
             return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
         }
     }

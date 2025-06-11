@@ -26,43 +26,110 @@
                 @csrf
                 <div class="card">
                     <div class="card-body">
-                       <div class="row col-md-12">
+                        <div class="col-md-3 mb-4">
+                            <label for="rol_id"> Rol (*) </label>
+                            <select class="form-select form-select-sm" id="rol_id" name="rol_id" style="cursor: pointer;" disabled>
+                                <option value="" selected disabled> Selecciona una opción </option>
+                                @foreach ($roles as $rol)
+                                    <option value="{{ $rol->id }}" @if ($rol->id == $usuario->role_id) selected @endif >- {{ $rol->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="row col-md-12" style="display: none;" id="formPersonal">
                             <h4 class="card-title text-center"> Datos Personales </h4>
                             <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
                             <div class="col-md-3 mb-4">
                                 <label for="nombre"> Nombre(s)(*) </label>
-                                <input type="text" class="form-control form-control-sm" name="nombre" value="{{ $usuario->nombre }}" style="text-transform:lowercase" required>
+                                <input type="text" class="form-control form-control-sm" id="nombre" name="nombre" value="{{ $usuario->nombre }}" style="text-transform:lowercase" disabled required>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="primer_apellido"> Primer Apellido (*) </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido" value="{{ $usuario->primer_apellido }}" style="text-transform:lowercase" required>
+                                <input type="text" class="form-control form-control-sm" id="primer_apellido" name="primer_apellido" value="{{ $usuario->primer_apellido }}" style="text-transform:lowercase" disabled required>
                             </div>
-                            <div class="col-md-3 b-4">
+                            <div class="col-md-3 mb-4">
                                 <label for="segundo_apellido"> Segundo Apellido</label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" value="{{ $usuario->segundo_apellido }}" style="text-transform:lowercase">
+                                <input type="text" class="form-control form-control-sm" id="segundo_apellido" name="segundo_apellido" value="{{ $usuario->segundo_nombre }}" style="text-transform:lowercase" disabled>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="email"> Correo Electrónico (*) </label>
-                                <input type="email" class="form-control form-control-sm" name="email" value="{{ $usuario->email }}" style="text-transform:lowercase" required>
+                                <input type="email" class="form-control form-control-sm" id="email" name="email" value="{{ $usuario->email }}" style="text-transform:lowercase" disabled required>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <label for="rol_id"> Rol (*) </label>
-                                <select class="form-select form-select-sm" name="rol_id" style="cursor: pointer;" required>
-                                    <option value="" selected disabled> Selecciona una opción </option>
-                                    @foreach ($roles as $rol)
-                                        <option value="{{ $rol->id }}" @if ($usuario->role_id == $rol->id) selected @endif>- {{ $rol->nombre }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="telefono"> Teléfono (*) </label>
+                                <input type="number" class="form-control form-control-sm" id="telefono" name="telefono" value="{{ $usuario->telefono }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" disabled>
                             </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="password"> Contraseña </label>
-                                <input type="password" class="form-control form-control-sm" name="password">
-                                <small style="color: red">Sólo si se desea modificar</small>
+                            <div class="col-md-3 mb-4" id="divSeudonimo">
+                                <label for="seudonimo"> Seudónimo </label>
+                                <input type="text" class="form-control form-control-sm" id="seudonimo" name="seudonimo" value="{{ $usuario->seudonimo }}" placeholder="Ingresa la información">
+                            </div>
+                            <div class="col-md-3 mb-4" id="divFechaNacimiento">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $usuario->fecha_nacimiento }}" onchange="claculaEdad()" style="cursor: pointer;" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divEdad">
+                                <label for="edad"> Edad (*) <small> (En años) </small></label>
+                                <input type="number" class="form-control form-control-sm" id="edad" name="edad" value="{{ $usuario->edad }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3)" minlength="3" maxlength="3" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divImagenPerfil">
+                                <label for="imagenPerfil"> Imagen de perfil </label>
+                                <input type="file" id="imagenPerfil" name="imagenPerfil" class="form-control from-control-sm" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divDomicilio">
+                                <label for="domicilio"> Domicilio </label>
+                                <input type="text" class="form-control form-control-sm" id="domicilio" name="domicilio" value="{{ $usuario->domicilio }}" placeholder="Ingresa la información" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divEnfermedad">
+                                <label for="enfermedades"> Enfermedades/Alergias</label>
+                                <input type="text" class="form-control form-control-sm" id="enfermedades" name="enfermedades" value="{{ $usuario->enfermedades }}" placeholder="Ingresa la información" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divTipoSangre">
+                                <label for="tipo_sangre"> Tipo de sangre </label>
+                                <input type="text" class="form-control form-control-sm" id="tipo_sangre" name="tipo_sangre" value="{{ $usuario->tipo_sangre }}" placeholder="Ingresa la información" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divFechaInicioLaboral">
+                                <label for="fecha_inicio_laboral">Fecha de inicio laboral (*) </label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_inicio_laboral" name="fecha_inicio_laboral" value="{{ $usuario->fecha_laboral }}">
+                            </div>
+                            <div class="col-md-3 mb-4" id="divAntiguedad">
+                                <label for="antiguedad"> Antigüedad Laboral </label>
+                                <input type="text" class="form-control form-control-sm" id="antiguedad" name="antiguedad" readOnly>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divNumContacto">
+                                <label for="num_contacto">Número de contacto </label>
+                                <input type="number" class="form-control form-control-sm" id="num_contacto" name="num_contacto" value="{{ $usuario->num_contacto }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" disabled>
+                            </div>
+                            <div class="col-md-3 mb-4" id="divParentesco">
+                                <label for="parentesco"> Parentesco </label>
+                                <input type="text" class="form-control form-control-sm" id="parentesco" name="parentesco" style="text-transform:lowercase" disabled value="{{ $usuario->parentesco }}">
                             </div>
                         </div>
+                        {{--  <div class="row col-md-12" id="formCorredor" style="display: none;">
+                            <h4 class="card-title text-center"> Datos Personales </h4>
+                            <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
+                            <div class="col-md-3 mb-4">
+                                <label for="nombreCorredor"> Nombre(s)(*) </label>
+                                <input type="text" class="form-control form-control-sm" id="nombreCorredor" name="nombreCorredor" placeholder="Ingresa el nombre" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="primer_apellido_corredor"> Primer Apellido (*) </label>
+                                <input type="text" class="form-control form-control-sm" name="primer_apellido_corredor" placeholder="Ingresa el primer apellido" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="segundo_apellido_corredor"> Segundo Apellido</label>
+                                <input type="text" class="form-control form-control-sm" name="segundo_apellido_corredor" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="email_corredor"> Correo Electrónico (*) </label>
+                                <input type="email" class="form-control form-control-sm" name="email_corredor" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase">
+                            </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="telefono_corredor"> Teléfono </label>
+                                <input type="number" class="form-control form-control-sm" name="telefono_corredor" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
+                            </div>
+                        </div>  --}}
                     </div>
                 </div>
-                <div class="card">
+                <div class="card" style="display: none;">
                     <div class="card-body">
                        <div class="row col-md-12">
                             <h4 class="card-title text-center mb-4"> Configuración de Permisos (EN DESARROLLO)</h4>
@@ -137,7 +204,7 @@
                     </div> <!-- end col -->
                     <div class="col-sm-6">
                         <div class="text-end">
-                            <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
+                            <button type="submit" class="btn btn-success" disabled id="btnSubmit"><i class="mdi mdi-check me-1"></i> Guardar </button>
                         </div>
                     </div> 
                 </div>
@@ -167,6 +234,157 @@
 
     <!-- form advanced init -->
     <script src="{{ URL::asset('build/js/pages/form-advanced.init.js') }}"></script>
+    <script>
+        $( document ).ready(function() {
+            var rol = "<?php echo $usuario->role_id ?>";
+            if (rol == 1 || rol == 2 || rol == 3) {
+                $('#formPersonal').css('display', '');
+                document.getElementById("nombre").disabled = false;
+                document.getElementById("primer_apellido").disabled = false;
+                document.getElementById("segundo_apellido").disabled = false;
+                document.getElementById("email").disabled = false;
+                document.getElementById("telefono").disabled = false;
+                document.getElementById("btnSubmit").disabled = false;
+                document.getElementById("edad").disabled = false;
+                document.getElementById("imagenPerfil").disabled = false;
+                document.getElementById("domicilio").disabled = false;
+                document.getElementById("enfermedades").disabled = false;
+                document.getElementById("fecha_nacimiento").disabled = false;
+                document.getElementById("tipo_sangre").disabled = false;
+                document.getElementById("antiguedad").disabled = false;
+                document.getElementById("num_contacto").disabled = false;
+                document.getElementById("parentesco").disabled = false;
+                $("#divSeudonimo").hide();
+                $("#divEdad").show();
+                $("#divImagenPerfil").show();
+                $("#divDomicilio").show();
+                $("#divEnfermedad").show();
+                $("#divFechaNacimiento").show();
+                $("#divTipoSangre").show();
+                $("#divFechaInicioLaboral").show();
+                $("#divAntiguedad").show();
+                $("#divNumContacto").show();
+                $("#divParentesco").show();
+                document.getElementById("edad").required = true;
+                document.getElementById("telefono").required = true;
+                document.getElementById("imagenPerfil").required = false;
+                document.getElementById("domicilio").required = false;
+                document.getElementById("enfermedades").required = false;
+                document.getElementById("fecha_nacimiento").required = true;
+                document.getElementById("tipo_sangre").required = false;
+                document.getElementById("antiguedad").required = false;
+                document.getElementById("fecha_inicio_laboral").required = true;
+                document.getElementById("num_contacto").required = false;
+                document.getElementById("parentesco").required = false;
+            }  else if (rol == 4){
+                $('#formPersonal').css('display', '');
+                document.getElementById("nombre").disabled = false;
+                document.getElementById("primer_apellido").disabled = false;
+                document.getElementById("segundo_apellido").disabled = false;
+                document.getElementById("email").disabled = false;
+                document.getElementById("telefono").disabled = false;
+                $("#divSeudonimo").show();
+                $("#divEdad").hide();
+                $("#divImagenPerfil").hide();
+                $("#divDomicilio").hide();
+                $("#divEnfermedad").hide();
+                $("#divFechaNacimiento").hide();
+                $("#divTipoSangre").hide();
+                $("#divFechaInicioLaboral").hide();
+                $("#divAntiguedad").hide();
+                $("#divNumContacto").hide();
+                $("#divParentesco").hide();
+                document.getElementById("telefono").required = true;
+                document.getElementById("edad").required = false;
+                document.getElementById("imagenPerfil").required = false;
+                document.getElementById("domicilio").required = false;
+                document.getElementById("enfermedades").required = false;
+                document.getElementById("fecha_nacimiento").required = false;
+                document.getElementById("tipo_sangre").required = false;
+                document.getElementById("antiguedad").required = false;
+                document.getElementById("num_contacto").required = false;
+                document.getElementById("parentesco").required = false;
+                document.getElementById("fecha_inicio_laboral").required = false;
+                document.getElementById("seudonimo").required = false;
+                document.getElementById("btnSubmit").disabled = false;
+            }
+        });
+    </script>
+    <script>
+        $('#rol_id').on('change', function() {
+            if(this.value == 1 || this.value == 2 || this.value == 3){
+                $('#formPersonal').css('display', '');
+                document.getElementById("nombre").disabled = false;
+                document.getElementById("primer_apellido").disabled = false;
+                document.getElementById("segundo_apellido").disabled = false;
+                document.getElementById("email").disabled = false;
+                document.getElementById("telefono").disabled = false;
+                document.getElementById("btnSubmit").disabled = false;
+                document.getElementById("edad").disabled = false;
+                document.getElementById("imagenPerfil").disabled = false;
+                document.getElementById("domicilio").disabled = false;
+                document.getElementById("enfermedades").disabled = false;
+                document.getElementById("fecha_nacimiento").disabled = false;
+                document.getElementById("tipo_sangre").disabled = false;
+                document.getElementById("antiguedad").disabled = false;
+                document.getElementById("num_contacto").disabled = false;
+                document.getElementById("parentesco").disabled = false;
+                $("#divSeudonimo").hide();
+                $("#divEdad").show();
+                $("#divImagenPerfil").show();
+                $("#divDomicilio").show();
+                $("#divEnfermedad").show();
+                $("#divFechaNacimiento").show();
+                $("#divTipoSangre").show();
+                $("#divFechaInicioLaboral").show();
+                $("#divAntiguedad").show();
+                $("#divNumContacto").show();
+                $("#divParentesco").show();
+                document.getElementById("edad").required = true;
+                document.getElementById("telefono").required = true;
+                document.getElementById("imagenPerfil").required = false;
+                document.getElementById("domicilio").required = false;
+                document.getElementById("enfermedades").required = false;
+                document.getElementById("fecha_nacimiento").required = true;
+                document.getElementById("tipo_sangre").required = false;
+                document.getElementById("antiguedad").required = false;
+                document.getElementById("fecha_inicio_laboral").required = true;
+                document.getElementById("num_contacto").required = false;
+                document.getElementById("parentesco").required = false;
+            }  else if (this.value == 4){
+                $('#formPersonal').css('display', '');
+                document.getElementById("nombre").disabled = false;
+                document.getElementById("primer_apellido").disabled = false;
+                document.getElementById("segundo_apellido").disabled = false;
+                document.getElementById("email").disabled = false;
+                document.getElementById("telefono").disabled = false;
+                $("#divSeudonimo").show();
+                $("#divEdad").hide();
+                $("#divImagenPerfil").hide();
+                $("#divDomicilio").hide();
+                $("#divEnfermedad").hide();
+                $("#divFechaNacimiento").hide();
+                $("#divTipoSangre").hide();
+                $("#divFechaInicioLaboral").hide();
+                $("#divAntiguedad").hide();
+                $("#divNumContacto").hide();
+                $("#divParentesco").hide();
+                document.getElementById("telefono").required = true;
+                document.getElementById("edad").required = false;
+                document.getElementById("imagenPerfil").required = false;
+                document.getElementById("domicilio").required = false;
+                document.getElementById("enfermedades").required = false;
+                document.getElementById("fecha_nacimiento").required = false;
+                document.getElementById("tipo_sangre").required = false;
+                document.getElementById("antiguedad").required = false;
+                document.getElementById("num_contacto").required = false;
+                document.getElementById("parentesco").required = false;
+                document.getElementById("fecha_inicio_laboral").required = false;
+                document.getElementById("seudonimo").required = false;
+                document.getElementById("btnSubmit").disabled = false;
+            }
+        });
+    </script>
     @if(Session::has('success'))
         <script>
             toastr.options = {
