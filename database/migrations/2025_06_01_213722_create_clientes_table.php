@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('primer_apellido');
             $table->string('segundo_apellido')->nullable();
-            $table->string('telefono');
-            $table->date('fecha_nacimiento')->nullable();
-            $table->string('email')->unique();
-            $table->string('num_contacto');
-            $table->string('parentesco');
+            $table->string('telefono')->nullable();
+            $table->date('fecha_nacimiento');
+            $table->string('email')->unique()->nullable();
+            $table->string('num_contacto')->nullable();
+            $table->string('parentesco')->nullable();
             $table->string('url_ine')->nullable();
             $table->timestamps();
         });

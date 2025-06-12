@@ -45,9 +45,7 @@ class ClienteController extends Controller
         $rules = [
             'nombre' => 'required',
             'primer_apellido' => 'required',
-            'email' => 'required',
-            'telefono' => 'required',
-            'fileIne'=> 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'fecha_nacimiento' => 'required'
         ];
 
         $validator = Validator::make($input, $rules);
@@ -122,11 +120,7 @@ class ClienteController extends Controller
         $rules = [
             'nombre' => 'required',
             'primer_apellido' => 'required',
-            'email' => 'required',
-            'telefono' => 'required',
-            'num_contacto' => 'required',
-            'parentesco' => 'required',
-            'fileIne'=> 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'fecha_nacimiento' => 'required'
         ];
 
         $validator = Validator::make($input, $rules);

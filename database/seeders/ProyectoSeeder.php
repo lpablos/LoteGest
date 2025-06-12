@@ -16,30 +16,10 @@ class ProyectoSeeder extends Seeder
     {
         //
         Proyecto::create([
-            'nombre' => 'Xalapa',
+            'nombre' => 'Michoacán',
             'fecha_inicio' => Carbon::parse('2025-05-19'),
-            'responsable_proyecto' => 'Lic. Rodrigo Chávez',
-            // 'clave' => 'FRACC-001',
+            'responsable_proyecto' => 'Arq. Tania Medina Marcos',
             'observaciones' => 'Ubicado al sur de la ciudad, con lotes residenciales y comerciales.',
-            // 'estatus_proyecto_id' => 1, // Planeado
-        ]);
-
-        Proyecto::create([
-            'nombre' => 'Residencial Las Palmas',
-            'fecha_inicio' => Carbon::parse('2025-01-10'),
-            'responsable_proyecto' => 'Ing. Mariana López',
-            // 'clave' => 'FRACC-002',
-            'observaciones' => 'Fraccionamiento privado con amenidades y áreas verdes.',
-            // 'estatus_proyecto_id' => 2, // En ejecución
-        ]);
-
-        Proyecto::create([
-            'nombre' => 'Terrenos Campestres La Cumbre',
-            'fecha_inicio' => Carbon::parse('2023-08-15'),
-            'responsable_proyecto' => 'Arq. Ernesto Salazar',
-            // 'clave' => 'FRACC-003',
-            'observaciones' => 'Terrenos rústicos con vista panorámica, listos para escriturar.',
-            // 'estatus_proyecto_id' => 3, // Finalizado
         ]);
     }
 }

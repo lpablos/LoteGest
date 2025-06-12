@@ -42,15 +42,15 @@
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="telefono"> Teléfono </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
+                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
                             </div>
                              <div class="col-md-3 mb-4">
-                                <label for="fecha_nacimiento">Fecha de nacimiento </label>
+                                <label for="fecha_nacimiento">Fecha de nacimiento (*) </label>
                                 <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <label for="email"> Correo Electrónico (*) </label>
-                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" required>
+                                <label for="email"> Correo Electrónico </label>
+                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" >
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="num_contacto">Número de contacto </label>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-md-3 b-4">
                                 <label for="fileINE"> Identificación INE</label>
-                                <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture required>
+                                <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture>
                             </div>
                         </div>
                     </div>

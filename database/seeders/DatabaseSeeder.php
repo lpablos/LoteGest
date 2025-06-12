@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             CatTipoPredioTableSeeder::class,
             ProyectoSeeder::class,
             CatEstatusDisponibilidadTableSeeder::class,
-            FraccionamientoSeeder::class,
-            ManzaSeeder::class,
-            LoteSeeder::class,
+            // FraccionamientoSeeder::class,
+            // ManzaSeeder::class,
+            // LoteSeeder::class,
         ]);
     }
 }

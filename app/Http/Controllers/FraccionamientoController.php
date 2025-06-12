@@ -45,7 +45,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // dd($request->all());
         $validated = $request->validate([
             'nombre'          => 'required|string|max:255',
             'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -55,7 +55,7 @@ class FraccionamientoController extends Controller
             'ubicacion'       => 'nullable|string|max:255',
             'observaciones'   => 'nullable|string',
             'proyecto_id'     => 'required|exists:proyectos,id',
-            'tipo_predios_id' => 'required|exists:proyectos,id',
+            // 'tipo_predios_id' => 'required|exists:proyectos,id',
             'manzanas'        => 'required|array|min:1',
             
             
@@ -78,7 +78,7 @@ class FraccionamientoController extends Controller
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->proyecto_id = $validated['proyecto_id'];
-            $fraccionamiento->tipo_predios_id = $validated['tipo_predios_id'];
+            $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
 
