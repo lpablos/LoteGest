@@ -47,7 +47,6 @@
                                 <th> Fraccionamiento </th>
                                 <th> Responsable </th>
                                 <th> Propietaria </th>
-                                <th> Proyecto </th>
                                 <th> Superficie </th>
                                 <th> # Manzanas </th>
                                 <th> Acciones </th>
@@ -59,9 +58,8 @@
                                         <td>{{$fracc->nombre}}</td>
                                         <td>{{$fracc->reponsable}}</td>
                                         <td>{{$fracc->propietaria}}</td>
-                                        <td>{{$fracc->proyecto->nombre}}</td> 
                                         <td>{{$fracc->superficie}}</td>      
-                                        <td>{{$fracc->manzanas->count()}}</td>      
+                                        <td>{{$fracc->manzanas}}</td>      
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

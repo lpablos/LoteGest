@@ -22,14 +22,19 @@ return new class extends Migration
             $table->decimal('precio_credito', 12, 2)->nullable();
             $table->string('plano')->nullable();
             $table->text('observaciones')->nullable();
-            $table->unsignedBigInteger('manzana_id');
-            $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
+            $table->integer('manzana');
+            // $table->unsignedBigInteger('manzana_id');
+            // $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
             $table->unsignedBigInteger('cat_estatus_id');
             $table->foreign('cat_estatus_id')->references('id')->on('cat_estatus')->onDelete('restrict');
             $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
             $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
-             $table->unsignedBigInteger('user_corredor_id')->nullable();
+            $table->unsignedBigInteger('user_corredor_id')->nullable();
             $table->foreign('user_corredor_id')->references('id')->on('users')->onDelete('restrict');
+            $table->unsignedBigInteger('fraccionamiento_id');
+            $table->foreign('fraccionamiento_id')
+                  ->references('id')->on('fraccionamientos')
+                  ->onDelete('cascade');
             $table->softDeletes(); 
             $table->timestamps();
         });

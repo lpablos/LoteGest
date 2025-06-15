@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('propietaria')->nullable();
             $table->decimal('superficie', 10, 2)->nullable();
             $table->string('ubicacion')->nullable();
+            $table->unsignedInteger('manzanas')->nullable();
             $table->text('observaciones')->nullable();
-            $table->unsignedBigInteger('proyecto_id');
-            $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade');
+            
+            // $table->unsignedBigInteger('proyecto_id');
+            // $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('cascade');
              $table->unsignedBigInteger("tipo_predios_id")->nullable();
             $table->foreign("tipo_predios_id")->references("id")->on("cat_tipo_predios");
             $table->softDeletes(); 

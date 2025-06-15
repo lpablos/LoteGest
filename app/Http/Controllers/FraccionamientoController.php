@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
-use App\Models\Proyecto;
+// use App\Models\Proyecto;
 use App\Models\CatTipoPredio;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
@@ -19,10 +19,10 @@ class FraccionamientoController extends Controller
     {
         //
         $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
-        $proyectos=Proyecto::all();
+        // $proyectos=Proyecto::all();
         $tpPredio = CatTipoPredio::all();
         if (view()->exists('pages.gestion-fraccionamientos.index')) {
-            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','proyectos','tpPredio'));
+            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','tpPredio'));
         }
         return abort(404);
     }

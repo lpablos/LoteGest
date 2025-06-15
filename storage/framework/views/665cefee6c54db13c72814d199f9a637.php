@@ -45,7 +45,6 @@
                                 <th> Fraccionamiento </th>
                                 <th> Responsable </th>
                                 <th> Propietaria </th>
-                                <th> Proyecto </th>
                                 <th> Superficie </th>
                                 <th> # Manzanas </th>
                                 <th> Acciones </th>
@@ -57,9 +56,8 @@
                                         <td><?php echo e($fracc->nombre); ?></td>
                                         <td><?php echo e($fracc->reponsable); ?></td>
                                         <td><?php echo e($fracc->propietaria); ?></td>
-                                        <td><?php echo e($fracc->proyecto->nombre); ?></td> 
                                         <td><?php echo e($fracc->superficie); ?></td>      
-                                        <td><?php echo e($fracc->manzanas->count()); ?></td>      
+                                        <td><?php echo e($fracc->manzanas); ?></td>      
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

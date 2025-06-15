@@ -8,6 +8,7 @@ use App\Models\Lote;
 use App\Models\Manzana;
 use App\Models\CatEstatus;
 use Illuminate\Support\Str;
+use App\Models\Fraccionamiento;
 
 class LoteSeeder extends Seeder
 {
@@ -18,14 +19,15 @@ class LoteSeeder extends Seeder
     {
         // Asegúrate de tener manzanas y estatus existentes
         $manzanas = Manzana::all();
-        $estatuses = CatEstatus::all();
+        $manzanas = Manzana::all();
+        $Fraccionamientos = Fraccionamiento::all();
 
-        if ($manzanas->isEmpty() || $estatuses->isEmpty()) {
-            $this->command->warn('No hay manzanas o estatus en la base de datos. Seeder cancelado.');
-            return;
-        }
+        // if ($manzanas->isEmpty() || $estatuses->isEmpty()) {
+        //     $this->command->warn('No hay manzanas o estatus en la base de datos. Seeder cancelado.');
+        //     return;
+        // }
 
-        foreach ($manzanas as $manzana) {
+        foreach ($Fraccionamientos as $Fraccionamiento) {
             $cantidadLotes = rand(5, 15); // Crea entre 5 y 15 lotes por manzana
 
             for ($i = 0; $i < $cantidadLotes; $i++) {
@@ -39,7 +41,9 @@ class LoteSeeder extends Seeder
                     'precio_credito' => rand(110000, 150000),
                     // 'plano' => 'plano_' . Str::random(5) . '.pdf',
                     'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ' . $manzana->id,
-                    'manzana_id' => $manzana->id,
+                    // 'manzana_id' => $manzana->id,
+                    'manzana' => rand(5, 1),
+                    'fraccionamiento_id' => $Fraccionamiento->id,
                     'cat_estatus_id' => $estatuses->random()->id,
                     'cat_estatus_disponibilidad_id' => 1,
                     'user_corredor_id' => 1

@@ -12,7 +12,7 @@
                         <span key="t-dashboards">Gestion de Proyectos</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="<?php echo e(route('proyectos.index')); ?>" key="t-default">Proyectos</a></li>
+                        <!-- <li><a href="<?php echo e(route('proyectos.index')); ?>" key="t-default">Proyectos</a></li> -->
                         <li><a href="<?php echo e(route('fraccionamiento.index')); ?>" key="t-saas">Fraccionamientos</a></li>
                         <li><a href="<?php echo e(route('lote.index')); ?>" key="t-crypto">Lotes</a></li>
                     </ul>
@@ -27,7 +27,7 @@
                 <li>
                     <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
                         <i class="bx bx-user"></i>
-                        <span key="t-chat"> Personas </span>
+                        <span key="t-chat"> Personal </span>
                     </a>
                 </li>
                 <li>
