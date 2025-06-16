@@ -23,22 +23,13 @@ class LoteController extends Controller
         if (view()->exists('pages.gestion-lotes.index')) {
             $identy = $request->input('identy'); 
             $fraccionamientos = Fraccionamiento::orderBy('nombre', 'desc')->get();
-            
-            
-            $corredores = User::leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
-                            ->leftJoin('roles', 'users.role_id', 'roles.id')
-                            ->select(
-                                'users.*',
-                            )->orderByDesc('id')
-                            ->where('roles.nombre', 'corredor')
-                            ->get();
             $fracc = $identy
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null;
-            $estatus = CatEstatus::all();
+            
             $estatusDisponibilidad = CatEstatusDisponibilidad::all();
 
-            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatus','estatusDisponibilidad', 'corredores'));
+            return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatusDisponibilidad'));
         }
         return abort(404);
     }
@@ -64,11 +55,14 @@ class LoteController extends Controller
             'precio_contado'   => ['nullable', 'numeric', 'min:0'],
             'precio_credito'   => ['nullable', 'numeric', 'min:0'],
             'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'manzana'          => ['required', 'numeric', 'min:1'],
+            'colinda_norte'    => ['nullable', 'string'],
+            'colinda_sur'      => ['nullable', 'string'],
+            'colinda_este'     => ['nullable', 'string'],
+            'colinda_oeste'    => ['nullable', 'string'],
             'observaciones'    => ['nullable', 'string'],
-            'manzana_id'       => ['required', 'exists:manzanas,id'],
-            'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
             'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
-            'user_corredor_id' => ['required'],
+            'fraccionamiento_id' =>['required'],
         ]);
         
         DB::beginTransaction();
@@ -86,11 +80,14 @@ class LoteController extends Controller
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
             $lote->plano = $validated['plano'];
+            $lote->manzana = $validated['manzana'];
+            $lote->colinda_norte = $validated['colinda_norte'];
+            $lote->colinda_sur = $validated['colinda_sur'];
+            $lote->colinda_este = $validated['colinda_este'];
+            $lote->colinda_oeste = $validated['colinda_oeste'];
             $lote->observaciones = $validated['observaciones'];
-            $lote->manzana_id = $validated['manzana_id'];
-            $lote->cat_estatus_id = $validated['cat_estatus_id'];
             $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
-            $lote->user_corredor_id = $validated['user_corredor_id'];
+            $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->save();
             DB::commit();
             Session::flash('success', 'Lote fue registrado');

@@ -1,5 +1,9 @@
  <div class="row g-3">
-
+    <div>
+        <div>
+            <div><input type="hidden" name="fraccionamiento_id" value="<?php echo e($fracc->id); ?>" required></div>
+        </div>
+    </div>
     <?php if(isset($lote) && !empty($lote->plano) ): ?>
         <div class="row mb-3">
             <div class="col-md-12 text-center">
@@ -34,7 +38,7 @@
 
     <div class="col-md-4">
         <label for="plano" class="form-label">Plano (Archivo)</label>
-        <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value= class="form-control">
+        <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value="" class="form-control">
     </div>
 
    
@@ -54,32 +58,27 @@
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
         <select name="manzana" id="manzana<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <option value="1">Manazna 1</option>
-            <option value="2">Manazna 2</option>
-            <option value="3">Manazna 3</option>
-            <option value="2">Manazna 4</option>
-            <option value="3">Manazna 5</option>
+            <?php $__currentLoopData = range(1, $fracc->manzanas); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($i); ?>">Manazna <?php echo e($i); ?></option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
-    </div>
-   
+    </div>   
     <div class="col-md-4">
         <label class="form-label">Colinda Norte</label>
-        <input type="text" name="colinda_norte" class="form-control">
+        <input type="text" name="colinda_norte" value="<?php echo e(isset($lote)? $lote->colinda_norte : ''); ?>" class="form-control">
     </div>
-    <div class="col-md-4">
-        <label class="form-label">Colinda Sur</label>
-        <input type="text" name="colinda_sur" class="form-control">
+    <div  class="col-md-4">
+        <label  class="form-label">Colinda Sur</label>
+        <input type="text" name="colinda_sur" value="<?php echo e(isset($lote)? $lote->colinda_sur : ''); ?>" class="form-control">
     </div>
-    <div class="col-md-4">
+    <div  class="col-md-4">
         <label class="form-label">Colinda Este</label>
-        <input type="text" name="colinda_este" class="form-control">
+        <input type="text" name="colinda_este" value="<?php echo e(isset($lote)? $lote->colinda_este : ''); ?>" class="form-control">
     </div>
     <div class="col-md-4">
         <label class="form-label">Colinda Oeste</label>
-        <input type="text" name="colinda_oeste" class="form-control">
+        <input type="text" name="colinda_oeste" value="<?php echo e(isset($lote)? $lote->colinda_oeste : ''); ?>" class="form-control">
     </div>
-
-    
     <div class="col-md-12">
         <label for="observaciones" class="form-label">Observaciones</label>
         <textarea name="observaciones" id="observaciones<?php echo e($lote->id ?? ''); ?>" rows="3" class="form-control"><?php echo e($lote->observaciones ?? ''); ?></textarea>
