@@ -49,22 +49,10 @@ class LoteController extends Controller
     public function store(Request $request)
     {
         
-        $validated = $request->validate([
-            'num_lote'         => ['required', 'string'],
-            'medidas_m'        => ['required', 'string'],
-            'superficie_m2'    => ['required', 'numeric', 'min:1'],
-            'precio_contado'   => ['nullable', 'numeric', 'min:0'],
-            'precio_credito'   => ['nullable', 'numeric', 'min:0'],
-            'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
-            'manzana'          => ['required', 'numeric', 'min:1'],
-            'colinda_norte'    => ['nullable', 'string'],
-            'colinda_sur'      => ['nullable', 'string'],
-            'colinda_este'     => ['nullable', 'string'],
-            'colinda_oeste'    => ['nullable', 'string'],
-            'observaciones'    => ['nullable', 'string'],
-            'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
-            'fraccionamiento_id' =>['required'],
-        ]);
+        $validated = $request->validate(  
+            $this->loteRules(),
+            $this->loteMessages()
+        );
         
         DB::beginTransaction();
         try {
@@ -127,22 +115,10 @@ class LoteController extends Controller
     public function update(Request $request, string $id)
     {
         
-       $validated = $request->validate([
-            'num_lote'         => ['required', 'string'],
-            'medidas_m'        => ['required', 'string'],
-            'superficie_m2'    => ['required', 'numeric', 'min:1'],
-            'precio_contado'   => ['nullable', 'numeric', 'min:0'],
-            'precio_credito'   => ['nullable', 'numeric', 'min:0'],
-            'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
-            'manzana'          => ['required', 'numeric', 'min:1'],
-            'colinda_norte'    => ['nullable', 'string'],
-            'colinda_sur'      => ['nullable', 'string'],
-            'colinda_este'     => ['nullable', 'string'],
-            'colinda_oeste'    => ['nullable', 'string'],
-            'observaciones'    => ['nullable', 'string'],
-            'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
-            'fraccionamiento_id' =>['required'],
-        ]);
+       $validated = $request->validate( 
+            $this->loteRules(),
+            $this->loteMessages()
+        );
         DB::beginTransaction();
         try {
 
@@ -208,5 +184,43 @@ class LoteController extends Controller
             return view('pages.gestion-lotes.create',compact('fraccionamiento_id'));
         }
         return abort(404);
+    }
+
+
+
+     private function loteRules(): array
+    {
+        return [
+            'num_lote'                         => ['required', 'string'],
+            'medidas_m'                        => ['required', 'string'],
+            'superficie_m2'                    => ['required', 'numeric', 'min:1'],
+            'precio_contado'                   => ['nullable', 'numeric', 'min:0'],
+            'precio_credito'                   => ['nullable', 'numeric', 'min:0'],
+            'plano'                            => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
+            'manzana'                          => ['required', 'numeric', 'min:1'],
+            'colinda_norte'                    => ['nullable', 'string'],
+            'colinda_sur'                      => ['nullable', 'string'],
+            'colinda_este'                     => ['nullable', 'string'],
+            'colinda_oeste'                    => ['nullable', 'string'],
+            'observaciones'                    => ['nullable', 'string'],
+            'cat_estatus_disponibilidad_id'    => ['required', 'exists:cat_estatus_disponibilidad,id'],
+            'fraccionamiento_id'               => ['required'],
+        ];
+    }
+
+    private function loteMessages(): array
+    {
+        return [
+            'num_lote.required'                     => 'El número de lote es obligatorio.',
+            'num_lote.string'                       => 'El número de lote debe ser texto.',
+            'medidas_m.required'                    => 'Las medidas son obligatorias.',
+            'superficie_m2.min'                     => 'La superficie debe ser al menos :min m².',
+            'precio_contado.min'                    => 'El precio de contado no puede ser negativo.',
+            'plano.image'                           => 'El plano debe ser una imagen.',
+            'plano.mimes'                           => 'El plano debe ser jpg, jpeg, png o webp.',
+            'manzana.min'                           => 'La manzana debe ser al menos :min.',
+            'cat_estatus_disponibilidad_id.required'=> 'El estatus de disponibilidad es obligatorio.',
+            // [...] completa con el resto.
+        ];
     }
 }

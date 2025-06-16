@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-md-6">
-        <label for="imagen" class="form-label">Imagen </label>
+        <label for="imagen" class="form-label">Imagen (jpg,jpeg,png,webp)</label>
         <input type="file" name="imagen" id="imagen{{isset($fracc)? $fracc->id:''}}" class="form-control">
     </div>
 </div>

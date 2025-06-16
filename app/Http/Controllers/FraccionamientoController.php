@@ -47,16 +47,10 @@ class FraccionamientoController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $validated = $request->validate([
-            'nombre'          => 'required|string|max:255',
-            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'reponsable'      => 'nullable|string|max:255', 
-            'propietaria'     => 'nullable|string|max:255',
-            'superficie'      => 'nullable|numeric|min:0',
-            'ubicacion'       => 'nullable|string|max:255',
-            'manzanas'        => 'nullable|numeric|min:1',
-            'observaciones'   => 'nullable|string',
-        ]);
+        $validated = $request->validate( 
+            $this->fraccRules(),
+            $this->fraccMessages()
+        );
         DB::beginTransaction();
         try {
             if (isset($validated['imagen'])) {
@@ -118,17 +112,10 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $validated = $request->validate([
-            'nombre'          => 'required|string|max:255',
-            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'reponsable'      => 'nullable|string|max:255', 
-            'propietaria'     => 'nullable|string|max:255',
-            'superficie'      => 'nullable|numeric|min:0',
-            'ubicacion'       => 'nullable|string|max:255',
-            'manzanas'        => 'nullable|numeric|min:1',
-            'observaciones'   => 'nullable|string',
-            'tipo_predios_id' => 'nullable|numeric|min:1',
-        ]);
+        $validated = $request->validate(
+            $this->fraccRules(),
+            $this->fraccMessages()
+        );
         DB::beginTransaction();
         try {
             $fraccionamiento = Fraccionamiento::find($id);
@@ -205,5 +192,50 @@ class FraccionamientoController extends Controller
             return view('pages.gestion-fraccionamiento.lotes', compact('lotes','fraccionamiento','proyecto'));
         }
         return abort(404);
+    }
+
+     private function fraccRules(): array
+    {
+        return [
+            'nombre'          => 'required|string|max:255',
+            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'reponsable'      => 'nullable|string|max:255', 
+            'propietaria'     => 'nullable|string|max:255',
+            'superficie'      => 'nullable|numeric|min:0',
+            'ubicacion'       => 'nullable|string|max:255',
+            'manzanas'        => 'nullable|numeric|min:1',
+            'observaciones'   => 'nullable|string',
+            'tipo_predios_id' => 'nullable|numeric|min:1',
+        ];
+    }
+
+    /** Mensajes de error personalizados */
+    private function fraccMessages(): array
+    {
+        return [
+            'nombre.required'           => 'El nombre es obligatorio.',
+            'nombre.string'             => 'El nombre debe ser un texto válido.',
+            'nombre.max'                => 'El nombre no puede exceder :max caracteres.',
+
+            'imagen.image'              => 'La imagen debe ser un archivo de imagen.',
+            'imagen.mimes'              => 'Solo se permiten formatos jpg, jpeg, png o webp.',
+            'imagen.max'                => 'La imagen no puede superar los 2 MB.',
+
+            'reponsable.string'         => 'El responsable debe ser un texto válido.',
+            'propietaria.string'        => 'La propietaria debe ser un texto válido.',
+
+            'superficie.numeric'        => 'La superficie debe ser un número.',
+            'superficie.min'            => 'La superficie no puede ser negativa.',
+
+            'ubicacion.string'          => 'La ubicación debe ser un texto válido.',
+
+            'manzanas.numeric'          => 'Las manzanas deben ser numéricas.',
+            'manzanas.min'              => 'Debe haber al menos una manzana.',
+
+            'observaciones.string'      => 'Las observaciones deben ser un texto válido.',
+
+            'tipo_predios_id.numeric'   => 'El tipo de predio debe ser numérico.',
+            'tipo_predios_id.min'       => 'El tipo de predio debe tener al menos valor :min.',
+        ];
     }
 }
