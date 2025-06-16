@@ -41,6 +41,8 @@
                         <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
                         <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
                         <li><a href="{{ route('tipo-de-predios.index') }}" key="t-tui-calendar"> Tipo de Predios </a></li>
+                        <li><a href="{{ route('entidades-federativas.index') }}" key="t-tui-calendar"> Estados del país </a></li>
+                        <li><a href="{{ route('municipios.index') }}" key="t-tui-calendar"> Municipios </a></li>
                     </ul>
                 </li>
                 <li>
