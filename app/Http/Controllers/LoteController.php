@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Storage;
 
 class LoteController extends Controller
 {
@@ -75,17 +76,17 @@ class LoteController extends Controller
             }
             $lote = new Lote();
             $lote->num_lote = $validated['num_lote'];
-            $lote->medidas_m = $validated['medidas_m'];
+            $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
             $lote->plano = $validated['plano'];
             $lote->manzana = $validated['manzana'];
-            $lote->colinda_norte = $validated['colinda_norte'];
-            $lote->colinda_sur = $validated['colinda_sur'];
-            $lote->colinda_este = $validated['colinda_este'];
-            $lote->colinda_oeste = $validated['colinda_oeste'];
-            $lote->observaciones = $validated['observaciones'];
+            $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
+            $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
+            $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
+            $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
+            $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->save();
@@ -133,34 +134,47 @@ class LoteController extends Controller
             'precio_contado'   => ['nullable', 'numeric', 'min:0'],
             'precio_credito'   => ['nullable', 'numeric', 'min:0'],
             'plano'            => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'manzana'          => ['required', 'numeric', 'min:1'],
+            'colinda_norte'    => ['nullable', 'string'],
+            'colinda_sur'      => ['nullable', 'string'],
+            'colinda_este'     => ['nullable', 'string'],
+            'colinda_oeste'    => ['nullable', 'string'],
             'observaciones'    => ['nullable', 'string'],
-            'manzana_id'       => ['required', 'exists:manzanas,id'],
-            'cat_estatus_id'   => ['required', 'exists:cat_estatus,id'],
             'cat_estatus_disponibilidad_id'   => ['required', 'exists:cat_estatus_disponibilidad,id'],
-            'user_corredor_id' => ['required'],
+            'fraccionamiento_id' =>['required'],
         ]);
         DB::beginTransaction();
         try {
-            if ($request->hasFile('plano')) {
-                $file = $request->file('plano');
-                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
-                $path = $file->storeAs('plano', $filename, 'public');
-                $validated['plano'] = $path ?? null;
-            }
 
             $lote = Lote::find($id);
+            if ($request->hasFile('plano')) {
+                // 1. Eliminar imagen previa si existe
+                if ($lote->plano && Storage::disk('public')->exists($lote->plano)) {
+                    Storage::disk('public')->delete($lote->plano);
+                }
+
+                // 2. Guardar la nueva imagen
+                $file     = $request->file('plano');
+                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension();
+                $path     = $file->storeAs('plano', $filename, 'public');
+
+                // Asignar la ruta al array de datos validados
+                $lote->plano = $path;
+            }
             $lote->num_lote = $validated['num_lote'];
-            $lote->medidas_m = $validated['medidas_m'];
+            $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
-            $lote->plano = $validated['plano'];
-            $lote->observaciones = $validated['observaciones'];
-            $lote->manzana_id = $validated['manzana_id'];
-            $lote->cat_estatus_id = $validated['cat_estatus_id'];
+            $lote->manzana = $validated['manzana'];
+            $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
+            $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
+            $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
+            $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
+            $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
-            $lote->user_corredor_id = $validated['user_corredor_id'];
-            $lote->save();
+            $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
+            $lote->update();
             DB::commit();
             Session::flash('success', 'Lote fue actualizado');
             return back();
