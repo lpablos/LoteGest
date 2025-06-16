@@ -1,21 +1,19 @@
-@extends('layouts.master')
-
-@section('title')
+<?php $__env->startSection('title'); ?>
     Estatus de Proyectos
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!-- DataTables -->
-    <link href="{{ URL::asset('build/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"type="text/css" />
-    <link href="{{ URL::asset('build/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet"type="text/css" />
+    <link href="<?php echo e(URL::asset('build/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')); ?>" rel="stylesheet"type="text/css" />
+    <link href="<?php echo e(URL::asset('build/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')); ?>" rel="stylesheet"type="text/css" />
     <!-- Responsive datatable examples -->
-    <link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
+    <link href="<?php echo e(URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')); ?>" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('build/libs/toastr/build/toastr.min.css')); ?>">
     <!-- Sweet Alert-->
-    <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-@endsection
+    <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <div class="row">
         <div class="col-12">
@@ -29,7 +27,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (isset($fracc))
+                        <?php if(isset($fracc)): ?>
                             <div class="col-sm-8">
                                 <div class="text-sm-end">
                                     <button type="button" 
@@ -40,25 +38,26 @@
                                     </button>
                                 </div>
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
                     
-                    @if (isset($fracc))
-                        @include('pages.gestion-lotes.modal.add')
-                    @endif
+                    <?php if(isset($fracc)): ?>
+                        <?php echo $__env->make('pages.gestion-lotes.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <?php endif; ?>
 
                    <div class="container d-flex justify-content-center mt-5">
                         <div class="col-md-6">
-                            <form method="GET" action="{{ route('lote.index') }}">
+                            <form method="GET" action="<?php echo e(route('lote.index')); ?>">
                                 <div class="mb-3">
                                     <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
                                     <select class="form-select" id="fraccionamiento" name="identy" required>
-                                        <option value="" disabled {{ old('identy', $identy ?? '') == '' ? 'selected' : '' }}>Selecciona un fraccionamiento</option>
-                                        @foreach ($fraccionamientos as $fraccc)
-                                            <option value="{{ $fraccc->id }}" {{ (old('identy', $identy ?? '') == $fraccc->id) ? 'selected' : '' }}>
-                                                {{ $fraccc->nombre }}
+                                        <option value="" disabled <?php echo e(old('identy', $identy ?? '') == '' ? 'selected' : ''); ?>>Selecciona un fraccionamiento</option>
+                                        <?php $__currentLoopData = $fraccionamientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fraccc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($fraccc->id); ?>" <?php echo e((old('identy', $identy ?? '') == $fraccc->id) ? 'selected' : ''); ?>>
+                                                <?php echo e($fraccc->nombre); ?>
+
                                             </option>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
 
@@ -83,12 +82,12 @@
                             </tr>
                         </thead>
                         <tbody>    
-                            @foreach ($fracc->lotes as $lote)
+                            <?php $__currentLoopData = $fracc->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{ $lote->num_lote }}</td>
-                                    <td>{{ $lote->superficie_m2 }}</td>
-                                    <td>{{ $lote->precio_contado }}</td>      
-                                    <td>{{ $lote->precio_credito }}</td>   
+                                    <td><?php echo e($lote->num_lote); ?></td>
+                                    <td><?php echo e($lote->superficie_m2); ?></td>
+                                    <td><?php echo e($lote->precio_contado); ?></td>      
+                                    <td><?php echo e($lote->precio_credito); ?></td>   
                                     <td>Manzana</td>      
                                     <td>
                                     <div class="dropdown">
@@ -97,18 +96,18 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-start">
                                             <li>
-                                                <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
+                                                <a href="#editEstatusProyecto(<?php echo e($lote->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($lote->id); ?>">
                                                     <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </td> 
-                                @if (isset($fracc))
-                                    @include('pages.gestion-lotes.modal.edit')                                    
-                                @endif
+                                <?php if(isset($fracc)): ?>
+                                    <?php echo $__env->make('pages.gestion-lotes.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                                    
+                                <?php endif; ?>
                                 </tr>   
-                            @endforeach                        
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                        
                            
                         </tbody>
                     </table>
@@ -117,29 +116,29 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
    
-@endsection
-@section('script')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->
-    <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')); ?>"></script>
     <!-- Buttons examples -->
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-buttons/js/dataTables.buttons.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/jszip/jszip.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-buttons/js/buttons.html5.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-buttons/js/buttons.print.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-buttons/js/buttons.colVis.min.js')); ?>"></script>
 
     <!-- Responsive examples -->
-    <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')); ?>"></script>
     <!-- toastr plugin -->
-    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/toastr/build/toastr.min.js')); ?>"></script>
     <!-- Sweet Alerts js -->
-    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
     <!-- toastr init -->
-    <script src="{{ URL::asset('build/js/pages/toastr.init.js') }}"></script>
+    <script src="<?php echo e(URL::asset('build/js/pages/toastr.init.js')); ?>"></script>
     <!-- Datatable init js -->
     <script>
         $(document).ready(function() {
@@ -173,33 +172,35 @@
             $(".dataTables_length select").addClass('form-select form-select-sm');
         });
     </script>
-    @if(Session::has('success'))
+    <?php if(Session::has('success')): ?>
         <script>
             toastr.options = {
                 "closeButton" : false,
                 "progressBar" : true
             }
-            toastr.success("{{ session('success') }}");
+            toastr.success("<?php echo e(session('success')); ?>");
         </script>
-    @endif
-    @if(Session::has('error'))
+    <?php endif; ?>
+    <?php if(Session::has('error')): ?>
         <script>
             toastr.options = {
                 "closeButton" : false,
                 "progressBar" : true
             }
-            toastr.warning("{{ session('error') }}");
+            toastr.warning("<?php echo e(session('error')); ?>");
         </script>
-    @endif
-    @if ($errors->any())
+    <?php endif; ?>
+    <?php if($errors->any()): ?>
         <script>
             toastr.options = {
                 "closeButton" : false,
                 "progressBar" : true
             };
-            @foreach ($errors->all() as $error)
-                toastr.error("{{ $error }}");
-            @endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                toastr.error("<?php echo e($error); ?>");
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </script>
-    @endif
-@endsection
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-lotes/index.blade.php ENDPATH**/ ?>

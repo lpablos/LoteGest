@@ -17,36 +17,30 @@ class LoteSeeder extends Seeder
      */
     public function run(): void
     {
-        // Asegúrate de tener manzanas y estatus existentes
-        $manzanas = Manzana::all();
-        $manzanas = Manzana::all();
+        
         $Fraccionamientos = Fraccionamiento::all();
 
-        // if ($manzanas->isEmpty() || $estatuses->isEmpty()) {
-        //     $this->command->warn('No hay manzanas o estatus en la base de datos. Seeder cancelado.');
-        //     return;
-        // }
-
         foreach ($Fraccionamientos as $Fraccionamiento) {
-            $cantidadLotes = rand(5, 15); // Crea entre 5 y 15 lotes por manzana
+            $cantidadLotes = rand(5, 10); // Crea entre 5 y 15 lotes por manzana
 
             for ($i = 0; $i < $cantidadLotes; $i++) {
                 Lote::create([
                     'num_lote'=> rand(5, 20),
-                    // 'frente_m' => rand(5, 20) + rand(0, 99) / 100,
-                    // 'fondo_m' => rand(10, 30) + rand(0, 99) / 100,
                     'medidas_m' => '5 m Ancho * 7 m Fondo',
                     'superficie_m2' => rand(100, 300) + rand(0, 99) / 100,
                     'precio_contado' => rand(50000, 100000),
                     'precio_credito' => rand(110000, 150000),
-                    // 'plano' => 'plano_' . Str::random(5) . '.pdf',
-                    'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ' . $manzana->id,
-                    // 'manzana_id' => $manzana->id,
                     'manzana' => rand(5, 1),
+                    'colinda_norte' => 'Colinda en esta dirección norte',
+                    'colinda_sur' => 'Colinda en esta dirección sur',
+                    'colinda_este' => 'Colinda en esta dirección este',
+                    'colinda_oeste' => 'Colinda en esta dirección oeste',
+                    'observaciones' => 'Observaciones del lote ' . ($i + 1) . ' en manzana ',
                     'fraccionamiento_id' => $Fraccionamiento->id,
-                    'cat_estatus_id' => $estatuses->random()->id,
                     'cat_estatus_disponibilidad_id' => 1,
-                    'user_corredor_id' => 1
+                    // 'user_corredor_id' => 1
+                    // 'plano' => 'plano_' . Str::random(5) . '.pdf',
+                    // 'manzana_id' => $manzana->id,
                 ]);
             }
         }

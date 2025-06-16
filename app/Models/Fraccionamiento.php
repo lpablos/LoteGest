@@ -32,6 +32,9 @@ class Fraccionamiento extends Model
     // {
     //     return $this->hasMany(Manzana::class);
     // }
+    public function lotes(){        
+        return $this->hasMany(Lote::class);
+    }
 
      public function predio()
     {

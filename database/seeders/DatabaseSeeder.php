@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
             CatEntidadFederativaTableSeeder::class,
             CatMunicipiosTableSeeder::class,
             // ManzaSeeder::class,
-            // LoteSeeder::class,
             FraccionamientoSeeder::class,
+            LoteSeeder::class,
         ]);
     }
 }
