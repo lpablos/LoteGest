@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
 // use App\Models\Proyecto;
+use Illuminate\Support\Facades\Storage;
 use App\Models\CatTipoPredio;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
@@ -53,12 +54,8 @@ class FraccionamientoController extends Controller
             'propietaria'     => 'nullable|string|max:255',
             'superficie'      => 'nullable|numeric|min:0',
             'ubicacion'       => 'nullable|string|max:255',
+            'manzanas'        => 'nullable|numeric|min:1',
             'observaciones'   => 'nullable|string',
-            'proyecto_id'     => 'required|exists:proyectos,id',
-            // 'tipo_predios_id' => 'required|exists:proyectos,id',
-            'manzanas'        => 'required|array|min:1',
-            
-            
         ]);
         DB::beginTransaction();
         try {
@@ -77,20 +74,10 @@ class FraccionamientoController extends Controller
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
-            $fraccionamiento->proyecto_id = $validated['proyecto_id'];
+            $fraccionamiento->manzanas = $validated['manzanas'];
             $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
-
-            foreach ($request->manzanas as $manzana) {
-                $fraccionamiento->manzanas()->create([
-                    'num_manzana' => $manzana['num_manzana'],
-                    'colinda_norte' => $manzana['colinda_norte'],
-                    'colinda_sur' => $manzana['colinda_sur'],
-                    'colinda_este' => $manzana['colinda_este'],
-                    'colinda_oeste' => $manzana['colinda_oeste'],
-                ]);
-            }
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue registrado');
             return redirect()->route('fraccionamiento.index');
@@ -131,49 +118,48 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        // dd("Esto es lo que se pasa", $request->all());
         $validated = $request->validate([
             'nombre'          => 'required|string|max:255',
-            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'reponsable'      => 'nullable|string|max:255', 
             'propietaria'     => 'nullable|string|max:255',
-            
             'superficie'      => 'nullable|numeric|min:0',
             'ubicacion'       => 'nullable|string|max:255',
+            'manzanas'        => 'nullable|numeric|min:1',
             'observaciones'   => 'nullable|string',
-            'proyecto_id'     => 'required|exists:proyectos,id',
-            'tipo_predios_id'     => 'required|exists:proyectos,id',
+            'tipo_predios_id' => 'nullable|numeric|min:1',
         ]);
-         DB::beginTransaction();
+        DB::beginTransaction();
         try {
-            if ($request->hasFile('imagen')) {
-                $file = $request->file('imagen');
-                $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
-                $path = $file->storeAs('fraccionamientos', $filename, 'public');
-                $validated['imagen'] = $path;
-            }
             $fraccionamiento = Fraccionamiento::find($id);
+           
+            if ($request->hasFile('imagen')) {
+                // 1. Eliminar imagen previa si existe
+                if ($fraccionamiento->imagen && Storage::disk('public')->exists($fraccionamiento->imagen)) {
+                    Storage::disk('public')->delete($fraccionamiento->imagen);
+                }
+
+                // 2. Guardar la nueva imagen
+                $file     = $request->file('imagen');
+                $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension();
+                $path     = $file->storeAs('fraccionamientos', $filename, 'public');
+
+                // Asignar la ruta al array de datos validados
+                // $validated['imagen'] = $path;
+                $fraccionamiento->imagen = $path;
+            }
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
-            $fraccionamiento->imagen = $validated['imagen'];
+            $fraccionamiento->manzanas = $validated['manzanas'];
             $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
-            $fraccionamiento->proyecto_id = $validated['proyecto_id'];
             $fraccionamiento->tipo_predios_id = $validated['tipo_predios_id'];
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            $fraccionamiento->save();
-            //   foreach ($request->manzanas as $manzana) {
-            //     $fraccionamiento->manzanas()->create([
-            //         'num_manzana' => $manzana['num_manzana'],
-            //         'colinda_norte' => $manzana['colinda_norte'],
-            //         'colinda_sur' => $manzana['colinda_sur'],
-            //         'colinda_este' => $manzana['colinda_este'],
-            //         'colinda_oeste' => $manzana['colinda_oeste'],
-            //     ]);
-            // }
+            $fraccionamiento->update();
+           
             DB::commit();
-            Session::flash('success', 'Fraccionamiento fue registrado');
+            Session::flash('success', 'Fraccionamiento fue actualizados');
             return redirect()->route('fraccionamiento.index');
         } catch (\Throwable $th) {
             Log::error('Error guardar Fraccionamiento: ' . $th->getMessage());

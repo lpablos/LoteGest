@@ -1,7 +1,7 @@
 @if(isset($fracc) && !empty($fracc->imagen) )
     <div class="row mb-3">
         <div class="col-md-12 text-center">
-            <img src="{{ asset('storage/' . $fracc->imagen) }}" alt="Imagen del fraccionamiento" width="700">
+            <img src="{{ asset('storage/' . $fracc->imagen) }}" alt="Imagen del fraccionamiento" width="700" height="400">
             <p>{{ (isset($fracc) && $fracc->imagen !== ' ') ? $fracc->imagen : '' }}</p>
         </div>
     </div>
@@ -9,8 +9,8 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" name="nombre" id="nombre{{isset($fracc)? $fracc->id:''}}" class="form-control" required value="{{isset($fracc)? $fracc->nombre:''}}">
+        <label for="nombre" class="form-label">Nombre *</label>
+        <input type="text" name="nombre" id="nombre{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->nombre:''}}" required>
     </div>
 
     <div class="col-md-6">
@@ -21,26 +21,36 @@
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="reponsable" class="form-label">Responsable</label>
-        <input type="text" name="reponsable" id="reponsable{{isset($fracc)? $fracc->id:''}}" class="form-control" required value="{{isset($fracc)? $fracc->reponsable:''}}">
+        <label for="reponsable" class="form-label">Responsable *</label>
+        <input type="text" name="reponsable" id="reponsable{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->reponsable:''}}" required>
     </div>
 
     <div class="col-md-6">
-        <label for="propietaria" class="form-label"> Propietario (a)</label>
-        <input type="text" name="propietaria" id="propietaria{{isset($fracc)? $fracc->id:''}}" class="form-control" required value="{{isset($fracc)? $fracc->propietaria:''}}">
+        <label for="propietaria" class="form-label"> Propietario(a) *</label>
+        <input type="text" name="propietaria" id="propietaria{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->propietaria:''}}" required>
     </div>
 </div>
 
 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="predio_urbano" class="form-label">Tipo de Predio</label>
-        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select" style="cursor: pointer;">
+        <label for="tipo_predios_id" class="form-label">Tipo de Predio</label>
+        <select name="tipo_predios_id" id="tipo_predios_id{{isset($fracc)? $fracc->id:''}}"  class="form-select" required>
             <option value="" selected disabled> Selecciona una opción </option>
+            @isset($fracc)
+                @php
+                    $selectedValue = old('tipo_predios_id', $fracc->tipo_predios_id);
+                @endphp
+            @else
+                @php
+                    $selectedValue = old('tipo_predios_id');
+                @endphp
+            @endisset
             @foreach ($tpPredio as $predio)
-                <option value="{{ $predio->id }}">- {{ $predio->nombre }}</option>
+                <option value="{{ $predio->id }}"  
+                  {{ $selectedValue == $predio->id ? 'selected' : '' }}                
+                >{{ $predio->nombre }}</option>
             @endforeach
         </select>
-        <!-- <input type="text" name="predio_urbano" id="predio_urbano{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->predio_urbano:''}}"> -->
     </div>
 
     <div class="col-md-6">
@@ -56,8 +66,8 @@
     </div>
 
      <div class="col-md-6">
-        <label for="manzana" class="form-label">Manzanas</label>
-        <input type="number" name="manzana" id="superficie{{isset($fracc)? $fracc->manzana:''}}" class="form-control" value="{{isset($fracc)? $fracc->manzana:1}}">
+        <label for="manzanas" class="form-label">Manzanas *</label>
+        <input type="number" name="manzanas" min="1" id="manzanas{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->manzanas:1}}" required>
     </div>
 
 </div>
@@ -66,6 +76,3 @@
     <label for="observaciones" class="form-label">Observaciones</label>
     <textarea name="observaciones" id="observaciones{{isset($fracc)? $fracc->id:''}}" class="form-control" rows="3"> {{isset($fracc)? $fracc->observaciones:''}} </textarea>
 </div>
-
-
-
