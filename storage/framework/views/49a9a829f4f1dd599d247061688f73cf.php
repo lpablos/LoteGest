@@ -37,7 +37,7 @@
     </div>
 
     <div class="col-md-4">
-        <label for="plano" class="form-label">Plano (Archivo)</label>
+        <label for="plano" class="form-label">Plano (jpg,jpeg,png,webp)</label>
         <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value="" class="form-control">
     </div>
 

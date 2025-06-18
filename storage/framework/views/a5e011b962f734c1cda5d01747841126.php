@@ -82,7 +82,7 @@
                             </tr>
                         </thead>
                         <tbody>    
-                            <?php $__currentLoopData = $fracc->lotes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = optional($fracc)->lotes ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($lote->num_lote); ?></td>
                                     <td><?php echo e($lote->superficie_m2); ?></td>

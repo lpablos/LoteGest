@@ -83,7 +83,7 @@
                             </tr>
                         </thead>
                         <tbody>    
-                            @foreach ($fracc->lotes as $lote)
+                            @foreach (optional($fracc)->lotes ?? [] as $lote)
                                 <tr>
                                     <td>{{ $lote->num_lote }}</td>
                                     <td>{{ $lote->superficie_m2 }}</td>
