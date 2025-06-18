@@ -49,7 +49,7 @@
 
                    <div class="container d-flex justify-content-center mt-5">
                         <div class="col-md-6">
-                            <form method="GET" action="{{ route('lote.index') }}">
+                            <form method="GET" id="busquedaResultado" action="{{ route('lote.index') }}">
                                 <div class="mb-3">
                                     <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
                                     <select class="form-select" id="fraccionamiento" name="identy" required>
@@ -60,10 +60,6 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
                                 </div>
                             </form>
                         </div>
@@ -83,7 +79,7 @@
                             </tr>
                         </thead>
                         <tbody>    
-                            @foreach (optional($fracc)->lotes ?? [] as $lote)
+                            @foreach ( optional($fracc)->lotes ?? [] as $lote )
                                 <tr>
                                     <td>{{ $lote->num_lote }}</td>
                                     <td>{{ $lote->superficie_m2 }}</td>
@@ -171,6 +167,19 @@
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+            const selectFraccionamiento = document.getElementById('fraccionamiento');
+            const formBusqueda = document.getElementById('busquedaResultado');
+            
+            
+            selectFraccionamiento.addEventListener('change', function () {
+                if (this.value) {
+                    formBusqueda.submit();
+                }
+            });
         });
     </script>
     @if(Session::has('success'))

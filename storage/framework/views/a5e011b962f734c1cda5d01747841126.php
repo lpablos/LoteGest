@@ -47,7 +47,7 @@
 
                    <div class="container d-flex justify-content-center mt-5">
                         <div class="col-md-6">
-                            <form method="GET" action="<?php echo e(route('lote.index')); ?>">
+                            <form method="GET" id="busquedaResultado" action="<?php echo e(route('lote.index')); ?>">
                                 <div class="mb-3">
                                     <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
                                     <select class="form-select" id="fraccionamiento" name="identy" required>
@@ -59,10 +59,6 @@
                                             </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
                                 </div>
                             </form>
                         </div>
@@ -170,6 +166,19 @@
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+            const selectFraccionamiento = document.getElementById('fraccionamiento');
+            const formBusqueda = document.getElementById('busquedaResultado');
+            
+            
+            selectFraccionamiento.addEventListener('change', function () {
+                if (this.value) {
+                    formBusqueda.submit();
+                }
+            });
         });
     </script>
     <?php if(Session::has('success')): ?>
