@@ -19,10 +19,15 @@
                     @csrf
                     @method('PUT')
                     @include('pages.gestion-lotes.formulario.lote')
+                    @php
+                        $readonly = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'readonly' : '';
+                    @endphp
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
+                        @if(!$readonly)
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        @endif
+                        </div>
                 </form>
             </div>
         <!-- end modal body -->
