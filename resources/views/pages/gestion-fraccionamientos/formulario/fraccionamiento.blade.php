@@ -2,7 +2,7 @@
     <div class="row mb-3">
         <div class="col-md-12 text-center">
             <img src="{{ asset('storage/' . $fracc->imagen) }}" alt="Imagen del fraccionamiento" width="700" height="400">
-            <p>{{ (isset($fracc) && $fracc->imagen !== ' ') ? $fracc->imagen : '' }}</p>
+            <p>{{ (isset($fracc) && $fracc->nombre !== ' ') ? $fracc->nombre : '' }}</p>
         </div>
     </div>
 @endif

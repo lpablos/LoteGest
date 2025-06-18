@@ -27,7 +27,7 @@
 
     <div class="col-md-2">
         <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? '' }}" value="{{ $lote->superficie_m2 ?? '' }}" class="form-control" readonly>
+        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? '' }}" value="{{ $lote->superficie_m2 ?? '' }}" class="form-control" {{ $readonly }}>
     </div>  
 
     <div class="col-md-4">
