@@ -39,21 +39,6 @@
         <label for="plano" class="form-label">Plano (jpg,jpeg,png,webp)</label>
         <input type="file" name="plano" id="plano<?php echo e($lote->id ?? ''); ?>" value="" class="form-control">
     </div>
-
-   
-    <div class="col-md-4">
-        <label for="cat_estatus_disponibilidad_id" class="form-label">Estatus Disponibilidad</label>
-        <select name="cat_estatus_disponibilidad_id" id="cat_estatus_disponibilidad_id<?php echo e($lote->id ?? ''); ?>" class="form-select" required>
-            <?php $__currentLoopData = $estatusDisponibilidad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $estatusItemDispo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($estatusItemDispo->id); ?>"
-                    <?php echo e(isset($lote) && $lote->cat_estatus_id == $estatusItemDispo->id ? 'selected' : ''); ?>>
-                    <?php echo e($estatusItemDispo->nombre); ?>
-
-                </option>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </select>
-    </div>
-
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
         <select name="manzana" id="manzana<?php echo e($lote->id ?? ''); ?>" class="form-select" required>

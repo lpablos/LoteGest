@@ -39,20 +39,6 @@
         <label for="plano" class="form-label">Plano (jpg,jpeg,png,webp)</label>
         <input type="file" name="plano" id="plano{{$lote->id ?? ''}}" value="" class="form-control">
     </div>
-
-   
-    <div class="col-md-4">
-        <label for="cat_estatus_disponibilidad_id" class="form-label">Estatus Disponibilidad</label>
-        <select name="cat_estatus_disponibilidad_id" id="cat_estatus_disponibilidad_id{{ $lote->id ?? '' }}" class="form-select" required>
-            @foreach($estatusDisponibilidad as $estatusItemDispo)
-                <option value="{{ $estatusItemDispo->id }}"
-                    {{ isset($lote) && $lote->cat_estatus_id == $estatusItemDispo->id ? 'selected' : '' }}>
-                    {{ $estatusItemDispo->nombre }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
         <select name="manzana" id="manzana{{ $lote->id ?? '' }}" class="form-select" required>

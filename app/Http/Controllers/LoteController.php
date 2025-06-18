@@ -75,7 +75,7 @@ class LoteController extends Controller
             $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
             $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
             $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
+            $lote->cat_estatus_disponibilidad_id = 2;
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->save();
             DB::commit();
@@ -148,7 +148,7 @@ class LoteController extends Controller
             $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
             $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
             $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
+            // $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->update();
             DB::commit();
@@ -203,7 +203,7 @@ class LoteController extends Controller
             'colinda_este'                     => ['nullable', 'string'],
             'colinda_oeste'                    => ['nullable', 'string'],
             'observaciones'                    => ['nullable', 'string'],
-            'cat_estatus_disponibilidad_id'    => ['required', 'exists:cat_estatus_disponibilidad,id'],
+            // 'cat_estatus_disponibilidad_id'    => ['required', 'exists:cat_estatus_disponibilidad,id'],
             'fraccionamiento_id'               => ['required'],
         ];
     }
@@ -219,7 +219,7 @@ class LoteController extends Controller
             'plano.image'                           => 'El plano debe ser una imagen.',
             'plano.mimes'                           => 'El plano debe ser jpg, jpeg, png o webp.',
             'manzana.min'                           => 'La manzana debe ser al menos :min.',
-            'cat_estatus_disponibilidad_id.required'=> 'El estatus de disponibilidad es obligatorio.',
+            // 'cat_estatus_disponibilidad_id.required'=> 'El estatus de disponibilidad es obligatorio.',
             // [...] completa con el resto.
         ];
     }
