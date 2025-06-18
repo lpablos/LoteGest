@@ -13,6 +13,9 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
     <!-- Sweet Alert-->
     <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- Lightbox css -->
+<link href="{{ URL::asset('build/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -46,7 +49,18 @@
                     @if (isset($fracc))
                         @include('pages.gestion-lotes.modal.add')
                     @endif
-
+                    @if(isset($fracc) && !empty($fracc->imagen) )
+                    <div class="row">
+                            <div class="col-6 mx-auto text-center">
+                                <div>
+                                    <h5 class="font-size-14">{{$fracc->nombre}}</h5>
+                                    <a class="image-popup-vertical-fit" href="{{ asset('storage/' . $fracc->imagen) }}" title="Caption. Can be aligned it to any side and contain any HTML.">
+                                        <img src="{{ asset('storage/' . $fracc->imagen) }}" alt="Imagen del fraccionamiento" width="300px">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>    
+                    @endif
                    <div class="container d-flex justify-content-center mt-5">
                         <div class="col-md-6">
                             <form method="GET" id="busquedaResultado" action="{{ route('lote.index') }}">
@@ -64,8 +78,7 @@
                             </form>
                         </div>
                     </div>
-                           
-                           
+                   
 
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
@@ -115,6 +128,13 @@
    
 @endsection
 @section('script')
+
+    <!-- Magnific Popup-->
+    <script src="{{ URL::asset('build/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+
+    <!-- lightbox init js-->
+    <script src="{{ URL::asset('build/js/pages/lightbox.init.js') }}"></script>
+    
     <!-- Required datatable js -->
     <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

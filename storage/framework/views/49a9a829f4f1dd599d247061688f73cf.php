@@ -7,8 +7,7 @@
     <?php if(isset($lote) && !empty($lote->plano) ): ?>
         <div class="row mb-3">
             <div class="col-md-12 text-center">
-                <img src="<?php echo e(asset('storage/' . $lote->plano)); ?>" alt="Imagen del lote" width="300px">
-                <p><?php echo e((isset($lote) && $lote->plano !== ' ') ? $lote->plano : ''); ?></p>
+                <img src="<?php echo e(asset('storage/' . $lote->plano)); ?>" alt="Imagen del lote" width="100px" height="150">
             </div>
         </div>
     <?php endif; ?>

@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('build/libs/toastr/build/toastr.min.css')); ?>">
     <!-- Sweet Alert-->
     <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
+
+    <!-- Lightbox css -->
+<link href="<?php echo e(URL::asset('build/libs/magnific-popup/magnific-popup.css')); ?>" rel="stylesheet" type="text/css" />
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -44,7 +47,18 @@
                     <?php if(isset($fracc)): ?>
                         <?php echo $__env->make('pages.gestion-lotes.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <?php endif; ?>
-
+                    <?php if(isset($fracc) && !empty($fracc->imagen) ): ?>
+                    <div class="row">
+                            <div class="col-6 mx-auto text-center">
+                                <div>
+                                    <h5 class="font-size-14"><?php echo e($fracc->nombre); ?></h5>
+                                    <a class="image-popup-vertical-fit" href="<?php echo e(asset('storage/' . $fracc->imagen)); ?>" title="Caption. Can be aligned it to any side and contain any HTML.">
+                                        <img src="<?php echo e(asset('storage/' . $fracc->imagen)); ?>" alt="Imagen del fraccionamiento" width="300px">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>    
+                    <?php endif; ?>
                    <div class="container d-flex justify-content-center mt-5">
                         <div class="col-md-6">
                             <form method="GET" id="busquedaResultado" action="<?php echo e(route('lote.index')); ?>">
@@ -63,8 +77,7 @@
                             </form>
                         </div>
                     </div>
-                           
-                           
+                   
 
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
@@ -114,6 +127,13 @@
    
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
+
+    <!-- Magnific Popup-->
+    <script src="<?php echo e(URL::asset('build/libs/magnific-popup/jquery.magnific-popup.min.js')); ?>"></script>
+
+    <!-- lightbox init js-->
+    <script src="<?php echo e(URL::asset('build/js/pages/lightbox.init.js')); ?>"></script>
+    
     <!-- Required datatable js -->
     <script src="<?php echo e(URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js')); ?>"></script>
     <script src="<?php echo e(URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js')); ?>"></script>
