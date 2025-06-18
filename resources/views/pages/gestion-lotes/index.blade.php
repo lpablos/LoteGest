@@ -83,22 +83,29 @@
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> num_lote</th>
+                                <th> Manzana </th>
+                                <th> # lote</th>
                                 <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
-                                <th> Manzana </th>
+                                <th> Disponibilidad</th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>    
                             @foreach ( optional($fracc)->lotes ?? [] as $lote )
                                 <tr>
+                                    <td>Manzana {{ $lote->manzana }}</td>      
                                     <td>{{ $lote->num_lote }}</td>
                                     <td>{{ $lote->superficie_m2 }}</td>
                                     <td>{{ $lote->precio_contado }}</td>      
                                     <td>{{ $lote->precio_credito }}</td>   
-                                    <td>Manzana {{ $lote->manzana }}</td>      
+                                    <td>
+                                        <span class="badge" style="background-color: {{$lote->disponibilidad->color}}; color: white;">
+                                            {{ $lote->disponibilidad->nombre }}
+                                        </span>
+                                        
+                                    </td>   
                                     <td>
                                     <div class="dropdown">
                                         <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">

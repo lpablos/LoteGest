@@ -1,9 +1,18 @@
  <div class="modal fade" id="editEstatusProyecto({{ $lote->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editSede"> Editar Lote</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           <div class="modal-header align-items-center">
+                <h5 class="modal-title mb-0" id="editSede"> 
+                    Editar Lote 
+                </h5>
+                <h4>
+
+                    <span class="badge ms-3" style="background-color: {{ $lote->disponibilidad->color }}; color: white;">
+                        {{ $lote->disponibilidad->nombre }}
+                    </span>
+                </h4>
+
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('lote.update', ['lote' => $lote->id]) }}" autocomplete="off" enctype="multipart/form-data">

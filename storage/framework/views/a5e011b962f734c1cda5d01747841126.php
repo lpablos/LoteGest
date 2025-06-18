@@ -82,22 +82,30 @@
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> num_lote</th>
+                                <th> Manzana </th>
+                                <th> # lote</th>
                                 <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
-                                <th> Manzana </th>
+                                <th> Disponibilidad</th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>    
                             <?php $__currentLoopData = optional($fracc)->lotes ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
+                                    <td>Manzana <?php echo e($lote->manzana); ?></td>      
                                     <td><?php echo e($lote->num_lote); ?></td>
                                     <td><?php echo e($lote->superficie_m2); ?></td>
                                     <td><?php echo e($lote->precio_contado); ?></td>      
                                     <td><?php echo e($lote->precio_credito); ?></td>   
-                                    <td>Manzana <?php echo e($lote->manzana); ?></td>      
+                                    <td>
+                                        <span class="badge" style="background-color: <?php echo e($lote->disponibilidad->color); ?>; color: white;">
+                                            <?php echo e($lote->disponibilidad->nombre); ?>
+
+                                        </span>
+                                        
+                                    </td>   
                                     <td>
                                     <div class="dropdown">
                                         <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
