@@ -23,6 +23,12 @@
                         <span key="t-chat"> Clientes </span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo e(route('cliente.index')); ?>" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-chat"> Contratos </span>
+                    </a>
+                </li>
                 <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
                 <li>
                     <a href="<?php echo e(route('usuarios.index')); ?>" class="waves-effect">
