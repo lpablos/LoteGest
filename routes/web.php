@@ -39,6 +39,7 @@ Route::resource('perfiles', App\Http\Controllers\RoleController::class);
 Route::resource('cliente', App\Http\Controllers\ClienteController::class);
 Route::resource('estatus', App\Http\Controllers\CatEstatusController::class);
 Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
+Route::resource('contratos', App\Http\Controllers\ContratoController::class);
 Route::resource('municipios', App\Http\Controllers\CatMunicipioController::class);
 Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
 Route::resource('tipo-de-predios', App\Http\Controllers\CatTipoPredioController::class);

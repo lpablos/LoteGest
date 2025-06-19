@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('cliente.index') }}" class="waves-effect">
+                    <a href="{{ route('contratos.index') }}" class="waves-effect">
                         <i class="bx bx-user"></i>
                         <span key="t-chat"> Contratos </span>
                     </a>
