@@ -4,6 +4,16 @@
 @endphp
 
 <div class="row g-3 mt-3">
+
+     <div class="col-md-4">
+        <label for="cliente" class="form-label">Cliente</label>
+        <input type="text" step="0.01" name="cliente" id="cliente{{ $lote->id ?? '' }}" value="{{ $lote->cliente ?? '' }}" class="form-control" {{ $readonly }}>
+    </div>  
+
+    <div class="col-md-4">
+        <label for="numCompra" class="form-label">Numero de Compra</label>
+        <input type="text" step="0.01" name="numCompra" id="numCompra{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->num_lote ?? '' }}" required {{ $readonly }}>
+    </div>
     
     <div class="col-12 text-center mb-2">
         <h5 class="mb-0">Lote asociado</h5>

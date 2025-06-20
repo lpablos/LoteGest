@@ -15,7 +15,7 @@ class ContratoController extends Controller
     {
         //
 
-        if (view()->exists('pages.gestion-lotes.index')) {
+        if (view()->exists('pages.contratos.index')) {
             /*
             $identy = $request->input('identy') && 1; 
             $fraccionamientos = Fraccionamiento::orderBy('nombre', 'desc')->get();
@@ -54,7 +54,24 @@ class ContratoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // 
+        
+        if (view()->exists('pages.contratos.contrato')) {
+            /*
+            $identy = $request->input('identy') && 1; 
+            $fraccionamientos = Fraccionamiento::orderBy('nombre', 'desc')->get();
+            $fracc = $identy
+                ? $fraccionamientos->firstWhere('id', $identy)
+                : null; 
+            */
+
+            $fracc = Fraccionamiento::orderBy('nombre', 'desc')->get();
+            
+            $estatusDisponibilidad = CatEstatusDisponibilidad::all();
+
+            return view('pages.contratos.contrato', compact('fracc','estatusDisponibilidad'));
+        }
+        return abort(404);
     }
 
     /**
