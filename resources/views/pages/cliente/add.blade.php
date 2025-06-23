@@ -70,55 +70,94 @@
                         </div>
                         </form>
                     </section>
-
-                    <!-- Company Document -->
                     <h3> Datos de Lote </h3>
                     <section>
                         <form>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-pancard-input">PAN Card</label>
-                                        <input type="text" class="form-control" id="basicpill-pancard-input" placeholder="Enter Your PAN No.">
-                                    </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="entidad_id"> Estado </label>
+                                    <select class="form-select form-select-sm" id="entidad_id" name="entidad_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        @foreach ($estados as $estado)
+                                            <option value="{{ $estado->id }}" @if ($estado->id == 16) selected @endif >- {{ $estado->nom_estado }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Municipio </label>
+                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        @foreach ($mpios as $mpio)
+                                            <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Fraccionamiento </label>
+                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        @foreach ($mpios as $mpio)
+                                            <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Lote </label>
+                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        @foreach ($mpios as $mpio)
+                                            <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="medidas_m">Medidas (m)</label>
+                                    <input type="text" step="0.01" name="medidas_m" class="form-control">
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="superficie_m2">Superficie (m²)</label>
+                                    <input type="number" step="0.01" name="superficie_m2" class="form-control">
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="precio_contado">Precio Contado</label>
+                                    <input type="number" step="0.01" name="precio_contado" class="form-control" >
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-vatno-input">VAT/TIN No.</label>
-                                        <input type="text" class="form-control" id="basicpill-vatno-input" placeholder="Enter Your VAT/TIN No.">
-                                    </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="precio_credito">Precio Crédito</label>
+                                    <input type="number" step="0.01" name="precio_credito" class="form-control">
                                 </div>
+                                <div class="col-md-3 mb-4">
+                                <label for="manzana">Manzana</label>
+                                    <select name="manzana" class="form-control">
+                                        
+                                    </select>
+                                </div>   
+
+                                <div class="col-md-3 mb-4">
+                                    <label>Colinda Norte</label>
+                                    <input type="text" name="colinda_norte" class="form-control">
+                                </div>
+
+                                <div class="col-md-3 mb-4">
+                                    <label>Colinda Sur</label>
+                                    <input type="text" name="colinda_sur" class="form-control">
+                                </div>
+
+                            <div class="col-md-3 mb-4">
+                                <label>Colinda Este</label>
+                                <input type="text" name="colinda_este" class="form-control">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-cstno-input">CST No.</label>
-                                        <input type="text" class="form-control" id="basicpill-cstno-input" placeholder="Enter Your CST No.">
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-servicetax-input">Service Tax No.</label>
-                                        <input type="text" class="form-control" id="basicpill-servicetax-input" placeholder="Enter Your Service Tax No.">
-                                    </div>
-                                </div>
+                            <div class="col-md-3 mb-4">
+                                <label>Colinda Oeste</label>
+                                <input type="text" name="colinda_oeste" class="form-control">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-companyuin-input">Company UIN</label>
-                                        <input type="text" class="form-control" id="basicpill-companyuin-input" placeholder="Enter Your Company UIN">
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="basicpill-declaration-input">Declaration</label>
-                                        <input type="text" class="form-control" id="basicpill-Declaration-input" placeholder="Declaration Details">
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                <label for="observaciones">Observaciones</label>
+                                <textarea name="observaciones" class="form-control"></textarea>
+                            </div>
                             </div>
                         </form>
                     </section>
@@ -129,49 +168,47 @@
                         <div>
                             <form>
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="basicpill-namecard-input">Name on Card</label>
-                                            <input type="text" class="form-control" id="basicpill-namecard-input" placeholder="Enter Your Name on Card">
-                                        </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label for="precio_contado"> Núm. de Solicitud </label>
+                                        <input type="text" name="precio_contado" class="form-control" >
+                                    </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label> Tipo de Compra </label>
+                                        <select class="form-select">
+                                            <option selected> Selecciona una opción </option>
+                                            <option value="AE"> Contado </option>
+                                            <option value="VI"> Crédito </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label for="precio_contado">Precio Contado</label>
+                                        <input type="number" step="0.01" name="precio_contado" class="form-control" >
                                     </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label>Credit Card Type</label>
-                                            <select class="form-select">
-                                                <option selected>Select Card Type</option>
-                                                <option value="AE">American Express</option>
-                                                <option value="VI">Visa</option>
-                                                <option value="MC">MasterCard</option>
-                                                <option value="DI">Discover</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label for="precio_credito">Precio Crédito</label>
+                                        <input type="number" step="0.01" name="precio_credito" class="form-control">
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="basicpill-cardno-input">Credit Card Number</label>
-                                            <input type="text" class="form-control" id="basicpill-cardno-input" placeholder="Credit Card Number">
-                                        </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label for="precio_credito"> Enganche </label>
+                                        <input type="number" step="0.01" name="precio_credito" class="form-control">
                                     </div>
-
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="basicpill-card-verification-input">Card Verification Number</label>
-                                            <input type="text" class="form-control" id="basicpill-card-verification-input" placeholder="Credit Verification Number">
-                                        </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label> Forma de pago </label>
+                                        <select class="form-select">
+                                            <option selected> Selecciona una opción </option>
+                                            <option value="AE"> - Efectivo </option>
+                                            <option value="VI"> - Transferencia </option>
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="basicpill-expiration-input">Expiration Date</label>
-                                            <input type="text" class="form-control" id="basicpill-expiration-input" placeholder="Card Expiration Date">
-                                        </div>
+                                    <div class="col-md-3 mb-4">
+                                        <label> Corredor </label>
+                                        <select class="form-select">
+                                            <option selected> Selecciona una opción </option>
+                                            <option value="AE"> - Alfredo </option>
+                                            <option value="VI"> - Miguel </option>
+                                        </select>
                                     </div>
-
                                 </div>
                             </form>
                         </div>
