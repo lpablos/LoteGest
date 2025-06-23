@@ -56,19 +56,19 @@ class LoteController extends Controller
         
         DB::beginTransaction();
         try {
-            if ($request->hasFile('plano')) {
-                $file = $request->file('plano');
-                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
-                $path = $file->storeAs('plano', $filename, 'public');
-                $validated['plano'] = $path;
-            }
+            // if ($request->hasFile('plano')) {
+            //     $file = $request->file('plano');
+            //     $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+            //     $path = $file->storeAs('plano', $filename, 'public');
+            //     $validated['plano'] = $path;
+            // }
             $lote = new Lote();
             $lote->num_lote = $validated['num_lote'];
             $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
             $lote->precio_contado = $validated['precio_contado'];
             $lote->precio_credito = $validated['precio_credito'];
-            $lote->plano = $validated['plano'];
+            $lote->plano = 'Sin info';
             $lote->manzana = $validated['manzana'];
             $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
             $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
@@ -79,7 +79,7 @@ class LoteController extends Controller
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->save();
             DB::commit();
-            Session::flash('success', 'Lote fue registrado');
+            Session::flash('success', 'Lote registrado');
             return back();
         } catch (\Throwable $th) {
             Log::error('Error guardar el lote: ' . $th->getMessage());

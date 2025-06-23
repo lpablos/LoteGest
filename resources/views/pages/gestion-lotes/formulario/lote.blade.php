@@ -12,13 +12,13 @@
         </div>
     </div>
 
-    @if(isset($lote) && !empty($lote->plano))
+    {{--  @if(isset($lote) && !empty($lote->plano))
         <div class="row mb-3">
             <div class="col-md-12 text-center">
                 <img src="{{ asset('storage/' . $lote->plano) }}" alt="Imagen del lote" width="100px" height="150">
             </div>
         </div>
-    @endif
+    @endif  --}}
 
     <div class="col-md-10">
         <label for="medidas_m" class="form-label">Medidas (m)</label>
@@ -45,10 +45,10 @@
         <input type="number" step="0.01" name="precio_credito" id="precio_credito{{ $lote->id ?? '' }}" value="{{ $lote->precio_credito ?? '' }}" class="form-control" required {{ $readonly }}>
     </div>
 
-    <div class="col-md-4">
+    {{--  <div class="col-md-4">
         <label for="plano" class="form-label">Plano (jpg,jpeg,png,webp)</label>
         <input type="file" name="plano" id="plano{{$lote->id ?? ''}}" class="form-control" {{ $disabled }}>
-    </div>
+    </div>  --}}
 
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
