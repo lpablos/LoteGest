@@ -14,6 +14,8 @@
 
     <!-- Lightbox css -->
     <link href="<?php echo e(URL::asset('build/libs/magnific-popup/magnific-popup.css')); ?>" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert-->
+    <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -117,6 +119,16 @@
                                                     <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                 </a>
                                             </li>
+                                             <li>
+                                                <button type="button"
+                                                        class="dropdown-item btn btn-link"
+                                                        
+                                                        id="btn-duplicate<?php echo e($lote->id); ?>"
+                                                        onclick="duplica('<?php echo e($lote->id); ?>')">
+                                                    <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
+                                                </button>
+
+                                            </li>
                                         </ul>
                                     </div>
                                 </td> 
@@ -132,10 +144,20 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-   
+   <form id="formDuplicarLote" method="POST" action="<?php echo e(route('duplicar.lote')); ?>" style="display: none;">
+        <?php echo csrf_field(); ?>
+        <input type="hidden" name="id" id="inputDuplicarLoteId">
+    </form>
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('script'); ?>
 
+
+
+<?php $__env->startPush('scripts'); ?>
+    <!-- Sweet Alerts js -->
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="<?php echo e(URL::asset('build/js/pages/sweet-alerts.init.js')); ?>"></script>
     <!-- Magnific Popup-->
     <script src="<?php echo e(URL::asset('build/libs/magnific-popup/jquery.magnific-popup.min.js')); ?>"></script>
 
@@ -164,6 +186,8 @@
     <!-- toastr init -->
     <script src="<?php echo e(URL::asset('build/js/pages/toastr.init.js')); ?>"></script>
     <!-- Datatable init js -->
+
+    
     <script>
         $(document).ready(function() {
 
@@ -194,10 +218,11 @@
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+          
         });
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             const selectFraccionamiento = document.getElementById('fraccionamiento');
             const formBusqueda = document.getElementById('busquedaResultado');
             
@@ -208,6 +233,31 @@
                 }
             });
         });
+    </script>
+
+    <script>
+         const duplicarLoteUrl = <?php echo json_encode(route('duplicar.lote'), 15, 512) ?>;
+
+          function duplica(loteId) {
+                 Swal.fire({
+                    title: '¿Duplicar lote?',
+                    text: 'Esta acción creará una copia del lote seleccionado.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, duplicar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.isConfirmed) {
+                        // Setear el ID y enviar el formulario
+                        document.getElementById('inputDuplicarLoteId').value = loteId;
+                        document.getElementById('formDuplicarLote').submit();
+        }
+                    }
+    });
+            }
     </script>
     <?php if(Session::has('success')): ?>
         <script>
@@ -238,6 +288,5 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </script>
     <?php endif; ?>
-<?php $__env->stopSection(); ?>
-
+<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-lotes/index.blade.php ENDPATH**/ ?>

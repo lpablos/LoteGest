@@ -234,4 +234,20 @@ class LoteController extends Controller
             // [...] completa con el resto.
         ];
     }
+
+    public function duplicado(Request $request){
+        DB::beginTransaction();
+        try {
+            $lote = Lote::findOrFail($request->input('id'));
+            $nuevoLote = $lote->replicate();
+            $nuevoLote->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Lote Replicado Correctamente');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error('Error al replicar el Lote: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No Se Replico. Intenta Mas Tarde');
+        }
+    
+    }
 }

@@ -16,6 +16,8 @@
 
     <!-- Lightbox css -->
     <link href="{{ URL::asset('build/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Sweet Alert-->
+    <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -117,6 +119,16 @@
                                                     <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                 </a>
                                             </li>
+                                             <li>
+                                                <button type="button"
+                                                        class="dropdown-item btn btn-link"
+                                                        
+                                                        id="btn-duplicate{{ $lote->id }}"
+                                                        onclick="duplica('{{ $lote->id }}')">
+                                                    <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
+                                                </button>
+
+                                            </li>
                                         </ul>
                                     </div>
                                 </td> 
@@ -132,10 +144,20 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-   
+   <form id="formDuplicarLote" method="POST" action="{{ route('duplicar.lote') }}" style="display: none;">
+        @csrf
+        <input type="hidden" name="id" id="inputDuplicarLoteId">
+    </form>
 @endsection
-@section('script')
 
+
+
+@push('scripts')
+    <!-- Sweet Alerts js -->
+    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+    <!-- Sweet alert init js-->
+    <script src="{{ URL::asset('build/js/pages/sweet-alerts.init.js') }}"></script>
     <!-- Magnific Popup-->
     <script src="{{ URL::asset('build/libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 
@@ -164,6 +186,8 @@
     <!-- toastr init -->
     <script src="{{ URL::asset('build/js/pages/toastr.init.js') }}"></script>
     <!-- Datatable init js -->
+
+    
     <script>
         $(document).ready(function() {
 
@@ -194,10 +218,11 @@
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+          
         });
     </script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             const selectFraccionamiento = document.getElementById('fraccionamiento');
             const formBusqueda = document.getElementById('busquedaResultado');
             
@@ -208,6 +233,31 @@
                 }
             });
         });
+    </script>
+
+    <script>
+         const duplicarLoteUrl = @json(route('duplicar.lote'));
+
+          function duplica(loteId) {
+                 Swal.fire({
+                    title: '¿Duplicar lote?',
+                    text: 'Esta acción creará una copia del lote seleccionado.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, duplicar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.isConfirmed) {
+                        // Setear el ID y enviar el formulario
+                        document.getElementById('inputDuplicarLoteId').value = loteId;
+                        document.getElementById('formDuplicarLote').submit();
+        }
+                    }
+    });
+            }
     </script>
     @if(Session::has('success'))
         <script>
@@ -238,4 +288,4 @@
             @endforeach
         </script>
     @endif
-@endsection
+@endpush
