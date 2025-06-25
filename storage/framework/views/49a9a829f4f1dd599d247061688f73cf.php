@@ -1,38 +1,32 @@
-@php
+<?php
     $readonly = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'readonly' : '';
     $disabled = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'disabled' : '';
-@endphp
+?>
 
 <div class="row g-3">
     <div>
         <div>
             <div>
-                <input type="hidden" name="fraccionamiento_id" value="{{$fracc->id}}" required>
+                <input type="hidden" name="fraccionamiento_id" value="<?php echo e($fracc->id); ?>" required>
             </div>
         </div>
     </div>
 
-    {{--  @if(isset($lote) && !empty($lote->plano))
-        <div class="row mb-3">
-            <div class="col-md-12 text-center">
-                <img src="{{ asset('storage/' . $lote->plano) }}" alt="Imagen del lote" width="100px" height="150">
-            </div>
-        </div>
-    @endif  --}}
+    
 
     <div class="col-md-10">
         <label for="medidas_m" class="form-label">Medidas (m)</label>
-        <input type="text" step="0.01" name="medidas_m" id="medidas_m{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->medidas_m ?? '' }}" required {{ $readonly }}>
+        <input type="text" step="0.01" name="medidas_m" id="medidas_m<?php echo e($lote->id ?? ''); ?>" class="form-control" value="<?php echo e($lote->medidas_m ?? ''); ?>" required <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-2">
         <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? '' }}" value="{{ $lote->superficie_m2 ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2<?php echo e($lote->id ?? ''); ?>" value="<?php echo e($lote->superficie_m2 ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>  
 
     <div class="col-md-4">
         <label for="num_lote" class="form-label"># Lote</label>
-        <input type="number" step="0.01" name="num_lote" id="num_lote{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->num_lote ?? '' }}" required {{ $readonly }}>
+        <input type="number" step="0.01" name="num_lote" id="num_lote<?php echo e($lote->id ?? ''); ?>" class="form-control" value="<?php echo e($lote->num_lote ?? ''); ?>" required <?php echo e($readonly); ?>>
     </div>
 
   
@@ -42,10 +36,10 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="precioContadoPrepend">$</span>
             </div>
-            <input type="text" step="0.01" name="precio_contado" id="precio_contado{{ $lote->id ?? '' }}"
+            <input type="text" step="0.01" name="precio_contado" id="precio_contado<?php echo e($lote->id ?? ''); ?>"
                 class="form-control precio-input"
                 placeholder="0.00"
-                value="{{ isset($lote->precio_contado) ? number_format($lote->precio_contado, 2) : '' }}"
+                value="<?php echo e(isset($lote->precio_contado) ? number_format($lote->precio_contado, 2) : ''); ?>"
                 aria-describedby="precioContadoPrepend">
         </div>
     </div>
@@ -56,50 +50,50 @@
             <div class="input-group-prepend">
                 <span class="input-group-text" id="precioCreditoPrepend">$</span>
             </div>
-            <input type="text" step="0.01" name="precio_credito" id="precio_credito{{ $lote->id ?? '' }}"
+            <input type="text" step="0.01" name="precio_credito" id="precio_credito<?php echo e($lote->id ?? ''); ?>"
                 class="form-control precio-input"
                 placeholder="0.00"
-                value="{{ isset($lote->precio_credito) ? number_format($lote->precio_credito, 2) : '' }}"
+                value="<?php echo e(isset($lote->precio_credito) ? number_format($lote->precio_credito, 2) : ''); ?>"
                 aria-describedby="precioCreditoPrepend">
         </div>
     </div>
 
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
-        <select name="manzana" id="manzana{{ $lote->id ?? '' }}" class="form-select" required {{ $disabled }}>
-            @foreach (range(1, $fracc->manzanas) as $i)
-                <option value="{{ $i }}" {{ (isset($lote) && $lote->manzana == $i) ? 'selected' : '' }}>Manzana {{ $i }}</option>
-            @endforeach
+        <select name="manzana" id="manzana<?php echo e($lote->id ?? ''); ?>" class="form-select" required <?php echo e($disabled); ?>>
+            <?php $__currentLoopData = range(1, $fracc->manzanas); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($i); ?>" <?php echo e((isset($lote) && $lote->manzana == $i) ? 'selected' : ''); ?>>Manzana <?php echo e($i); ?></option>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>   
 
     <div class="col-md-4">
         <label class="form-label">Colinda Norte</label>
-        <input type="text" name="colinda_norte" value="{{ $lote->colinda_norte ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="text" name="colinda_norte" value="<?php echo e($lote->colinda_norte ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-4">
         <label class="form-label">Colinda Sur</label>
-        <input type="text" name="colinda_sur" value="{{ $lote->colinda_sur ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="text" name="colinda_sur" value="<?php echo e($lote->colinda_sur ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-4">
         <label class="form-label">Colinda Este</label>
-        <input type="text" name="colinda_oriente" value="{{ $lote->colinda_oriente ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="text" name="colinda_oriente" value="<?php echo e($lote->colinda_oriente ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-4">
         <label class="form-label">Colinda Oeste</label>
-        <input type="text" name="colinda_poniente" value="{{ $lote->colinda_poniente ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="text" name="colinda_poniente" value="<?php echo e($lote->colinda_poniente ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-12">
         <label for="observaciones" class="form-label">Observaciones</label>
-        <textarea name="observaciones" id="observaciones{{ $lote->id ?? '' }}" rows="3" class="form-control" {{ $readonly }}>{{ $lote->observaciones ?? '' }}</textarea>
+        <textarea name="observaciones" id="observaciones<?php echo e($lote->id ?? ''); ?>" rows="3" class="form-control" <?php echo e($readonly); ?>><?php echo e($lote->observaciones ?? ''); ?></textarea>
     </div>
 </div>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const inputs = document.querySelectorAll('.precio-input');
@@ -152,4 +146,5 @@
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-lotes/formulario/lote.blade.php ENDPATH**/ ?>

@@ -56,31 +56,38 @@ class LoteController extends Controller
         
         DB::beginTransaction();
         try {
-            // if ($request->hasFile('plano')) {
-            //     $file = $request->file('plano');
-            //     $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
-            //     $path = $file->storeAs('plano', $filename, 'public');
-            //     $validated['plano'] = $path;
-            // }
+            if ($request->hasFile('plano')) {
+                $file = $request->file('plano');
+                $filename = 'lote_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                $path = $file->storeAs('plano', $filename, 'public');
+                $validated['plano'] = $path;
+            }
+            
             $lote = new Lote();
             $lote->num_lote = $validated['num_lote'];
             $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
-            $lote->precio_contado = $validated['precio_contado'];
-            $lote->precio_credito = $validated['precio_credito'];
-            $lote->plano = 'Sin info';
+            // -----------------------
+            $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
+            $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
+            // -----------------------
+            
+            $lote->precio_contado = $precioContado;
+            $lote->precio_credito = $precioCredito;
+            // $lote->plano = 'Sin info';
             $lote->manzana = $validated['manzana'];
             $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
             $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
-            $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
-            $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
+            // $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
+            // $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
+            $lote->colinda_oriente = Helper::capitalizeFirst($validated['colinda_oriente']);
+            $lote->colinda_poniente = Helper::capitalizeFirst($validated['colinda_poniente']);
             $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $lote->cat_estatus_disponibilidad_id = 2;
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
             $lote->save();
             DB::commit();
-            Session::flash('success', 'Lote registrado');
-            return back();
+            return back()->with('success', 'Fraccionamiento fue registrado');
         } catch (\Throwable $th) {
             Log::error('Error guardar el lote: ' . $th->getMessage());
             DB::rollBack();
@@ -140,13 +147,17 @@ class LoteController extends Controller
             $lote->num_lote = $validated['num_lote'];
             $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
-            $lote->precio_contado = $validated['precio_contado'];
-            $lote->precio_credito = $validated['precio_credito'];
+             // -----------------------
+            $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
+            $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
+            // -----------------------            
+            $lote->precio_contado = $precioContado;
+            $lote->precio_credito = $precioCredito;
             $lote->manzana = $validated['manzana'];
             $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
             $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
-            $lote->colinda_este = Helper::capitalizeFirst($validated['colinda_este']);
-            $lote->colinda_oeste = Helper::capitalizeFirst($validated['colinda_oeste']);
+            $lote->colinda_oriente = Helper::capitalizeFirst($validated['colinda_oriente']);
+            $lote->colinda_poniente = Helper::capitalizeFirst($validated['colinda_poniente']);
             $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             // $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
             $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
@@ -194,14 +205,14 @@ class LoteController extends Controller
             'num_lote'                         => ['required', 'string'],
             'medidas_m'                        => ['required', 'string'],
             'superficie_m2'                    => ['required', 'numeric', 'min:1'],
-            'precio_contado'                   => ['nullable', 'numeric', 'min:0'],
-            'precio_credito'                   => ['nullable', 'numeric', 'min:0'],
+            'precio_contado'                   => ['nullable', 'string'],
+            'precio_credito'                   => ['nullable', 'string'],
             'plano'                            => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
             'manzana'                          => ['required', 'numeric', 'min:1'],
             'colinda_norte'                    => ['nullable', 'string'],
             'colinda_sur'                      => ['nullable', 'string'],
-            'colinda_este'                     => ['nullable', 'string'],
-            'colinda_oeste'                    => ['nullable', 'string'],
+            'colinda_oriente'                  => ['nullable', 'string'],
+            'colinda_poniente'                 => ['nullable', 'string'],
             'observaciones'                    => ['nullable', 'string'],
             // 'cat_estatus_disponibilidad_id'    => ['required', 'exists:cat_estatus_disponibilidad,id'],
             'fraccionamiento_id'               => ['required'],

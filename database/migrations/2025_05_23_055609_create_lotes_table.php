@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('manzana');
             $table->string('colinda_norte')->nullable();
             $table->string('colinda_sur')->nullable();
-            $table->string('colinda_este')->nullable();
-            $table->string('colinda_oeste')->nullable();
+            $table->string('colinda_oriente')->nullable();
+            $table->string('colinda_poniente')->nullable();
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
             $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');

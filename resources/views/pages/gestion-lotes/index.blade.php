@@ -15,7 +15,7 @@
     <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Lightbox css -->
-<link href="{{ URL::asset('build/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('build/libs/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -98,8 +98,8 @@
                                     <td>Manzana {{ $lote->manzana }}</td>      
                                     <td>{{ $lote->num_lote }}</td>
                                     <td>{{ $lote->superficie_m2 }}</td>
-                                    <td>{{ $lote->precio_contado }}</td>      
-                                    <td>{{ $lote->precio_credito }}</td>   
+                                    <td>${{ number_format($lote->precio_contado, 2) }}</td>
+                                    <td>${{ number_format($lote->precio_credito, 2) }}</td>
                                     <td>
                                         <span class="badge" style="background-color: {{$lote->disponibilidad->color}}; color: white;">
                                             {{ $lote->disponibilidad->nombre }}
