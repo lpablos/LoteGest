@@ -236,28 +236,26 @@
     </script>
 
     <script>
-         const duplicarLoteUrl = @json(route('duplicar.lote'));
-
-          function duplica(loteId) {
-                 Swal.fire({
-                    title: '¿Duplicar lote?',
-                    text: 'Esta acción creará una copia del lote seleccionado.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#28a745',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí, duplicar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
+        function duplica(loteId) {
+            Swal.fire({
+                title: '¿Duplicar lote?',
+                text: 'Esta acción creará una copia del lote seleccionado.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, duplicar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {   
+                if (result.isConfirmed) {
                     if (result.isConfirmed) {
-                        if (result.isConfirmed) {
                         // Setear el ID y enviar el formulario
                         document.getElementById('inputDuplicarLoteId').value = loteId;
                         document.getElementById('formDuplicarLote').submit();
-        }
                     }
-    });
-            }
+                }
+            });
+        }
     </script>
     @if(Session::has('success'))
         <script>

@@ -238,4 +238,21 @@ class FraccionamientoController extends Controller
             'tipo_predios_id.min'       => 'El tipo de predio debe tener al menos valor :min.',
         ];
     }
+
+      public function duplicado(Request $request){
+        DB::beginTransaction();
+        try {
+            $fracc = Fraccionamiento::findOrFail($request->input('id'));
+            $nuevoFracc = $fracc->replicate();
+            $nuevoFracc->nombre = $fracc->nombre . ' (Réplica)';
+            $nuevoFracc->save();
+            DB::commit();
+            return redirect()->back()->with('success', 'Fraccionamiento Replicado Correctamente');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error('Error al replicar el Fraccionamiento: ' . $th->getMessage());
+            return redirect()->back()->with('error', 'No Se Replico. Intenta Mas Tarde');
+        }
+    
+    }
 }

@@ -33,8 +33,9 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 // });
 
 Route::post('guarda-corredor', [App\Http\Controllers\UserController::class, 'storeCorredor'])->name('usuario.corredor');
-Route::resource('lote', App\Http\Controllers\LoteController::class);
 Route::post('duplicar-lote', [App\Http\Controllers\LoteController::class, 'duplicado'])->name('duplicar.lote');
+Route::post('duplicar-lotfraccionamientoe', [App\Http\Controllers\FraccionamientoController::class, 'duplicado'])->name('duplicar.fraccionamiento');
+Route::resource('lote', App\Http\Controllers\LoteController::class);
 Route::resource('usuarios', App\Http\Controllers\UserController::class);
 Route::resource('perfiles', App\Http\Controllers\RoleController::class);
 Route::resource('cliente', App\Http\Controllers\ClienteController::class);
@@ -48,6 +49,7 @@ Route::resource('fraccionamiento', App\Http\Controllers\FraccionamientoControlle
 Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoController::class);
 Route::resource('entidades-federativas', App\Http\Controllers\CatEntidadFederativaController::class);
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
+
 
 
 //Language Translation
