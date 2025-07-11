@@ -43,7 +43,9 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd("Aqui entra ",$request->all());
+
+
         $input = $request->all();
 
         $rules = [
