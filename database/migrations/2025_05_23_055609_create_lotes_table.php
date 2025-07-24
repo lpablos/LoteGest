@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('num_lote');
             $table->string('medidas_m');
             $table->decimal('superficie_m2', 10, 2)->nullable();
-            $table->decimal('precio_contado', 12, 2)->nullable();
-            $table->decimal('precio_credito', 12, 2)->nullable();
+            // $table->decimal('precio_contado', 12, 2)->nullable();
+            // $table->decimal('precio_credito', 12, 2)->nullable();
             $table->string('plano')->nullable();
             $table->integer('manzana');
             $table->string('colinda_norte')->nullable();

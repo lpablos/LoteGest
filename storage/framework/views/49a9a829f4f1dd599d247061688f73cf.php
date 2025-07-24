@@ -30,7 +30,7 @@
     </div>
 
   
-    <div class="col-md-4 mb-4">
+    <!-- <div class="col-md-4 mb-4">
         <label for="precio_contado">Precio Contado</label>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -42,9 +42,9 @@
                 value="<?php echo e(isset($lote->precio_contado) ? number_format($lote->precio_contado, 2) : ''); ?>"
                 aria-describedby="precioContadoPrepend">
         </div>
-    </div>
+    </div> -->
 
-    <div class="col-md-4 mb-4">
+    <!-- <div class="col-md-4 mb-4">
         <label for="precio_credito">Precio Crédito</label>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -56,7 +56,7 @@
                 value="<?php echo e(isset($lote->precio_credito) ? number_format($lote->precio_credito, 2) : ''); ?>"
                 aria-describedby="precioCreditoPrepend">
         </div>
-    </div>
+    </div> -->
 
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
@@ -78,12 +78,12 @@
     </div>
 
     <div class="col-md-4">
-        <label class="form-label">Colinda Este</label>
+        <label class="form-label">Colinda Oriente</label>
         <input type="text" name="colinda_oriente" value="<?php echo e($lote->colinda_oriente ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 
     <div class="col-md-4">
-        <label class="form-label">Colinda Oeste</label>
+        <label class="form-label">Colinda Poniente</label>
         <input type="text" name="colinda_poniente" value="<?php echo e($lote->colinda_poniente ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
 

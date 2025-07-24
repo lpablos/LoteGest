@@ -68,12 +68,12 @@ class LoteController extends Controller
             $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
             // -----------------------
-            $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
-            $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
+            // $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
+            // $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
             // -----------------------
             
-            $lote->precio_contado = $precioContado;
-            $lote->precio_credito = $precioCredito;
+            // $lote->precio_contado = $precioContado;
+            // $lote->precio_credito = $precioCredito;
             // $lote->plano = 'Sin info';
             $lote->manzana = $validated['manzana'];
             $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
@@ -148,11 +148,11 @@ class LoteController extends Controller
             $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
             $lote->superficie_m2 = $validated['superficie_m2'];
              // -----------------------
-            $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
-            $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
+            // $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
+            // $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
             // -----------------------            
-            $lote->precio_contado = $precioContado;
-            $lote->precio_credito = $precioCredito;
+            // $lote->precio_contado = $precioContado;
+            // $lote->precio_credito = $precioCredito;
             $lote->manzana = $validated['manzana'];
             $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
             $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
@@ -205,8 +205,8 @@ class LoteController extends Controller
             'num_lote'                         => ['required', 'string'],
             'medidas_m'                        => ['required', 'string'],
             'superficie_m2'                    => ['required', 'numeric', 'min:1'],
-            'precio_contado'                   => ['nullable', 'string'],
-            'precio_credito'                   => ['nullable', 'string'],
+            // 'precio_contado'                   => ['nullable', 'string'],
+            // 'precio_credito'                   => ['nullable', 'string'],
             'plano'                            => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
             'manzana'                          => ['required', 'numeric', 'min:1'],
             'colinda_norte'                    => ['nullable', 'string'],
@@ -226,7 +226,7 @@ class LoteController extends Controller
             'num_lote.string'                       => 'El número de lote debe ser texto.',
             'medidas_m.required'                    => 'Las medidas son obligatorias.',
             'superficie_m2.min'                     => 'La superficie debe ser al menos :min m².',
-            'precio_contado.min'                    => 'El precio de contado no puede ser negativo.',
+            // 'precio_contado.min'                    => 'El precio de contado no puede ser negativo.',
             'plano.image'                           => 'El plano debe ser una imagen.',
             'plano.mimes'                           => 'El plano debe ser jpg, jpeg, png o webp.',
             'manzana.min'                           => 'La manzana debe ser al menos :min.',
