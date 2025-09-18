@@ -47,6 +47,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
+        
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()
@@ -61,7 +62,7 @@ class FraccionamientoController extends Controller
                     $validated['imagen'] = $path;
                 } 
             }
-
+            
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
@@ -73,16 +74,17 @@ class FraccionamientoController extends Controller
             $fraccionamiento->viento3 = Helper::capitalizeFirst($validated['viento3']);
             $fraccionamiento->viento4 = Helper::capitalizeFirst($validated['viento4']);
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
-            $fraccionamiento->manzanas = $validated['manzanas'];
+            $fraccionamiento->manzanas = count($request->manzana);
             $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
 
             foreach ($request->manzana as $key => $manzana) {
+                $contador = $key + 1;
                 $lotes = 1;
                 for ($i=0; $i < $manzana['nLote']; $i++) { 
                     $lote = new Lote();
-                    $lote->manzana = $manzana['manzana'];
+                    $lote->manzana = $contador;
                     $lote->num_lote = $lotes++;
                     $lote->precio_contado = $manzana['precio_contado'];
                     $lote->precio_credito = $manzana['precio_credito'];

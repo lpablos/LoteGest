@@ -8,31 +8,27 @@
 @endif
 
 <div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="nombre" class="form-label">Nombre *</label>
         <input type="text" name="nombre" id="nombre{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->nombre:''}}" required>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="imagen" class="form-label">Imagen (jpg,jpeg,png,webp)</label>
         <input type="file" name="imagen" id="imagen{{isset($fracc)? $fracc->id:''}}" class="form-control">
     </div>
-</div>
-
-<div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="reponsable" class="form-label">Responsable *</label>
         <input type="text" name="reponsable" id="reponsable{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->reponsable:''}}" required>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="propietaria" class="form-label"> Propietario(a) *</label>
         <input type="text" name="propietaria" id="propietaria{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->propietaria:''}}" required>
     </div>
 </div>
 
-<div class="row mb-3">
-    <div class="col-md-6">
+<div class="row mb-2">
+    <div class="col-md-4">
         <label for="tipo_predios_id" class="form-label">Tipo de Predio</label>
         <select name="tipo_predios_id" id="tipo_predios_id{{isset($fracc)? $fracc->id:''}}"  class="form-select" required>
             <option value="" selected disabled> Selecciona una opción </option>
@@ -52,14 +48,17 @@
             @endforeach
         </select>
     </div>
-
-    <div class="col-md-6">
+    <div class="col-md-4">
         <label for="superficie" class="form-label">Superficie (m²)</label>
         <input type="number" step="0.01" name="superficie" id="superficie{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->superficie:''}}">
     </div>
+    <div class="col-md-4">
+        <label for="ubicacion" class="form-label">Ubicación</label>
+        <input type="text" name="ubicacion" id="ubicacion{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->ubicacion:''}}">
+    </div>
 </div>
 <hr>
-<div class="row mb-3">
+<div class="row mb-2">
     <div class="col-md-12">
         <label for="reponsable" class="form-label">Define los vientos</label>
     </div>
@@ -79,19 +78,17 @@
 </div>
 <hr>
 
-<div class="row mb-3">
-    <div class="col-md-6">
-        <label for="ubicacion" class="form-label">Ubicación</label>
-        <input type="text" name="ubicacion" id="ubicacion{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->ubicacion:''}}">
-    </div>
 
-     <div class="col-md-6">
-        <label for="manzanas" class="form-label">Manzanas *</label>
-        <input type="number" min="1" name="manzanas" min="1" id="manzanas{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->manzanas:0}}" required>
-    </div>
+<div class="text-end m-1">
+    <button type="button" id="btn-agregar-manzana-btn" class="btn btn-sm btn-primary btn-small waves-effect waves-light btn-agregar-manzana-btn">
+        + Manzana
+    </button>
 </div>
 
-<div id="contenedor-lotes"></div>
+<div class="row mb-1">
+    <div id="contenedor-lotes"></div>
+</div>
+
 
 <div class="mb-3">
     <label for="observaciones" class="form-label">Observaciones</label>
@@ -99,50 +96,46 @@
 </div>
 
 
-<script>
-    document.getElementById('manzanas').addEventListener('input', function () {
-        let cantidad = parseInt(this.value) || 0; // número ingresado
-        let contenedor = document.getElementById('contenedor-lotes');
-        contenedor.innerHTML = ""; // limpiar antes de regenerar
 
-        for (let i = 0; i < cantidad; i++) {
-            let bloque = `
-            <div class="row mb-3 border border-secondary rounded p-2">
-                <div class="col-md-2">
-                    <label class="form-label">Manzana</label>
-                    <input type="number" name="manzana[${i}][manzana]" class="form-control" value="${i+1}" readonly>
+<script>
+    let contadorManzanas = 0; // lleva la cuenta de cuántas manzanas se han agregado
+
+    document.getElementById('btn-agregar-manzana-btn').addEventListener('click', function () {
+        let contenedor = document.getElementById('contenedor-lotes');
+        let bloque = `
+        <div class="row mb-3 border border-secondary rounded p-2 align-items-end" id="manzana-${contadorManzanas}">
+            <div class="col-md-2">
+                <label class="form-label">No. Lotes</label>
+                <input type="number" name="manzana[${contadorManzanas}][nLote]" class="form-control" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Precio Contado</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_contado]" class="form-control" required>
                 </div>
-                <div class="col-md-2">
-                    <label class="form-label">No. Lotes</label>
-                    <input type="number" name="manzana[${i}][nLote]" class="form-control" value="" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Precio Crédito</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_credito]" class="form-control" required>
                 </div>
-                <div class="col-md-2">
-                    <label class="form-label">Precio Contado</label>
-                    <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" name="manzana[${i}][precio_contado]" class="form-control" value="" required>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Precio Crédito</label>
-                    <div class="input-group">
-                        <span class="input-group-text">$</span>
-                        <input type="number" name="manzana[${i}][precio_credito]" class="form-control" value="" required>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Enganche</label>
-                    <select name="manzana[${i}][enganche]" class="form-select" required>
-                        <option value="">Seleccione...</option>
-                        <option value="10">10%</option>
-                        <option value="15">15%</option>
-                        <option value="20">20%</option>
-                        <option value="30">30%</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Enganche</label>
+                <select name="manzana[${contadorManzanas}][enganche]" class="form-select" required>
+                    <option value="">Seleccione...</option>
+                    <option value="10">10%</option>
+                    <option value="15">15%</option>
+                    <option value="20">20%</option>
+                    <option value="30">30%</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div>
                     <label class="form-label">Mensualidades</label>
-                    <select name="manzana[${i}][mensualidades]" class="form-select" required>
+                    <select name="manzana[${contadorManzanas}][mensualidades]" class="form-select" required>
                         <option value="">Seleccione...</option>
                         <option value="6">6 meses</option>
                         <option value="12">12 meses</option>
@@ -152,9 +145,27 @@
                         <option value="36">36 meses</option>
                     </select>
                 </div>
-            </div>`;
-            
-            contenedor.insertAdjacentHTML('beforeend', bloque);
-        }
+              
+            </div>
+            <div class="col-md-1">
+                <div class="m-2">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="eliminarManzana(${contadorManzanas})">
+                        ❌
+                    </button>
+                </div>
+            </div>
+        </div>`;
+
+        contenedor.insertAdjacentHTML('beforeend', bloque);
+
+        contadorManzanas++; // aumentar el índice para la siguiente
     });
+
+    // Función para eliminar un bloque específico
+    function eliminarManzana(id) {
+        let bloque = document.getElementById(`manzana-${id}`);
+        if (bloque) {
+            bloque.remove();
+        }
+    }
 </script>

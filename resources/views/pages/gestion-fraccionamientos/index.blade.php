@@ -31,6 +31,7 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
+                                 @include('pages.gestion-fraccionamientos.modal.add')
                                 <button type="button" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#add_fraccionamiento"
@@ -40,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    @include('pages.gestion-fraccionamientos.modal.add')
+                   
                     <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
