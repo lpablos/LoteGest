@@ -15,33 +15,20 @@ class Lote extends Model
         'num_lote',
         'medidas_m',
         'superficie_m2',
-        // 'precio_contado',
-        // 'precio_credito',
+        'precio_contado',
+        'precio_credito',
         'plano',
         'manzana',
-        'colinda_norte',
-        'colinda_sur',
-        'colinda_oriente',
-        'colinda_poniente',
+        'viento1',
+        'viento2',
+        'viento3',
+        'viento4',
+        'enganche',
+        'mensualidades',
         'observaciones',
         'cat_estatus_disponibilidad_id',
         'fraccionamiento_id',
-        // 'frente_m',
-        // 'fondo_m',
-        // 'manzana_id',
-        // 'cat_estatus_id',
-        // 'user_corredor_id',
     ];
-
-    // public function manzana()
-    // {
-    //     return $this->belongsTo(Manzana::class,'manzana_id','id');
-    // }
-
-    // public function estatu()
-    // {
-    //     return $this->belongsTo(CatEstatus::class,'cat_estatus_id','id');
-    // }
 
     public function disponibilidad()
     {

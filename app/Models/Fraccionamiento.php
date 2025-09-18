@@ -17,21 +17,22 @@ class Fraccionamiento extends Model
         'propietaria',
         'superficie',
         'ubicacion',
+        'viento1',
+        'viento2',
+        'viento3',
+        'viento4',
         'manzanas',
-        // 'proyecto_id',
         'observaciones',
         'tipo_predios_id',
     ];
 
-    // public function proyecto()
-    // {
-    //     return $this->belongsTo(Proyecto::class,'proyecto_id','id');
-    // }
+    protected $appends = ['lotes_total'];
+      
+    public function getLotesTotalAttribute()
+    {
+        return $this->lotes()->count();
+    }
 
-    // public function manzanas()
-    // {
-    //     return $this->hasMany(Manzana::class);
-    // }
     public function lotes(){        
         return $this->hasMany(Lote::class);
     }

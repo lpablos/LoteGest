@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
             $table->integer('num_lote');
-            $table->string('medidas_m');
+            $table->string('medidas_m')->nullable();
             $table->decimal('superficie_m2', 10, 2)->nullable();
-            // $table->decimal('precio_contado', 12, 2)->nullable();
-            // $table->decimal('precio_credito', 12, 2)->nullable();
+            $table->decimal('precio_contado', 12, 2)->nullable();
+            $table->decimal('precio_credito', 12, 2)->nullable();
             $table->string('plano')->nullable();
             $table->integer('manzana');
-            $table->string('colinda_norte')->nullable();
-            $table->string('colinda_sur')->nullable();
-            $table->string('colinda_oriente')->nullable();
-            $table->string('colinda_poniente')->nullable();
+            $table->string('viento1')->nullable();
+            $table->string('viento2')->nullable();
+            $table->string('viento3')->nullable();
+            $table->string('viento4')->nullable();
+            $table->enum('enganche',['10','15','20','30'])->nullable()->comment('Porcentaje de enganche');
+            $table->enum('mensualidades',['6','12','18','24','30','36'])->nullable()->comment('Numero de mensualidades');
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
             $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');

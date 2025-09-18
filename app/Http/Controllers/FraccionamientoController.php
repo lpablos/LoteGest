@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
+use App\Models\Lote;
 // use App\Models\Proyecto;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CatTipoPredio;
@@ -46,7 +47,6 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()
@@ -61,24 +61,49 @@ class FraccionamientoController extends Controller
                     $validated['imagen'] = $path;
                 } 
             }
+
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
             $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->superficie = $validated['superficie'];
+            $fraccionamiento->viento1 = Helper::capitalizeFirst($validated['viento1']);
+            $fraccionamiento->viento2 = Helper::capitalizeFirst($validated['viento2']);
+            $fraccionamiento->viento3 = Helper::capitalizeFirst($validated['viento3']);
+            $fraccionamiento->viento4 = Helper::capitalizeFirst($validated['viento4']);
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->manzanas = $validated['manzanas'];
             $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
+
+            foreach ($request->manzana as $key => $manzana) {
+                $lotes = 1;
+                for ($i=0; $i < $manzana['nLote']; $i++) { 
+                    $lote = new Lote();
+                    $lote->manzana = $manzana['manzana'];
+                    $lote->num_lote = $lotes++;
+                    $lote->precio_contado = $manzana['precio_contado'];
+                    $lote->precio_credito = $manzana['precio_credito'];
+                    $lote->enganche = $manzana['enganche'];
+                    $lote->mensualidades = $manzana['mensualidades'];
+                    $lote->fraccionamiento_id = $fraccionamiento->id;
+                    $lote->cat_estatus_disponibilidad_id = 1; // Disponible
+                    $lote->save();
+                }             
+            }
+
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue registrado');
             return redirect()->route('fraccionamiento.index');
+
         } catch (\Throwable $th) {
+
             Log::error('Error guardar Fraccionamiento: ' . $th->getMessage());
             DB::rollBack();
             return back()->withErrors(['Error' => substr($th->getMessage(), 0, 150)]);
+            
         }
    
 
@@ -202,6 +227,10 @@ class FraccionamientoController extends Controller
             'reponsable'      => 'nullable|string|max:255', 
             'propietaria'     => 'nullable|string|max:255',
             'superficie'      => 'nullable|numeric|min:0',
+            'viento1'         => 'nullable|string|max:255',
+            'viento2'         => 'nullable|string|max:255',
+            'viento3'         => 'nullable|string|max:255',
+            'viento4'         => 'nullable|string|max:255',
             'ubicacion'       => 'nullable|string|max:255',
             'manzanas'        => 'nullable|numeric|min:1',
             'observaciones'   => 'nullable|string',

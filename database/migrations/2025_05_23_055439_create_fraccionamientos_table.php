@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('propietaria')->nullable();
             $table->decimal('superficie', 10, 2)->nullable();
             $table->string('ubicacion')->nullable();
+            $table->string('viento1')->nullable();
+            $table->string('viento2')->nullable();
+            $table->string('viento3')->nullable();
+            $table->string('viento4')->nullable();
             $table->unsignedInteger('manzanas')->nullable();
             $table->text('observaciones')->nullable();
             
