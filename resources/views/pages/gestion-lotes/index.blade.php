@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (isset($fracc))
+                        <!-- @if (isset($fracc))
                             <div class="col-sm-8">
                                 <div class="text-sm-end">
                                     <button type="button" 
@@ -45,7 +45,7 @@
                                     </button>
                                 </div>
                             </div>
-                        @endif
+                        @endif -->
                     </div>
                     
                     @if (isset($fracc))
@@ -87,10 +87,10 @@
                             <tr>
                                 <th> Manzana </th>
                                 <th> # lote</th>
-                                <th> Medidas </th>
+                                <!-- <th> Medidas </th> -->
                                 <th> Superficie (m2) </th>
-                                <!-- <th> Precio Contado </th>
-                                <th> Precio Credito </th> -->
+                                <th> Precio Contado </th>
+                                <th> Precio Credito </th>
                                 <th> Disponibilidad</th>
                                 <th> Acciones </th>
                             </tr>
@@ -100,10 +100,10 @@
                                 <tr>
                                     <td>Manzana {{ $lote->manzana }}</td>      
                                     <td>{{ $lote->num_lote }}</td>
-                                    <td>{{ $lote->medidas_m }}</td>
+                                    <!-- <td>{{ $lote->medidas_m }}</td> -->
                                     <td>{{ $lote->superficie_m2 }}</td>
-                                    <!-- <td>${{ number_format($lote->precio_contado, 2) }}</td>
-                                    <td>${{ number_format($lote->precio_credito, 2) }}</td> -->
+                                    <td>${{ number_format($lote->precio_contado, 2) }}</td>
+                                    <td>${{ number_format($lote->precio_credito, 2) }}</td>
                                     <td>
                                         <span class="badge" style="background-color: {{$lote->disponibilidad->color}}; color: white;">
                                             {{ $lote->disponibilidad->nombre }}
@@ -121,7 +121,7 @@
                                                     <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
                                                 </a>
                                             </li>
-                                             <li>
+                                             <!-- <li>
                                                 <button type="button"
                                                         class="dropdown-item btn btn-link"
                                                         
@@ -130,7 +130,7 @@
                                                     <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
                                                 </button>
 
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                 </td> 

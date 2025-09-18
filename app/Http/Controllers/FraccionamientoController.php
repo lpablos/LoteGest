@@ -89,7 +89,7 @@ class FraccionamientoController extends Controller
                     $lote->enganche = $manzana['enganche'];
                     $lote->mensualidades = $manzana['mensualidades'];
                     $lote->fraccionamiento_id = $fraccionamiento->id;
-                    $lote->cat_estatus_disponibilidad_id = 1; // Disponible
+                    $lote->cat_estatus_disponibilidad_id = 2; // Disponible
                     $lote->save();
                 }             
             }

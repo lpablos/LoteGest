@@ -14,20 +14,49 @@
 
     
 
-    <div class="col-md-10">
+    <!-- <div class="col-md-10">
         <label for="medidas_m" class="form-label">Medidas (m)</label>
         <input type="text" step="0.01" name="medidas_m" id="medidas_m<?php echo e($lote->id ?? ''); ?>" class="form-control" value="<?php echo e($lote->medidas_m ?? ''); ?>" required <?php echo e($readonly); ?>>
+    </div> -->
+     <div class="col-md-4">
+        <label for="num_lote" class="form-label"># Lote</label>
+        <input type="number" step="0.01" name="num_lote" id="num_lote<?php echo e($lote->id ?? ''); ?>" class="form-control" value="<?php echo e($lote->num_lote ?? ''); ?>" required readonly>
     </div>
-
-    <div class="col-md-2">
+    <div class="col-md-4">
         <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2<?php echo e($lote->id ?? ''); ?>" value="<?php echo e($lote->superficie_m2 ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
+        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2<?php echo e($lote->id ?? ''); ?>" value="<?php echo e($lote->superficie_m2 ?? ''); ?>" class="form-control" >
     </div>  
 
     <div class="col-md-4">
-        <label for="num_lote" class="form-label"># Lote</label>
-        <input type="number" step="0.01" name="num_lote" id="num_lote<?php echo e($lote->id ?? ''); ?>" class="form-control" value="<?php echo e($lote->num_lote ?? ''); ?>" required <?php echo e($readonly); ?>>
-    </div>
+        <label for="precio_contado" class="form-label">Precio Contado</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" step="0.01" 
+                name="precio_contado" 
+                id="precio_contado<?php echo e($lote->id ?? ''); ?>" 
+                value="<?php echo e($lote->precio_contado ?? ''); ?>" 
+                class="form-control" 
+                readonly>
+        </div>
+
+        <!-- <input type="number" step="0.01" name="precio_contado" id="precio_contado<?php echo e($lote->id ?? ''); ?>" value="<?php echo e($lote->precio_contado ?? ''); ?>" class="form-control" readonly> -->
+    </div>  
+    <div class="col-md-4">
+        <label for="precio_credito" class="form-label">Precio Credito</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" step="0.01" 
+                name="precio_credito" 
+                id="precio_credito<?php echo e($lote->id ?? ''); ?>" 
+                value="<?php echo e($lote->precio_credito ?? ''); ?>" 
+                class="form-control" 
+                readonly>
+        </div>
+
+        <!-- <input type="number" step="0.01" name="precio_credito" id="precio_credito<?php echo e($lote->id ?? ''); ?>" value="<?php echo e($lote->precio_credito ?? ''); ?>" class="form-control" readonly> -->
+    </div>  
+
+   
 
   
     <!-- <div class="col-md-4 mb-4">
@@ -60,14 +89,14 @@
 
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
-        <select name="manzana" id="manzana<?php echo e($lote->id ?? ''); ?>" class="form-select" required <?php echo e($disabled); ?>>
+        <select name="manzana" id="manzana<?php echo e($lote->id ?? ''); ?>" class="form-select" readonly disabled>
             <?php $__currentLoopData = range(1, $fracc->manzanas); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($i); ?>" <?php echo e((isset($lote) && $lote->manzana == $i) ? 'selected' : ''); ?>>Manzana <?php echo e($i); ?></option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>   
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <label class="form-label">Colinda Norte</label>
         <input type="text" name="colinda_norte" value="<?php echo e($lote->colinda_norte ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
     </div>
@@ -85,6 +114,16 @@
     <div class="col-md-4">
         <label class="form-label">Colinda Poniente</label>
         <input type="text" name="colinda_poniente" value="<?php echo e($lote->colinda_poniente ?? ''); ?>" class="form-control" <?php echo e($readonly); ?>>
+    </div> -->
+
+    <div class="col-md-4">
+        <label class="form-label">Enganche</label>
+        <input type="text" name="enganche" value="<?php echo e($lote->enganche ?? ''); ?>" class="form-control" readonly>
+    </div>
+
+     <div class="col-md-4">
+        <label class="form-label">Mensualidades</label>
+        <input type="text" name="mensualidades" value="<?php echo e($lote->mensualidades ?? ''); ?>" class="form-control" readonly>
     </div>
 
     <div class="col-md-12">

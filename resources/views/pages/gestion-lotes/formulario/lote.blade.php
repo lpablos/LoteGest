@@ -20,20 +20,49 @@
         </div>
     @endif  --}}
 
-    <div class="col-md-10">
+    <!-- <div class="col-md-10">
         <label for="medidas_m" class="form-label">Medidas (m)</label>
         <input type="text" step="0.01" name="medidas_m" id="medidas_m{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->medidas_m ?? '' }}" required {{ $readonly }}>
+    </div> -->
+     <div class="col-md-4">
+        <label for="num_lote" class="form-label"># Lote</label>
+        <input type="number" step="0.01" name="num_lote" id="num_lote{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->num_lote ?? '' }}" required readonly>
     </div>
-
-    <div class="col-md-2">
+    <div class="col-md-4">
         <label for="superficie_m2" class="form-label">Superficie (m²)</label>
-        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? '' }}" value="{{ $lote->superficie_m2 ?? '' }}" class="form-control" {{ $readonly }}>
+        <input type="number" step="0.01" name="superficie_m2" id="superficie_m2{{ $lote->id ?? '' }}" value="{{ $lote->superficie_m2 ?? '' }}" class="form-control" >
     </div>  
 
     <div class="col-md-4">
-        <label for="num_lote" class="form-label"># Lote</label>
-        <input type="number" step="0.01" name="num_lote" id="num_lote{{$lote->id ?? ''}}" class="form-control" value="{{ $lote->num_lote ?? '' }}" required {{ $readonly }}>
-    </div>
+        <label for="precio_contado" class="form-label">Precio Contado</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" step="0.01" 
+                name="precio_contado" 
+                id="precio_contado{{ $lote->id ?? '' }}" 
+                value="{{ $lote->precio_contado ?? '' }}" 
+                class="form-control" 
+                readonly>
+        </div>
+
+        <!-- <input type="number" step="0.01" name="precio_contado" id="precio_contado{{ $lote->id ?? '' }}" value="{{ $lote->precio_contado ?? '' }}" class="form-control" readonly> -->
+    </div>  
+    <div class="col-md-4">
+        <label for="precio_credito" class="form-label">Precio Credito</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" step="0.01" 
+                name="precio_credito" 
+                id="precio_credito{{ $lote->id ?? '' }}" 
+                value="{{ $lote->precio_credito ?? '' }}" 
+                class="form-control" 
+                readonly>
+        </div>
+
+        <!-- <input type="number" step="0.01" name="precio_credito" id="precio_credito{{ $lote->id ?? '' }}" value="{{ $lote->precio_credito ?? '' }}" class="form-control" readonly> -->
+    </div>  
+
+   
 
   
     <!-- <div class="col-md-4 mb-4">
@@ -66,14 +95,14 @@
 
     <div class="col-md-4">
         <label for="manzana" class="form-label">Manzana Pertenece</label>
-        <select name="manzana" id="manzana{{ $lote->id ?? '' }}" class="form-select" required {{ $disabled }}>
+        <select name="manzana" id="manzana{{ $lote->id ?? '' }}" class="form-select" readonly disabled>
             @foreach (range(1, $fracc->manzanas) as $i)
                 <option value="{{ $i }}" {{ (isset($lote) && $lote->manzana == $i) ? 'selected' : '' }}>Manzana {{ $i }}</option>
             @endforeach
         </select>
     </div>   
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <label class="form-label">Colinda Norte</label>
         <input type="text" name="colinda_norte" value="{{ $lote->colinda_norte ?? '' }}" class="form-control" {{ $readonly }}>
     </div>
@@ -91,6 +120,16 @@
     <div class="col-md-4">
         <label class="form-label">Colinda Poniente</label>
         <input type="text" name="colinda_poniente" value="{{ $lote->colinda_poniente ?? '' }}" class="form-control" {{ $readonly }}>
+    </div> -->
+
+    <div class="col-md-4">
+        <label class="form-label">Enganche</label>
+        <input type="text" name="enganche" value="{{ $lote->enganche ?? '' }}" class="form-control" readonly>
+    </div>
+
+     <div class="col-md-4">
+        <label class="form-label">Mensualidades</label>
+        <input type="text" name="mensualidades" value="{{ $lote->mensualidades ?? '' }}" class="form-control" readonly>
     </div>
 
     <div class="col-md-12">
