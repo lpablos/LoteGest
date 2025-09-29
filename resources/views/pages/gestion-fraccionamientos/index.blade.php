@@ -57,10 +57,10 @@
                               @foreach ($fraccionamientos as $fracc)
                                     <tr>
                                         <td>{{$fracc->nombre}}</td>
-                                        <td>{{$fracc->reponsable}}</td>
+                                        <td>{{$fracc->responsable}}</td>
                                         <td>{{$fracc->propietaria}}</td>
-                                        <td>{{$fracc->superficie}}</td>      
-                                        <td>{{$fracc->manzanas}}</td>      
+                                        <td>{{$fracc->superficie}}</td>  
+                                        <td>{{$fracc->manzanas->count()}}</td>  
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -86,6 +86,7 @@
                                         </td> 
                                         @include('pages.gestion-fraccionamientos.modal.edit')                            
                                     </tr>
+                                   
                                 @endforeach           
                         </tbody>
                     </table>

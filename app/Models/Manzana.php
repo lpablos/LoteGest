@@ -18,7 +18,7 @@ class Manzana extends Model
         'precio_credito',
         'enganche',
         'mensualidades',
-        'num_manzana',
+        'num_lotes',
         'fraccionamiento_id',
     ];
 

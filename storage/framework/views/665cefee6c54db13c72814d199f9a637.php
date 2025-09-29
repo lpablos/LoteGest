@@ -55,10 +55,10 @@
                               <?php $__currentLoopData = $fraccionamientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fracc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
                                         <td><?php echo e($fracc->nombre); ?></td>
-                                        <td><?php echo e($fracc->reponsable); ?></td>
+                                        <td><?php echo e($fracc->responsable); ?></td>
                                         <td><?php echo e($fracc->propietaria); ?></td>
-                                        <td><?php echo e($fracc->superficie); ?></td>      
-                                        <td><?php echo e($fracc->manzanas); ?></td>      
+                                        <td><?php echo e($fracc->superficie); ?></td>  
+                                        <td><?php echo e($fracc->manzanas->count()); ?></td>  
                                         <td>
                                             <div class="dropdown">
                                                 <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -84,6 +84,7 @@
                                         </td> 
                                         <?php echo $__env->make('pages.gestion-fraccionamientos.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                            
                                     </tr>
+                                   
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>           
                         </tbody>
                     </table>

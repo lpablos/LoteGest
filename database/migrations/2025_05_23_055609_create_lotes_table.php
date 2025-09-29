@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('medidas_m')->nullable();
             $table->decimal('superficie_m2', 10, 2)->nullable();
             $table->string('plano')->nullable();
-            $table->decimal('precio_contado', 12, 2)->nullable();
-            $table->decimal('precio_credito', 12, 2)->nullable();
-            $table->enum('enganche',['10','15','20','30'])->nullable()->comment('Porcentaje de enganche');
-            $table->enum('mensualidades',['6','12','18','24','30','36'])->nullable()->comment('Numero de mensualidades');
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
             $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');

@@ -20,10 +20,8 @@ class FraccionamientoController extends Controller
      */
     public function index()
     {
-        //
+        
         $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
-        // dd($fraccionamientos);
-        // $proyectos=Proyecto::all();
         $tpPredio = CatTipoPredio::all();
         if (view()->exists('pages.gestion-fraccionamientos.index')) {
             return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','tpPredio'));
@@ -81,22 +79,23 @@ class FraccionamientoController extends Controller
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
             
-
+            // dd($request->all());
             foreach ($request->manzana as $key => $man) {
+                
                 $numManzana = $key + 1;
                 $manzana = new Manzana;
                 $manzana->precio_contado = $man['precio_contado'] ?? null;
                 $manzana->precio_credito = $man['precio_credito'] ?? null;
                 $manzana->enganche = $man['enganche'] ?? null;
                 $manzana->mensualidades = $man['mensualidades'] ?? null;
-                $manzana->num_manzana = $numManzana;
+                $manzana->num_lotes = $man['nLote'];
                 $manzana->fraccionamiento_id = $fraccionamiento->id;
                 $manzana->save();
                 for ($i=0; $i < $man['nLote']; $i++) { 
                     $lote = new Lote;
                     $lote->num_lote = $i;    
                     $lote->cat_estatus_disponibilidad_id = 2;
-                    $lote->manzana_id = $manzana->num_manzana;
+                    $lote->manzana_id = $manzana->id;
                     $lote->save();
                 }
                
