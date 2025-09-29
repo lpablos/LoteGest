@@ -88,6 +88,9 @@
                                     <label for="entidad_id"> Corredor </label>
                                     <select class="form-select form-select-sm" id="entidad_id" name="entidad_id" style="cursor: pointer;" required>
                                         <option value="" selected disabled> Selecciona una opción </option>
+                                        @foreach ($corredores as $corredor)
+                                            <option value="{{ $corredor->id }}">- {{ $corredor->full_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -114,8 +117,8 @@
                                     <label for="mpio_id"> Fraccionamiento </label>
                                     <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
                                         <option value="" selected disabled> Selecciona una opción </option>
-                                        @foreach ($mpios as $mpio)
-                                            <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                        @foreach ($fraccionamientos as $fraccionamiento)
+                                            <option value="{{ $fraccionamiento->id }}">- {{ $fraccionamiento->nombre }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -292,7 +295,7 @@
                         </div>
                     </div>  --}}
                 </div>
-                <div class="row">
+                {{--  <div class="row">
                     <div class="col-sm-6">
                         <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
                     </div> <!-- end col -->
@@ -301,7 +304,7 @@
                             <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
                         </div>
                     </div> 
-                </div>
+                </div>  --}}
             </form>
         </div>
     </div>

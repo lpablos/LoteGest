@@ -20,7 +20,6 @@ class UserController extends Controller
         if (view()->exists('pages.usuario.index')) {
             $usuarios = User::withTrashed()
                             ->leftJoin('cat_estatus', 'users.estatus_id', 'cat_estatus.id')
-                            ->leftJoin('usuario_datos_personales as udp', 'users.id', 'udp.usuario_id', )
                             ->leftJoin('roles', 'users.role_id', 'roles.id')
                             ->select(
                                 'users.id',

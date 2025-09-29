@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                 <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('cliente.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
+                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('cliente.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
                             </div>
                         </div><!-- end col-->
                     </div>
