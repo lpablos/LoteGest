@@ -7,9 +7,7 @@
                 </h5>
                 <h4>
 
-                    <span class="badge ms-3" style="background-color: {{ $lote->disponibilidad->color }}; color: white;">
-                        {{ $lote->disponibilidad->nombre }}
-                    </span>
+                  
                 </h4>
 
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>

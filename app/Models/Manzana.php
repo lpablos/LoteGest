@@ -14,6 +14,7 @@ class Manzana extends Model
     protected $table = 'manzanas';
 
     protected $fillable = [
+        'num_manzana',
         'precio_contado',
         'precio_credito',
         'enganche',

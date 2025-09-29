@@ -7,8 +7,8 @@
                 </h5>
                 <h4>
 
-                    <span class="badge ms-3" style="background-color: {{ $lote->disponibilidad->color }}; color: white;">
-                        {{ $lote->disponibilidad->nombre }}
+                    <span class="badge ms-3" style="background-color: ; color: white;">
+                        
                     </span>
                 </h4>
 
@@ -18,7 +18,7 @@
                 <form method="POST" action="{{ route('lote.update', ['lote' => $lote->id]) }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    @include('pages.gestion-lotes.formulario.lote')
+                    <!-- @include('pages.gestion-lotes.formulario.lote') -->
                     @php
                         $readonly = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'readonly' : '';
                     @endphp

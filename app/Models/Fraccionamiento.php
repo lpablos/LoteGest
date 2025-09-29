@@ -48,5 +48,10 @@ class Fraccionamiento extends Model
     {
         return $this->hasMany(Manzana::class, 'fraccionamiento_id');
     }
+
+    public function lotes()
+    {
+        return $this->hasManyThrough(Lote::class, Manzana::class);
+    }
     
 }

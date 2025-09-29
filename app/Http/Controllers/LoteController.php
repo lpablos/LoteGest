@@ -27,9 +27,8 @@ class LoteController extends Controller
             $fracc = $identy
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null;
-            
             $estatusDisponibilidad = CatEstatusDisponibilidad::all();
-
+            
             return view('pages.gestion-lotes.index', compact('fraccionamientos','identy', 'fracc','estatusDisponibilidad'));
         }
         return abort(404);

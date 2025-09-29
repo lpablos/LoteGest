@@ -21,7 +21,7 @@ class Lote extends Model
         'superficie_m2',
         'plano',
         'observaciones',
-        'cat_estatus_disponibilidad_id',
+        'disponibilidad_id',
         'manzana_id',
     ];
 
@@ -36,9 +36,9 @@ class Lote extends Model
      */
 
     // Un lote pertenece a un estatus de disponibilidad
-    public function estatusDisponibilidad()
+    public function disponibilidad()
     {
-        return $this->belongsTo(CatEstatusDisponibilidad::class, 'cat_estatus_disponibilidad_id');
+        return $this->belongsTo(CatEstatusDisponibilidad::class, 'disponibilidad_id');
     }
 
     // Un lote pertenece a una manzana

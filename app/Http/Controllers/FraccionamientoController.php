@@ -89,12 +89,13 @@ class FraccionamientoController extends Controller
                 $manzana->enganche = $man['enganche'] ?? null;
                 $manzana->mensualidades = $man['mensualidades'] ?? null;
                 $manzana->num_lotes = $man['nLote'];
+                $manzana->num_manzana = $numManzana;
                 $manzana->fraccionamiento_id = $fraccionamiento->id;
                 $manzana->save();
-                for ($i=0; $i < $man['nLote']; $i++) { 
+                for ($i=1; $i <= $man['nLote']; $i++) { 
                     $lote = new Lote;
                     $lote->num_lote = $i;    
-                    $lote->cat_estatus_disponibilidad_id = 2;
+                    $lote->disponibilidad_id = 2;
                     $lote->manzana_id = $manzana->id;
                     $lote->save();
                 }

@@ -33,23 +33,11 @@
                                     <h2> Lotes </h2>
                                 </div>
                             </div>
-                        </div>
-                        <!-- @if (isset($fracc))
-                            <div class="col-sm-8">
-                                <div class="text-sm-end">
-                                    <button type="button" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#add_proyecto"
-                                        class="btn btn-success btn-rounded waves-effect waves-light mb-2">
-                                            <i class="mdi mdi-plus me-1"></i> Agregar
-                                    </button>
-                                </div>
-                            </div>
-                        @endif -->
+                        </div>                   
                     </div>
                     
                     @if (isset($fracc))
-                        @include('pages.gestion-lotes.modal.add')
+                        
                     @endif
                     @if(isset($fracc) && !empty($fracc->imagen) )
                     <div class="row">
@@ -87,8 +75,6 @@
                             <tr>
                                 <th> Manzana </th>
                                 <th> # lote</th>
-                                <!-- <th> Medidas </th> -->
-                                <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
                                 <th> Disponibilidad</th>
@@ -98,44 +84,27 @@
                         <tbody>    
                             @foreach ( optional($fracc)->lotes ?? [] as $lote )
                                 <tr>
-                                    <td>Manzana {{ $lote->manzana }}</td>      
-                                    <td>{{ $lote->num_lote }}</td>
-                                    <!-- <td>{{ $lote->medidas_m }}</td> -->
-                                    <td>{{ $lote->superficie_m2 }}</td>
-                                    <td>${{ number_format($lote->precio_contado, 2) }}</td>
-                                    <td>${{ number_format($lote->precio_credito, 2) }}</td>
+                                    <td>{{$lote->manzana->num_manzana}}</td>      
+                                    <td>{{$lote->num_lote}}</td>
+                                    <td>{{$lote->manzana->precio_contado}}</td>
+                                    <td>{{$lote->manzana->precio_credito}}</td>
+                                    <td>{{$lote->disponibilidad->nombre}}</td>                                      
                                     <td>
-                                        <span class="badge" style="background-color: {{$lote->disponibilidad->color}}; color: white;">
-                                            {{ $lote->disponibilidad->nombre }}
-                                        </span>
-                                        
-                                    </td>   
-                                    <td>
-                                    <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                             <!-- <li>
-                                                <button type="button"
-                                                        class="dropdown-item btn btn-link"
-                                                        
-                                                        id="btn-duplicate{{ $lote->id }}"
-                                                        onclick="duplica('{{ $lote->id }}')">
-                                                    <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
-                                                </button>
-
-                                            </li> -->
-                                        </ul>
-                                    </div>
-                                </td> 
+                                        <div class="dropdown">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                    <a href="#editEstatusProyecto({{ $lote->id }})" data-bs-toggle="modal" class="dropdown-item" data-edit-id="{{ $lote->id }}">
+                                                        <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td> 
                                 @if (isset($fracc))
-                                    @include('pages.gestion-lotes.modal.edit')                                    
+                                    @include('pages.gestion-lotes.modal.edit')                                            
                                 @endif
                                 </tr>   
                             @endforeach                        
@@ -144,8 +113,8 @@
                     </table>
                 </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div> 
+    </div> 
    <form id="formDuplicarLote" method="POST" action="{{ route('duplicar.lote') }}" style="display: none;">
         @csrf
         <input type="hidden" name="id" id="inputDuplicarLoteId">

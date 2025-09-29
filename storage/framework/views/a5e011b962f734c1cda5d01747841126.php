@@ -31,23 +31,11 @@
                                     <h2> Lotes </h2>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <?php if(isset($fracc)): ?>
-                            <div class="col-sm-8">
-                                <div class="text-sm-end">
-                                    <button type="button" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#add_proyecto"
-                                        class="btn btn-success btn-rounded waves-effect waves-light mb-2">
-                                            <i class="mdi mdi-plus me-1"></i> Agregar
-                                    </button>
-                                </div>
-                            </div>
-                        <?php endif; ?> -->
+                        </div>                   
                     </div>
                     
                     <?php if(isset($fracc)): ?>
-                        <?php echo $__env->make('pages.gestion-lotes.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                        
                     <?php endif; ?>
                     <?php if(isset($fracc) && !empty($fracc->imagen) ): ?>
                     <div class="row">
@@ -86,8 +74,6 @@
                             <tr>
                                 <th> Manzana </th>
                                 <th> # lote</th>
-                                <!-- <th> Medidas </th> -->
-                                <th> Superficie (m2) </th>
                                 <th> Precio Contado </th>
                                 <th> Precio Credito </th>
                                 <th> Disponibilidad</th>
@@ -97,45 +83,27 @@
                         <tbody>    
                             <?php $__currentLoopData = optional($fracc)->lotes ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>Manzana <?php echo e($lote->manzana); ?></td>      
+                                    <td><?php echo e($lote->manzana->num_manzana); ?></td>      
                                     <td><?php echo e($lote->num_lote); ?></td>
-                                    <!-- <td><?php echo e($lote->medidas_m); ?></td> -->
-                                    <td><?php echo e($lote->superficie_m2); ?></td>
-                                    <td>$<?php echo e(number_format($lote->precio_contado, 2)); ?></td>
-                                    <td>$<?php echo e(number_format($lote->precio_credito, 2)); ?></td>
+                                    <td><?php echo e($lote->manzana->precio_contado); ?></td>
+                                    <td><?php echo e($lote->manzana->precio_credito); ?></td>
+                                    <td><?php echo e($lote->disponibilidad->nombre); ?></td>                                      
                                     <td>
-                                        <span class="badge" style="background-color: <?php echo e($lote->disponibilidad->color); ?>; color: white;">
-                                            <?php echo e($lote->disponibilidad->nombre); ?>
-
-                                        </span>
-                                        
-                                    </td>   
-                                    <td>
-                                    <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="#editEstatusProyecto(<?php echo e($lote->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($lote->id); ?>">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                             <!-- <li>
-                                                <button type="button"
-                                                        class="dropdown-item btn btn-link"
-                                                        
-                                                        id="btn-duplicate<?php echo e($lote->id); ?>"
-                                                        onclick="duplica('<?php echo e($lote->id); ?>')">
-                                                    <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
-                                                </button>
-
-                                            </li> -->
-                                        </ul>
-                                    </div>
-                                </td> 
+                                        <div class="dropdown">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                    <a href="#editEstatusProyecto(<?php echo e($lote->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($lote->id); ?>">
+                                                        <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td> 
                                 <?php if(isset($fracc)): ?>
-                                    <?php echo $__env->make('pages.gestion-lotes.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                                    
+                                    <?php echo $__env->make('pages.gestion-lotes.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                                            
                                 <?php endif; ?>
                                 </tr>   
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                        
@@ -144,8 +112,8 @@
                     </table>
                 </div>
             </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+        </div> 
+    </div> 
    <form id="formDuplicarLote" method="POST" action="<?php echo e(route('duplicar.lote')); ?>" style="display: none;">
         <?php echo csrf_field(); ?>
         <input type="hidden" name="id" id="inputDuplicarLoteId">

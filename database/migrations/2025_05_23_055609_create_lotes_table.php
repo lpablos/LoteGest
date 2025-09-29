@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('superficie_m2', 10, 2)->nullable();
             $table->string('plano')->nullable();
             $table->text('observaciones')->nullable();
-            $table->unsignedBigInteger('cat_estatus_disponibilidad_id');
-            $table->foreign('cat_estatus_disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
+            $table->unsignedBigInteger('disponibilidad_id');
+            $table->foreign('disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
             $table->unsignedBigInteger('manzana_id');
             $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
             $table->softDeletes(); 

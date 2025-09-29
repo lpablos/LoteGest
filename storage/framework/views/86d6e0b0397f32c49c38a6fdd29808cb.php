@@ -7,9 +7,8 @@
                 </h5>
                 <h4>
 
-                    <span class="badge ms-3" style="background-color: <?php echo e($lote->disponibilidad->color); ?>; color: white;">
-                        <?php echo e($lote->disponibilidad->nombre); ?>
-
+                    <span class="badge ms-3" style="background-color: ; color: white;">
+                        
                     </span>
                 </h4>
 
@@ -19,7 +18,7 @@
                 <form method="POST" action="<?php echo e(route('lote.update', ['lote' => $lote->id])); ?>" autocomplete="off" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
-                    <?php echo $__env->make('pages.gestion-lotes.formulario.lote', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    <!-- <?php echo $__env->make('pages.gestion-lotes.formulario.lote', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?> -->
                     <?php
                         $readonly = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'readonly' : '';
                     ?>
