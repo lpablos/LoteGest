@@ -18,8 +18,8 @@
         <input type="file" name="imagen" id="imagen{{isset($fracc)? $fracc->id:''}}" class="form-control">
     </div>
     <div class="col-md-3">
-        <label for="reponsable" class="form-label">Responsable *</label>
-        <input type="text" name="reponsable" id="reponsable{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->reponsable:''}}" required>
+        <label for="responsable" class="form-label">Responsable *</label>
+        <input type="text" name="responsable" id="responsable{{isset($fracc)? $fracc->id:''}}" class="form-control" value="{{isset($fracc)? $fracc->responsable:''}}" required>
     </div>
     <div class="col-md-3">
         <label for="propietaria" class="form-label"> Propietario(a) *</label>

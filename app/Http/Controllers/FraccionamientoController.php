@@ -11,6 +11,7 @@ use App\Models\CatTipoPredio;
 use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
+use App\Models\Manzana;
 
 class FraccionamientoController extends Controller
 {
@@ -64,39 +65,43 @@ class FraccionamientoController extends Controller
                 } 
             }
             
+            
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
-            $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
+            $fraccionamiento->responsable = Helper::capitalizeFirst($validated['responsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
+            $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->superficie = $validated['superficie'];
+            $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
             $fraccionamiento->viento1 = Helper::capitalizeFirst($validated['viento1']);
             $fraccionamiento->viento2 = Helper::capitalizeFirst($validated['viento2']);
             $fraccionamiento->viento3 = Helper::capitalizeFirst($validated['viento3']);
             $fraccionamiento->viento4 = Helper::capitalizeFirst($validated['viento4']);
-            $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
-            $fraccionamiento->manzanas = count($request->manzana);
-            $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->save();
+            
 
-            foreach ($request->manzana as $key => $manzana) {
-                $contador = $key + 1;
-                $lotes = 1;
-                for ($i=0; $i < $manzana['nLote']; $i++) { 
-                    $lote = new Lote();
-                    $lote->manzana = $contador;
-                    $lote->num_lote = $lotes++;
-                    $lote->precio_contado = $manzana['precio_contado'];
-                    $lote->precio_credito = $manzana['precio_credito'];
-                    $lote->enganche = $manzana['enganche'];
-                    $lote->mensualidades = $manzana['mensualidades'];
-                    $lote->fraccionamiento_id = $fraccionamiento->id;
-                    $lote->cat_estatus_disponibilidad_id = 2; // Disponible
+            foreach ($request->manzana as $key => $man) {
+                $numManzana = $key + 1;
+                $manzana = new Manzana;
+                $manzana->precio_contado = $man['precio_contado'] ?? null;
+                $manzana->precio_credito = $man['precio_credito'] ?? null;
+                $manzana->enganche = $man['enganche'] ?? null;
+                $manzana->mensualidades = $man['mensualidades'] ?? null;
+                $manzana->num_manzana = $numManzana;
+                $manzana->fraccionamiento_id = $fraccionamiento->id;
+                $manzana->save();
+                for ($i=0; $i < $man['nLote']; $i++) { 
+                    $lote = new Lote;
+                    $lote->num_lote = $i;    
+                    $lote->cat_estatus_disponibilidad_id = 2;
+                    $lote->manzana_id = $manzana->num_manzana;
                     $lote->save();
-                }             
+                }
+               
             }
-
+            
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue registrado');
             return redirect()->route('fraccionamiento.index');
@@ -227,7 +232,7 @@ class FraccionamientoController extends Controller
         return [
             'nombre'          => 'required|string|max:255',
             'imagen'          => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'reponsable'      => 'nullable|string|max:255', 
+            'responsable'      => 'nullable|string|max:255', 
             'propietaria'     => 'nullable|string|max:255',
             'superficie'      => 'nullable|numeric|min:0',
             'viento1'         => 'nullable|string|max:255',
@@ -253,7 +258,7 @@ class FraccionamientoController extends Controller
             'imagen.mimes'              => 'Solo se permiten formatos jpg, jpeg, png o webp.',
             'imagen.max'                => 'La imagen no puede superar los 2 MB.',
 
-            'reponsable.string'         => 'El responsable debe ser un texto válido.',
+            'responsable.string'         => 'El responsable debe ser un texto válido.',
             'propietaria.string'        => 'La propietaria debe ser un texto válido.',
 
             'superficie.numeric'        => 'La superficie debe ser un número.',
