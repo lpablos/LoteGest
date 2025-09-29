@@ -63,17 +63,17 @@
         <label for="reponsable" class="form-label">Define los vientos</label>
     </div>
     <div class="col-md-3">
-        <input type="text" name="viento1" class="form-control" value="Norte" required>
+        <input type="text" name="viento1" class="form-control" value="Norte" value="{{isset($fracc)? $fracc->viento1:''}}" required>
     </div>
 
     <div class="col-md-3">        
-        <input type="text" name="viento2" class="form-control" value="Sur" required>
+        <input type="text" name="viento2" class="form-control" value="Sur" value="{{isset($fracc)? $fracc->viento2:''}}" required>
     </div>
     <div class="col-md-3">
-        <input type="text" name="viento3" class="form-control" value="Oriente" required>
+        <input type="text" name="viento3" class="form-control" value="Oriente" value="{{isset($fracc)? $fracc->viento2:''}}" required>
     </div>
     <div class="col-md-3">        
-        <input type="text" name="viento4" class="form-control" value="Poniente" required>
+        <input type="text" name="viento4" class="form-control" value="Poniente" value="{{isset($fracc)? $fracc->viento3:''}}" required>
     </div>
 </div>
 <hr>

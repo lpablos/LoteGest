@@ -13,15 +13,13 @@ return new class extends Migration
     {
         Schema::create('manzanas', function (Blueprint $table) {
             $table->id();
+            $table->decimal('precio_contado', 12, 2)->nullable();
+            $table->decimal('precio_credito', 12, 2)->nullable();
+            $table->enum('enganche',['10','15','20','30'])->nullable()->comment('Porcentaje de enganche');
+            $table->enum('mensualidades',['6','12','18','24','30','36'])->nullable()->comment('Numero de mensualidades');
             $table->integer('num_manzana')->nullable();
-            $table->string('colinda_norte')->nullable();
-            $table->string('colinda_sur')->nullable();
-            $table->string('colinda_este')->nullable();
-            $table->string('colinda_oeste')->nullable();
             $table->unsignedBigInteger('fraccionamiento_id');
-            $table->foreign('fraccionamiento_id')
-                  ->references('id')->on('fraccionamientos')
-                  ->onDelete('cascade');
+            $table->foreign('fraccionamiento_id')->references('id')->on('fraccionamientos')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

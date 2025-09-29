@@ -5,43 +5,49 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CatEstatusDisponibilidad;
+use App\Models\Manzana;
 
 class Lote extends Model
 {
     //
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
+
+    protected $table = 'lotes';
 
     protected $fillable = [
         'num_lote',
         'medidas_m',
         'superficie_m2',
+        'plano',
         'precio_contado',
         'precio_credito',
-        'plano',
-        'manzana',
-        'viento1',
-        'viento2',
-        'viento3',
-        'viento4',
         'enganche',
         'mensualidades',
         'observaciones',
         'cat_estatus_disponibilidad_id',
-        'fraccionamiento_id',
+        'manzana_id',
     ];
 
-    public function disponibilidad()
+    protected $casts = [
+        'superficie_m2'   => 'decimal:2',
+        'precio_contado'  => 'decimal:2',
+        'precio_credito'  => 'decimal:2',
+    ];
+
+    /**
+     * Relaciones
+     */
+
+    // Un lote pertenece a un estatus de disponibilidad
+    public function estatusDisponibilidad()
     {
-        return $this->belongsTo(CatEstatusDisponibilidad::class,'cat_estatus_disponibilidad_id','id');
+        return $this->belongsTo(CatEstatusDisponibilidad::class, 'cat_estatus_disponibilidad_id');
     }
 
-    public function fraccionamiento()
+    // Un lote pertenece a una manzana
+    public function manzana()
     {
-        return $this->belongsTo(Fraccionamiento::class,'fraccionamiento_id','id');
+        return $this->belongsTo(Manzana::class, 'manzana_id');
     }
-
-    // public function corredor()
-    // {
-    //     return $this->belongsTo(User::class,'user_corredor_id','id');
-    // }
 }

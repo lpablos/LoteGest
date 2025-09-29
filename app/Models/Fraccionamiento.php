@@ -5,15 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CatTipoPredio;
+use App\Models\Manzana;
 
 class Fraccionamiento extends Model
 {
-    use HasFactory, SoftDeletes;
-    //
+    use SoftDeletes;
+
+    protected $table = 'fraccionamientos';
+
     protected $fillable = [
         'nombre',
         'imagen',
-        'reponsable',
+        'responsable',
         'propietaria',
         'superficie',
         'ubicacion',
@@ -21,25 +25,28 @@ class Fraccionamiento extends Model
         'viento2',
         'viento3',
         'viento4',
-        'manzanas',
         'observaciones',
         'tipo_predios_id',
     ];
 
-    protected $appends = ['lotes_total'];
-      
-    public function getLotesTotalAttribute()
+    protected $casts = [
+        'superficie' => 'decimal:2',
+    ];
+
+    /**
+     * Relaciones
+     */
+
+    // Un fraccionamiento pertenece a un tipo de predio
+    public function tipoPredio()
     {
-        return $this->lotes()->count();
+        return $this->belongsTo(CatTipoPredio::class, 'tipo_predios_id');
     }
 
-    public function lotes(){        
-        return $this->hasMany(Lote::class);
-    }
-
-     public function predio()
+    // Un fraccionamiento tiene muchas manzanas
+    public function manzanas()
     {
-        return $this->belongsTo(CatTipoPredio::class,'tipo_predios_id','id');
+        return $this->hasMany(Manzana::class, 'fraccionamiento_id');
     }
     
 }

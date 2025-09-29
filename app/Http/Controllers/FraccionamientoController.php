@@ -21,6 +21,7 @@ class FraccionamientoController extends Controller
     {
         //
         $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
+        // dd($fraccionamientos);
         // $proyectos=Proyecto::all();
         $tpPredio = CatTipoPredio::all();
         if (view()->exists('pages.gestion-fraccionamientos.index')) {
