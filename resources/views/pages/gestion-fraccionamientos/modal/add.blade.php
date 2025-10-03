@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('fraccionamiento.store') }}" autocomplete="off" enctype="multipart/form-data">
+                <form method="POST" id="form-fraccionamiento" action="{{ route('fraccionamiento.store') }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     @include('pages.gestion-fraccionamientos.formulario.fraccionamiento')
                     <div class="modal-footer">

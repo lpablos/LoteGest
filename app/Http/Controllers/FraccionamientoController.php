@@ -47,7 +47,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        dd($request->all());
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()

@@ -66,23 +66,17 @@
                                                 </a>
                                                 <ul class="dropdown-menu dropdown-menu-start">
                                                     <li>
-                                                        <a href="#editEstatusProyecto(<?php echo e($fracc->id); ?>)" data-bs-toggle="modal" class="dropdown-item" data-edit-id="<?php echo e($fracc->id); ?>">
-                                                            <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
+                                                        <a  href="javascript:void(0);" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#add_fraccionamiento" 
+                                                            class="dropdown-item">
+                                                            <i class="mdi mdi-plus font-size-16 text-success me-1"></i> Agregar
                                                         </a>
-                                                    </li>
-                                                     <li>
-                                                        <button type="button"
-                                                                class="dropdown-item btn btn-link"
-                                                                
-                                                                id="btn-duplicate<?php echo e($fracc->id); ?>"
-                                                                onclick="duplica('<?php echo e($fracc->id); ?>')">
-                                                            <i class="mdi mdi-file-document-multiple-outline font-size-16 text-success me-1"></i> Duplicar
-                                                        </button>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </td> 
-                                        <?php echo $__env->make('pages.gestion-fraccionamientos.modal.edit', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                            
+                                                                
                                     </tr>
                                    
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>           
@@ -119,20 +113,17 @@
     <!-- Sweet Alerts js -->
     <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
 
-    <!-- toastr init -->
-    <script src="<?php echo e(URL::asset('build/js/pages/toastr.init.js')); ?>"></script>
-    <!-- Datatable init js -->
+    <!-- Datatable + Toastr init -->
     <script>
-        $(document).ready(function() {
-
-            // Se declara el token global para las peticiones que se vayan a realizar
+        $(document).ready(function () {
+            // CSRF token global para peticiones
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        
-            //Buttons examples
+
+            // Inicializar DataTable
             var table = $('#datatable-estatus-proyecto').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
@@ -141,51 +132,123 @@
                     "infoEmpty": "Sin registros disponibles",
                     "infoFiltered": "(filtrando de _MAX_ registros en total)",
                     "search": 'Buscar:',
-                    "paginate": {
-                        previous: 'Anterior',
-                        next: 'Siguiente'
-                    }
+                    "paginate": { previous: 'Anterior', next: 'Siguiente' }
                 },
                 lengthChange: true
             });
-        
+
             table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
-        
             $(".dataTables_length select").addClass('form-select form-select-sm');
 
-            // ----------------------
-
-          
-
-
-
-
+            // --- Validación antes de enviar el formulario ---
+            document.getElementById('form-fraccionamiento').addEventListener('submit', function (e) {
+                const container = document.getElementById('contenedor-lotes');
+                if (container.children.length === 0) {
+                    e.preventDefault();
+                    toastr.options = {
+                        "closeButton": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "timeOut": "3000"
+                    };
+                    toastr.warning("Debes agregar al menos una manzana antes de guardar.");
+                }
+            });
         });
+
+        // ----------------------
+        // Manejo dinámico de manzanas
+        let contadorManzanas = 0;
+
+        document.getElementById('btn-agregar-manzana-btn').addEventListener('click', function () {
+            let contenedor = document.getElementById('contenedor-lotes');
+            let bloque = `
+                <div class="row mb-3 border border-secondary rounded p-2 align-items-end" id="manzana-${contadorManzanas}">
+                    <div class="col-md-2">
+                        <label class="form-label">No. Lotes</label>
+                        <input type="number" name="manzana[${contadorManzanas}][nLote]" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Precio Contado</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_contado]" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Precio Crédito</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_credito]" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Enganche</label>
+                        <select name="manzana[${contadorManzanas}][enganche]" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="10">10%</option>
+                            <option value="15">15%</option>
+                            <option value="20">20%</option>
+                            <option value="30">30%</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Mensualidades</label>
+                        <select name="manzana[${contadorManzanas}][mensualidades]" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                            <option value="6">6 meses</option>
+                            <option value="12">12 meses</option>
+                            <option value="18">18 meses</option>
+                            <option value="24">24 meses</option>
+                            <option value="30">30 meses</option>
+                            <option value="36">36 meses</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="m-2">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="eliminarManzana(${contadorManzanas})">❌</button>
+                        </div>
+                    </div>
+                </div>`;
+            contenedor.insertAdjacentHTML('beforeend', bloque);
+            contadorManzanas++;
+        });
+
+        function eliminarManzana(id) {
+            let bloque = document.getElementById(`manzana-${id}`);
+            if (bloque) bloque.remove();
+        }
+
+        // ----------------------
+        // Confirmación duplicar con SweetAlert
+        function duplica(FraccionamientoId) {
+            Swal.fire({
+                title: '¿Duplicar Fraccionamiento?',
+                text: 'Esta Acción Creará Una Copia Del Fraccionamiento Seleccionado.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, duplicar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('inputDuplicarFraccionamientoId').value = FraccionamientoId;
+                    document.getElementById('formDuplicarFraccionamiento').submit();
+                }
+            });
+        }
     </script>
+
+    
     <?php if(Session::has('success')): ?>
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.success("<?php echo e(session('success')); ?>");
-        </script>
+        <script> toastr.success("<?php echo e(session('success')); ?>"); </script>
     <?php endif; ?>
     <?php if(Session::has('error')): ?>
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.warning("<?php echo e(session('error')); ?>");
-        </script>
+        <script> toastr.warning("<?php echo e(session('error')); ?>"); </script>
     <?php endif; ?>
     <?php if($errors->any()): ?>
         <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            };
             <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 toastr.error("<?php echo e($error); ?>");
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -194,74 +257,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php $__env->startPush('scripts'); ?>
-<script>
- let manzanaIndexes = window.manzanaIndexes || {};
-
-    function agregarManzana(fraccId) {
-        if (!(fraccId in manzanaIndexes)) {
-            manzanaIndexes[fraccId] = 0;
-        }
-
-        const index = manzanaIndexes[fraccId];
-        const container = document.getElementById(`manzanas-container-${fraccId}`);
-
-        const card = document.createElement('div');
-        card.classList.add('card', 'p-3', 'mb-3', 'border', 'rounded', 'position-relative');
-        card.innerHTML = `
-            <button type="button" class="btn-close position-absolute end-0 top-0 m-2" onclick="this.parentElement.remove()" aria-label="Eliminar"></button>
-            <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label"># Manzana (*)</label>
-                    <input type="number" name="manzanas[${index}][num_manzana]" class="form-control" required>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Colinda Norte</label>
-                    <input type="text" name="manzanas[${index}][colinda_norte]" class="form-control">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Colinda Sur</label>
-                    <input type="text" name="manzanas[${index}][colinda_sur]" class="form-control">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Colinda Este</label>
-                    <input type="text" name="manzanas[${index}][colinda_este]" class="form-control">
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label">Colinda Oeste</label>
-                    <input type="text" name="manzanas[${index}][colinda_oeste]" class="form-control">
-                </div>
-            </div>
-        `;
-
-        container.appendChild(card);
-        manzanaIndexes[fraccId]++;
-    }
-    
-</script>
-
-
-<script>
-    function duplica(FraccionamientoId) {
-        Swal.fire({
-            title: '¿Duplicar Fraccionamiento?',
-            text: 'Esta Acción Creará Una Copia Del Fraccionamiento Seleccionado.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, duplicar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {   
-            if (result.isConfirmed) {
-                if (result.isConfirmed) {
-                    // Setear el ID y enviar el formulario
-                    document.getElementById('inputDuplicarFraccionamientoId').value = FraccionamientoId;
-                    document.getElementById('formDuplicarFraccionamiento').submit();
-                }
-            }
-        });
-    }
-</script>
-<?php $__env->stopPush(); ?>
 <?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/index.blade.php ENDPATH**/ ?>

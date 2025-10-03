@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="<?php echo e(route('fraccionamiento.store')); ?>" autocomplete="off" enctype="multipart/form-data">
+                <form method="POST" id="form-fraccionamiento" action="<?php echo e(route('fraccionamiento.store')); ?>" autocomplete="off" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
                     <?php echo $__env->make('pages.gestion-fraccionamientos.formulario.fraccionamiento', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <div class="modal-footer">
@@ -17,4 +17,9 @@
             </div>
         </div>
     </div>
-</div><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/modal/add.blade.php ENDPATH**/ ?>
+</div>
+
+<script>
+    
+</script>
+<?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/modal/add.blade.php ENDPATH**/ ?>
