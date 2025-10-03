@@ -47,7 +47,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        dd("Registro nuevo", $request->all());
+        
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()
@@ -88,11 +88,11 @@ class FraccionamientoController extends Controller
                 $manzana->precio_credito = $man['precio_credito'] ?? null;
                 $manzana->enganche = $man['enganche'] ?? null;
                 $manzana->mensualidades = $man['mensualidades'] ?? null;
-                $manzana->num_lotes = $man['nLote'];
+                $manzana->num_lotes = $man['num_lotes'];
                 $manzana->num_manzana = $numManzana;
                 $manzana->fraccionamiento_id = $fraccionamiento->id;
                 $manzana->save();
-                for ($i=1; $i <= $man['nLote']; $i++) { 
+                for ($i=1; $i <= $man['num_lotes']; $i++) { 
                     $lote = new Lote;
                     $lote->num_lote = $i;    
                     $lote->disponibilidad_id = 2;
