@@ -247,6 +247,7 @@
                 $('#viento2').val(data.viento2);
                 $('#viento3').val(data.viento3);
                 $('#viento4').val(data.viento4);
+                $('#tipo_predios_id').val(data.tipo_predios_id);
 
                 let contenedor = $('#contenedor-lotes');
                 contenedor.empty();
