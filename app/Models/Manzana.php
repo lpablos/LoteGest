@@ -28,6 +28,8 @@ class Manzana extends Model
         'precio_credito'  => 'decimal:2',
     ];
 
+    protected $hidden = ['deleted_at', 'created_at', 'updated_at'];
+
     /**
      * Relaciones
      */

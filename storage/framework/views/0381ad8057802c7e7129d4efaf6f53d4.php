@@ -18,8 +18,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    
-</script>
 <?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/gestion-fraccionamientos/modal/add.blade.php ENDPATH**/ ?>

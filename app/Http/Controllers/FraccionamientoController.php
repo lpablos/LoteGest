@@ -47,7 +47,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()
@@ -122,7 +122,9 @@ class FraccionamientoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
+        $fraccionamiento = Fraccionamiento::with('manzanas')->findOrFail($id);
+        return response()->json($fraccionamiento);
     }
 
     /**
@@ -145,6 +147,7 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        
         $validated = $request->validate(
             $this->fraccRules(),
             $this->fraccMessages()

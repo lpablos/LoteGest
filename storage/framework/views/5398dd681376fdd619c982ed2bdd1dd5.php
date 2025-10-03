@@ -51,17 +51,16 @@
         <label for="reponsable" class="form-label">Define los vientos</label>
     </div>
     <div class="col-md-3">
-        <input type="text" name="viento1" class="form-control" value="Norte" value="" required>
+        <input type="text" id="viento1" name="viento1" class="form-control" placeholder="Ejemplo: Norte" value="" required>
     </div>
-
     <div class="col-md-3">        
-        <input type="text" name="viento2" class="form-control" value="Sur" value="" required>
+        <input type="text" id="viento2" name="viento2" class="form-control" placeholder="Ejemplo: Sur" value="" required>
     </div>
     <div class="col-md-3">
-        <input type="text" name="viento3" class="form-control" value="Oriente" value="" required>
+        <input type="text" id="viento3" name="viento3" class="form-control" placeholder="Ejemplo: Oriente" value="" required>
     </div>
     <div class="col-md-3">        
-        <input type="text" name="viento4" class="form-control" value="Poniente" value="" required>
+        <input type="text" id="viento4" name="viento4" class="form-control" placeholder="Ejemplo: Poniente" value="" required>
     </div>
 </div>
 <hr>

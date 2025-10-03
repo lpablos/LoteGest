@@ -69,10 +69,11 @@
                                                 <ul class="dropdown-menu dropdown-menu-start">
                                                     <li>
                                                         <a  href="javascript:void(0);" 
+                                                            class="dropdown-item btn-detalle-fracc"
+                                                            data-id="{{ $fracc->id }}"
                                                             data-bs-toggle="modal" 
-                                                            data-bs-target="#add_fraccionamiento" 
-                                                            class="dropdown-item">
-                                                            <i class="mdi mdi-plus font-size-16 text-success me-1"></i> Agregar
+                                                            data-bs-target="#add_fraccionamiento">
+                                                            <i class="mdi mdi-plus font-size-16 text-success me-1"></i> Detalle
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -160,50 +161,58 @@
 
         // ----------------------
         // Manejo dinámico de manzanas
+
         let contadorManzanas = 0;
 
+        // Botón para agregar nuevas manzanas
         document.getElementById('btn-agregar-manzana-btn').addEventListener('click', function () {
+            agregarManzana({});
+        });
+
+        // Función para agregar una manzana (vacía o con datos)
+        function agregarManzana(m) {
             let contenedor = document.getElementById('contenedor-lotes');
             let bloque = `
                 <div class="row mb-3 border border-secondary rounded p-2 align-items-end" id="manzana-${contadorManzanas}">
+                    ${m.id ? `<input type="hidden" name="manzana[${contadorManzanas}][id]" value="${m.id}">` : ''}
                     <div class="col-md-2">
                         <label class="form-label">No. Lotes</label>
-                        <input type="number" name="manzana[${contadorManzanas}][nLote]" class="form-control" required>
+                        <input type="number" name="manzana[${contadorManzanas}][num_lotes]" class="form-control" value="${m.num_lotes || ''}" required>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Precio Contado</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_contado]" class="form-control" required>
+                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_contado]" class="form-control" value="${m.precio_contado || ''}" required>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Precio Crédito</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_credito]" class="form-control" required>
+                            <input type="number" step="0.01" name="manzana[${contadorManzanas}][precio_credito]" class="form-control" value="${m.precio_credito || ''}" required>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Enganche</label>
                         <select name="manzana[${contadorManzanas}][enganche]" class="form-select" required>
                             <option value="">Seleccione...</option>
-                            <option value="10">10%</option>
-                            <option value="15">15%</option>
-                            <option value="20">20%</option>
-                            <option value="30">30%</option>
+                            <option value="10" ${m.enganche == "10" ? 'selected' : ''}>10%</option>
+                            <option value="15" ${m.enganche == "15" ? 'selected' : ''}>15%</option>
+                            <option value="20" ${m.enganche == "20" ? 'selected' : ''}>20%</option>
+                            <option value="30" ${m.enganche == "30" ? 'selected' : ''}>30%</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Mensualidades</label>
                         <select name="manzana[${contadorManzanas}][mensualidades]" class="form-select" required>
                             <option value="">Seleccione...</option>
-                            <option value="6">6 meses</option>
-                            <option value="12">12 meses</option>
-                            <option value="18">18 meses</option>
-                            <option value="24">24 meses</option>
-                            <option value="30">30 meses</option>
-                            <option value="36">36 meses</option>
+                            <option value="6" ${m.mensualidades == "6" ? 'selected' : ''}>6 meses</option>
+                            <option value="12" ${m.mensualidades == "12" ? 'selected' : ''}>12 meses</option>
+                            <option value="18" ${m.mensualidades == "18" ? 'selected' : ''}>18 meses</option>
+                            <option value="24" ${m.mensualidades == "24" ? 'selected' : ''}>24 meses</option>
+                            <option value="30" ${m.mensualidades == "30" ? 'selected' : ''}>30 meses</option>
+                            <option value="36" ${m.mensualidades == "36" ? 'selected' : ''}>36 meses</option>
                         </select>
                     </div>
                     <div class="col-md-1">
@@ -214,12 +223,42 @@
                 </div>`;
             contenedor.insertAdjacentHTML('beforeend', bloque);
             contadorManzanas++;
-        });
+        }
 
+        // Función para eliminar manzana
         function eliminarManzana(id) {
             let bloque = document.getElementById(`manzana-${id}`);
             if (bloque) bloque.remove();
         }
+
+        // Cargar manzanas existentes desde AJAX
+        $(document).on('click', '.btn-detalle-fracc', function () {
+            let fraccId = $(this).data('id');
+            let url = "{{ route('fraccionamiento.show', ':id') }}".replace(':id', fraccId);
+
+            $.get(url, function (data) {
+                $('#id').val(data.id);
+                $('#nombre').val(data.nombre);
+                $('#responsable').val(data.responsable);
+                $('#propietaria').val(data.propietaria);
+                $('#superficie').val(data.superficie);
+                $('#ubicacion').val(data.ubicacion);
+                $('#viento1').val(data.viento1);
+                $('#viento2').val(data.viento2);
+                $('#viento3').val(data.viento3);
+                $('#viento4').val(data.viento4);
+
+                let contenedor = $('#contenedor-lotes');
+                contenedor.empty();
+                contadorManzanas = 0;
+
+                data.manzanas.forEach(m => agregarManzana(m));
+
+                $('#add_fraccionamiento').modal('show');
+            });
+        });
+
+  
 
         // ----------------------
         // Confirmación duplicar con SweetAlert
@@ -240,6 +279,10 @@
                 }
             });
         }
+
+
+
+
     </script>
 
     {{-- Mensajes Toastr desde Laravel --}}
