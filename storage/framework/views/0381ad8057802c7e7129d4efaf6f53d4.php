@@ -8,6 +8,7 @@
             <div class="modal-body">
                 <form method="POST" id="form-fraccionamiento" action="<?php echo e(route('fraccionamiento.store')); ?>" autocomplete="off" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
+                    <input type="hidden" name="_method" id="form_method" value="POST"> <!-- POST por defecto -->
                     <?php echo $__env->make('pages.gestion-fraccionamientos.formulario.fraccionamiento', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

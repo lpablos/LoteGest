@@ -30,12 +30,18 @@
                         <div class="col-sm-8">
                             <div class="text-sm-end">
                                  <?php echo $__env->make('pages.gestion-fraccionamientos.modal.add', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                                <button type="button" 
+                                <!-- <button type="button" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#add_fraccionamiento"
                                     class="btn btn-success btn-rounded waves-effect waves-light mb-2">
                                         <i class="mdi mdi-plus me-1"></i> Agregar
+                                </button> -->
+                                <button type="button" 
+                                        id="btn-nuevo-fracc"
+                                        class="btn btn-success btn-rounded waves-effect waves-light mb-2">
+                                    <i class="mdi mdi-plus me-1"></i> Agregar
                                 </button>
+
                             </div>
                         </div>
                     </div>
@@ -156,8 +162,6 @@
                 }
             });
         });
-
-        // ----------------------
         // Manejo dinámico de manzanas
 
         let contadorManzanas = 0;
@@ -232,10 +236,12 @@
         // Cargar manzanas existentes desde AJAX
         $(document).on('click', '.btn-detalle-fracc', function () {
             let fraccId = $(this).data('id');
-            let url = "<?php echo e(route('fraccionamiento.show', ':id')); ?>".replace(':id', fraccId);
+            let url = "<?php echo e(route('fraccionamiento.show', ':id')); ?>".replace(':id', fraccId);           
+            let urlUpdate = "<?php echo e(route('fraccionamiento.update', ':id')); ?>".replace(':id', fraccId);
+
 
             $.get(url, function (data) {
-                $('#id').val(data.id);
+                $('#fracc_id').val(data.id);
                 $('#nombre').val(data.nombre);
                 $('#responsable').val(data.responsable);
                 $('#propietaria').val(data.propietaria);
@@ -247,6 +253,10 @@
                 $('#viento4').val(data.viento4);
                 $('#tipo_predios_id').val(data.tipo_predios_id);
 
+                //Aqui hacermos el update del form
+                $('#form-fraccionamiento').attr('action', urlUpdate);
+                $('#form_method').val('PUT'); // importantísimo
+
                 let contenedor = $('#contenedor-lotes');
                 contenedor.empty();
                 contadorManzanas = 0;
@@ -256,8 +266,6 @@
                 $('#add_fraccionamiento').modal('show');
             });
         });
-
-  
 
         // ----------------------
         // Confirmación duplicar con SweetAlert
@@ -279,7 +287,15 @@
             });
         }
 
-
+        $('#btn-nuevo-fracc').click(function() {
+            $('#form-fraccionamiento')[0].reset();
+            $('#fracc_id').val('');
+            $('#form_method').val('POST');
+            $('#form-fraccionamiento').attr('action', "<?php echo e(route('fraccionamiento.store')); ?>");
+            $('#contenedor-lotes').empty();
+            contadorManzanas = 0; 
+            $('#add_fraccionamiento').modal('show');
+        });
 
 
     </script>

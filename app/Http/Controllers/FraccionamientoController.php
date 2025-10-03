@@ -35,7 +35,7 @@ class FraccionamientoController extends Controller
     public function create()
     {
         //
-        //dd("HOla aqi vista Fraccionamiento");
+        
         if (view()->exists('pages.gestion-fraccionamiento.create')) {
             return view('pages.gestion-fraccionamiento.create');
         }
@@ -47,7 +47,7 @@ class FraccionamientoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        dd("Registro nuevo", $request->all());
         $validated = $request->validate( 
             $this->fraccRules(),
             $this->fraccMessages()
@@ -133,6 +133,7 @@ class FraccionamientoController extends Controller
     public function edit(string $id)
     {
         
+
         $fraccionamiento = Fraccionamiento::find($id);
         
         if (view()->exists('pages.gestion-fraccionamiento.edit')) {
@@ -147,7 +148,7 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        
+        dd("RegiActualizacion registro", $request->all());
         $validated = $request->validate(
             $this->fraccRules(),
             $this->fraccMessages()

@@ -8,6 +8,7 @@
             <div class="modal-body">
                 <form method="POST" id="form-fraccionamiento" action="{{ route('fraccionamiento.store') }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="_method" id="form_method" value="POST"> <!-- POST por defecto -->
                     @include('pages.gestion-fraccionamientos.formulario.fraccionamiento')
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
