@@ -13,6 +13,7 @@ use DB, Session;
 use App\Helpers\Helper;
 use App\Models\Manzana;
 
+
 class FraccionamientoController extends Controller
 {
     /**
@@ -80,9 +81,10 @@ class FraccionamientoController extends Controller
             $fraccionamiento->save();
             
             // dd($request->all());
+            $numManzana = 0;
             foreach ($request->manzana as $key => $man) {
                 
-                $numManzana = $key + 1;
+                $numManzana = $numManzana + 1;
                 $manzana = new Manzana;
                 $manzana->precio_contado = $man['precio_contado'] ?? null;
                 $manzana->precio_credito = $man['precio_credito'] ?? null;
@@ -148,7 +150,6 @@ class FraccionamientoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        dd("RegiActualizacion registro", $request->all());
         $validated = $request->validate(
             $this->fraccRules(),
             $this->fraccMessages()
@@ -162,7 +163,6 @@ class FraccionamientoController extends Controller
                 if ($fraccionamiento->imagen && Storage::disk('public')->exists($fraccionamiento->imagen)) {
                     Storage::disk('public')->delete($fraccionamiento->imagen);
                 }
-
                 // 2. Guardar la nueva imagen
                 $file     = $request->file('imagen');
                 $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension();
@@ -171,17 +171,72 @@ class FraccionamientoController extends Controller
                 // Asignar la ruta al array de datos validados
                 // $validated['imagen'] = $path;
                 $fraccionamiento->imagen = $path;
-            }
+            }            
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
-            $fraccionamiento->manzanas = $validated['manzanas'];
-            $fraccionamiento->reponsable = Helper::capitalizeFirst($validated['reponsable']);
+            $fraccionamiento->responsable = Helper::capitalizeFirst($validated['responsable']);
             $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
+            $fraccionamiento->tipo_predios_id = $request->tipo_predios_id;
             $fraccionamiento->superficie = $validated['superficie'];
             $fraccionamiento->ubicacion = Helper::capitalizeFirst($validated['ubicacion']);
-            $fraccionamiento->tipo_predios_id = $validated['tipo_predios_id'];
+            $fraccionamiento->viento1 = Helper::capitalizeFirst($validated['viento1']);
+            $fraccionamiento->viento2 = Helper::capitalizeFirst($validated['viento2']);
+            $fraccionamiento->viento3 = Helper::capitalizeFirst($validated['viento3']);
+            $fraccionamiento->viento4 = Helper::capitalizeFirst($validated['viento4']);
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
             $fraccionamiento->update();
-           
+
+            // El ultimo registro de manzana para sacar el contador
+            $numManzanaContador = $fraccionamiento->manzanas->last()?->num_manzana ?? 0; 
+            
+            
+            $ids = collect($request->manzana)->pluck('id')->filter()->toArray();
+            Manzana::where('fraccionamiento_id', $fraccionamiento->id)
+                ->whereNotIn('id', $ids)
+                ->delete(); 
+            $suma = false;
+            foreach ($request->manzana as $key => $man) {                
+                if(isset($man['id']) && $man['id']){
+                    $manzana = Manzana::findOrFail($man['id']);
+                    $suma = false;
+
+                }else{
+                    $suma = true;
+                    $manzana = new Manzana;
+                    $numManzanaContador = $numManzanaContador + 1;
+                }
+                $manzana->precio_contado = $man['precio_contado'] ?? null;
+                $manzana->precio_credito = $man['precio_credito'] ?? null;
+                $manzana->enganche = $man['enganche'] ?? null;
+                $manzana->mensualidades = $man['mensualidades'] ?? null;
+                $manzana->num_lotes = $man['num_lotes'];
+                if($suma){
+                    $manzana->num_manzana = $numManzanaContador;
+                }
+                $manzana->fraccionamiento_id = $fraccionamiento->id;
+                $manzana->save();
+
+                
+                $numActual = $manzana->lotes()->count();
+                $numNuevo = (int) $man['num_lotes'];
+                
+                if ($numNuevo > $numActual) {
+                    for ($i = $numActual + 1; $i <= $numNuevo; $i++) {
+                        $lote = new Lote;
+                        $lote->num_lote = $i;
+                        $lote->disponibilidad_id = 2;
+                        $lote->manzana_id = $manzana->id;
+                        $lote->save();
+                    }
+                }
+                
+                if ($numNuevo < $numActual) {
+                    
+                    $manzana->lotes()
+                        ->where('num_lote', '>', $numNuevo)
+                        ->delete();
+                }
+               
+            }
             DB::commit();
             Session::flash('success', 'Fraccionamiento fue actualizados');
             return redirect()->route('fraccionamiento.index');

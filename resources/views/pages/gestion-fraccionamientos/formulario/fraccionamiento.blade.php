@@ -79,7 +79,7 @@
 
 <div class="mb-3">
     <label for="observaciones" class="form-label">Observaciones</label>
-    <textarea name="observaciones" id="" class="form-control" rows="3"></textarea>
+    <textarea name="observaciones" id="observaciones" class="form-control" rows="3"></textarea>
 </div>
 
 <div> <input type="hidden" name="id" id="fracc_id" value=""></div>

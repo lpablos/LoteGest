@@ -254,6 +254,7 @@
                 $('#viento3').val(data.viento3);
                 $('#viento4').val(data.viento4);
                 $('#tipo_predios_id').val(data.tipo_predios_id);
+                $('#observaciones').val(data.observaciones);
 
                 //Aqui hacermos el update del form
                 $('#form-fraccionamiento').attr('action', urlUpdate);

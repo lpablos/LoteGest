@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
             $table->unsignedBigInteger('disponibilidad_id');
             $table->foreign('disponibilidad_id')->references('id')->on('cat_estatus_disponibilidad')->onDelete('restrict');
+            // $table->unsignedBigInteger('manzana_id');
+            // $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
             $table->unsignedBigInteger('manzana_id');
             $table->foreign('manzana_id')->references('id')->on('manzanas')->onDelete('cascade');
             $table->softDeletes(); 
