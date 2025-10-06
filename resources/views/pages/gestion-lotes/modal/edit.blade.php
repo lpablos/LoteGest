@@ -1,9 +1,9 @@
- <div class="modal fade" id="editEstatusProyecto({{ $lote->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+ <div class="modal fade" id="editEstatusProyecto({{ $lote->id }})" tabindex="-1" aria-labelledby="editSede" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
            <div class="modal-header align-items-center">
                 <h5 class="modal-title mb-0" id="editSede"> 
-                    Editar Lote 
+                    Detalle del Lote 
                 </h5>
                 <h4>
 
@@ -12,13 +12,13 @@
                     </span>
                 </h4>
 
-                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal{{$lote->id}}" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form method="POST" action="{{ route('lote.update', ['lote' => $lote->id]) }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <!-- @include('pages.gestion-lotes.formulario.lote') -->
+                    @include('pages.gestion-lotes.formulario.lote') 
                     @php
                         $readonly = (isset($lote) && $lote->disponibilidad->nombre !== 'Disponible') ? 'readonly' : '';
                     @endphp
@@ -29,9 +29,7 @@
                         @endif
                         </div>
                 </form>
-            </div>
-        <!-- end modal body -->
+            </div>  
+        </div>        
     </div>
-    <!-- end modal-content -->
 </div>
-<!-- end modal-dialog -->

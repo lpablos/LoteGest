@@ -17,19 +17,16 @@ class Lote extends Model
 
     protected $fillable = [
         'num_lote',
-        'medidas_m',
-        'superficie_m2',
-        'plano',
         'observaciones',
         'disponibilidad_id',
         'manzana_id',
     ];
 
-    protected $casts = [
-        'superficie_m2'   => 'decimal:2',
-        'precio_contado'  => 'decimal:2',
-        'precio_credito'  => 'decimal:2',
-    ];
+    // protected $casts = [
+    //     'superficie_m2'   => 'decimal:2',
+    //     'precio_contado'  => 'decimal:2',
+    //     'precio_credito'  => 'decimal:2',
+    // ];
 
     /**
      * Relaciones

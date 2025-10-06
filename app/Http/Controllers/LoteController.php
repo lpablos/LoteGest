@@ -53,6 +53,7 @@ class LoteController extends Controller
             $this->loteMessages()
         );
         
+        
         DB::beginTransaction();
         try {
             if ($request->hasFile('plano')) {
@@ -143,23 +144,7 @@ class LoteController extends Controller
                 // Asignar la ruta al array de datos validados
                 $lote->plano = $path;
             }
-            $lote->num_lote = $validated['num_lote'];
-            $lote->medidas_m = Helper::capitalizeFirst($validated['medidas_m']);
-            $lote->superficie_m2 = $validated['superficie_m2'];
-             // -----------------------
-            // $precioContado = (float) str_replace(',', '', $validated['precio_contado']);
-            // $precioCredito = (float) str_replace(',', '', $validated['precio_credito']);
-            // -----------------------            
-            // $lote->precio_contado = $precioContado;
-            // $lote->precio_credito = $precioCredito;
-            $lote->manzana = $validated['manzana'];
-            $lote->colinda_norte = Helper::capitalizeFirst($validated['colinda_norte']);
-            $lote->colinda_sur = Helper::capitalizeFirst($validated['colinda_sur']);
-            $lote->colinda_oriente = Helper::capitalizeFirst($validated['colinda_oriente']);
-            $lote->colinda_poniente = Helper::capitalizeFirst($validated['colinda_poniente']);
-            $lote->observaciones = Helper::capitalizeFirst($validated['observaciones']);
-            // $lote->cat_estatus_disponibilidad_id = $validated['cat_estatus_disponibilidad_id'];
-            $lote->fraccionamiento_id = $validated['fraccionamiento_id'];
+            $lote->observaciones = $validated['observaciones'];
             $lote->update();
             DB::commit();
             Session::flash('success', 'Lote fue actualizado');
@@ -201,34 +186,21 @@ class LoteController extends Controller
      private function loteRules(): array
     {
         return [
-            'num_lote'                         => ['required', 'string'],
-            'medidas_m'                        => ['required', 'string'],
-            'superficie_m2'                    => ['required', 'numeric', 'min:1'],
-            // 'precio_contado'                   => ['nullable', 'string'],
-            // 'precio_credito'                   => ['nullable', 'string'],
-            'plano'                            => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp'],
-            'manzana'                          => ['required', 'numeric', 'min:1'],
-            'colinda_norte'                    => ['nullable', 'string'],
-            'colinda_sur'                      => ['nullable', 'string'],
-            'colinda_oriente'                  => ['nullable', 'string'],
-            'colinda_poniente'                 => ['nullable', 'string'],
-            'observaciones'                    => ['nullable', 'string'],
-            // 'cat_estatus_disponibilidad_id'    => ['required', 'exists:cat_estatus_disponibilidad,id'],
-            'fraccionamiento_id'               => ['required'],
+            'observaciones'                    => ['nullable', 'string'],         
         ];
     }
 
     private function loteMessages(): array
     {
         return [
-            'num_lote.required'                     => 'El número de lote es obligatorio.',
-            'num_lote.string'                       => 'El número de lote debe ser texto.',
-            'medidas_m.required'                    => 'Las medidas son obligatorias.',
-            'superficie_m2.min'                     => 'La superficie debe ser al menos :min m².',
-            // 'precio_contado.min'                    => 'El precio de contado no puede ser negativo.',
-            'plano.image'                           => 'El plano debe ser una imagen.',
-            'plano.mimes'                           => 'El plano debe ser jpg, jpeg, png o webp.',
-            'manzana.min'                           => 'La manzana debe ser al menos :min.',
+            // 'num_lote.required'                     => 'El número de lote es obligatorio.',
+            // 'num_lote.string'                       => 'El número de lote debe ser texto.',
+            // 'medidas_m.required'                    => 'Las medidas son obligatorias.',
+            // 'superficie_m2.min'                     => 'La superficie debe ser al menos :min m².',
+            // // 'precio_contado.min'                    => 'El precio de contado no puede ser negativo.',
+            // 'plano.image'                           => 'El plano debe ser una imagen.',
+            // 'plano.mimes'                           => 'El plano debe ser jpg, jpeg, png o webp.',
+            // 'manzana.min'                           => 'La manzana debe ser al menos :min.',
             // 'cat_estatus_disponibilidad_id.required'=> 'El estatus de disponibilidad es obligatorio.',
             // [...] completa con el resto.
         ];
