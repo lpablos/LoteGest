@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,6 +50,10 @@ Route::resource('fraccionamiento', App\Http\Controllers\FraccionamientoControlle
 Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoController::class);
 Route::resource('entidades-federativas', App\Http\Controllers\CatEntidadFederativaController::class);
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
+
+Route::get('vista-previa-contrato', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
+
+
 
 
 
