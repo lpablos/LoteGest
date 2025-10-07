@@ -123,6 +123,23 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Tipo de compra </label>
+                                    <select class="form-select form-select-sm" id="tipo_compra" name="tipo_compra" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        <option value="1"> Individual </option>
+                                        <option value="2"> Grupal </option>
+                                    </select>
+                                </div>
+                                <div class="text-end m-1">
+                                    <button type="button" id="btn_add_medidas" class="btn btn-sm btn-primary btn-small waves-effect waves-light">
+                                        + Medias y colindancias
+                                    </button>
+                                </div>
+
+                                <div class="row mb-1">
+                                    <div id="contenedor-medidas"></div>
+                                </div>
+                                {{--  <div class="col-md-3 mb-4">
                                     <label for="mpio_id"> Lote </label>
                                     <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
                                         <option value="" selected disabled> Selecciona una opción </option>
@@ -172,51 +189,6 @@
                                         <option value="AE"> - Alfredo </option>
                                         <option value="VI"> - Miguel </option>
                                     </select>
-                                </div>
-
-
-
-
-
-
-
-                                {{--  <div class="col-md-3 mb-4">
-                                    <label for="medidas_m">Medidas (m)</label>
-                                    <input type="text" step="0.01" name="medidas_m" class="form-control">
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label for="superficie_m2">Superficie (m²)</label>
-                                    <input type="number" step="0.01" name="superficie_m2" class="form-control">
-                                </div>  --}}
-                                
-                                
-
-                                
-                                 
-
-                                {{--  <div class="col-md-3 mb-4">
-                                    <label>Colinda Norte</label>
-                                    <input type="text" name="colinda_norte" class="form-control">
-                                </div>
-
-                                <div class="col-md-3 mb-4">
-                                    <label>Colinda Sur</label>
-                                    <input type="text" name="colinda_sur" class="form-control">
-                                </div>
-
-                                <div class="col-md-3 mb-4">
-                                    <label>Colinda Este</label>
-                                    <input type="text" name="colinda_este" class="form-control">
-                                </div>
-
-                                <div class="col-md-3 mb-4">
-                                    <label>Colinda Oeste</label>
-                                    <input type="text" name="colinda_oeste" class="form-control">
-                                </div>  --}}
-
-                                {{--  <div class="col-md-12">
-                                    <label for="observaciones">Observaciones</label>
-                                    <textarea name="observaciones" class="form-control"></textarea>
                                 </div>  --}}
                             </div>
                         </form>
@@ -252,59 +224,7 @@
                         </div>
                     </section>
                 </div>
-                    {{--  <div class="card-body">
-                       <div class="row col-md-12">
-                            <h4 class="card-title text-center"> Datos Personales </h4>
-                            <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
-                            <div class="col-md-3 mb-4">
-                                <label for="nombre"> Nombre(s)(*) </label>
-                                <input type="text" class="form-control form-control-sm" name="nombre" placeholder="Ingresa el nombre" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="primer_apellido"> Primer Apellido (*) </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido" placeholder="Ingresa el primer apellido" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 b-4">
-                                <label for="segundo_apellido"> Segundo Apellido</label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="telefono"> Teléfono </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
-                            </div>
-                             <div class="col-md-3 mb-4">
-                                <label for="fecha_nacimiento">Fecha de nacimiento (*) </label>
-                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Correo Electrónico </label>
-                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" >
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="num_contacto">Número de contacto </label>
-                                <input type="number" class="form-control form-control-sm" name="num_contacto" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="parentesco"> Parentesco </label>
-                                <input type="text" class="form-control form-control-sm" name="parentesco" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 b-4">
-                                <label for="fileINE"> Identificación INE</label>
-                                <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture>
-                            </div>
-                        </div>
-                    </div>  --}}
                 </div>
-                {{--  <div class="row">
-                    <div class="col-sm-6">
-                        <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
-                    </div> <!-- end col -->
-                    <div class="col-sm-6">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
-                        </div>
-                    </div> 
-                </div>  --}}
             </form>
         </div>
     </div>
@@ -337,6 +257,52 @@
 
     <!-- form wizard init -->
     <script src="{{ URL::asset('build/js/pages/form-wizard.init.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+        
+            document.getElementById('btn_add_medidas').addEventListener('click', function () {
+                agregarMedidas({});
+            });
+        
+            function agregarMedidas(m) {
+                let contenedor = document.getElementById('contenedor-medidas');
+                let bloque = `
+                    <div class="row mb-3 border border-secondary rounded p-2" id="">
+                        <div class="col-md-2">
+                            <label class="form-label"> Manzana </label>
+                            <select name="" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                                <option value="30">30%</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label"> Lote </label>
+                            <select name="" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                                <option value="30">30%</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label"> Superficie </label>
+                            <input type="number" name="" class="form-control" value="" required>
+                        </div>
+                    </div>`;
+                contenedor.insertAdjacentHTML('beforeend', bloque);
+                contadorManzanas++;
+            }
+        });
+    </script>
+
+
+
+
+
     @if(Session::has('success'))
         <script>
             toastr.options = {
