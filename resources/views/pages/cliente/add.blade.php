@@ -123,73 +123,60 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3 mb-4">
-                                    <label for="mpio_id"> Tipo de compra </label>
+                                    <label for="tipo_compra"> Tipo de compra </label>
                                     <select class="form-select form-select-sm" id="tipo_compra" name="tipo_compra" style="cursor: pointer;" required>
                                         <option value="" selected disabled> Selecciona una opción </option>
                                         <option value="1"> Individual </option>
                                         <option value="2"> Grupal </option>
+                                        <option value="3"> Mixto </option>
                                     </select>
                                 </div>
+                                <hr>
+                                <div class="col-md-3 mb-4">
+                                    <label for="manzana"> Superficie Total </label>
+                                    <input type="text" name="precio_contado" class="form-control form-control-sm" readOnly>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Enganche </label>
+                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        <option value="1"> 10% </option>
+                                        <option value="2"> 15%</option>
+                                        <option value="3"> 20%</option>
+                                        <option value="4"> 30%</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <label for="mpio_id"> Mensualidades </label>
+                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                        <option value="" selected disabled> Selecciona una opción </option>
+                                        <option value="1"> 6 Meses </option>
+                                        <option value="2"> 12 Meses </option>
+                                        <option value="3"> 18 Meses </option>
+                                        <option value="4"> 24 Meses  </option>
+                                        <option value="5"> 30 Meses </option>
+                                        <option value="6"> 36 Meses </option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="text-end m-1" id="b_add_lote">
+                                    <button type="button" id="btn_add_lote" class="btn btn-sm btn-primary btn-small waves-effect waves-light">
+                                        + Lote
+                                    </button>
+                                </div>
+                                <div class="row mb-1">
+                                    <div id="contenedor-lotes"></div>
+                                </div>
+                                <hr>
                                 <div class="text-end m-1">
                                     <button type="button" id="btn_add_medidas" class="btn btn-sm btn-primary btn-small waves-effect waves-light">
                                         + Medias y colindancias
                                     </button>
                                 </div>
-
                                 <div class="row mb-1">
                                     <div id="contenedor-medidas"></div>
                                 </div>
-                                {{--  <div class="col-md-3 mb-4">
-                                    <label for="mpio_id"> Lote </label>
-                                    <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
-                                        <option value="" selected disabled> Selecciona una opción </option>
-                                        @foreach ($mpios as $mpio)
-                                            <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label for="manzana">Manzana</label>
-                                    <select name="manzana" class="form-select form-select-sm" style="cursor: pointer;">  
-                                        <option selected> Selecciona una opción </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label> Tipo de Compra </label>
-                                    <select class="form-select form-select-sm" style="cursor: pointer;">
-                                        <option selected> Selecciona una opción </option>
-                                        <option value="AE"> Contado </option>
-                                        <option value="VI"> Crédito </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label for="precio_contado">Precio Contado</label>
-                                    <input type="number" step="0.01" name="precio_contado" class="form-control form-control-sm" >
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label for="precio_credito">Precio Crédito</label>
-                                    <input type="number" step="0.01" name="precio_credito" class="form-control form-control-sm">
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label for="precio_credito"> Enganche </label>
-                                    <input type="number" step="0.01" name="precio_credito" class="form-control form-control-sm">
-                                </div>
-                                 <div class="col-md-3 mb-4">
-                                    <label> Forma de pago (CUANDO ES AL CONTADO) </label>
-                                    <select class="form-select form-select-sm" style="cursor: pointer;">
-                                        <option selected> Selecciona una opción </option>
-                                        <option value="AE"> - Efectivo </option>
-                                        <option value="VI"> - Transferencia </option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-4">
-                                    <label> Mensualidades (A Crédito) </label>
-                                    <select class="form-select form-select-sm" style="cursor: pointer;">
-                                        <option selected> Selecciona una opción </option>
-                                        <option value="AE"> - Alfredo </option>
-                                        <option value="VI"> - Miguel </option>
-                                    </select>
-                                </div>  --}}
+                                <hr>
                             </div>
                         </form>
                     </section>
@@ -260,37 +247,92 @@
     <script>
         $(document).ready(function () {
         
+            document.getElementById('btn_add_lote').addEventListener('click', function () {
+                agregarLote({});
+            });
+
             document.getElementById('btn_add_medidas').addEventListener('click', function () {
                 agregarMedidas({});
             });
+
+            function agregarLote(m) {
+                let contenedor = document.getElementById('contenedor-lotes');
+                let b_lote = `
+                    <div class="row mb-1">
+                        <div class="col-md-2 mb-4">
+                            <label for="mpio_id"> Manzana </label>
+                            <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                <option value="" selected disabled> Selecciona una opción </option>
+                                @foreach ($mpios as $mpio)
+                                    <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label for="mpio_id"> Lote </label>
+                            <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                <option value="" selected disabled> Selecciona una opción </option>
+                                @foreach ($mpios as $mpio)
+                                    <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label for="manzana"> Superficie </label>
+                            <input type="number" step="0.01" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label for="manzana"> Precio </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" readOnly>
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label for="mpio_id"> Tipo de venta </label>
+                            <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
+                                <option value="" selected disabled> Selecciona una opción </option>
+                                <option value="1"> - Crédito </option>
+                                <option value="2"> - Contado </option>
+                            </select>
+                        </div>
+                    </div>`;
+                contenedor.insertAdjacentHTML('beforeend', b_lote);
+                contadorManzanas++;
+            }
         
             function agregarMedidas(m) {
                 let contenedor = document.getElementById('contenedor-medidas');
                 let bloque = `
-                    <div class="row mb-3 border border-secondary rounded p-2" id="">
-                        <div class="col-md-2">
-                            <label class="form-label"> Manzana </label>
-                            <select name="" class="form-select" required>
-                                <option value="">Seleccione...</option>
-                                <option value="10">10%</option>
-                                <option value="15">15%</option>
-                                <option value="20">20%</option>
-                                <option value="30">30%</option>
-                            </select>
+                    <div class="row mb-3" id="">
+                        <div class="col-md-6">
+                            <label class="form-label"> Noroeste </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label"> Lote </label>
-                            <select name="" class="form-select" required>
-                                <option value="">Seleccione...</option>
-                                <option value="10">10%</option>
-                                <option value="15">15%</option>
-                                <option value="20">20%</option>
-                                <option value="30">30%</option>
-                            </select>
+                        <div class="col-md-6">
+                            <label class="form-label"> Colindando con: </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label"> Superficie </label>
-                            <input type="number" name="" class="form-control" value="" required>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Sureste </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Colindando con: </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Noreste </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Colindando con: </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Suroeste </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label class="form-label"> Colindando con: </label>
+                            <input type="text" name="precio_contado" class="form-control form-control-sm" >
                         </div>
                     </div>`;
                 contenedor.insertAdjacentHTML('beforeend', bloque);
