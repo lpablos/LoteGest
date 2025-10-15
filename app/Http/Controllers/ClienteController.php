@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
 use App\Models\CatEntidadFederativa;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ClienteController extends Controller
 {
@@ -45,9 +46,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        dd("Aqui entra ",$request->all());
-
-
+    
         $input = $request->all();
 
         $rules = [
@@ -57,44 +56,55 @@ class ClienteController extends Controller
         ];
 
         $validator = Validator::make($input, $rules);
-
+        
         if ($validator->fails()) {
             Session::flash('error', 'Campos obligatorios incompletos');
             return redirect()->route('cliente.create');
         }
-
+        
         DB::beginTransaction();
 
         try {
-            $cliente = new Cliente();
-
-            $cliente->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
-            $cliente->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
-            $cliente->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
-            $cliente->telefono = ($request->telefono == null) ? "Sin Información" : $request->telefono ;
+            if($request->identy){
+                $cliente = Cliente::find($request->identy);
+            }else{
+                $cliente = new Cliente();    
+            }
+            $cliente->no_cliente = $request->no_cliente;
+            $cliente->nombre = $request->nombre;
+            $cliente->primer_apellido = $request->primer_apellido;
+            $cliente->segundo_apellido = $request->segundo_apellido;
+            $cliente->telefono = $request->telefono;
             $cliente->fecha_nacimiento = $request->fecha_nacimiento;
             $cliente->email = $request->email;
-            $cliente->num_contacto = ($request->num_contacto == null) ? "Sin Información" : $request->num_contacto;
-            $cliente->parentesco = ($request->parentesco == null) ? "Sin Información" : $request->parentesco;
+            $cliente->num_contacto = $request->num_contacto;
+            $cliente->parentesco = $request->parentesco;
             if ($request->hasFile('fileIne')) {
-                    $file = $request->file('fileIne');
-                    $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
-                    $path = $file->storeAs('cliente', $filename, 'public');
+                $file = $request->file('fileIne');
+                $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
+                $path = $file->storeAs('cliente', $filename, 'public');
             } else {
                 $path = null;
             }
             $cliente->url_ine = $path;
             $cliente->save();
-
             DB::commit();
 
-            Session::flash('success', '¡Cliente registrado!');
-            return redirect()->route('cliente.index');
+            return response()->json([
+                'status' => 'success',
+                'message' => '¡Cliente registrado exitosamente!',
+                'cliente' => $cliente,
+            ]);
 
         }catch (\PDOException $e){
             DB::rollBack();
-            dd($e);
-            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+            Log::error("Error al guardar cliente: " . $e->getMessage());
+            // ❌ Devolver error JSON
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un error al guardar el cliente.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 

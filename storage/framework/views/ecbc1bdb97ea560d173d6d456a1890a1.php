@@ -128,4 +128,4 @@
         <p><input type="text" name="observaciones" id="observaciones" value="Firma como gestor oficio su hija Glenis Maldonado Aburto en representación de Carlos Maldonado." class="form-control form-control-sm" style="width: 650px; display: inline-block; vertical-align: middle; margin: 0 4px;"></p>
         </div>
     </form>
-</section>
+</section><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cliente/pasos/contratos.blade.php ENDPATH**/ ?>
