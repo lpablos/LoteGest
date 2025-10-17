@@ -98,8 +98,7 @@ class ClienteController extends Controller
 
         }catch (\PDOException $e){
             DB::rollBack();
-            Log::error("Error al guardar cliente: " . $e->getMessage());
-            // ❌ Devolver error JSON
+            Log::error("Error al guardar cliente: " . $e->getMessage());            
             return response()->json([
                 'status' => 'error',
                 'message' => 'Hubo un error al guardar el cliente.',

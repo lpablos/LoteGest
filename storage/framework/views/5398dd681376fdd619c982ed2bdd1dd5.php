@@ -7,48 +7,46 @@
 
 
 <div class="row mb-3">
-    <div class="col-md-3">
-        <label for="nombre" class="form-label">Nombre *</label>
+    <div class="col-md-4">
+        <label for="nombre" class="form-label">Nombre (*)</label>
         <input type="text" name="nombre" id="nombre" class="form-control" value="" required>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <label for="imagen" class="form-label">Imagen (jpg,jpeg,png,webp)</label>
         <input type="file" name="imagen" id="imagen" class="form-control">
     </div>
-    <div class="col-md-3">
-        <label for="responsable" class="form-label">Responsable *</label>
+    <div class="col-md-4">
+        <label for="responsable" class="form-label">Responsable (*)</label>
         <input type="text" name="responsable" id="responsable" class="form-control" value="" required>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4 mt-4">
         <label for="propietaria" class="form-label"> Propietario(a) *</label>
         <input type="text" name="propietaria" id="propietaria" class="form-control" value="" required>
     </div>
-</div>
-
-<div class="row mb-2">
-    <div class="col-md-4">
-        <label for="tipo_predios_id" class="form-label">Tipo de Predio</label>
-        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select" required>
+    <div class="col-md-4 mt-4">
+        <label for="tipo_predios_id" class="form-label">Tipo de Predio (*)</label>
+        <select name="tipo_predios_id" id="tipo_predios_id"  class="form-select" required style="cursor: pointer;">
             <option value="" selected disabled> Selecciona una opción </option>
             <?php $__currentLoopData = $tpPredio; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $predio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($predio->id); ?>"><?php echo e($predio->nombre); ?></option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select>
     </div>
-    <div class="col-md-4">
-        <label for="superficie" class="form-label">Superficie (m²)</label>
+    <div class="col-md-4 mt-4">
+        <label for="superficie" class="form-label">Superficie (m²)(*)</label>
         <input type="number" step="0.01" name="superficie" id="superficie" class="form-control" value="">
     </div>
-    <div class="col-md-4">
+    <div class="col-md-12 mt-4">
         <label for="ubicacion" class="form-label">Ubicación</label>
         <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="">
     </div>
 </div>
+
 <hr>
 <div class="row mb-2">
     <div class="col-md-12">
-        <label for="reponsable" class="form-label">Define los vientos</label>
+        <label for="reponsable" class="form-label">Define los vientos (*)</label>
     </div>
     <div class="col-md-3">
         <input type="text" id="viento1" name="viento1" class="form-control" placeholder="Ejemplo: Norte" value="" required>

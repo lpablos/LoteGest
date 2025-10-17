@@ -112,8 +112,7 @@
                     @include('pages.cliente.pasos.personales')
                     @include('pages.cliente.pasos.compra')
                     @include('pages.cliente.pasos.contratos')
-                    @include('pages.cliente.pasos.preview')
-                   
+                    @include('pages.cliente.pasos.preview')                   
                 </div>
                 </div>
             </form>
@@ -154,105 +153,161 @@
 
     <script>
         $(document).ready(function () {
-            document.getElementById('btn_add_lote').addEventListener('click', function () {
-                agregarLote({});
+            
+            let contadorLotes = 0;
+            let contadorTablas = 0; 
+            
+
+
+            const $btn = $('#btn_add_compra');
+            const $contenedor = $('#contenedor-compra');
+            const $spanContador = $('#contador-lotes');
+
+            if ($btn.length === 0) {
+                console.error('No existe el botón con id #btn_add_compra en el DOM');
+                return;
+            }
+            if ($contenedor.length === 0) {
+                console.error('No existe el contenedor con id #contenedor-compra en el DOM');
+                return;
+            }
+            if ($spanContador.length === 0) {
+                // Si no existe el span del contador, crearlo opcionalmente
+                $contenedor.before('<div class="text-center mt-2"><strong>Total de lotes agregados:</strong> <span id="contador-lotes">0</span></div>');
+            }
+
+            // Función para actualizar contador en pantalla
+            function actualizarContador() {
+                $('#contador-lotes').text(contadorLotes);
+            }
+
+            // Función que crea y agrega un bloque
+            function agregarBloque() {
+                const bloque = $(`
+                    <div class="row col-md-12 mb-3 lote-item">
+                        <div class="col-md-3 mb-4">
+                            <label>Manzana</label>
+                            <select class="form-select form-select-sm" name="manzana[]" required>
+                                <option value="" selected disabled>Selecciona una opción</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label>Lote</label>
+                            <select class="form-select form-select-sm" name="lote[]" required>
+                                <option value="" selected disabled>Selecciona una opción</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <label>Superficie</label>
+                            <input type="text" step="0.01" name="num_solicitud[]" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-2 mb-4">
+                            <label>Tipo de Venta</label>
+                            <select class="form-select form-select-sm" name="venta_tp[]" required>
+                                <option value="" selected disabled>Selecciona una opción</option>
+                            </select>
+                        </div>
+                          <div class="col-md-3 mb-4">
+                            <label>Precio</label>
+                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-1 mb-4 d-flex align-items-end">
+                            <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
+                        </div>
+                    </div>
+                `);
+
+                // Agregar al contenedor y actualizar contador
+                $contenedor.append(bloque);
+                contadorLotes++;
+                actualizarContador();
+                setTimeout(() => {
+                    agregarTabla();                    
+                }, 1000);
+            }
+
+            // Evento click: agrega 1 bloque por click
+            $btn.on('click', function () {
+                agregarBloque();
             });
 
-            document.getElementById('btn_add_medidas').addEventListener('click', function () {
-                agregarMedidas({});
+            // Delegación: eliminar bloque con botón (disminuye contador)
+            $contenedor.on('click', '.btn-eliminar', function () {
+                $(this).closest('.lote-item').remove();
+                contadorLotes = Math.max(0, contadorLotes - 1);
+                actualizarContador();
+                
+              
             });
 
-            // function agregarLote(m) {
-            //     let contenedor = document.getElementById('contenedor-lotes');
-            //     let b_lote = `
-            //         <div class="row mb-1">
-            //             <div class="col-md-2 mb-4">
-            //                 <label for="mpio_id"> Manzana </label>
-            //                 <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
-            //                     <option value="" selected disabled> Selecciona una opción </option>
-            //                     @foreach ($mpios as $mpio)
-            //                         <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
-            //                     @endforeach
-            //                 </select>
-            //             </div>
-            //             <div class="col-md-2 mb-4">
-            //                 <label for="mpio_id"> Lote </label>
-            //                 <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
-            //                     <option value="" selected disabled> Selecciona una opción </option>
-            //                     @foreach ($mpios as $mpio)
-            //                         <option value="{{ $mpio->id }}">- {{ $mpio->nom_mpio }}</option>
-            //                     @endforeach
-            //                 </select>
-            //             </div>
-            //             <div class="col-md-2 mb-4">
-            //                 <label for="manzana"> Superficie </label>
-            //                 <input type="number" step="0.01" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-2 mb-4">
-            //                 <label for="manzana"> Precio </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" readOnly>
-            //             </div>
-            //             <div class="col-md-2 mb-4">
-            //                 <label for="mpio_id"> Tipo de venta </label>
-            //                 <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
-            //                     <option value="" selected disabled> Selecciona una opción </option>
-            //                     <option value="1"> - Crédito </option>
-            //                     <option value="2"> - Contado </option>
-            //                 </select>
-            //             </div>
-            //         </div>`;
-            //     contenedor.insertAdjacentHTML('beforeend', b_lote);
-            //     contadorManzanas++;
-            // }
-        
-            // function agregarMedidas(m) {
-            //     let contenedor = document.getElementById('contenedor-medidas');
-            //     let bloque = `
-            //         <div class="row mb-3" id="">
-            //             <div class="col-md-6">
-            //                 <label class="form-label"> Noroeste </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6">
-            //                 <label class="form-label"> Colindando con: </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Sureste </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Colindando con: </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Noreste </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Colindando con: </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Suroeste </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //             <div class="col-md-6 mt-2">
-            //                 <label class="form-label"> Colindando con: </label>
-            //                 <input type="text" name="precio_contado" class="form-control form-control-sm" >
-            //             </div>
-            //         </div>`;
-            //     contenedor.insertAdjacentHTML('beforeend', bloque);
-            //     contadorManzanas++;
-            // }
+            function agregarTabla() {
+                contadorTablas++;
+                const tabla = $(`
+                    <div class="row col-md-12 mb-3 tabla-item">                        
+                        <table class="table table-bordered border-primary mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Vientos</td>
+                                    <td>Metros</td>
+                                    <td>Colindancia</td>
+                                    <td>Descripcio</td>
+                                </tr>
+                                <tr>
+                                    <td>Noroeste</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="colinda1[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sureste</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="colinda2[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>Noreste</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="colinda3[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td>Suroeste</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="colinda4[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `);
+
+                $('#contenedor-tablas').append(tabla);
+            }
         });
     </script>
-
-    
-
-
-
-
 
     @if(Session::has('success'))
         <script>
