@@ -62,13 +62,20 @@
                 <input type="text" step="0.01" name="superficiel_venta" class="form-control form-control-sm">
             </div>
             <div class="col-md-3 mb-4">
-                <label>Total de Venta</label>
+                <label>Total de Venta (MXN)</label>
                 <input type="text" step="0.01" name="total_venta" id="total_venta" class="form-control form-control-sm">
                 
             </div>
             <div class="col-md-3 mb-4">
-                <label>Enganche 10%</label>
-                <input type="text" step="0.01" name="enganche" class="form-control form-control-sm">
+                <label>Selecciona Enganche</label>
+                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta">
+                    <option value="" selected>Selecciona una opción</option>                   
+                </select>
+                
+            </div>
+            <div class="col-md-3 mb-4">
+                <label>Valor del Enganche (MXN)</label>
+                <input type="text" step="0.01" name="enganche_venta" class="form-control form-control-sm" readonly>
             </div>
            
             <div class="col-md-3 mb-4">

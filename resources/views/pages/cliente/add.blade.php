@@ -212,7 +212,7 @@
                         </div>
                         <div class="col-md-3 mb-4">
                             <label>Superficie m2</label>
-                            <input type="text" step="0.01" name="superficie_m2[]" class="form-control form-control-sm">
+                            <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-2 mb-4">
                             <label>Tipo de Venta</label>
@@ -369,7 +369,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {                       
-                       dataManzanasLotes = data[0]
+                        dataManzanasLotes = data[0]
                        
                         selectManzas();                        
                        
@@ -414,8 +414,64 @@
                 $('input[name="superficiel_venta"]').val(totalSuperficie.toFixed(2));
             }
 
+            $(document).on('change', '.manzanaSelect', function() {
+                // Array para almacenar todos los enganches seleccionados, sin duplicados
+                let enganchesUnicos = [];
 
-           
+                // Recorremos todos los select de manzana
+                $('select[name="manzana[]"]').each(function() {
+                    const manzanaId = parseInt($(this).val());
+                    
+                    
+                    if (!manzanaId) return;
+
+                    // Buscar la manzana en el objeto
+                    const manzana = dataManzanasLotes.find(m => m.id === manzanaId);
+                    if (manzana && manzana.enganche) {
+                        if (!enganchesUnicos.includes(manzana.enganche)) {
+                            enganchesUnicos.push(manzana.enganche);
+                        }
+                    }
+                });
+
+                console.log("Esto tienes", enganchesUnicos);
+                
+
+                // Recorremos todos los bloques para actualizar el select de tipoVenta/enganche
+                $('.lote-item').each(function() {
+                    const $engancheVentaSelect = $(this).find('.engancheVentaSelect');
+
+                    // Guardar la opción vacía inicial
+                    const vacio = '<option value="" selected>Selecciona una opción</option>';
+
+                    // Reconstruir todas las opciones
+                    let opciones = vacio;
+                    enganchesUnicos.forEach(e => {
+                        opciones += `<option value="${e}">${e} % </option>`;
+                    });
+
+                    $engancheVentaSelect.html(opciones);
+                });
+            });
+
+
+            $(document).on('change', '.engancheVentaSelect', function() {
+                // Obtenemos el porcentaje seleccionado
+                const porcentaje = parseFloat($(this).val());
+                if (isNaN(porcentaje)) return;
+
+                // Buscamos el total de venta
+                const totalVenta = parseFloat($('#total_venta').val()) || 0;
+
+                // Calculamos el enganche
+                const valorEnganche = (totalVenta * porcentaje) / 100;
+
+                // Ponemos el resultado en el input correspondiente
+                $(this).closest('.lote-item')
+                    .find('input[name="enganche_venta"]')
+                    .val(valorEnganche.toFixed(2)); // 2 decimales
+            });
+
         });
     </script>
 
