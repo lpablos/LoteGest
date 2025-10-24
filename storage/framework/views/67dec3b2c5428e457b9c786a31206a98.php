@@ -121,6 +121,8 @@
     <!-- toastr plugin -->
     <script>
         const clienteStoreRoute = "<?php echo e(route('cliente.store')); ?>";
+        const fraccManzanaLoteRoute = "<?php echo e(route('fracc.Manzana.lote',['idFracc' => 1])); ?>"
+        
     </script>
     <script src="<?php echo e(URL::asset('build/libs/toastr/build/toastr.min.js')); ?>"></script>
     <!-- toastr init -->
@@ -155,11 +157,15 @@
             let contadorLotes = 0;
             let contadorTablas = 0; 
             
+            let dataManzanasLotes = '';
+            let opcionesManzanas = '';
 
 
             const $btn = $('#btn_add_compra');
             const $contenedor = $('#contenedor-compra');
             const $spanContador = $('#contador-lotes');
+
+            const $fraccSelect = $('#fracc_id');
 
             if ($btn.length === 0) {
                 console.error('No existe el botón con id #btn_add_compra en el DOM');
@@ -179,35 +185,44 @@
                 $('#contador-lotes').text(contadorLotes);
             }
 
+            function selectManzas (){
+                opcionesManzanas = '<option value="" disabled selected>Selecciona una manzana</option>';
+                dataManzanasLotes.forEach(m => {
+                    opcionesManzanas += `<option value="${m.id}">Manzana ${m.num_manzana}</option>`;
+                });
+            }
+
             // Función que crea y agrega un bloque
             function agregarBloque() {
                 const bloque = $(`
-                    <div class="row col-md-12 mb-3 lote-item">
+                    <div class="row col-md-12 mb-3 lote-item" id=${contadorLotes}>
                         <div class="col-md-3 mb-4">
-                            <label>Manzana</label>
-                            <select class="form-select form-select-sm" name="manzana[]" required>
-                                <option value="" selected disabled>Selecciona una opción</option>
+                            <label>Manzana</label>                            
+                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required>
+                                ${opcionesManzanas}
                             </select>
                         </div>
                         <div class="col-md-3 mb-4">
                             <label>Lote</label>
-                            <select class="form-select form-select-sm" name="lote[]" required>
-                                <option value="" selected disabled>Selecciona una opción</option>
+                            <select class="form-select form-select-sm loteSelect" name="lote[]" required>
+                                <option value="" disabled selected>Selecciona un lote</option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-4">
-                            <label>Superficie</label>
-                            <input type="text" step="0.01" name="num_solicitud[]" class="form-control form-control-sm">
+                            <label>Superficie m2</label>
+                            <input type="text" step="0.01" name="superficie_m2[]" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-2 mb-4">
                             <label>Tipo de Venta</label>
-                            <select class="form-select form-select-sm" name="venta_tp[]" required>
-                                <option value="" selected disabled>Selecciona una opción</option>
+                            <select class="form-select form-select-sm tipoVentaSelect" name="venta_tp[]" required>
+                                <option value="" selected>Selecciona una opción</option>
+                                <option value="precio_credito">Credito</option>
+                                <option value="precio_contado">Contado</option>
                             </select>
                         </div>
                           <div class="col-md-3 mb-4">
                             <label>Precio</label>
-                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm">
+                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" readonly>
                         </div>
                         <div class="col-md-1 mb-4 d-flex align-items-end">
                             <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
@@ -220,9 +235,45 @@
                 contadorLotes++;
                 actualizarContador();
                 setTimeout(() => {
-                    agregarTabla();                    
+                    // agregarTabla();                    
                 }, 1000);
             }
+
+            $(document).on('change', '.manzanaSelect', function() {
+                const manzanaId = parseInt($(this).val());
+                const $bloque = $(this).closest('.lote-item'); 
+                const $selectLote = $bloque.find('.loteSelect');
+
+                // Buscar manzana correspondiente en el JSON
+                const manzana = dataManzanasLotes.find(m => m.id === manzanaId);
+
+                // Limpiar y llenar el select de lotes
+                let opcionesLotes = '<option value="" disabled selected>Selecciona un lote</option>';
+                if (manzana && manzana.lotes) {
+                    manzana.lotes.forEach(l => {
+                        opcionesLotes += `<option value="${l.id}">Lote ${l.num_lote}</option>`;
+                    });
+                }
+
+                $selectLote.html(opcionesLotes);
+            });
+
+
+            $(document).on('change', '.tipoVentaSelect', function() {
+                const $bloque = $(this).closest('.lote-item');
+                const manzanaId = parseInt($bloque.find('.manzanaSelect').val());
+                const tipoVenta = $(this).val(); // "precio_contado" o "precio_credito"
+                const $precioInput = $bloque.find('.precioInput');
+
+                const manzana = dataManzanasLotes.find(m => m.id === manzanaId);
+
+                if (manzana && manzana[tipoVenta]) {
+                    $precioInput.val(manzana[tipoVenta]).trigger('change'); // 🔹 dispara el evento
+
+                } else {
+                    $precioInput.val('');
+                }
+            });
 
             // Evento click: agrega 1 bloque por click
             $btn.on('click', function () {
@@ -234,76 +285,135 @@
                 $(this).closest('.lote-item').remove();
                 contadorLotes = Math.max(0, contadorLotes - 1);
                 actualizarContador();
-                
+                actualizarTotalVenta();
               
             });
 
-            function agregarTabla() {
-                contadorTablas++;
-                const tabla = $(`
-                    <div class="row col-md-12 mb-3 tabla-item">                        
-                        <table class="table table-bordered border-primary mb-0 table">
-                            <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Vientos</td>
-                                    <td>Metros</td>
-                                    <td>Colindancia</td>
-                                    <td>Descripcio</td>
-                                </tr>
-                                <tr>
-                                    <td>Noroeste</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
-                                    </td>
-                                    <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="colinda1[]" class="form-control form-control-sm">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Sureste</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
-                                    </td>
-                                    <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="colinda2[]" class="form-control form-control-sm">
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <td>Noreste</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
-                                    </td>
-                                    <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="colinda3[]" class="form-control form-control-sm">
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <td>Suroeste</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
-                                    </td>
-                                    <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="colinda4[]" class="form-control form-control-sm">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                `);
+            // function agregarTabla() {
+            //     contadorTablas++;
+            //     const tabla = $(`
+            //         <div class="row col-md-12 mb-3 tabla-item">                        
+            //             <table class="table table-bordered border-primary mb-0 table">
+            //                 <thead>
+            //                     <tr>
+            //                         <th>First Name</th>
+            //                         <th>Last Name</th>
+            //                         <th>Username</th>
+            //                     </tr>
+            //                 </thead>
+            //                 <tbody>
+            //                     <tr>
+            //                         <td>Vientos</td>
+            //                         <td>Metros</td>
+            //                         <td>Colindancia</td>
+            //                         <td>Descripcio</td>
+            //                     </tr>
+            //                     <tr>
+            //                         <td>Noroeste</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="colinda1[]" class="form-control form-control-sm">
+            //                         </td>
+            //                     </tr>
+            //                     <tr>
+            //                         <td>Sureste</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="colinda2[]" class="form-control form-control-sm">
+            //                         </td>
+            //                     </tr>
+            //                      <tr>
+            //                         <td>Noreste</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="colinda3[]" class="form-control form-control-sm">
+            //                         </td>
+            //                     </tr>
+            //                      <tr>
+            //                         <td>Suroeste</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="colinda4[]" class="form-control form-control-sm">
+            //                         </td>
+            //                     </tr>
+            //                 </tbody>
+            //             </table>
+            //         </div>
+            //     `);
 
-                $('#contenedor-tablas').append(tabla);
+            //     $('#contenedor-tablas').append(tabla);
+            // }
+
+
+            $fraccSelect.on('change', function () {
+                const fraccId = $(this).val();
+
+                if (!fraccId) return;               
+                
+                $.ajax({
+                    url: fraccManzanaLoteRoute, // ruta Laravel
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {                       
+                       dataManzanasLotes = data[0]
+                       
+                        selectManzas();                        
+                       
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al obtener fraccionamiento:', error);
+                    }
+                });
+            });
+
+
+            // Evento: cada vez que se cambia un precio (manual o por código)
+            $(document).on('input change', 'input[name="precio[]"]', function() {
+                actualizarTotalVenta();
+            });
+
+            function actualizarTotalVenta() {
+                let total = 0;
+
+                // Recorre todos los inputs con nombre "precio[]"
+                $('input[name="precio[]"]').each(function() {
+                    const valor = parseFloat($(this).val()) || 0; // convierte a número o 0 si está vacío
+                    total += valor;
+                });
+
+                // Asigna el total en el input correspondiente
+                $('#total_venta').val(total.toFixed(2));
             }
+
+            // Detecta cambios o tipeo en cualquier campo de superficie
+            $(document).on('input change', 'input[name="superficie_m2[]"]', function() {
+                actualizarTotalSuperficie();
+            });
+
+            
+            function actualizarTotalSuperficie() {
+                let totalSuperficie = 0;
+                $('input[name="superficie_m2[]"]').each(function() {
+                    const valor = parseFloat($(this).val()) || 0;
+                    totalSuperficie += valor;
+                });
+                $('input[name="superficiel_venta"]').val(totalSuperficie.toFixed(2));
+            }
+
+
+           
         });
     </script>
 

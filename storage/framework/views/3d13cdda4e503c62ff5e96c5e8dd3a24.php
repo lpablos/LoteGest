@@ -4,7 +4,7 @@
     <div class="row col-md-12">
         <div class="col-md-3 mb-4">
             <label for="num_solicitud"> Núm. de Solicitud </label>
-            <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm">
+            <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
         </div>
         <div class="col-md-3 mb-4">
             <label for="corredor"> Corredor </label>
@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <label>Total de Venta</label>
-                <input type="text" step="0.01" name="total_venta" class="form-control form-control-sm">
+                <input type="text" step="0.01" name="total_venta" id="total_venta" class="form-control form-control-sm">
                 
             </div>
             <div class="col-md-3 mb-4">

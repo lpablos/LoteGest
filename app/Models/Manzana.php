@@ -40,9 +40,8 @@ class Manzana extends Model
         return $this->belongsTo(Fraccionamiento::class, 'fraccionamiento_id');
     }
 
-    // Una manzana tiene muchos lotes
     public function lotes()
     {
-        return $this->hasMany(Lote::class, 'manzana_id');
+        return $this->hasMany(Lote::class,'manzana_id');
     }
 }

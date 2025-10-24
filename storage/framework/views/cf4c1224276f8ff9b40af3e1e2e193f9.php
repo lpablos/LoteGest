@@ -6,7 +6,7 @@
         <input type="hidden" id="identy" name="identy">   
         <div class="col-md-3 mb-4">
             <label for="no_cliente"> No. Cliente (*)</label>
-            <input type="text" class="form-control form-control-sm" name="no_cliente"  required>
+            <input type="text" class="form-control form-control-sm" name="no_cliente" style="text-transform: uppercase;" required>
         </div>  
         <div class="col-md-3 mb-4">
             <label for="nombre"> Nombre(s)(*) </label>
