@@ -370,7 +370,8 @@
                     dataType: 'json',
                     success: function (data) {                       
                         dataManzanasLotes = data[0]
-                       
+                        console.log(dataManzanasLotes);
+                        
                         selectManzas();                        
                        
                     },
@@ -471,6 +472,65 @@
                     .find('input[name="enganche_venta"]')
                     .val(valorEnganche.toFixed(2)); // 2 decimales
             });
+
+
+            $(document).on('change', '.manzanaSelect', function() {
+                // Array para almacenar todas las mensualidades seleccionadas, sin duplicados
+                let mensualidadesUnicas = [];
+
+                // Recorremos todos los select de manzana
+                $('select[name="manzana[]"]').each(function() {
+                    const manzanaId = parseInt($(this).val());
+                    if (!manzanaId) return;
+
+                    // Buscar la manzana en el objeto
+                    const manzana = dataManzanasLotes.find(m => m.id === manzanaId);
+                    if (manzana && manzana.mensualidades) {
+                        if (!mensualidadesUnicas.includes(manzana.mensualidades)) {
+                            mensualidadesUnicas.push(manzana.mensualidades);
+                        }
+                    }
+                });
+
+                console.log("Mensualidades únicas encontradas:", mensualidadesUnicas);
+
+                // Recorremos todos los bloques para actualizar el select de mensualidades
+                $('.lote-item').each(function() {
+                    const $mensualidadSelect = $(this).find('.mensualidadVentaSelect');
+
+                    // Opción vacía inicial
+                    const vacio = '<option value="" selected disabled>Selecciona una opción</option>';
+
+                    // Reconstruir todas las opciones
+                    let opciones = vacio;
+                    mensualidadesUnicas.forEach(m => {
+                        opciones += `<option value="${m}">${m} mensualidades</option>`;
+                    });
+
+                    $mensualidadSelect.html(opciones);
+                });
+            });
+
+
+            $(document).on('change', '.mensualidadVentaSelect', function() {
+                const mensualidades = parseInt($(this).val());
+                const totalVenta = parseFloat($('#total_venta').val()) || 0;
+                const engancheVenta = parseFloat($('input[name="enganche_venta"]').val()) || 0;
+
+                if (mensualidades > 0 && totalVenta > 0) {
+                    // Calcular el resto y dividirlo entre el número de mensualidades
+                    const restante = totalVenta - engancheVenta;
+                    const pagoMensual = restante / mensualidades;
+
+                    // Mostrar el resultado con 2 decimales
+                    $('#pago_mensual_venta').val(pagoMensual.toFixed(2));
+                } else {
+                    // Si falta algún dato, limpiar el campo
+                    $('#pago_mensual_venta').val('');
+                }
+            });
+
+
 
         });
     </script>

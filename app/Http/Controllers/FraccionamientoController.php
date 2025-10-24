@@ -357,7 +357,7 @@ class FraccionamientoController extends Controller
             ->with(['lotes'=>function($query){
                 $query->select('id', 'num_lote', 'manzana_id');
             }])          
-            ->select('id','num_manzana','precio_contado','precio_credito','enganche')
+            ->select('id','num_manzana','precio_contado','precio_credito','enganche','mensualidades')
             ->get();
         if(!$manzana){
             return response()->json(['error' => 'Fraccionamiento no encontrado'], 404);
