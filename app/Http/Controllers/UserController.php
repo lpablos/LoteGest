@@ -94,18 +94,19 @@ class UserController extends Controller
             $usuario->estatus_id = 1;
             $usuario->save();
 
-            $datosPersonales = new UsuarioDatosPersonales();
-            $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
-            $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
-            $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
-            $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
-            $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
-            $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
-            $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
-            $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
-            $datosPersonales->usuario_id = $usuario->id;
-            $datosPersonales->save();
-            
+            if($request->rol_id != 4) {    
+                $datosPersonales = new UsuarioDatosPersonales();
+                $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
+                $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
+                $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
+                $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
+                $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
+                $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
+                $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
+                $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
+                $datosPersonales->usuario_id = $usuario->id;
+                $datosPersonales->save();
+            }
 
             DB::commit();
 
@@ -184,6 +185,7 @@ class UserController extends Controller
 
         try {
             $usuario = User::find($id);
+            // dd($usuario);
             if ($usuario) {
                 $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
                 $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
@@ -195,9 +197,9 @@ class UserController extends Controller
                 $usuario->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono ;
                 $usuario->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo ;
                 $usuario->save();
-
                 if ($usuario->role_id != 4) {
-                    $datosPersonales = UsuarioDatosPersonales::find($id);
+                    // dd($usuario->id);
+                    $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first();
                     $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
                     $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
                     $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
