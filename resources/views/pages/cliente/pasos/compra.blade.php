@@ -42,10 +42,18 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-md-2 mb-4">
+            <label>Tipo de Venta</label>
+            <select id="tipoVentaSelect" class="form-select form-select-sm tipoVentaSelect" name="venta_tp" required>
+                <option value="" selected>Selecciona una opción</option>
+                <option value="precio_credito">Credito</option>
+                <option value="precio_contado">Contado</option>
+            </select>
+        </div>
     </div>
     <div class="row col-md-12 text-center">
         <div class="m-1" id="b_add_lote">
-            <button type="button" id="btn_add_compra" class="btn btn-sm btn-primary btn-small waves-effect waves-light">
+            <button type="button" id="btn_add_compra" class="btn btn-sm btn-primary btn-small waves-effect waves-light" disabled>
                 Agregar Comnpra
             </button>
         </div>
@@ -55,8 +63,8 @@
         <div id="contenedor-compra"></div>
     </div>
 
-    <div class="row mb-1">
-         <div class="row col-md-12 mb-3 lote-item">
+    <div class="row mb-1" id="resumen_compra" style="display:none;">
+         <div class="row col-md-12 mb-3 lote-item-venta">
             <div class="col-md-3 mb-4">
                 <label>Superficie Total (m2)</label>
                 <input type="text" name="superficiel_venta" class="form-control form-control-sm">

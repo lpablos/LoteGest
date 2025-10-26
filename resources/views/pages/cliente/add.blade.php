@@ -180,7 +180,9 @@
             if ($spanContador.length === 0) {
                 // Si no existe el span del contador, crearlo opcionalmente
                 $contenedor.before('<div class="text-center mt-2"><strong>Total de lotes agregados:</strong> <span id="contador-lotes">0</span></div>');
+                
             }
+            
 
             // Función para actualizar contador en pantalla
             function actualizarContador() {
@@ -213,16 +215,8 @@
                         <div class="col-md-3 mb-4">
                             <label>Superficie m2</label>
                             <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-md-2 mb-4">
-                            <label>Tipo de Venta</label>
-                            <select class="form-select form-select-sm tipoVentaSelect" name="venta_tp[]" required>
-                                <option value="" selected>Selecciona una opción</option>
-                                <option value="precio_credito">Credito</option>
-                                <option value="precio_contado">Contado</option>
-                            </select>
-                        </div>
-                          <div class="col-md-3 mb-4">
+                        </div>                      
+                        <div class="col-md-3 mb-4">
                             <label>Precio</label>
                             <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" readonly>
                         </div>
@@ -256,40 +250,43 @@
                         opcionesLotes += `<option value="${l.id}">Lote ${l.num_lote}</option>`;
                     });
                 }
-
                 $selectLote.html(opcionesLotes);
+
+                
             });
 
-
-            $(document).on('change', '.tipoVentaSelect', function() {
-                const $bloque = $(this).closest('.lote-item');
-                const manzanaId = parseInt($bloque.find('.manzanaSelect').val());
-                const tipoVenta = $(this).val(); // "precio_contado" o "precio_credito"
-                const $precioInput = $bloque.find('.precioInput');
-
-                const manzana = dataManzanasLotes.find(m => m.id === manzanaId);
-
-                if (manzana && manzana[tipoVenta]) {
-                    $precioInput.val(manzana[tipoVenta]).trigger('change'); // 🔹 dispara el evento
-
-                } else {
-                    $precioInput.val('');
-                }
-            });
 
             // Evento click: agrega 1 bloque por click
             $btn.on('click', function () {
                 agregarBloque();
+                document.getElementById('resumen_compra').style.display = 'block';
             });
 
             // Delegación: eliminar bloque con botón (disminuye contador)
             $contenedor.on('click', '.btn-eliminar', function () {
                 $(this).closest('.lote-item').remove();
                 contadorLotes = Math.max(0, contadorLotes - 1);
+
+                if(contadorLotes === 0){
+                    limpiarVentaGenerales()
+                }
                 actualizarContador();
                 actualizarTotalVenta();
               
             });
+
+            function limpiarVentaGenerales(){
+                const contenedor = document.querySelector('.lote-item-venta');
+                // Limpia todos los <input> y <select> dentro de él
+                contenedor.querySelectorAll('input, select').forEach(el => {
+                    if (el.tagName === 'SELECT') {
+                        el.selectedIndex = 0; // regresa al primer option
+                    } else {
+                        el.value = ''; // limpia el valor
+                    }
+                });
+                document.getElementById('resumen_compra').style.display = 'none';
+            }
 
             // function agregarTabla() {
             //     contadorTablas++;
@@ -372,7 +369,9 @@
                         dataManzanasLotes = data[0]
                         console.log(dataManzanasLotes);
                         
-                        selectManzas();                        
+                        selectManzas();  
+                        $("#fracc_id")    
+                        document.getElementById('btn_add_compra').disabled = false;                  
                        
                     },
                     error: function (xhr, status, error) {
@@ -491,9 +490,6 @@
                         }
                     }
                 });
-
-                console.log("Mensualidades únicas encontradas:", mensualidadesUnicas);
-
                 // Recorremos todos los bloques para actualizar el select de mensualidades
                 $('.lote-item').each(function() {
                     const $mensualidadSelect = $(this).find('.mensualidadVentaSelect');
@@ -529,6 +525,132 @@
                     $('#pago_mensual_venta').val('');
                 }
             });
+
+          // Evento: cuando el usuario selecciona una manzana
+            $(document).on('change', '.manzanaSelect', function () {
+                const manzanaId = parseInt($(this).val()); // id de la manzana seleccionada
+                const tipoVenta = $('#tipoVentaSelect').val(); // tipo de venta global
+
+                // Si no hay selección válida, salir
+                if (!manzanaId || !tipoVenta) {
+                    console.warn('Debe seleccionar tipo de venta y manzana.');
+                    return;
+                }
+
+                // Buscar la manzana correspondiente en el arreglo global
+                const manzanaSeleccionada = dataManzanasLotes.find(m => m.id === manzanaId);
+
+                if (!manzanaSeleccionada) {
+                    console.error('No se encontró la manzana seleccionada.');
+                    return;
+                }
+
+                // Obtener el precio según el tipo de venta
+                const precio = manzanaSeleccionada[tipoVenta];
+
+                // Buscar el input .precioInput dentro de la misma fila y asignarle el precio
+                // $(this).closest('.lote-item').find('.precioInput').val(precio);
+                 // Asignar el valor y disparar el evento para que otros scripts lo detecten
+                const $inputPrecio = $(this).closest('.lote-item').find('.precioInput');
+                $inputPrecio.val(precio).trigger('change'); // ← aquí se dispara el evento
+
+                // console.log(`Manzana ${manzanaSeleccionada.num_manzana} (${tipoVenta}): ${precio}`);
+            });
+
+
+
+            $(document).on('change', '.manzanaSelect', function () {
+                // Obtener todas las manzanas seleccionadas
+                const manzanasSeleccionadas = $('.manzanaSelect')
+                    .map(function () {
+                        const val = $(this).val();
+                        return val ? parseInt(val) : null;
+                    })
+                    .get()
+                    .filter(Boolean); // elimina nulos o vacíos
+
+                // Crear un Set (para evitar valores repetidos)
+                const enganchesUnicos = new Set();
+
+                // Recorrer las manzanas seleccionadas y agregar sus enganches
+                manzanasSeleccionadas.forEach(id => {
+                    const manzana = dataManzanasLotes.find(m => m.id === id);
+                    if (manzana && manzana.enganche) {
+                        enganchesUnicos.add(manzana.enganche);
+                    }
+                });
+
+                // Seleccionar el combo de enganches
+                const $selectEnganche = $('.engancheVentaSelect');
+
+                // Limpiar y volver a generar opciones
+                $selectEnganche.empty();
+                $selectEnganche.append('<option value="" selected>Selecciona una opción</option>');
+
+                // Agregar todas las opciones únicas de enganche
+                enganchesUnicos.forEach(eng => {
+                    $selectEnganche.append(`<option value="${eng}">${eng} %</option>`);
+                });
+            });
+
+
+            $(document).on('change', '.manzanaSelect', function () {
+                // Obtener todas las manzanas seleccionadas
+                const manzanasSeleccionadas = $('.manzanaSelect')
+                    .map(function () {
+                        const val = $(this).val();
+                        return val ? parseInt(val) : null;
+                    })
+                    .get()
+                    .filter(Boolean);
+
+                // Crear un Set para valores únicos
+                const mensualidadesUnicas = new Set();
+
+                // Buscar las mensualidades de las manzanas seleccionadas
+                manzanasSeleccionadas.forEach(id => {
+                    const manzana = dataManzanasLotes.find(m => m.id === id);
+                    if (manzana && manzana.mensualidades) {
+                        mensualidadesUnicas.add(manzana.mensualidades);
+                    }
+                });
+
+                // Actualizar el select de mensualidades
+                const $selectMensualidades = $('.mensualidadVentaSelect');
+                $selectMensualidades.empty();
+                $selectMensualidades.append('<option value="" selected disabled>Selecciona una opción</option>');
+
+                mensualidadesUnicas.forEach(m => {
+                    $selectMensualidades.append(`<option value="${m}">${m} mensualidades</option>`);
+                });
+            });
+
+            $(document).on('change', '.engancheVentaSelect', function () {
+                const enganchePorcentaje = parseFloat($(this).val()); // valor seleccionado (ej. 15, 30)
+                const totalVenta = parseFloat($('#total_venta').val()); // valor total de la venta
+
+                if (!isNaN(enganchePorcentaje) && !isNaN(totalVenta)) {
+                    // Calcular el enganche
+                    const engancheCalculado = (totalVenta * enganchePorcentaje) / 100;
+
+                    // Insertar el resultado en el input correspondiente
+                    $('input[name="enganche_venta"]').val(engancheCalculado.toFixed(2));
+
+                    // Disparar evento "change" por si hay otros cálculos dependientes
+                    $('input[name="enganche_venta"]').trigger('change');
+                } else {
+                    // Si falta algún valor, limpiar el campo
+                    $('input[name="enganche_venta"]').val('');
+                }
+            });
+
+
+
+
+            
+
+
+
 
 
 
