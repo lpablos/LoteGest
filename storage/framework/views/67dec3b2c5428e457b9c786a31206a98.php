@@ -233,9 +233,8 @@
                 $contenedor.append(bloque);
                 contadorLotes++;
                 actualizarContador();
-                setTimeout(() => {
-                    // agregarTabla();                    
-                }, 1000);
+                // agregarTabla();                    
+                
             }
 
             $(document).on('change', '.manzanaSelect', function() {
@@ -291,72 +290,69 @@
                 document.getElementById('resumen_compra').style.display = 'none';
             }
 
-            // function agregarTabla() {
-            //     contadorTablas++;
-            //     const tabla = $(`
-            //         <div class="row col-md-12 mb-3 tabla-item">                        
-            //             <table class="table table-bordered border-primary mb-0 table">
-            //                 <thead>
-            //                     <tr>
-            //                         <th>First Name</th>
-            //                         <th>Last Name</th>
-            //                         <th>Username</th>
-            //                     </tr>
-            //                 </thead>
-            //                 <tbody>
-            //                     <tr>
-            //                         <td>Vientos</td>
-            //                         <td>Metros</td>
-            //                         <td>Colindancia</td>
-            //                         <td>Descripcio</td>
-            //                     </tr>
-            //                     <tr>
-            //                         <td>Noroeste</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="colinda1[]" class="form-control form-control-sm">
-            //                         </td>
-            //                     </tr>
-            //                     <tr>
-            //                         <td>Sureste</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="colinda2[]" class="form-control form-control-sm">
-            //                         </td>
-            //                     </tr>
-            //                      <tr>
-            //                         <td>Noreste</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="colinda3[]" class="form-control form-control-sm">
-            //                         </td>
-            //                     </tr>
-            //                      <tr>
-            //                         <td>Suroeste</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="colinda4[]" class="form-control form-control-sm">
-            //                         </td>
-            //                     </tr>
-            //                 </tbody>
-            //             </table>
-            //         </div>
-            //     `);
+           function agregarTabla() {
+                contadorTablas++;
 
-            //     $('#contenedor-tablas').append(tabla);
-            // }
+                const tabla = $(`
+                    <div class="row col-md-12 mb-3 tabla-item">                        
+                        <table class="table table-bordered border-primary mb-0 table">
+                            <thead>
+                                <tr>
+                                    <th>Vientos</th>
+                                    <th>Metros</th>
+                                    <th>Colindancia</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${opcionesVientos.viento1}</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" name="colinda1[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>${opcionesVientos.viento2}</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" name="colinda2[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>${opcionesVientos.viento3}</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" name="colinda3[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>${opcionesVientos.viento4}</td>
+                                    <td>
+                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
+                                    </td>
+                                    <td>Colindando con:</td>
+                                    <td>
+                                        <input type="text" name="colinda4[]" class="form-control form-control-sm">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `);
+
+                $('#contenedor-tablas').append(tabla);
+            }
+
 
 
             $fraccSelect.on('change', function () {
@@ -396,11 +392,10 @@
                     dataType: 'json',
                     success: function (data) {
                         opcionesVientos = data[0];
-                        console.log("Esto es --> ", opcionesVientos);
-                        
+                        console.log("Esto es --> ", opcionesVientos);                        
                     },
                     error: function (xhr, status, error) {
-                        console.error('Error al obtener fraccionamiento:', error);
+                        console.error('Error al obtener los vientos:', error);
                     }
                 });
             }
@@ -669,6 +664,66 @@
                     $('input[name="enganche_venta"]').val('');
                 }
             });
+
+
+            // Detecta cambios en manzana o lote
+            $(document).on('change', '.manzanaSelect, .loteSelect', function () {
+                verificarManzanasYLotes();
+            });
+
+
+            function verificarManzanasYLotes() {
+                const manzanas = [];
+                const lotes = [];
+
+                // Recorremos todos los selects de manzana y lote
+                $('.manzanaSelect').each(function (index) {
+                    const manzanaVal = $(this).val();
+                    const loteVal = $('.loteSelect').eq(index).val();
+
+                    if (manzanaVal && loteVal) {
+                        manzanas.push(manzanaVal);
+                        lotes.push(Number(loteVal));
+                    }
+                });
+
+                if (manzanas.length === 0 || lotes.length === 0) return;
+
+                // Verificar si todas las manzanas son iguales
+                const todasIguales = manzanas.every(m => m === manzanas[0]);
+
+                // Verificar si los lotes son una secuencia válida
+                const enSecuencia = verificarSecuenciaFlexible(lotes);
+
+                // Limpiamos las tablas previas antes de volver a agregar
+                $('#contenedor-tablas').empty();
+
+                if (todasIguales && enSecuencia) {
+                    console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
+                    agregarTabla();
+                } else {
+                    console.log('⚠️ Manzanas distintas o lotes no secuenciales → una tabla por registro');
+                    manzanas.forEach(() => agregarTabla());
+                }
+            }
+
+
+            function verificarSecuenciaFlexible(lotes) {
+                if (lotes.length <= 1) return true;
+
+                // Eliminamos duplicados y ordenamos
+                const ordenados = [...new Set(lotes)].sort((a, b) => a - b);
+
+                // Verifica si hay una diferencia constante de 1
+                for (let i = 1; i < ordenados.length; i++) {
+                    if (ordenados[i] - ordenados[i - 1] !== 1) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
 
         });
     </script>
