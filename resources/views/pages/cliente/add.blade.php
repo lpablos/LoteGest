@@ -124,6 +124,9 @@
     <script>
         const clienteStoreRoute = "{{ route('cliente.store') }}";
         const fraccManzanaLoteRoute = "{{ route('fracc.Manzana.lote',['idFracc' => 1]) }}"
+        const vientosFraccionamientoUrl = "{{ route('vientos.fraccion.identy',['idFracc' => 1]) }}"
+        
+        
         
     </script>
     <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
@@ -161,6 +164,8 @@
             
             let dataManzanasLotes = '';
             let opcionesManzanas = '';
+
+            let opcionesVientos = {};
 
 
             const $btn = $('#btn_add_compra');
@@ -214,11 +219,11 @@
                         </div>
                         <div class="col-md-3 mb-4">
                             <label>Superficie m2</label>
-                            <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm">
+                            <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm" required>
                         </div>                      
                         <div class="col-md-3 mb-4">
                             <label>Precio</label>
-                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" readonly>
+                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" required>
                         </div>
                         <div class="col-md-1 mb-4 d-flex align-items-end">
                             <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
@@ -361,24 +366,47 @@
 
                 if (!fraccId) return;               
                 
+                const fraccUrl = fraccManzanaLoteRoute.replace(/\/\d+$/, `/${fraccId}`);
+             
+                
                 $.ajax({
-                    url: fraccManzanaLoteRoute, // ruta Laravel
+                    url: fraccUrl, 
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {                       
                         dataManzanasLotes = data[0]
-                        console.log(dataManzanasLotes);
-                        
                         selectManzas();  
                         $("#fracc_id")    
-                        document.getElementById('btn_add_compra').disabled = false;                  
-                       
+                        document.getElementById('btn_add_compra').disabled = false;   
+                        vientosFraccionamiento(fraccId); 
                     },
                     error: function (xhr, status, error) {
                         console.error('Error al obtener fraccionamiento:', error);
                     }
                 });
             });
+
+            function vientosFraccionamiento(fraccIdd) {              
+                const fraccId = fraccIdd;
+                if (!fraccId) return;
+
+                const fraccUrlLote = vientosFraccionamientoUrl.replace(/\/\d+$/, `/${fraccId}`);
+
+                $.ajax({
+                    url: fraccUrlLote, 
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        opcionesVientos = data[0];
+                        console.log("Esto es --> ", opcionesVientos);
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al obtener los vientos:', error);
+                    }
+                });
+            }
+
 
 
             // Evento: cada vez que se cambia un precio (manual o por código)
@@ -643,16 +671,6 @@
                     $('input[name="enganche_venta"]').val('');
                 }
             });
-
-
-
-
-            
-
-
-
-
-
 
         });
     </script>

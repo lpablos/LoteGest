@@ -364,4 +364,14 @@ class FraccionamientoController extends Controller
         }
         return response()->json([$manzana]);
     }
+
+    public function vientosFraccionamiento($idFracc){
+        $fracc = Fraccionamiento::select('viento1', 'viento2','viento3','viento4')
+                ->findOrFail($idFracc);
+        if(!$fracc){
+            return response()->json(['error' => 'Fraccionamiento no encontrado'], 404);
+        }
+        return response()->json([$fracc]);
+
+    }
 }
