@@ -121,9 +121,11 @@
     <!-- toastr plugin -->
     <script>
         const clienteStoreRoute = "<?php echo e(route('cliente.store')); ?>";
+        const compraLoteFracc = "<?php echo e(route('compra-fraccionamiento-lotes.store')); ?>"
         const fraccManzanaLoteRoute = "<?php echo e(route('fracc.Manzana.lote',['idFracc' => 1])); ?>"
         const vientosFraccionamientoUrl = "<?php echo e(route('vientos.fraccion.identy',['idFracc' => 1])); ?>"
         
+        console.log("Esta es la ruta nueva -->",compraLoteFracc);
         
         
     </script>
@@ -308,41 +310,41 @@
                                 <tr>
                                     <td>${opcionesVientos.viento1}</td>
                                     <td>
-                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm">
+                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm" required>
                                     </td>
                                     <td>Colindando con:</td>
                                     <td>
-                                        <input type="text" name="colinda1[]" class="form-control form-control-sm">
+                                        <input type="text" name="colinda1[]" class="form-control form-control-sm" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento2}</td>
                                     <td>
-                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm">
+                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm" required>
                                     </td>
                                     <td>Colindando con:</td>
                                     <td>
-                                        <input type="text" name="colinda2[]" class="form-control form-control-sm">
+                                        <input type="text" name="colinda2[]" class="form-control form-control-sm" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento3}</td>
                                     <td>
-                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm">
+                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm" required>
                                     </td>
                                     <td>Colindando con:</td>
                                     <td>
-                                        <input type="text" name="colinda3[]" class="form-control form-control-sm">
+                                        <input type="text" name="colinda3[]" class="form-control form-control-sm" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento4}</td>
                                     <td>
-                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm">
+                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm" required>
                                     </td>
                                     <td>Colindando con:</td>
                                     <td>
-                                        <input type="text" name="colinda4[]" class="form-control form-control-sm">
+                                        <input type="text" name="colinda4[]" class="form-control form-control-sm" required>
                                     </td>
                                 </tr>
                             </tbody>

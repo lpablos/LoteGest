@@ -52,6 +52,7 @@ Route::get('vientos-fraccionamientos/{idFracc}', [App\Http\Controllers\Fracciona
 Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoController::class);
 Route::resource('entidades-federativas', App\Http\Controllers\CatEntidadFederativaController::class);
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
+Route::resource('compra-fraccionamiento-lotes', App\Http\Controllers\CompraController::class);
 
 Route::get('vista-previa-contrato', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
 

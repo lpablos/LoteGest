@@ -87,6 +87,77 @@ $(function () {
                 });
             }
 
+
+            if (currentIndex === 1 && newIndex > 1) {
+                let isValid = true;
+                let formData = new FormData();
+
+                $("#basic-example-p-1").find("input, select, textarea").each(function () {
+                    const $field = $(this);
+                    const value = $field.val();
+                    if ($field.prop("required")) {
+                        if (!value || value.trim() === "") {
+                            isValid = false;
+                            $field.addClass("is-invalid");
+                            toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
+                        } else {
+                            $field.removeClass("is-invalid");
+                        }
+                    }
+
+                    if (this.type === "file" && this.files.length > 0) {
+                        formData.append(this.name, this.files[0]);
+                    } else {
+                        formData.append(this.name, value);
+                    }
+                });
+                
+                // Validar las tablas dentro de contenedor-tablas
+                $("#contenedor-tablas .tabla-item table tbody tr").each(function (index, row) {
+                    $(row).find("input[required]").each(function () {
+                        const $input = $(this);
+                        if (!$input.val() || $input.val().trim() === "") {
+                            isValid = false;
+                            $input.addClass("is-invalid");
+                            toastr.warning(`Por favor completa el campo "${$input.attr("name")}" en la fila ${index + 1}`);
+                        } else {
+                            $input.removeClass("is-invalid");
+                        }
+                    });
+                });
+
+                if (!isValid) {
+                    toastr.error("Por favor completa todos los campos obligatorios antes de continuar.");
+                    return false;
+                }
+
+                formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
+
+                $.ajax({
+                    url: compraLoteFracc, // <-- Cambia a la ruta de paso 1
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    beforeSend: function() {
+                        toastr.info("Guardando datos del paso 2...");
+                    },
+                    success: function(response) {
+                        console.log("Este es el response paso 1", response);
+                        
+                        toastr.success("Paso 2 guardado correctamente");
+                    },
+                    error: function(xhr) {
+                        toastr.error("Error al guardar el paso 2");
+                        console.error(xhr.responseText);
+                        return false;
+                    }
+                });
+            }
+
+
+
             return true; // permite avanzar si todo está correcto
         }, 
         onFinished: function (event, currentIndex) {
