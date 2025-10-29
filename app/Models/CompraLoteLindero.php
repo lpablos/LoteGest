@@ -20,6 +20,7 @@ class CompraLoteLindero extends Model
         'compra_id',
         'lote_id',
         'lindero_id',
+        'campo',
         'descripcion',
     ];
 

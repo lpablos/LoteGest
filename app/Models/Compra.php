@@ -15,15 +15,34 @@ class Compra extends Model
 {
     //
     use SoftDeletes;
+    protected $table = 'compras';
 
     protected $fillable = [
         'num_solicitud',
+        'num_solicitud_sistema',
         'corredor_id',
         'estado_id',
         'municipio_id',
         'fraccionamiento_id',
         'cliente_id',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($compra) {
+            // Generar un número único con formato COMP-YYYYMMDD-####
+            $fecha = now()->format('Ymd');
+
+            // Contar cuántas compras se han hecho hoy para generar el consecutivo
+            $conteo = self::whereDate('created_at', now()->toDateString())->count() + 1;
+
+            // Crear un número con 4 dígitos (relleno con ceros)
+            $consecutivo = str_pad($conteo, 4, '0', STR_PAD_LEFT);
+
+            // Generar el código final
+            $compra->num_solicitud_sistema = "COMP-{$fecha}-{$consecutivo}";
+        });
+    }
 
     public function corredor()
     {

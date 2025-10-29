@@ -2,6 +2,10 @@
 <section>
     
     <div class="row col-md-12">
+        <div>
+            <input type="hidden" name="identyCli" id="identyCli">
+            <input type="hidden" name="compra" id="compraIdenty">
+        </div>
         <div class="col-md-3 mb-4">
             <label for="num_solicitud"> Núm. de Solicitud </label>
             <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
@@ -67,23 +71,23 @@
          <div class="row col-md-12 mb-3 lote-item-venta">
             <div class="col-md-3 mb-4">
                 <label>Superficie Total (m2)</label>
-                <input type="text" name="superficiel_venta" class="form-control form-control-sm">
+                <input type="text" name="superficiel_venta" class="form-control form-control-sm" readonly>
             </div>
             <div class="col-md-3 mb-4">
                 <label>Total de Venta (MXN)</label>
-                <input type="text" name="total_venta" id="total_venta" class="form-control form-control-sm">
+                <input type="text" name="total_venta" id="total_venta" class="form-control form-control-sm" readonly>
                 
             </div>
             <div class="col-md-3 mb-4">
                 <label>Selecciona Enganche</label>
-                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select">
+                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select" require>
                     <option value="" selected>Selecciona una opción</option>                   
                 </select>
                 
             </div>
             <div class="col-md-3 mb-4">
                 <label>Valor del Enganche (MXN)</label>
-                <input type="text" name="enganche_venta" class="form-control form-control-sm" readonly>
+                <input type="text" name="enganche_venta" class="form-control form-control-sm" required>
             </div>
            
             <div class="col-md-3 mb-4">
@@ -94,7 +98,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <label>Total Mensualidad</label>
-                <input type="text" id="pago_mensual_venta" name="pago_mensual_venta" class="form-control form-control-sm">
+                <input type="text" id="pago_mensual_venta" name="pago_mensual_venta" class="form-control form-control-sm" readonly>
             </div>
         </div>
     </div>

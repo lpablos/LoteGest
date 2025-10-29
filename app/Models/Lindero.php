@@ -12,7 +12,6 @@ class Lindero extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'compra_id',
         'viento1',
         'colinda1',
         'viento2',
@@ -23,9 +22,13 @@ class Lindero extends Model
         'colinda4',
     ];
 
-    // Relación con compra
-    public function compra()
+    public function compraLoteLinderos()
     {
-        return $this->belongsTo(Compra::class);
+        return $this->hasMany(CompraLoteLindero::class);
     }
+    // // Relación con compra
+    // public function compra()
+    // {
+    //     return $this->belongsTo(Compra::class);
+    // }
 }

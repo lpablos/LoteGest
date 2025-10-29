@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
-            $table->string('num_solicitud')->unique();
+            $table->string('num_solicitud');
+            $table->string('num_solicitud_sistema');
             $table->foreignId('corredor_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('estado_id')->constrained('cat_entidad_federativas')->onDelete('restrict');
             $table->foreignId('municipio_id')->constrained('cat_municipios')->onDelete('restrict');

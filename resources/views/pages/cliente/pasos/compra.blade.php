@@ -2,6 +2,10 @@
 <section>
     
     <div class="row col-md-12">
+        <div>
+            <input type="hidden" name="identyCli" id="identyCli">
+            <input type="hidden" name="compra" id="compraIdenty">
+        </div>
         <div class="col-md-3 mb-4">
             <label for="num_solicitud"> Núm. de Solicitud </label>
             <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
