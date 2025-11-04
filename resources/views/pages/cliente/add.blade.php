@@ -126,8 +126,12 @@
         const compraLoteFracc = "{{ route('compra-fraccionamiento-lotes.store') }}"
         const fraccManzanaLoteRoute = "{{ route('fracc.Manzana.lote',['idFracc' => 1]) }}"
         const vientosFraccionamientoUrl = "{{ route('vientos.fraccion.identy',['idFracc' => 1]) }}"
+        const objFraccDetalle = "{{ route('fracc.detalle.registro',['idFracc' => 1]) }}"
+
+
         
-        console.log("Esta es la ruta nueva -->",compraLoteFracc);
+        
+        // console.log("Esta es la ruta nueva -->",compraLoteFracc);
         
         
     </script>
@@ -169,6 +173,8 @@
 
             let opcionesVientos = {};
 
+            let detalleFraccionamiento = {}
+
 
             const $btn = $('#btn_add_compra');
             const $contenedor = $('#contenedor-compra');
@@ -177,11 +183,11 @@
             const $fraccSelect = $('#fracc_id');
 
             if ($btn.length === 0) {
-                console.error('No existe el botón con id #btn_add_compra en el DOM');
+                // console.error('No existe el botón con id #btn_add_compra en el DOM');
                 return;
             }
             if ($contenedor.length === 0) {
-                console.error('No existe el contenedor con id #contenedor-compra en el DOM');
+                // console.error('No existe el contenedor con id #contenedor-compra en el DOM');
                 return;
             }
             if ($spanContador.length === 0) {
@@ -365,7 +371,6 @@
                 if (!fraccId) return;               
                 
                 const fraccUrl = fraccManzanaLoteRoute.replace(/\/\d+$/, `/${fraccId}`);
-             
                 
                 $.ajax({
                     url: fraccUrl, 
@@ -396,7 +401,7 @@
                     dataType: 'json',
                     success: function (data) {
                         opcionesVientos = data[0];
-                        console.log("Esto es --> ", opcionesVientos);                        
+                        // console.log("Esto es --> ", opcionesVientos);                        
                     },
                     error: function (xhr, status, error) {
                         console.error('Error al obtener los vientos:', error);
@@ -459,7 +464,7 @@
                     }
                 });
 
-                console.log("Esto tienes", enganchesUnicos);
+                // console.log("Esto tienes", enganchesUnicos);
                 
 
                 // Recorremos todos los bloques para actualizar el select de tipoVenta/enganche
@@ -558,7 +563,7 @@
 
                 // Si no hay selección válida, salir
                 if (!manzanaId || !tipoVenta) {
-                    console.warn('Debe seleccionar tipo de venta y manzana.');
+                    // console.warn('Debe seleccionar tipo de venta y manzana.');
                     return;
                 }
 
@@ -566,7 +571,7 @@
                 const manzanaSeleccionada = dataManzanasLotes.find(m => m.id === manzanaId);
 
                 if (!manzanaSeleccionada) {
-                    console.error('No se encontró la manzana seleccionada.');
+                    // console.error('No se encontró la manzana seleccionada.');
                     return;
                 }
 
@@ -729,6 +734,44 @@
             }
 
 
+            $fraccSelect.on('change', function () {
+                const fraccId = $(this).val();
+
+                if (!fraccId) return;      
+                
+                const fraccUrlFraccDe = objFraccDetalle.replace(/\/\d+$/, `/${fraccId}`);
+                console.log("Ruta para detalles --> ", fraccUrlFraccDe);
+                
+                $.ajax({ 
+                    url: fraccUrlFraccDe, 
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {    
+                        console.log("Esto responde ", data);
+                        $("#vendedor_propietario_asc").val(data.propietaria)
+                        $("#vendedor_representante_asc").val(data.responsable)
+                        const nombreCompleto = $("#nombre_comprador").val()+' '+$("#primer_ap_comprador").val()+' '+$('#segundo_ap_comprador').val();
+                        $("#comprador_nombre_completo_asc").val(nombreCompleto)
+
+                        //Antecedentes
+                        $("#propietarios_familia_asc").val(data.propietaria)
+                        $("#ubicacion_escritura_asc").val(data.datos_propiedad)
+                        $("#ubicacion_zona_asc").val(data.ubicacion)                        
+                        $("#municipio_estado_asc").val(data.municipio_nombre+', '+data.estado_nombre);
+
+                        //Primera clausula
+                        $("#primer_vendedora_nombre").text(data.propietaria)
+                        $("#primera_familia").text(data.propietaria)
+                        
+                       
+                       
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al obtener fraccionamiento:', error);
+                    }
+                });
+            });
+            
         });
     </script>
 

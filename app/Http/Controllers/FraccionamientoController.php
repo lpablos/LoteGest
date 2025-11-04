@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use DB, Session;
 use App\Helpers\Helper;
 use App\Models\Manzana;
+use App\Models\CatEntidadFederativa;
+use App\Models\CatMunicipio;
 
 
 class FraccionamientoController extends Controller
@@ -24,8 +26,10 @@ class FraccionamientoController extends Controller
         
         $fraccionamientos = Fraccionamiento::orderByDesc('id')->get();
         $tpPredio = CatTipoPredio::all();
+        $catEntidades = CatEntidadFederativa::all();
+        $catMunicipios = CatMunicipio::all();
         if (view()->exists('pages.gestion-fraccionamientos.index')) {
-            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','tpPredio'));
+            return view('pages.gestion-fraccionamientos.index', compact('fraccionamientos','tpPredio','catEntidades','catMunicipios'));
         }
         return abort(404);
     }
@@ -64,7 +68,6 @@ class FraccionamientoController extends Controller
                 } 
             }
             
-            
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
@@ -78,6 +81,9 @@ class FraccionamientoController extends Controller
             $fraccionamiento->viento3 = Helper::capitalizeFirst($validated['viento3']);
             $fraccionamiento->viento4 = Helper::capitalizeFirst($validated['viento4']);
             $fraccionamiento->observaciones = Helper::capitalizeFirst($validated['observaciones']);
+            $fraccionamiento->entidad_fed_id = $validated['entidad_fed_id'];
+            $fraccionamiento->municipio_id = $validated['municipio_id'];
+            $fraccionamiento->datos_propiedad = Helper::capitalizeFirst($validated['datos_propiedad']);
             $fraccionamiento->save();
             
             // dd($request->all());
@@ -124,7 +130,6 @@ class FraccionamientoController extends Controller
      */
     public function show(string $id)
     {
-        
         $fraccionamiento = Fraccionamiento::with('manzanas')->findOrFail($id);
         return response()->json($fraccionamiento);
     }
@@ -302,6 +307,9 @@ class FraccionamientoController extends Controller
             'manzanas'        => 'nullable|numeric|min:1',
             'observaciones'   => 'nullable|string',
             'tipo_predios_id' => 'nullable|numeric|min:1',
+            'entidad_fed_id' => 'nullable|numeric|min:1',
+            'municipio_id' => 'nullable|numeric|min:1',
+            'datos_propiedad' => 'nullable|string|max:255',
         ];
     }
 
@@ -373,5 +381,17 @@ class FraccionamientoController extends Controller
         }
         return response()->json([$fracc]);
 
+    }
+
+
+    public function detFracc(string $id)
+    {
+        
+        $fraccionamiento = Fraccionamiento::find($id);
+        if (!$fraccionamiento) {
+            return response()->json(['error' => 'Fraccionamiento no encontrado'], 404);
+        }
+        return response()->json($fraccionamiento); 
+      
     }
 }

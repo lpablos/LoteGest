@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\CatTipoPredio;
 use App\Models\Manzana;
+use App\Models\CatEntidadFederativa;
 
 class Fraccionamiento extends Model
 {
@@ -27,6 +28,10 @@ class Fraccionamiento extends Model
         'viento4',
         'observaciones',
         'tipo_predios_id',
+        'entidad_fed_id',
+        'municipio_id',
+        'datos_propiedad',
+        'tipo_predio_nombre'
     ];
 
     protected $casts = [
@@ -34,6 +39,24 @@ class Fraccionamiento extends Model
     ];
 
     protected $hidden = ['deleted_at', 'created_at', 'updated_at'];
+
+    protected $appends = ['municipio_nombre', 'entidad_nombre','tipo_predio_nombre'];
+
+
+    public function getMunicipioNombreAttribute()
+    {
+        return $this->municipio ? $this->municipio->nom_mpio : null;
+    }
+
+    public function getEntidadNombreAttribute()
+    {
+        return $this->entidadFederativa ? $this->entidadFederativa->nom_estado : null;
+    }
+
+    public function getTipoPredioNombreAttribute()
+    {
+        return $this->tipoPredio ? $this->tipoPredio->nombre : null; 
+    }
 
     /**
      * Relaciones
@@ -43,6 +66,16 @@ class Fraccionamiento extends Model
     public function tipoPredio()
     {
         return $this->belongsTo(CatTipoPredio::class, 'tipo_predios_id');
+    }
+
+    public function entidadFederativa()
+    {
+        return $this->belongsTo(CatEntidadFederativa::class, 'entidad_fed_id');
+    }
+
+    public function municipio()
+    {
+        return $this->belongsTo(CatMunicipio::class, 'municipio_id');
     }
 
     // Un fraccionamiento tiene muchas manzanas

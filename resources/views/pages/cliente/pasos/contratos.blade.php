@@ -2,36 +2,41 @@
 <section>
     <form>
         <h4>CONTRATO DE COMPRAVENTA</h4>
-        <p>Contrato de la compraventa que celebran por una parte como VENDEDOR 
-            <input type="text" name="vendedor_asc" id="vendedor_asc" value="FAMILIA PINEDA" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+        <p>Contrato de la compraventa que celebran por una parte como <strong>VENDEDOR</strong>  
+            <input type="text" name="vendedor_propietario_asc" id="vendedor_propietario_asc" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
         quienes son <strong>propietarios/copropietarios</strong> y que son representados por 
-            <input type="text" name="propietarios_asc" id="propietarios_asc" value="LA ARQ TANIA MEDINA MARCOS" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-        y por el otro lado como COMPRADOR(A): 
-            <input type="text" name="comprador_asc" id="comprador_asc" value="LA ARQ TANIA MEDINA MARCOS" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+            <input type="text" name="vendedor_representante_asc" id="vendedor_representante_asc" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+        y por el otro lado como <strong>COMPRADOR(A): </strong> 
+            <input type="text" name="comprador_nombre_completo_asc" id="comprador_nombre_completo_asc" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
         los cuales se sujetan al tenor de las siguientes clausulas:</p>
 
         <h5 class="text-center"> ------------------------------------ ANTECEDENTES ------------------------------------ </h5>
 
         <p>La familia 
-            <input type="text" name="propietarios_familia_asc" id="propietarios_familia_asc" value="FAMILIA PINEDA" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+            <input type="text" name="propietarios_familia_asc" id="propietarios_familia_asc" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;">
         son <strong>propietarios/copropietarios</strong> de un predio identificado con
-            <input type="text" name="ubicacion_asc" id="ubicacion_asc" value="Escritura numero 1,354 amparado bajo el numero de resgitro 13, tomo 14, pasada ante notario publico numero 3 de esta Ciudad de Zacapu, Michoacan" class="form-control form-control-sm" style="width: 410px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+            <input type="text" name="ubicacion_escritura_asc" id="ubicacion_escritura_asc" class="form-control form-control-sm" style="width: 100%; display: inline-block; vertical-align: middle; margin: 0 4px;" placeholder="Datos de la escritura Escritura numero 1,354">
         ubicado 
-            <input type="text" name="ubicacion_zona_asc" id="ubicacion_zona_asc" value="AL ORIENTE DE LA CIUDAD DE ZACAPU denominado como LA CIENEGA" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;">
+            <input type="text" name="ubicacion_zona_asc" id="ubicacion_zona_asc" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;">
         municipio de 
-            <input type="text" name="municipio_estado_asc" id="municipio_estado_asc" value="ZACAPU, MICHOACAN" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;">.</p>
+            <input type="text" name="municipio_estado_asc" id="municipio_estado_asc" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;">.</p>
 
         <h5 class="text-center"> ------------------------------------ CLAUSULAS ------------------------------------ </h5>
 
         <h6>PRIMERA. - </h6>
-        <p>La 
+        <p id="condicion1" style="display:none;">La <span id="primera_familia">*</span> venden una fracción marcada con el número de lote(s) <span id="primera_lotes">*</span> que se describe con las siguientes medidas, colindancias y superficie:</p>
+        <textarea id="textoContrato" class="form-control" rows="2">
+            
+        </textarea>
+        <br>
+        <!-- <p>La 
             <input type="text" name="propietarios_uno_asc" id="propietarios_uno_asc" value="FAMILIA PINEDA" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
         venden una fracción marcada con el número de lote 
             <input type="text" name="lotes_uno_asc" id="lotes_uno_asc" value="3, 4, 5" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        que se describe con las siguientes medidas, colindancias y superficie:</p>
+        que se describe con las siguientes medidas, colindancias y superficie:</p> -->
 
-
-        <table style="margin: 0 auto; width: 60%; border-collapse: collapse; text-align: center;">
+        <div id="tabla_preview_id"></div>
+        <!-- <table style="margin: 0 auto; width: 60%; border-collapse: collapse; text-align: center;">
             <thead>
                 <tr>
                 <th style="border: 1px solid #000; padding: 6px;">Orientación</th>
@@ -77,7 +82,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
 
 
         <h4>SEGUNDA. - </h4>

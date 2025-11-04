@@ -47,6 +47,7 @@ Route::resource('municipios', App\Http\Controllers\CatMunicipioController::class
 Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
 Route::resource('tipo-de-predios', App\Http\Controllers\CatTipoPredioController::class);
 Route::resource('fraccionamiento', App\Http\Controllers\FraccionamientoController::class);
+Route::get('fraccionamiento-detalle/{idFracc}', [App\Http\Controllers\FraccionamientoController::class, 'detFracc'])->name('fracc.detalle.registro');
 Route::get('manzanas-lotes/{idFracc}', [App\Http\Controllers\FraccionamientoController::class, 'fraccManzanaLote'])->name('fracc.Manzana.lote');
 Route::get('vientos-fraccionamientos/{idFracc}', [App\Http\Controllers\FraccionamientoController::class, 'vientosFraccionamiento'])->name('vientos.fraccion.identy');
 Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoController::class);

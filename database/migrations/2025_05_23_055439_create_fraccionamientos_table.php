@@ -24,6 +24,11 @@ return new class extends Migration
             $table->string('viento3')->nullable();
             $table->string('viento4')->nullable();
             $table->text('observaciones')->nullable();
+            $table->string("datos_propiedad")->nullable();
+            $table->unsignedBigInteger("entidad_fed_id")->nullable();
+            $table->foreign("entidad_fed_id")->references("id")->on("cat_entidad_federativas");
+            $table->unsignedBigInteger("municipio_id")->nullable();
+            $table->foreign("municipio_id")->references("id")->on("cat_municipios");
             $table->unsignedBigInteger("tipo_predios_id")->nullable();
             $table->foreign("tipo_predios_id")->references("id")->on("cat_tipo_predios");
             $table->softDeletes(); 

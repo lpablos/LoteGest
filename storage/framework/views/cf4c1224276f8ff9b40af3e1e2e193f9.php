@@ -10,15 +10,15 @@
         </div>  
         <div class="col-md-3 mb-4">
             <label for="nombre"> Nombre(s)(*) </label>
-            <input type="text" class="form-control form-control-sm" name="nombre" placeholder="Ingresa el nombre"  required>
+            <input type="text" class="form-control form-control-sm" name="nombre" id="nombre_comprador" placeholder="Ingresa el nombre"  required>
         </div>
         <div class="col-md-3 mb-4">
             <label for="primer_apellido"> Primer Apellido (*) </label>
-            <input type="text" class="form-control form-control-sm" name="primer_apellido" placeholder="Ingresa el primer apellido"  required>
+            <input type="text" class="form-control form-control-sm" name="primer_apellido" id="primer_ap_comprador" placeholder="Ingresa el primer apellido"  required>
         </div>
         <div class="col-md-3 b-4">
             <label for="segundo_apellido"> Segundo Apellido</label>
-            <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa el segundo apellido" >
+            <input type="text" class="form-control form-control-sm" name="segundo_apellido" id="segundo_ap_comprador" placeholder="Ingresa el segundo apellido" >
         </div>
         <div class="col-md-3 mb-4">
             <label for="telefono"> Teléfono </label>

@@ -1,15 +1,15 @@
 
-    <div class="row mb-3">
+    <!-- <div class="row mb-3">
         <div class="col-md-12 text-center">
             <img src="" alt="Imagen del fraccionamiento" width="700" height="400">
         </div>
-    </div>
+    </div> -->
 
 
 <div class="row mb-3">
     <div class="col-md-4">
         <label for="nombre" class="form-label">Nombre (*)</label>
-        <input type="text" name="nombre" id="nombre" class="form-control" value="" required>
+        <input type="text" name="nombre" id="nombre" class="form-control" required>
     </div>
 
     <div class="col-md-4">
@@ -18,11 +18,11 @@
     </div>
     <div class="col-md-4">
         <label for="responsable" class="form-label">Responsable (*)</label>
-        <input type="text" name="responsable" id="responsable" class="form-control" value="" required>
+        <input type="text" name="responsable" id="responsable" class="form-control" required>
     </div>
     <div class="col-md-4 mt-4">
         <label for="propietaria" class="form-label"> Propietario(a) *</label>
-        <input type="text" name="propietaria" id="propietaria" class="form-control" value="" required>
+        <input type="text" name="propietaria" id="propietaria" class="form-control" required>
     </div>
     <div class="col-md-4 mt-4">
         <label for="tipo_predios_id" class="form-label">Tipo de Predio (*)</label>
@@ -37,9 +37,31 @@
         <label for="superficie" class="form-label">Superficie (m²)(*)</label>
         <input type="number" step="0.01" name="superficie" id="superficie" class="form-control" value="">
     </div>
+    <div class="col-md-4 mt-4">
+        <label for="entidad_fed_id" class="form-label">Estado (*)</label>
+        <select name="entidad_fed_id" id="entidad_fed_id"  class="form-select" required style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
+            @foreach ($catEntidades as $entidad)
+                <option value="{{ $entidad->id }}" {{ $entidad->id == 16 ? 'selected' : '' }}>{{ $entidad->nom_estado }}</option>
+            @endforeach
+        </select>
+    </div>
+     <div class="col-md-4 mt-4">
+        <label for="municipio_id" class="form-label">Municipio (*)</label>
+        <select name="municipio_id" id="municipio_id"  class="form-select" required style="cursor: pointer;">
+            <option value="" selected disabled> Selecciona una opción </option>
+            @foreach ($catMunicipios as $municipio)
+                <option value="{{ $municipio->id }}">{{ $municipio->nom_mpio }}</option>
+            @endforeach
+        </select>
+    </div>
+     <div class="col-md-12 mt-4">
+        <label for="datos_propiedad" class="form-label">Datos de la Propiedad</label>
+        <input type="text" name="datos_propiedad" id="datos_propiedad" class="form-control" required>
+    </div>
     <div class="col-md-12 mt-4">
         <label for="ubicacion" class="form-label">Ubicación</label>
-        <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="">
+        <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="" required>
     </div>
 </div>
 

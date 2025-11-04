@@ -86,7 +86,7 @@ $(function () {
                         $('#identy').val(id);
                         $('#identyCli').val(id);
                         toastr.success("Paso 1 guardado correctamente");
-                        pasoCompletado = true;
+                        pasoCompletado = true;                     
                     },
                     error: function (xhr) {
                         toastr.error("Error al guardar el paso 1");
@@ -164,6 +164,7 @@ $(function () {
                         $('#compraIdenty').val(id);
                         toastr.success(mensaje);
                         pasoCompletado = true;
+                        clonarTablaPrevia()
                     },
                     error: function (xhr) {
                         toastr.error("Error al guardar el paso 2");
@@ -175,7 +176,7 @@ $(function () {
                 // Si falló el guardado, bloquea el cambio de paso
                 if (!pasoCompletado) return false;
             }
-
+            
             // Si todo salió bien, permite avanzar
             return true;
         }, 
@@ -188,3 +189,52 @@ $(function () {
     });
    
 });
+
+
+function clonarTablaPrevia() {
+
+    // let lotes = $("select[name='lote[]']")
+    // .map(function () {
+    //     return $(this).find("option:selected").text().trim();
+    // })
+    // .get()
+    // .filter(Boolean);
+    // let lotesTexto = lotes.join(", ");
+    // $("#primera_lotes").text(lotesTexto);
+    // $("#textoContrato").val($("#condicion1").text())
+
+    let lotes = $("select[name='lote[]']").map(function (index) {
+    // Texto del lote seleccionado
+    let loteTexto = $(this).find("option:selected").text().trim();
+    // Texto de la manzana correspondiente (mismo índice)
+    let manzanaTexto = $("select[name='manzana[]']").eq(index).find("option:selected").text().trim();
+    // Validar que ambos tengan valor
+    if (loteTexto && loteTexto.toLowerCase() !== 'selecciona un lote' && 
+        manzanaTexto && manzanaTexto.toLowerCase() !== 'selecciona una manzana') {
+        return { lote: loteTexto, manzana: manzanaTexto };
+    }
+    }).get();
+    // Agrupar lotes por manzana
+    let agrupado = {};
+    lotes.forEach(({ lote, manzana }) => {
+        if (!agrupado[manzana]) agrupado[manzana] = [];
+        agrupado[manzana].push(lote);
+    });
+    // Construir texto final
+    let partes = Object.entries(agrupado).map(([manzana, lotes]) => {
+        if (lotes.length > 1) {
+            return `${lotes.join(", ")} que pertenecen a la ${manzana}`;
+        } else {
+            return `${lotes[0]} que pertenece a la ${manzana}`;
+        }
+    });
+    // Insertar en el span
+    $("#primera_lotes").text(partes.join(" y "));
+    // Y reflejarlo en el textarea (vista previa)
+    $("#textoContrato").val($("#condicion1").text());
+
+
+    
+    const copia = $("#contenedor-tablas").clone(true, true);
+    $("#tabla_preview_id").html(copia);
+}
