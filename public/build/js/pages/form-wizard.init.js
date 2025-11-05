@@ -164,7 +164,11 @@ $(function () {
                         $('#compraIdenty').val(id);
                         toastr.success(mensaje);
                         pasoCompletado = true;
-                        clonarTablaPrevia()
+                        primeraClausula();
+                        clonarTablaPrevia();
+                        segundaClausula();
+                        generarFechaActualLarga()
+                        datosVededorCliente()
                     },
                     error: function (xhr) {
                         toastr.error("Error al guardar el paso 2");
@@ -191,18 +195,13 @@ $(function () {
 });
 
 
-function clonarTablaPrevia() {
+function clonarTablaPrevia() { 
+    const copia = $("#contenedor-tablas").clone(true, true);
+    $("#tabla_preview_id").html(copia);
+}
 
-    // let lotes = $("select[name='lote[]']")
-    // .map(function () {
-    //     return $(this).find("option:selected").text().trim();
-    // })
-    // .get()
-    // .filter(Boolean);
-    // let lotesTexto = lotes.join(", ");
-    // $("#primera_lotes").text(lotesTexto);
-    // $("#textoContrato").val($("#condicion1").text())
 
+function primeraClausula(){
     let lotes = $("select[name='lote[]']").map(function (index) {
     // Texto del lote seleccionado
     let loteTexto = $(this).find("option:selected").text().trim();
@@ -232,9 +231,86 @@ function clonarTablaPrevia() {
     $("#primera_lotes").text(partes.join(" y "));
     // Y reflejarlo en el textarea (vista previa)
     $("#textoContrato").val($("#condicion1").text());
+}
+
+function segundaClausula(){
+    $("#precio_venta_segundo").text($("#total_venta").val()+' '+numeroALetras($("#total_venta").val()));
+    $("#precio_enganche_segundo").text($("#enganche_venta").val()+' '+numeroALetras($("#enganche_venta").val()));
+    const restante = parseFloat($("#total_venta").val()) - parseFloat($("#enganche_venta").val());
+    $("#restante_segundo").text(restante.toFixed(2)+' '+numeroALetras(restante.toFixed(2)));
+    $("#mensualidades_pago_segundo").text($("#mensualidades_venta_asc option:selected").text());
+    $("#pago_mensualidad_segundo").text($("#pago_mensual_venta").val()+' '+numeroALetras($("#pago_mensual_venta").val()));
+    $("#textoContratoSegunda").val($("#segundaClausula").text());
+    $("#fecha_asc").val();
+}  
 
 
-    
-    const copia = $("#contenedor-tablas").clone(true, true);
-    $("#tabla_preview_id").html(copia);
+function numeroALetras(num) {
+    const unidades = ['', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve'];
+    const especiales = ['diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis', 'diecisiete', 'dieciocho', 'diecinueve'];
+    const decenas = ['', '', 'veinte', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+    const centenas = ['', 'cien', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+
+    function convertir(num) {
+        if (num === 0) return 'cero';
+        if (num < 10) return unidades[num];
+        if (num < 20) return especiales[num - 10];
+        if (num < 100) {
+            const dec = Math.floor(num / 10);
+            const uni = num % 10;
+            if (dec === 2 && uni !== 0) return 'veinti' + unidades[uni];
+            return decenas[dec] + (uni ? ' y ' + unidades[uni] : '');
+        }
+        if (num < 1000) {
+            const cen = Math.floor(num / 100);
+            const resto = num % 100;
+            if (cen === 1 && resto > 0) return 'ciento ' + convertir(resto);
+            return centenas[cen] + (resto ? ' ' + convertir(resto) : '');
+        }
+        if (num < 1000000) {
+            const miles = Math.floor(num / 1000);
+            const resto = num % 1000;
+            if (miles === 1) return 'mil ' + convertir(resto);
+            return convertir(miles) + ' mil' + (resto ? ' ' + convertir(resto) : '');
+        }
+        if (num < 1000000000) {
+            const millones = Math.floor(num / 1000000);
+            const resto = num % 1000000;
+            if (millones === 1) return 'un millón ' + convertir(resto);
+            return convertir(millones) + ' millones' + (resto ? ' ' + convertir(resto) : '');
+        }
+        return 'Número demasiado grande';
+    }
+
+    num = parseFloat(num);
+    if (isNaN(num)) return '';
+
+    const partes = num.toFixed(2).split('.');
+    const entero = parseInt(partes[0]);
+    const centavos = partes[1];
+
+    let texto = convertir(entero).trim();
+    texto = texto.charAt(0).toUpperCase() + texto.slice(1);
+
+    return `${texto} pesos ${centavos}/100 M.N.`;
+}
+
+
+function generarFechaActualLarga() {
+    const hoy = new Date();
+    const meses = [
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    ];
+
+    const dia = hoy.getDate();
+    const mes = meses[hoy.getMonth()];
+    const año = hoy.getFullYear();
+    $("#fecha_asc_dato").val(`${dia} de ${mes} de ${año}.`)
+}
+
+
+function datosVededorCliente(){
+    $("#representante_firma").val($("#vendedor_propietario_asc").val());
+    $("#comprador_firma").val($("#nombre_comprador").val()+' '+$("#primer_ap_comprador").val()+' '+$('#segundo_ap_comprador').val());
 }

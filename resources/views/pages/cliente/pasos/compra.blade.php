@@ -87,12 +87,12 @@
             </div>
             <div class="col-md-3 mb-4">
                 <label>Valor del Enganche (MXN)</label>
-                <input type="text" name="enganche_venta" class="form-control form-control-sm" required>
+                <input type="text" name="enganche_venta" id="enganche_venta" class="form-control form-control-sm" required>
             </div>
            
             <div class="col-md-3 mb-4">
                 <label>Menualidades</label>
-                <select class="form-select form-select-sm mensualidadVentaSelect"  name="mensualidad_venta_select" required>
+                <select class="form-select form-select-sm mensualidadVentaSelect" id="mensualidades_venta_asc"  name="mensualidad_venta_select" required>
                     <option value="" selected disabled>Selecciona una opción</option>
                 </select>
             </div>

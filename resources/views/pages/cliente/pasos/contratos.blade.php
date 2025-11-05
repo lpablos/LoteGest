@@ -86,17 +86,13 @@
 
 
         <h4>SEGUNDA. - </h4>
-        <p>El vendedor se compromete a vender a la parte compradora en 
-            <input type="text" name="precio_venta_asc" id="precio_venta_asc" value="$348,000.00 (trescientos cuarenta y ocho mil pesos 00/100 m.n)" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        mismos que se pagarán de la siguiente manera: 
-            <input type="text" name="precio_enganche_asc" id="precio_enganche_asc" value="$34,800.00 (treinta y cuatro mil ochocientos pesos 00/100 m.n)" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        en concepto de enganche, el resto que es la cantidad de 
-            <input type="text" name="restante" id="restante" value="$313,200.00 (trescientos trece mil doscientos pesos 00/100 m.n)" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        se pagará en 
-            <input type="text" name="mensualidades_pago" id="mensualidades_pago" value="24 mensualidades" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        de 
-            <input type="text" name="pago_mensualidad" id="pago_mensualidad" value="$13,050.00 (trece mil cincuenta pesos 00/100 m.n)" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        , contados a la firma del presente contrato.</p>
+
+      
+
+        <p id="segundaClausula" style="display:none;">El vendedor se compromete a vender a la parte compradora en <span id="precio_venta_segundo"></span> mismos que se pagarán de la siguiente manera: <span id="precio_enganche_segundo"></span> en concepto de enganche, el resto que es la cantidad de <span id="restante_segundo"></span> se pagará en <span id="mensualidades_pago_segundo"></span> de <span id="pago_mensualidad_segundo"></span>, contados a la firma del presente contrato.</p>
+
+        <textarea id="textoContratoSegunda" class="form-control" rows="3"></textarea>
+        <br>
 
         <h4>TERCERA.-</h4>
         <p>La responsabilidad de obtención de los permisos de subdivisión, lotificación y servicios recaen íntegramente en el comprador.</p>
@@ -113,24 +109,20 @@
 
         <h4>SEPTIMA.-</h4>
         <p>Ambas partes manifiestan que en el presente contrato no existió error, dolo, mala fe, ni ningún otro vicio de la voluntad que pudiera invalidarlo.</p>
-        <p class="text-right"><input type="text" name="fecha_asc" id="fecha_asc" value="Zacapu, Michoacán, a 31 de enero de 2025." class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> </p>
+        <p class="text-right"><input type="text" name="fecha_asc_dato" id="fecha_asc_dato" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"> </p>
 
         <!-- Firmas -->
-        <table class="tabla-firmas">
-        <tr>
-            <td class="celda vacia"></td>
-            <td class="celda vacia"></td>
-        </tr>
-        <tr>
-            <td class="celda vendedor"><input type="text" name="representante" id="representante" value="LA ARQ TANIA MEDINA MARCOS" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"><br>Representante de los Vendedores</td>
-            <td class="celda comprador"><input type="text" name="Comprador" id="Comprador" value="Carlos" class="form-control form-control-sm" style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px;"><br>Comprador </td>
-        </tr>
+        <table class="tabla-firmas" style="border-collapse: collapse; border: none;">
+            <tr>
+                <td class="celda vendedor"><input type="text" name="representante_firma" id="representante_firma"  class="form-control form-control-sm"  style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px; text-align: center;"><br>Representante de los Vendedores</td>
+                <td class="celda comprador"><input type="text" name="comprador_firma" id="comprador_firma"  class="form-control form-control-sm"  style="width: 350px; display: inline-block; vertical-align: middle; margin: 0 4px; text-align: center;"><br>Comprador </td>
+            </tr>
         </table>
 
         <!-- Observaciones -->
         <div class="observaciones">
         <p><strong>OBSERVACIONES:</strong></p>
-        <p><input type="text" name="observaciones" id="observaciones" value="Firma como gestor oficio su hija Glenis Maldonado Aburto en representación de Carlos Maldonado." class="form-control form-control-sm" style="width: 650px; display: inline-block; vertical-align: middle; margin: 0 4px;"></p>
+        <p><input type="text" name="observaciones" id="observaciones" class="form-control form-control-sm" value="Ninguna" style="width: 100% ; display: inline-block; vertical-align: middle; margin: 0 4px;"></p>
         </div>
     </form>
 </section>
