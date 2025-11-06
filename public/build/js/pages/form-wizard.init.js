@@ -162,6 +162,7 @@ $(function () {
                         const { mensaje } = response;
                         const { id } = response.compra;
                         $('#compraIdenty').val(id);
+                        $("#id_contrato_asc").val(id);
                         toastr.success(mensaje);
                         pasoCompletado = true;
                         primeraClausula();
@@ -180,7 +181,92 @@ $(function () {
                 // Si falló el guardado, bloquea el cambio de paso
                 if (!pasoCompletado) return false;
             }
-            
+
+            // --------------------------
+            // 🟢 PASO 3 → Validar y enviar contrato
+            // --------------------------
+            if (currentIndex === 2 && newIndex > 2) { // 👈 Ajusta el índice del paso según corresponda
+                let isValid = true;
+                let formData = new FormData();
+
+                // Validar todos los inputs, selects y textareas del paso actual
+                $("#basic-example-p-2").find("input, select, textarea").each(function () {
+                    const $field = $(this);
+                    const value = $field.val();
+
+                    if ($field.prop("required")) {
+                        if (!value || value.trim() === "") {
+                            isValid = false;
+                            $field.addClass("is-invalid");
+                            toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
+                        } else {
+                            $field.removeClass("is-invalid");
+                        }
+                    }
+
+                    // Agregar valores al FormData
+                    if (this.type === "file" && this.files.length > 0) {
+                        formData.append(this.name, this.files[0]);
+                    } else {
+                        formData.append(this.name, value);
+                    }
+                });
+
+                // Validar tablas dentro del contenedor
+                $("#contenedor-tablas .tabla-item table tbody tr").each(function (index, row) {
+                    $(row).find("input[required]").each(function () {
+                        const $input = $(this);
+                        if (!$input.val() || $input.val().trim() === "") {
+                            isValid = false;
+                            $input.addClass("is-invalid");
+                            toastr.warning(`Por favor completa el campo "${$input.attr("name")}" en la fila ${index + 1}`);
+                        } else {
+                            $input.removeClass("is-invalid");
+                        }
+                    });
+                });
+
+                // Si hay errores, detener el avance
+                if (!isValid) {
+                    toastr.error("Por favor completa todos los campos obligatorios antes de continuar.");
+                    return false;
+                }
+
+                // Agregar token CSRF
+                formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
+
+                // Enviar datos por AJAX
+                let pasoCompletado = false;
+
+                $.ajax({
+                    url: contratoStoreRoute, // 👈 Ajusta tu ruta aquí
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    async: false, // 🔒 evita avanzar hasta recibir respuesta
+                    beforeSend: function () {
+                        toastr.info("Guardando datos del contrato...");
+                    },
+                    success: function (response) {
+                        toastr.success(response.mensaje || "Datos del contrato guardados correctamente.");
+                        // Ejemplo: guardar ID o hacer acciones adicionales
+                        if (response.contrato?.id) {
+                            $("#contratoIdenty").val(response.contrato.id);
+                        }
+                        pasoCompletado = true;
+                    },
+                    error: function (xhr) {
+                        toastr.error("Error al guardar los datos del contrato.");
+                        console.error(xhr.responseText);
+                        pasoCompletado = false;
+                    }
+                });
+
+                // Evitar avanzar si el guardado falló
+                if (!pasoCompletado) return false;
+            }
+                        
             // Si todo salió bien, permite avanzar
             return true;
         }, 

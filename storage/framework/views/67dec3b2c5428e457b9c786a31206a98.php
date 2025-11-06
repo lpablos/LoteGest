@@ -125,6 +125,8 @@
         const fraccManzanaLoteRoute = "<?php echo e(route('fracc.Manzana.lote',['idFracc' => 1])); ?>"
         const vientosFraccionamientoUrl = "<?php echo e(route('vientos.fraccion.identy',['idFracc' => 1])); ?>"
         const objFraccDetalle = "<?php echo e(route('fracc.detalle.registro',['idFracc' => 1])); ?>"
+        const contratoStoreRoute = "<?php echo e(route('contratos.store')); ?>";
+        
 
 
         

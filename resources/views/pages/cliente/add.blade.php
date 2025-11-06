@@ -127,6 +127,8 @@
         const fraccManzanaLoteRoute = "{{ route('fracc.Manzana.lote',['idFracc' => 1]) }}"
         const vientosFraccionamientoUrl = "{{ route('vientos.fraccion.identy',['idFracc' => 1]) }}"
         const objFraccDetalle = "{{ route('fracc.detalle.registro',['idFracc' => 1]) }}"
+        const contratoStoreRoute = "{{ route('contratos.store') }}";
+        
 
 
         

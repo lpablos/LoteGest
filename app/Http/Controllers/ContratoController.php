@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Fraccionamiento;
 use App\Models\CatEstatusDisponibilidad;
 use Illuminate\Http\Request;
+use DB, Session;
+use Illuminate\Support\Facades\Log;
+use App\Models\Contrato;
 
 class ContratoController extends Controller
 {
@@ -46,7 +49,42 @@ class ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        DB::beginTransaction();
+        try {
+
+            $contrato = new Contrato();
+            $contrato->vendedor_propietario_asc = $request['vendedor_propietario_asc'];
+            $contrato->vendedor_representante_asc = $request['vendedor_representante_asc'];
+            $contrato->comprador_nombre_completo_asc = $request['comprador_nombre_completo_asc'];
+            $contrato->propietarios_familia_asc = $request['propietarios_familia_asc'];
+            $contrato->ubicacion_escritura_asc = $request['ubicacion_escritura_asc'];
+            $contrato->ubicacion_zona_asc = $request['ubicacion_zona_asc'];
+            $contrato->municipio_estado_asc = $request['municipio_estado_asc'];
+            $contrato->textoContrato = $request['textoContrato'];
+            $contrato->textoContratoSegunda = $request['textoContratoSegunda'];
+            $contrato->fecha_asc_dato = $request['fecha_asc_dato'];
+            $contrato->representante_firma = $request['representante_firma'];
+            $contrato->comprador_firma = $request['comprador_firma'];
+            $contrato->observaciones = $request['observaciones'];
+            $contrato->compra_id = $request['id_contrato_asc'];
+            $contrato->save();
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => '¡Contrato VistaPrevia se registro exitosamente!',
+                'constrato' => $contrato,
+            ]);
+        } catch (\PDOException $e) {
+            DB::rollBack();
+            Log::error("Error al guardar cliente: " . $e->getMessage());    
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un error al guardar el contrato.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+
     }
 
     /**
