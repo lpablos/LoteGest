@@ -249,10 +249,13 @@ $(function () {
                         toastr.info("Guardando datos del contrato...");
                     },
                     success: function (response) {
-                        toastr.success(response.mensaje || "Datos del contrato guardados correctamente.");
+                        console.log("Este ees el response");
+                        
+                        toastr.success(response.message || "Datos del contrato guardados correctamente.");
                         // Ejemplo: guardar ID o hacer acciones adicionales
                         if (response.contrato?.id) {
-                            $("#contratoIdenty").val(response.contrato.id);
+                            $("#contratoIdenty").val(response.contrato.id);                            
+                            actualizarIframePreview(response.contrato.id);
                         }
                         pasoCompletado = true;
                     },
@@ -272,13 +275,27 @@ $(function () {
         }, 
         onFinished: function (event, currentIndex) {
             console.log("Aqui este es el event", event);
-            console.log("Este esel el currentIndex", event);
-            
+            console.log("Este esel el currentIndex", event);            
             document.getElementById('wizard-form').submit();
         }
     });
    
 });
+
+function actualizarIframePreview(id) {
+    let iframe = $("#preview");
+    let src = iframe.attr("src"); 
+    let nuevoSrc = src.replace('*', id);
+    iframe.attr("src", nuevoSrc);
+    setTimeout(() => {
+        $("#preview-section").show();
+        setTimeout(() => {
+            $("#preview-section-load").hide();
+        }, 1000);
+
+    }, 1000);
+}
+
 
 
 function clonarTablaPrevia() { 

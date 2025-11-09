@@ -74,8 +74,8 @@ class ContratoController extends Controller
             DB::commit();
             return response()->json([
                 'status' => 'success',
-                'message' => '¡Contrato VistaPrevia se registro exitosamente!',
-                'constrato' => $contrato,
+                'message' => '¡Contrato Vista Previa se registro exitosamente!',
+                'contrato' => $contrato,
             ]);
         } catch (\PDOException $e) {
             DB::rollBack();
