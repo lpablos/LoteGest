@@ -86,61 +86,49 @@
         .tabla-firmas .comprador {
             text-align: center;
         }
+
+
+        .tabla-firmas {
+            border: none;
+            /* border-collapse: collapse; */
+            width: 100%;
+        }
+
+        .tabla-firmas td {
+            border: none;
+        }
+
+        .tabla-firmas .vacia {
+            border: none;
+            height: 20px;      /* da un poco de espacio sin línea */
+            content: "";        /* asegura que esté vacía */
+        }
+
     </style>
 </head>
 <body>
 
 <h1>CONTRATO DE COMPRAVENTA</h1>
-<p>Contrato de la compraventa que celebran por una parte como VENDEDOR <strong>FAMILIA PINEDA</strong> 
-quienes son <strong>propietarios/copropietarios</strong> y que son representados por <strong>LA ARQ TANIA MEDINA MARCOS</strong>
-y por el otro lado como COMPRADOR(A): <strong>Carlos</strong> los cuales se sujetan al tenor de las siguientes clausulas:</p>
+<p>Contrato de la compraventa que celebran por una parte como VENDEDOR <strong>{{$contrato->vendedor_propietario_asc}}</strong> 
+quienes son <strong>propietarios/copropietarios</strong> y que son representados por <strong>{{$contrato->vendedor_representante_asc}}</strong>
+y por el otro lado como COMPRADOR(A): <strong>{{$contrato->comprador_nombre_completo_asc}}</strong> los cuales se sujetan al tenor de las siguientes clausulas:</p>
 
 <h3> -------------------------------------------- ANTECEDENTES -------------------------------------------- </h3>
 
-<p>La familia <strong>FAMILIA PINEDA</strong> son <strong>propietarios/copropietarios</strong> de un predio identificado con
-<strong>Escritura numero 1,354 amparado bajo el numero de resgitro 13, tomo 14, pasada ante notario publico numero 3 de esta 
-Ciudad de Zacapu, Michoacan</strong> ubicado <strong>AL ORIENTE DE LA CIUDAD DE ZACAPU</strong>denominado como <strong>LA CIENEGA</strong>
-municipio de <strong>ZACAPU, MICHOACAN</strong>.</p>
+<p>La familia <strong>{{$contrato->propietarios_familia_asc}}</strong> son <strong>propietarios/copropietarios</strong> de un predio identificado con
+<strong>{{$contrato->ubicacion_escritura_asc}}</strong> ubicado <strong>{{$contrato->ubicacion_zona_asc}}</strong>denominado como <strong>{{$contrato->denominado_como_asc}}</strong>
+municipio de <strong>{{$contrato->municipio_estado_asc}}</strong>.</p>
 
 <h3> ----------------------------------------------- CLAUSULAS ----------------------------------------------- </h3>
 
 <h4>PRIMERA. - </h4>
-<p>La manzana <strong>FAMILIA PINEDA</strong> venden una fracción marcada con el número de lote <strong>3, 4, 5</strong> que se 
-describe con las siguientes medidas, colindancias y superficie:</p>
+<p>{{$contrato->textoContrato}}</p>
 
-<table>
-    <tr>
-        <th>Orientación</th>
-        <th>Medida</th>
-        <th>Colindancia</th>
-    </tr>
-    <tr>
-        <td>Noroeste</td>
-        <td>24.00 M</td>
-        <td>LOTE 2</td>
-    </tr>
-    <tr>
-        <td>Sureste</td>
-        <td>16.00 M</td>
-        <td>PROPIEDAD PRIVADA</td>
-    </tr>
-    <tr>
-        <td>Noreste</td>
-        <td>24.00 M</td>
-        <td>LOTE 6</td>
-    </tr>
-    <tr>
-        <td>Suroeste</td>
-        <td>16.00 M</td>
-        <td>CALLE</td>
-    </tr>
-</table>
+
+ {!! $contrato->html_tablas !!}
 
 <h4>SEGUNDA. - </h4>
-<p>El vendedor se compromete a vender a la parte compradora en <strong>$348,000.00 (trescientos cuarenta y ocho mil pesos 00/100 m.n)</strong>, 
-mismos que se pagarán de la siguiente manera: <strong>$34,800.00 (treinta y cuatro mil ochocientos pesos 00/100 m.n)</strong> en concepto de 
-enganche, el resto que es la cantidad de <strong>$313,200.00 (trescientos trece mil doscientos pesos 00/100 m.n)</strong> se pagará en <strong> 24
-mensualidades</strong> de <strong>$13,050.00 (trece mil cincuenta pesos 00/100 m.n)</strong>, contados a la firma del presente contrato.</p>
+<p>{{$contrato->textoContratoSegunda}}</p>
 
 <h4>TERCERA.-</h4>
 <p>La responsabilidad de obtención de los permisos de subdivisión, lotificación y servicios recaen íntegramente en el comprador.</p>
@@ -157,7 +145,7 @@ de su terreno y no se reintegrarán los pagos realizados.</p>
 
 <h4>SEPTIMA.-</h4>
 <p>Ambas partes manifiestan que en el presente contrato no existió error, dolo, mala fe, ni ningún otro vicio de la voluntad que pudiera invalidarlo.</p>
-<p class="text-right">Zacapu, Michoacán, a 31 de enero de 2025.</p>
+<p class="text-right">{{$contrato->fecha_asc_dato}}</p>
 
 <!-- Firmas -->
 <table class="tabla-firmas">
@@ -166,16 +154,18 @@ de su terreno y no se reintegrarán los pagos realizados.</p>
     <td class="celda vacia"></td>
   </tr>
   <tr>
-    <td class="celda vendedor"> <strong>LA ARQ TANIA MEDINA MARCOS</strong><br>Representante de los Vendedores</td>
-    <td class="celda comprador"> <strong>CARLOS</strong><br>Comprador </td>
+    <td class="celda vendedor"> ______________________________<br/><strong>{{$contrato->representante_firma}}</strong><br>Representante de los Vendedores</td>
+    <td class="celda comprador">______________________________<br/<strong>{{$contrato->comprador_firma}}</strong><br>Comprador </td>
   </tr>
 </table>
 
 <!-- Observaciones -->
 <div class="observaciones">
-<p><strong>OBSERVACIONES:</strong></p>
-<p>Firma como gestor oficio su hija Glenis Maldonado Aburto en representación de Carlos Maldonado.</p>
-</div>
+    @if ($contrato->observaciones !== 'Ninguna')
+        <p><strong>OBSERVACIONES:</strong></p>
+        <p>{{$contrato->observaciones}}</p>
+    @endif
+</div> 
 
 </body>
 </html>

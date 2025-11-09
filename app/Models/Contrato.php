@@ -28,6 +28,8 @@ class Contrato extends Model
         'comprador_firma',
         'observaciones',
         'compra_id',
+        'denominado_como_asc',
+        'html_tablas',
     ];
 
     /**

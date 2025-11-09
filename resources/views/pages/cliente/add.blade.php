@@ -749,7 +749,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {    
-                        console.log("Esto responde ", data);
+                        console.log("Esto  *** ", data);
                         $("#vendedor_propietario_asc").val(data.propietaria)
                         $("#vendedor_representante_asc").val(data.responsable)
                         const nombreCompleto = $("#nombre_comprador").val()+' '+$("#primer_ap_comprador").val()+' '+$('#segundo_ap_comprador').val();
@@ -758,8 +758,9 @@
                         //Antecedentes
                         $("#propietarios_familia_asc").val(data.propietaria)
                         $("#ubicacion_escritura_asc").val(data.datos_propiedad)
-                        $("#ubicacion_zona_asc").val(data.ubicacion)                        
-                        $("#municipio_estado_asc").val(data.municipio_nombre+', '+data.estado_nombre);
+                        $("#ubicacion_zona_asc").val(data.ubicacion)    
+                        $("#denominado_como_asc").val(data.nombre)                    
+                        $("#municipio_estado_asc").val(data.municipio_nombre+', '+data.entidad_nombre);
 
                         //Primera clausula
                         $("#primer_vendedora_nombre").text(data.propietaria)

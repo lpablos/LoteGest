@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('comprador_nombre_completo_asc');
             $table->string('propietarios_familia_asc');
             $table->string('ubicacion_escritura_asc');
+            $table->string('denominado_como_asc');
             $table->string('ubicacion_zona_asc');
             $table->string('municipio_estado_asc');
             $table->text('textoContrato');
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->text('observaciones');
             $table->bigInteger('compra_id')->unsigned();
             $table->foreign('compra_id')->references('id')->on('compras');
+             $table->longText('html_tablas')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

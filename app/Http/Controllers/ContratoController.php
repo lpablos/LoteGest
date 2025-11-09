@@ -68,6 +68,8 @@ class ContratoController extends Controller
             $contrato->comprador_firma = $request['comprador_firma'];
             $contrato->observaciones = $request['observaciones'];
             $contrato->compra_id = $request['id_contrato_asc'];
+            $contrato->denominado_como_asc = $request['denominado_como_asc'];
+            $contrato->html_tablas = $request['html_tablas'];
             $contrato->save();
             DB::commit();
             return response()->json([

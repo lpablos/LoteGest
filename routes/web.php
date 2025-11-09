@@ -55,7 +55,7 @@ Route::resource('entidades-federativas', App\Http\Controllers\CatEntidadFederati
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
 Route::resource('compra-fraccionamiento-lotes', App\Http\Controllers\CompraController::class);
 
-Route::get('vista-previa-contrato', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
+Route::get('vista-previa-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
 
 
 

@@ -21,6 +21,8 @@
             <input type="text" name="ubicacion_escritura_asc" id="ubicacion_escritura_asc" class="form-control form-control-sm" style="width: 100%; display: inline-block; vertical-align: middle; margin: 0 4px;" placeholder="Datos de la escritura Escritura numero 1,354" required>
         ubicado 
             <input type="text" name="ubicacion_zona_asc" id="ubicacion_zona_asc" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;" required>
+        denominado como
+            <input type="text" name="denominado_como_asc" id="denominado_como_asc" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;" required>
         municipio de 
             <input type="text" name="municipio_estado_asc" id="municipio_estado_asc" class="form-control form-control-sm" style="width: 250px; display: inline-block; vertical-align: middle; margin: 0 4px;" required>.</p>
 
@@ -30,65 +32,11 @@
         <p id="condicion1" style="display:none;">La <span id="primera_familia">*</span> venden una fracción marcada con el número de lote(s) <span id="primera_lotes">*</span> que se describe con las siguientes medidas, colindancias y superficie:</p>
         <textarea id="textoContrato" name="textoContrato" class="form-control" rows="2"></textarea>
         <br>
-        <!-- <p>La 
-            <input type="text" name="propietarios_uno_asc" id="propietarios_uno_asc" value="FAMILIA PINEDA" class="form-control form-control-sm" style="width: 200px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        venden una fracción marcada con el número de lote 
-            <input type="text" name="lotes_uno_asc" id="lotes_uno_asc" value="3, 4, 5" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;"> 
-        que se describe con las siguientes medidas, colindancias y superficie:</p> -->
-
+       
+        <input type="hidden" name="html_tablas" id="html_tablas">
         <div id="tabla_preview_id"></div>
-        <!-- <table style="margin: 0 auto; width: 60%; border-collapse: collapse; text-align: center;">
-            <thead>
-                <tr>
-                <th style="border: 1px solid #000; padding: 6px;">Orientación</th>
-                <th style="border: 1px solid #000; padding: 6px;">Medida</th>
-                <th style="border: 1px solid #000; padding: 6px;">Colindancia</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #000; padding: 6px;">Noroeste</td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento1_medida" id="viento1_medida" value="24.00 M" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento1_colinda" id="viento1_colinda" value="Lote 2" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="border: 1px solid #000; padding: 6px;">Sureste</td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento2_medida" id="viento2_medida" value="24.00 M" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento2_colinda" id="viento2_colinda" value="Lote 2" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="border: 1px solid #000; padding: 6px;">Noreste</td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento3_medida" id="viento3_medida" value="24.00 M" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento3_colinda" id="viento3_colinda" value="Lote 2" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="border: 1px solid #000; padding: 6px;">Suroeste</td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento4_medida" id="viento4_medida" value="24.00 M" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                    <td style="border: 1px solid #000; padding: 6px;">
-                        <input type="text" name="viento4_colinda" id="viento4_colinda" value="Lote 2" class="form-control form-control-sm" style="width: 150px; display: inline-block; vertical-align: middle; margin: 0 4px;">
-                    </td>
-                </tr>
-            </tbody>
-        </table> -->
-
-
-        <h4>SEGUNDA. - </h4>
-
       
+        <h4>SEGUNDA. - </h4>
 
         <p id="segundaClausula" style="display:none;">El vendedor se compromete a vender a la parte compradora en <span id="precio_venta_segundo"></span> mismos que se pagarán de la siguiente manera: <span id="precio_enganche_segundo"></span> en concepto de enganche, el resto que es la cantidad de <span id="restante_segundo"></span> se pagará en <span id="mensualidades_pago_segundo"></span> de <span id="pago_mensualidad_segundo"></span>, contados a la firma del presente contrato.</p>
 

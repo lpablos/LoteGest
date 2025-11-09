@@ -282,8 +282,27 @@ $(function () {
 
 
 function clonarTablaPrevia() { 
+    // Clonamos el contenido original
     const copia = $("#contenedor-tablas").clone(true, true);
-    $("#tabla_preview_id").html(copia);
+
+    // Recorremos todos los inputs dentro del clon
+    copia.find("input").each(function() {
+        let valor = $(this).val().trim();
+        if (valor === "") valor = "&nbsp;"; // si está vacío, deja espacio
+        $(this).replaceWith(valor); // reemplaza el input por texto plano
+    });
+
+    // Pegamos el HTML limpio (sin inputs) en el contenedor destino
+    // $("#tabla_preview_id").html(copia.html());
+    // $("#html_tablas").value(copia.html());
+
+     const htmlLimpio = copia.html();
+
+    // Mostramos vista previa
+    $("#tabla_preview_id").html(htmlLimpio);
+
+    // Guardamos en input hidden para enviar al backend
+    $("#html_tablas").val(htmlLimpio);
 }
 
 
