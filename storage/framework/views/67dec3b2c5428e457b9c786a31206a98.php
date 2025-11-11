@@ -110,7 +110,8 @@
                     <?php echo $__env->make('pages.cliente.pasos.personales', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <?php echo $__env->make('pages.cliente.pasos.compra', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     <?php echo $__env->make('pages.cliente.pasos.contratos', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-                    <?php echo $__env->make('pages.cliente.pasos.preview', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                   
+                    <?php echo $__env->make('pages.cliente.pasos.preview', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>       
+                    <?php echo $__env->make('pages.cliente.pasos.contrato', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>                   
                 </div>
                 </div>
             </form>

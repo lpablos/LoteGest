@@ -269,7 +269,35 @@ $(function () {
                 // Evitar avanzar si el guardado falló
                 if (!pasoCompletado) return false;
             }
-                        
+
+
+            // --------------------------
+            // 🟢 PASO 4 → Confirmar generación de registro
+            // --------------------------
+           if (currentIndex === 3 && newIndex > 3) { // 👈 Ajusta según el índice real del wizard
+                const confirmar = confirm(
+                    "Se generará el registro oficial del contrato.\n\n" +
+                    "Esto asignará un folio único y un código de seguridad.\n\n" +
+                    "¿Deseas continuar?"
+                );
+
+                if (!confirmar) {
+                    toastr.info("Operación cancelada. No se generó el registro.");
+                    return false; // 👈 No avanza si cancela
+                }
+
+                // ✅ Si aceptó → avanzar manualmente al siguiente paso
+                toastr.success("Registro generado correctamente (simulado).");
+                $("#basic-example").steps("next");
+
+                // 👇 Detenemos el avance automático (lo controlamos manualmente arriba)
+                return true;
+            }
+
+
+
+
+            
             // Si todo salió bien, permite avanzar
             return true;
         }, 

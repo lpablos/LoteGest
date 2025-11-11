@@ -56,6 +56,7 @@ Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponi
 Route::resource('compra-fraccionamiento-lotes', App\Http\Controllers\CompraController::class);
 
 Route::get('vista-previa-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
+Route::get('vista-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'contratoPDF']);
 
 
 

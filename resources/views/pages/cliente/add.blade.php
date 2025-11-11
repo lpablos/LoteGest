@@ -112,7 +112,8 @@
                     @include('pages.cliente.pasos.personales')
                     @include('pages.cliente.pasos.compra')
                     @include('pages.cliente.pasos.contratos')
-                    @include('pages.cliente.pasos.preview')                   
+                    @include('pages.cliente.pasos.preview')       
+                    @include('pages.cliente.pasos.contrato')                   
                 </div>
                 </div>
             </form>
