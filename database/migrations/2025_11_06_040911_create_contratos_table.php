@@ -29,7 +29,9 @@ return new class extends Migration
             $table->text('observaciones');
             $table->bigInteger('compra_id')->unsigned();
             $table->foreign('compra_id')->references('id')->on('compras');
-             $table->longText('html_tablas')->nullable();
+            $table->longText('html_tablas')->nullable();
+            $table->string('codigo_valido_contrato')->nullable();
+            $table->string('documento_url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

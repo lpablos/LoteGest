@@ -30,6 +30,17 @@ $(function () {
         bodyTag: "section",
         transitionEffect: "slide",
         autoFocus: true,
+        enableAllSteps: false, // 🚫 evita habilitar pasos
+        enableKeyNavigation: false, // 🚫 bloquea avanzar con teclado
+        labels: {
+            cancel: "Cancelar",
+            current: "Paso actual:",
+            pagination: "Paginación",
+            finish: "Finalizar",
+            next: "Siguiente",
+            previous: "Anterior",
+            loading: "Cargando..."
+        },
         onStepChanging: function (event, currentIndex, newIndex) {
   // Evita avanzar hacia atrás sin restricciones
         if (newIndex < currentIndex) return true;
@@ -254,7 +265,7 @@ $(function () {
                         toastr.success(response.message || "Datos del contrato guardados correctamente.");
                         // Ejemplo: guardar ID o hacer acciones adicionales
                         if (response.contrato?.id) {
-                            $("#contratoIdenty").val(response.contrato.id);                            
+                            $("#id_contrato_asc").val(response.contrato.id);                            
                             actualizarIframePreview(response.contrato.id);
                         }
                         pasoCompletado = true;
@@ -271,10 +282,11 @@ $(function () {
             }
 
 
+          
             // --------------------------
             // 🟢 PASO 4 → Confirmar generación de registro
             // --------------------------
-           if (currentIndex === 3 && newIndex > 3) { // 👈 Ajusta según el índice real del wizard
+           if (currentIndex === 3 && newIndex === 4) {
                 const confirmar = confirm(
                     "Se generará el registro oficial del contrato.\n\n" +
                     "Esto asignará un folio único y un código de seguridad.\n\n" +
@@ -283,17 +295,15 @@ $(function () {
 
                 if (!confirmar) {
                     toastr.info("Operación cancelada. No se generó el registro.");
-                    return false; // 👈 No avanza si cancela
+                    return false; // 🚫 Bloquea el avance
                 }
 
-                // ✅ Si aceptó → avanzar manualmente al siguiente paso
+                // ✅ Si confirma → ejecuta tu función antes de avanzar
+                actualizarIframeContrato($("#id_contrato_asc").val());
                 toastr.success("Registro generado correctamente (simulado).");
-                $("#basic-example").steps("next");
 
-                // 👇 Detenemos el avance automático (lo controlamos manualmente arriba)
-                return true;
+                return true; // ✅ Permite avanzar
             }
-
 
 
 
@@ -301,14 +311,58 @@ $(function () {
             // Si todo salió bien, permite avanzar
             return true;
         }, 
+      
+        onStepChanged: function (event, currentIndex, priorIndex) {
+            console.log("Paso actual:", currentIndex);
+
+            // Esperar a que se rendericen los botones antes de ocultar/mostrar
+            setTimeout(() => {
+                const $actions = $('.actions');
+                const $finishBtn = $actions.find('a[href="#finish"]');
+                const $nextBtn = $actions.find('a[href="#next"]');
+                const $prevBtn = $actions.find('a[href="#previous"]');
+
+                // 🔹 Paso 3 (preview): mostrar solo el botón "Finalizar"
+                if (currentIndex === 3) {
+                    $finishBtn.show().text('Finalizar');
+                    // $nextBtn.hide();
+                    $prevBtn.show();
+                } 
+                // 🔹 Paso 4 (contrato): ocultar todos los botones
+                else if (currentIndex === 4) {
+                    $actions.hide();
+                } 
+                // 🔹 Cualquier otro paso: botones normales
+                else {
+                    $actions.show();
+                    $finishBtn.hide();
+                    $nextBtn.show();
+                    $prevBtn.show();
+                }
+            }, 100);
+        },
+
+        onFinishing: function (event, currentIndex) {
+            // En el paso 3 (preview), pasar al paso 4 (contrato)
+            if (currentIndex === 3) {
+                $("#basic-example").steps("next");
+                return false;
+            }
+            return true;
+        },
+
+
         onFinished: function (event, currentIndex) {
-            console.log("Aqui este es el event", event);
-            console.log("Este esel el currentIndex", event);            
-            document.getElementById('wizard-form').submit();
+         
+            // console.log("Aqui este es el event", event);
+            // console.log("Este esel el currentIndex", event);            
+            // document.getElementById('wizard-form').submit();
         }
     });
    
 });
+
+
 
 function actualizarIframePreview(id) {
     let iframe = $("#preview");
@@ -321,7 +375,29 @@ function actualizarIframePreview(id) {
             $("#preview-section-load").hide();
         }, 1000);
 
-    }, 1000);
+    }, 1500);
+}
+
+function actualizarIframeContrato(id) {
+    let iframe = $("#contrato");
+    let src = iframe.attr("src"); 
+    let nuevoSrc = src.replace('*', id);
+
+    // Mostrar el loader y ocultar el iframe
+    $("#vista-contrato-load").show();
+    $("#vista-contrato").hide();
+
+    // Actualizar el src del iframe
+    iframe.attr("src", nuevoSrc);
+
+    // Esperar a que el iframe cargue su contenido
+    iframe.on("load", function() {
+        // Ocultar el loader después de 1 segundo
+        setTimeout(() => {
+            $("#vista-contrato-load").fadeOut(300);
+            $("#vista-contrato").fadeIn(300);
+        }, 1500);
+    });
 }
 
 

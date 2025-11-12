@@ -8,9 +8,36 @@
             font-family: DejaVu Sans, sans-serif;
             font-size: 12px;
             line-height: 1.4;
-            margin: 20px;
             text-align: justify; /* Justificado */
+            margin: 55px 20px 10px 20px; /* menos espacio arriba del header */
         }
+        @page {
+            margin: 70px 35px 25px 55px; /* margen superior reducido */
+        }
+
+        header {
+            position: fixed;
+            top: -40px; /* posición del encabezado */
+            left: 0;
+            right: 0;
+            height: 60px;
+            text-align: right;
+            font-size: 10px;
+            color: #555;
+        }
+
+        header img {
+            position: absolute;
+            left: 20px;
+            top: 5px;
+        }
+
+        header .codigo {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        }
+
         h1 {
             text-align: center;
             font-size: 16px;
@@ -107,6 +134,14 @@
     </style>
 </head>
 <body>
+ <?php if(!empty($qr)): ?>
+    <header>
+        <img src="data:image/png;base64,<?php echo e($qr); ?>" alt="QR" width="60" height="60">
+        <div class="codigo">
+            <strong>Código del contrato:</strong><?php echo e(Str::beforeLast($contrato->codigo_valido_contrato, '-')); ?>-XXXXX
+        </div>
+    </header>    
+<?php endif; ?>
 
 <h1>CONTRATO DE COMPRAVENTA</h1>
 <p>Contrato de la compraventa que celebran por una parte como VENDEDOR <strong><?php echo e($contrato->vendedor_propietario_asc); ?></strong> 

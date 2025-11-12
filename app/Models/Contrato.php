@@ -30,6 +30,8 @@ class Contrato extends Model
         'compra_id',
         'denominado_como_asc',
         'html_tablas',
+        'codigo_valido_contrato',
+        'documento_url' 
     ];
 
     /**
@@ -39,4 +41,14 @@ class Contrato extends Model
     {
         return $this->belongsTo(Compra::class);
     }
+
+
+    public static function generarCodigoUnico()
+    {
+        $fecha = now()->format('Ymd'); // Ejemplo: 20251110
+        $random = strtoupper(substr(uniqid(), -5)); // Ejemplo: 9A3F2
+        return "C-{$fecha}-{$random}";
+    }
+
+   
 }
