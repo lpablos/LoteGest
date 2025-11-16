@@ -243,6 +243,8 @@
 
 
             $.get(url, function (data) {
+            console.log("El data", data);
+            
                 $('#fracc_id').val(data.id);
                 $('#nombre').val(data.nombre);
                 $('#responsable').val(data.responsable);
@@ -255,6 +257,8 @@
                 $('#viento4').val(data.viento4);
                 $('#tipo_predios_id').val(data.tipo_predios_id);
                 $('#observaciones').val(data.observaciones);
+                $('#datos_propiedad').val(data.datos_propiedad)
+                $("#municipio_id").val(data.municipio_id); 
 
                 //Aqui hacermos el update del form
                 $('#form-fraccionamiento').attr('action', urlUpdate);
