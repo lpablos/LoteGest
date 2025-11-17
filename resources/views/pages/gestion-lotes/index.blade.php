@@ -56,7 +56,7 @@
                             <form method="GET" id="busquedaResultado" action="{{ route('lote.index') }}">
                                 <div class="mb-3">
                                     <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
-                                    <select class="form-select" id="fraccionamiento" name="identy" required>
+                                    <select class="form-select" id="fraccionamiento" name="identy" required style="cursor: pointer;">
                                         <option value="" disabled {{ old('identy', $identy ?? '') == '' ? 'selected' : '' }}>Selecciona un fraccionamiento</option>
                                         @foreach ($fraccionamientos as $fraccc)
                                             <option value="{{ $fraccc->id }}" {{ (old('identy', $identy ?? '') == $fraccc->id) ? 'selected' : '' }}>
@@ -76,7 +76,7 @@
                                 <th> Manzana </th>
                                 <th> # lote</th>
                                 <th> Precio Contado </th>
-                                <th> Precio Credito </th>
+                                <th> Precio Crédito </th>
                                 <th> Disponibilidad</th>
                                 <th> Acciones </th>
                             </tr>

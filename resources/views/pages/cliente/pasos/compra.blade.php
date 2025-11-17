@@ -7,11 +7,11 @@
             <input type="hidden" name="compra" id="compraIdenty">
         </div>
         <div class="col-md-3 mb-4">
-            <label for="num_solicitud"> Núm. de Solicitud </label>
+            <label for="num_solicitud"> Núm. de Solicitud (*)</label>
             <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
         </div>
         <div class="col-md-3 mb-4">
-            <label for="corredor"> Corredor </label>
+            <label for="corredor"> Corredor (*)</label>
             <select class="form-select form-select-sm" id="corredor" name="corredor" style="cursor: pointer;" required>
                 <option value="" selected disabled> Selecciona una opción </option>
                 @foreach ($corredores as $corredor)
@@ -20,7 +20,7 @@
             </select>
         </div>
         <div class="col-md-3 mb-4">
-            <label for="entidad_id"> Estado </label>
+            <label for="entidad_id"> Estado (*)</label>
             <select class="form-select form-select-sm" id="entidad_id" name="entidad_id" style="cursor: pointer;" required>
                 <option value="" selected disabled> Selecciona una opción </option>
                 @foreach ($estados as $estado)
@@ -29,7 +29,7 @@
             </select>
         </div>
         <div class="col-md-3 mb-4">
-            <label for="mpio_id"> Municipio </label>
+            <label for="mpio_id"> Municipio (*)</label>
             <select class="form-select form-select-sm" id="mpio_id" name="mpio_id" style="cursor: pointer;" required>
                 <option value="" selected disabled> Selecciona una opción </option>
                 @foreach ($mpios as $mpio)
@@ -38,7 +38,7 @@
             </select>
         </div>
         <div class="col-md-3 mb-4">
-            <label for="fracc_id"> Fraccionamiento </label>
+            <label for="fracc_id"> Fraccionamiento (*)</label>
             <select class="form-select form-select-sm" id="fracc_id" name="fracc_id" style="cursor: pointer;" required>
                 <option value="" selected disabled> Selecciona una opción </option>
                 @foreach ($fraccionamientos as $fracci)
@@ -47,23 +47,23 @@
             </select>
         </div>
         <div class="col-md-2 mb-4">
-            <label>Tipo de Venta</label>
-            <select id="tipoVentaSelect" class="form-select form-select-sm tipoVentaSelect" name="venta_tp" required>
+            <label> Tipo de Venta (*)</label>
+            <select id="tipoVentaSelect" class="form-select form-select-sm tipoVentaSelect" name="venta_tp" required style="cursor: pointer;">
                 <option value="" selected>Selecciona una opción</option>
-                <option value="precio_credito">Credito</option>
-                <option value="precio_contado">Contado</option>
+                <option value="precio_credito"> Crédito </option>
+                <option value="precio_contado"> Contado </option>
             </select>
         </div>
     </div>
     <div class="row col-md-12 text-center">
         <div class="m-1" id="b_add_lote">
             <button type="button" id="btn_add_compra" class="btn btn-sm btn-primary btn-small waves-effect waves-light" disabled>
-                Agregar Comnpra
+                Agregar Compra
             </button>
         </div>
     </div>
 
-    <div class="row mb-1">
+    <div class="row mb-4">
         <div id="contenedor-compra"></div>
     </div>
 
@@ -79,8 +79,8 @@
                 
             </div>
             <div class="col-md-3 mb-4">
-                <label>Selecciona Enganche</label>
-                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select" require>
+                <label> % de Enganche </label>
+                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select" require style="cursor: pointer;">
                     <option value="" selected>Selecciona una opción</option>                   
                 </select>
                 
@@ -92,7 +92,7 @@
            
             <div class="col-md-3 mb-4">
                 <label>Menualidades</label>
-                <select class="form-select form-select-sm mensualidadVentaSelect" id="mensualidades_venta_asc"  name="mensualidad_venta_select" required>
+                <select class="form-select form-select-sm mensualidadVentaSelect" id="mensualidades_venta_asc"  name="mensualidad_venta_select" required style="cursor: pointer;">
                     <option value="" selected disabled>Selecciona una opción</option>
                 </select>
             </div>

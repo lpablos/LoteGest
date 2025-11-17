@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Compra;
-use App\Models\CompraLoteLindero;
-use App\Models\Lindero;
-use App\Models\Lote;
 use DB, Session;
+use App\Models\Lote;
+use App\Models\Compra;
+use App\Models\Lindero;
+use Illuminate\Http\Request;
+use App\Models\CompraLoteLindero;
+use Illuminate\Support\Facades\Log;
 
 class CompraController extends Controller
 {

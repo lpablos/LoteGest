@@ -61,7 +61,7 @@ $(function () {
                         if (!value || value.trim() === "") {
                             isValid = false;
                             $field.addClass("is-invalid");
-                            toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
+                            //toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
                         } else {
                             $field.removeClass("is-invalid");
                         }
@@ -125,7 +125,7 @@ $(function () {
                         if (!value || value.trim() === "") {
                             isValid = false;
                             $field.addClass("is-invalid");
-                            toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
+                            //toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
                         } else {
                             $field.removeClass("is-invalid");
                         }
@@ -209,7 +209,7 @@ $(function () {
                         if (!value || value.trim() === "") {
                             isValid = false;
                             $field.addClass("is-invalid");
-                            toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
+                           // toastr.warning(`El campo "${$field.attr("name")}" es obligatorio.`);
                         } else {
                             $field.removeClass("is-invalid");
                         }

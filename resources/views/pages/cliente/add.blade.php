@@ -195,7 +195,7 @@
             }
             if ($spanContador.length === 0) {
                 // Si no existe el span del contador, crearlo opcionalmente
-                $contenedor.before('<div class="text-center mt-2"><strong>Total de lotes agregados:</strong> <span id="contador-lotes">0</span></div>');
+                $contenedor.before('<div class="text-center mt-2 pt-2"><strong>Total de lotes agregados:</strong> <span id="contador-lotes">0</span></div>');
                 
             }
             
@@ -215,16 +215,16 @@
             // Función que crea y agrega un bloque
             function agregarBloque() {
                 const bloque = $(`
-                    <div class="row col-md-12 mb-3 lote-item" id=${contadorLotes}>
+                    <div class="row col-md-12 mb-3 pt-4 lote-item" id=${contadorLotes}>
                         <div class="col-md-3 mb-4">
                             <label>Manzana</label>                            
-                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required>
+                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required style="cursor: pointer;">
                                 ${opcionesManzanas}
                             </select>
                         </div>
-                        <div class="col-md-3 mb-4">
+                        <div class="col-md-2 mb-4">
                             <label>Lote</label>
-                            <select class="form-select form-select-sm loteSelect" name="lote[]" required>
+                            <select class="form-select form-select-sm loteSelect" name="lote[]" required style="cursor: pointer;">
                                 <option value="" disabled selected>Selecciona un lote</option>
                             </select>
                         </div>

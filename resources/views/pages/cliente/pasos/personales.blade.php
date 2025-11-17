@@ -6,11 +6,11 @@
         <input type="hidden" id="identy" name="identy">   
         <div class="col-md-3 mb-4">
             <label for="no_cliente"> No. Cliente (*)</label>
-            <input type="text" class="form-control form-control-sm" name="no_cliente" style="text-transform: uppercase;" required>
+            <input type="text" class="form-control form-control-sm" name="no_cliente" style="text-transform: uppercase;" required placeholder="No. de cliente">
         </div>  
         <div class="col-md-3 mb-4">
             <label for="nombre"> Nombre(s)(*) </label>
-            <input type="text" class="form-control form-control-sm" name="nombre" id="nombre_comprador" placeholder="Ingresa el nombre"  required>
+            <input type="text" class="form-control form-control-sm" name="nombre" id="nombre_comprador" placeholder="Ingresa el nombre" required>
         </div>
         <div class="col-md-3 mb-4">
             <label for="primer_apellido"> Primer Apellido (*) </label>
@@ -22,11 +22,11 @@
         </div>
         <div class="col-md-3 mb-4">
             <label for="telefono"> Teléfono </label>
-            <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
+            <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" placeholder="Ingresa el teléfono">
         </div>
             <div class="col-md-3 mb-4">
             <label for="fecha_nacimiento">Fecha de nacimiento (*) </label>
-            <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" required style="cursor: pointer;">
         </div>
         <div class="col-md-3 mb-4">
             <label for="email"> Correo Electrónico </label>
@@ -34,11 +34,11 @@
         </div>
         <div class="col-md-3 mb-4">
             <label for="num_contacto">Número de contacto </label>
-            <input type="number" class="form-control form-control-sm" name="num_contacto" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
+            <input type="number" class="form-control form-control-sm" name="num_contacto" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" placeholder="Ingresa el número de contacto">
         </div>
         <div class="col-md-3 mb-4">
             <label for="parentesco"> Parentesco </label>
-            <input type="text" class="form-control form-control-sm" name="parentesco" >
+            <input type="text" class="form-control form-control-sm" name="parentesco" placeholder="Ingresa el parentesco">
         </div>
         <div class="col-md-3 mb-4">
             <label for="ine"> Identificación INE</label>

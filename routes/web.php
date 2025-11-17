@@ -54,6 +54,7 @@ Route::resource('estatus-proyectos', App\Http\Controllers\CatEstatusProyectoCont
 Route::resource('entidades-federativas', App\Http\Controllers\CatEntidadFederativaController::class);
 Route::resource('estatus-disponibilidad', App\Http\Controllers\CatEstatusDisponibilidadController::class);
 Route::resource('compra-fraccionamiento-lotes', App\Http\Controllers\CompraController::class);
+Route::resource('compras', App\Http\Controllers\CompraController::class);
 
 Route::get('vista-previa-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
 Route::get('vista-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'contratoPDF']);
