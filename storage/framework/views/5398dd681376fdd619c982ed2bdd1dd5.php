@@ -34,8 +34,8 @@
         </select>
     </div>
     <div class="col-md-4 mt-4">
-        <label for="superficie" class="form-label">Superficie (m²)(*)</label>
-        <input type="number" step="0.01" name="superficie" id="superficie" class="form-control" value="">
+        <label for="superficie" class="form-label"> Superficie (m²)(*) </label>
+        <input type="number" step="0.01" name="superficie" id="superficie" class="form-control" value="" required>
     </div>
     <div class="col-md-4 mt-4">
         <label for="entidad_fed_id" class="form-label">Estado (*)</label>
@@ -56,11 +56,11 @@
         </select>
     </div>
      <div class="col-md-12 mt-4">
-        <label for="datos_propiedad" class="form-label">Datos de la Propiedad</label>
+        <label for="datos_propiedad" class="form-label"> Datos de la Propiedad (*)</label>
         <input type="text" name="datos_propiedad" id="datos_propiedad" class="form-control" required>
     </div>
     <div class="col-md-12 mt-4">
-        <label for="ubicacion" class="form-label">Ubicación</label>
+        <label for="ubicacion" class="form-label"> Ubicación (*)</label>
         <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="" required>
     </div>
 </div>

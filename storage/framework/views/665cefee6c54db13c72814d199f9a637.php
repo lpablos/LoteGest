@@ -197,7 +197,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Enganche</label>
-                        <select name="manzana[${contadorManzanas}][enganche]" class="form-select" required>
+                        <select name="manzana[${contadorManzanas}][enganche]" class="form-select" required style="cursor: pointer;">
                             <option value="">Seleccione...</option>
                             <option value="10" ${m.enganche == "10" ? 'selected' : ''}>10%</option>
                             <option value="15" ${m.enganche == "15" ? 'selected' : ''}>15%</option>
@@ -207,7 +207,7 @@
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Mensualidades</label>
-                        <select name="manzana[${contadorManzanas}][mensualidades]" class="form-select" required>
+                        <select name="manzana[${contadorManzanas}][mensualidades]" class="form-select" required style="cursor: pointer;">
                             <option value="">Seleccione...</option>
                             <option value="6" ${m.mensualidades == "6" ? 'selected' : ''}>6 meses</option>
                             <option value="12" ${m.mensualidades == "12" ? 'selected' : ''}>12 meses</option>
