@@ -173,7 +173,7 @@ $(function () {
                         const { mensaje } = response;
                         const { id } = response.compra;
                         $('#compraIdenty').val(id);
-                        $("#id_contrato_asc").val(id);
+                        $("#compra_id").val(id);
                         toastr.success(mensaje);
                         pasoCompletado = true;
                         primeraClausula();
@@ -260,7 +260,8 @@ $(function () {
                         toastr.info("Guardando datos del contrato...");
                     },
                     success: function (response) {
-                        console.log("Este ees el response");
+
+                        console.log("Este ees el response", response);
                         
                         toastr.success(response.message || "Datos del contrato guardados correctamente.");
                         // Ejemplo: guardar ID o hacer acciones adicionales

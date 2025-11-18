@@ -3,6 +3,7 @@
     <form>
         <div>
             <input type="hidden" name="id_contrato_asc" id="id_contrato_asc">
+            <input type="hidden" name="compra_id" id="compra_id">
         </div>
         <h4>CONTRATO DE COMPRAVENTA</h4>
         <p>Contrato de la compraventa que celebran por una parte como <strong>VENDEDOR</strong>  

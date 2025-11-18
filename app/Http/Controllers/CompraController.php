@@ -36,7 +36,20 @@ class CompraController extends Controller
 
         DB::beginTransaction();
         try {
-            $compra = new Compra;
+            
+
+            if (!$request->filled('compra')) {
+                // NUEVA COMPRA
+                $compra = new Compra;
+            } else {
+                // EDITAR COMPRA EXISTENTE
+                $compra = Compra::find($request['compra']);
+                  // Obtener linderos anteriores
+                $linderos = CompraLoteLindero::where('compra_id',$compra->id)->pluck('lindero_id');
+                CompraLoteLindero::where('compra_id', $compra->id)->delete();
+                Lindero::whereIn('id', $linderos)->delete();
+                
+            }            
             $compra->num_solicitud = $request['num_solicitud'];
             $compra->corredor_id = $request['corredor'];
             $compra->estado_id = $request['entidad_id'];
@@ -49,11 +62,11 @@ class CompraController extends Controller
 
             $idLindero;
             $campo = 'individual';
-
-            for ($i=0; $i < $totalLotes - 1;$i++) { 
+            
+            for ($i=0; $i <= $totalLotes - 1;$i++) { 
                 
-                if($request['viento1'][$i]){
-                    
+                // if($request['viento1'][$i]){ 
+                if (!empty($request['viento1'][$i])) {
                     $lindero = new Lindero;
                     $lindero->viento1 = $request['viento1'][$i];
                     $lindero->colinda1 = $request['colinda1'][$i];

@@ -65,7 +65,7 @@ class ClienteController extends Controller
         DB::beginTransaction();
 
         try {
-            if($request->identy){
+            if($request->identy){                
                 $cliente = Cliente::find($request->identy);
             }else{
                 $cliente = new Cliente();    

@@ -52,8 +52,12 @@ class ContratoController extends Controller
         
         DB::beginTransaction();
         try {
-
-            $contrato = new Contrato();
+                        
+            if(!$request->filled('id_contrato_asc')){
+                $contrato = new Contrato();
+            }else{
+                $contrato = Contrato::findOrFail($request['id_contrato_asc']);
+            }            
             $contrato->vendedor_propietario_asc = $request['vendedor_propietario_asc'];
             $contrato->vendedor_representante_asc = $request['vendedor_representante_asc'];
             $contrato->comprador_nombre_completo_asc = $request['comprador_nombre_completo_asc'];
@@ -67,7 +71,7 @@ class ContratoController extends Controller
             $contrato->representante_firma = $request['representante_firma'];
             $contrato->comprador_firma = $request['comprador_firma'];
             $contrato->observaciones = $request['observaciones'];
-            $contrato->compra_id = $request['id_contrato_asc'];
+            $contrato->compra_id = $request['compra_id'];
             $contrato->denominado_como_asc = $request['denominado_como_asc'];
             $contrato->html_tablas = $request['html_tablas'];
             $contrato->save();

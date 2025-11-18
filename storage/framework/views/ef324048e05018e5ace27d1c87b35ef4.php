@@ -59,7 +59,9 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
-                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar</a>
+                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
+                                                    <a href="<?php echo e(route('compras.index')); ?>" class="dropdown-item"><i class="mdi mdi-card font-size-16 text-success me-1"></i> Compras </a>
+                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
                                                 </li>
                                             </ul>
                                         </div>

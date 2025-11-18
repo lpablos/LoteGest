@@ -287,6 +287,8 @@
                 }
                 actualizarContador();
                 actualizarTotalVenta();
+                verificarManzanasYLotes();
+                
               
             });
 
@@ -687,7 +689,8 @@
             function verificarManzanasYLotes() {
                 const manzanas = [];
                 const lotes = [];
-
+                // Limpiamos las tablas previas antes de volver a agregar
+                $('#contenedor-tablas').empty();
                 // Recorremos todos los selects de manzana y lote
                 $('.manzanaSelect').each(function (index) {
                     const manzanaVal = $(this).val();
@@ -707,9 +710,9 @@
                 // Verificar si los lotes son una secuencia válida
                 const enSecuencia = verificarSecuenciaFlexible(lotes);
 
-                // Limpiamos las tablas previas antes de volver a agregar
-                $('#contenedor-tablas').empty();
-
+                // // Limpiamos las tablas previas antes de volver a agregar
+                // $('#contenedor-tablas').empty();
+                
                 if (todasIguales && enSecuencia) {
                     console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
                     agregarTabla();
