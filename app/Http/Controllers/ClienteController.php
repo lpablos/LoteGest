@@ -6,6 +6,7 @@ use DB, Session;
 use App\Models\User;
 use App\Models\Compra;
 use App\Models\Cliente;
+use App\Helpers\Helper;
 use App\Models\CatMunicipio;
 use Illuminate\Http\Request;
 use App\Models\Fraccionamiento;
