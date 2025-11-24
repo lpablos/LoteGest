@@ -56,6 +56,7 @@ class CompraController extends Controller
             $compra->municipio_id = $request['mpio_id'];
             $compra->fraccionamiento_id = $request['fracc_id'];
             $compra->cliente_id = $request['identyCli']; // Hay que agregarlo en el front
+            $compra->estatus_id = 2; // Al dejar una compra pendiente, aún sin generar el contrato
             $compra->save();
             
             $totalLotes = count($request['lote']);

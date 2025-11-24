@@ -9,7 +9,7 @@
 @slot('title') Dashboard @endslot
 @endcomponent
 
-<div class="row">
+{{--  <div class="row">
     <div class="col-xl-4">
         <div class="card overflow-hidden">
             <div class="bg-primary-subtle">
@@ -168,10 +168,10 @@
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <!-- end row -->
 
-<div class="row">
+{{--  <div class="row">
     <div class="col-xl-4">
         <div class="card">
             <div class="card-body">
@@ -363,10 +363,10 @@
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <!-- end row -->
 
-<div class="row">
+{{--  <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
@@ -568,11 +568,11 @@
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <!-- end row -->
 
 <!-- Transaction Modal -->
-<div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
+{{--  <div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -654,7 +654,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>  --}}
 <!-- end modal -->
 
 <!-- subscribeModal -->

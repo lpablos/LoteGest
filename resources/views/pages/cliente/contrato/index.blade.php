@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Clientes
+    Contratos
 @endsection
 
 @section('css')
@@ -25,51 +25,23 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Clientes </h2>
+                                    <h2> Contratos </h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('cliente.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
-                            </div>
-                        </div><!-- end col-->
                     </div>
-                    <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
+                                <th> Núm. de venta </th>
                                 <th> Núm. cliente </th>
-                                <th> Fecha alta </th>
-                                <th> Corredor </th>
-                                <th> Estatus </th>
+                                <th> Fecha contrato </th>
+                                <th> Fraccionamiento </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clientes as $cliente)
-                                <tr>
-                                    <td>{{ $cliente->nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}</td>
-                                    <td> ZAC-CARMAL-25 </td>
-                                    <td> {{ Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y') }} </td>
-                                    <td> SIN INFORMACIÓN </td>
-                                    <td> SIN INFORMACIÓN </td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-start">
-                                                <li>
-                                                    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
-                                                    <a href="{{ route('cliente.show', ['cliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-receipt font-size-16 text-success me-1"></i> Compras </a>
-                                                    <a href="{{ route('cliente.contratos', ['idCliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-folder-open font-size-16 text-success me-1"></i> Contratos </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            
                         </tbody>
                     </table>
                 </div>
@@ -112,7 +84,7 @@
             });
         
             //Buttons examples
-            var table = $('#datatable-cliente').DataTable({
+            var table = $('#datatable-cliente-contratos').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "Sin resultados",
@@ -128,7 +100,7 @@
                 lengthChange: true
             });
         
-            table.buttons().container().appendTo('#datatable-cliente_wrapper .col-md-6:eq(0)');
+            table.buttons().container().appendTo('#datatable-cliente-contratos_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
 

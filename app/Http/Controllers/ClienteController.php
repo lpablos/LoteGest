@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB, Session;
 use App\Models\User;
+use App\Models\Compra;
 use App\Models\Cliente;
 use App\Models\CatMunicipio;
 use Illuminate\Http\Request;
@@ -71,9 +72,9 @@ class ClienteController extends Controller
                 $cliente = new Cliente();    
             }
             $cliente->no_cliente = $request->no_cliente;
-            $cliente->nombre = $request->nombre;
-            $cliente->primer_apellido = $request->primer_apellido;
-            $cliente->segundo_apellido = $request->segundo_apellido;
+            $cliente->nombre = Helper::capitalizeFirst($request->nombre);
+            $cliente->primer_apellido = Helper::capitalizeFirst($request->primer_apellido);
+            $cliente->segundo_apellido = Helper::capitalizeFirst($request->segundo_apellido);
             $cliente->telefono = $request->telefono;
             $cliente->fecha_nacimiento = $request->fecha_nacimiento;
             $cliente->email = $request->email;
@@ -112,7 +113,19 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        dd($cliente);
+        $compras = Compra::leftJoin('users', 'compras.corredor_id', 'users.id')
+                            ->select('compras.num_solicitud', 'compras.num_solicitud_sistema', DB::raw('CONCAT(users.nombre," ", users.primer_apellido) AS corredor'))
+                            ->where('cliente_id', $cliente->id)
+                            ->where('compras.estatus_id', 2)
+                            ->get();
+
+        // dd($compras);
+
+        if (view()->exists('pages.cliente.compra.index')) {
+
+            return view('pages.cliente.compra.index', compact('cliente', 'compras'));
+        }
+        return abort(404);
     }
 
     /**
@@ -188,5 +201,13 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+
+    public function verContrato($idCliente) {
+        if (view()->exists('pages.cliente.contrato.index')) {
+
+            return view('pages.cliente.contrato.index');
+        }
+        return abort(404);
     }
 }

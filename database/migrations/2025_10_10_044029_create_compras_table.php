@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('fraccionamiento_id')->constrained('fraccionamientos')->onDelete('restrict');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('restrict');
             $table->unsignedBigInteger("estatus_id")->nullable();
-            $table->foreign("estatus_id")->references("id")->on("cat_estatus");
+            $table->foreign("estatus_id")->references("id")->on("cat_estatus_proyectos");
             $table->softDeletes();
             $table->timestamps();
         });

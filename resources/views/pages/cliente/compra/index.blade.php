@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Clientes
+    Compras
 @endsection
 
 @section('css')
@@ -25,35 +25,28 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Clientes </h2>
+                                    <h2> Compras </h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('cliente.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
-                            </div>
-                        </div><!-- end col-->
                     </div>
                     <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
                                 <th> Núm. cliente </th>
-                                <th> Fecha alta </th>
+                                <th> Núm. de solicitud </th>
                                 <th> Corredor </th>
-                                <th> Estatus </th>
+                                <th> Fecha registro </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clientes as $cliente)
+                            @foreach ($compras as $compra)
                                 <tr>
-                                    <td>{{ $cliente->nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}</td>
-                                    <td> ZAC-CARMAL-25 </td>
-                                    <td> {{ Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y') }} </td>
-                                    <td> SIN INFORMACIÓN </td>
-                                    <td> SIN INFORMACIÓN </td>
+                                    <td>{{ $compra->num_solicitud }} </td>
+                                    <td>{{ $compra->num_solicitud_sistema }} </td>
+                                    <td>{{ $compra->corredor }} </td>
+                                    <td> {{ Carbon\Carbon::parse($compra->created_at)->format('d-m-Y') }} </td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,9 +54,7 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
-                                                    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
-                                                    <a href="{{ route('cliente.show', ['cliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-receipt font-size-16 text-success me-1"></i> Compras </a>
-                                                    <a href="{{ route('cliente.contratos', ['idCliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-folder-open font-size-16 text-success me-1"></i> Contratos </a>
+                                                    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Ver detalle </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -76,7 +67,6 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    {{--  @include('usuario.add')  --}}
 @endsection
 @section('script')
     <!-- Required datatable js -->
