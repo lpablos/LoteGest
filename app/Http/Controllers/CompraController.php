@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB, Session;
 use App\Models\Lote;
 use App\Models\Compra;
+use App\Helpers\Helper;
 use App\Models\Lindero;
 use Illuminate\Http\Request;
 use App\Models\CompraLoteLindero;
