@@ -165,8 +165,83 @@
     <!-- form wizard init -->
     <script src="{{ URL::asset('build/js/pages/form-wizard.init.js') }}"></script>
 
+   
+    <script>
+        
+        window.datosCompra =@json($datosCompra ?? []);
+    </script>
+
     <script>
         $(document).ready(function () {
+
+             // 👉 Aquí recibes los datos de Laravel
+            let datos = window.datosCompra;
+            let modoCargando = false;
+
+            let $fraccSelect = $('#fracc_id');
+            
+            if(datos.length > 0){
+                console.log("esta es la data -->", datos);
+                
+                const {cliente, corredor, estado, fraccionamiento, compralotelinderos} = datos[0]
+
+                console.log("Este es el cliente", cliente);
+                // Segmento del clinte
+                $("#identy").val(cliente.id);
+                $("#no_cliente").val(cliente.no_cliente)
+                $("#nombre_comprador").val(cliente.nombre)
+                $("#primer_ap_comprador").val(cliente.primer_apellido)
+                $("#segundo_ap_comprador").val(cliente.segundo_apellido)
+                $("#telefono_comprador").val(cliente.telefono)
+                $("#fecha_nacimiento").val(cliente.fecha_nacimiento.split("T")[0])
+                $("#correo_electronico_comprador").val(cliente.email)
+                $("#num_contacto_comprador").val(cliente.num_contacto)
+                $("#parentesco_comprador").val(cliente.parentesco)
+
+                // Datos de compra
+                $("#identyCli").val(cliente.id)
+                $("#compraIdenty").val(datos[0].id)
+                $("#num_solicitud").val(datos[0].num_solicitud)                
+                $("#btn_add_compra").prop('disabled', false);
+                setTimeout(() => {
+                    $("#corredor").val(corredor.id).trigger("change");
+                    $("#entidad_id").val(datos[0].estado_id).trigger("change");
+                    $("#mpio_id").val(estado.id).trigger("change");
+                    $("#tipoVentaSelect").val(datos[0].venta_tp).trigger("change");
+                    $("#fracc_id").val(fraccionamiento.id).trigger("change");   
+
+                    
+                }, 1000);
+                setTimeout(() => {
+                    modoCargando = true;
+                    compralotelinderos.forEach(registro => {
+                        agregarBloque(registro);
+                    });
+                    setTimeout(() => {
+                        modoCargando = false;                        
+                    }, 1000);
+                }, 1500);
+
+                document.getElementById('resumen_compra').style.display = 'block';
+
+
+                // Resumen de compra
+                $("#superficiel_venta").val(datos[0].superficiel_venta);
+                $("#total_venta").val(datos[0].total_venta);
+                setTimeout(() => {
+                    $("#enganche_venta_select").val(datos[0].enganche_venta_select).trigger("change");
+                    $("#mensualidad_venta_select").val(datos[0].mensualidad_venta_select).trigger("change");
+                    setTimeout(() => {
+                        $("#enganche_venta").val(datos[0].enganche_venta);
+                        $("#pago_mensual_venta").val(datos[0].ago_mensual_venta);                                            
+                    }, 200);
+                }, 2000);
+
+                
+               
+            }
+
+
             
             let contadorLotes = 0;
             let contadorTablas = 0; 
@@ -183,7 +258,7 @@
             const $contenedor = $('#contenedor-compra');
             const $spanContador = $('#contador-lotes');
 
-            const $fraccSelect = $('#fracc_id');
+           
 
             if ($btn.length === 0) {
                 // console.error('No existe el botón con id #btn_add_compra en el DOM');
@@ -198,6 +273,8 @@
                 $contenedor.before('<div class="text-center mt-2 pt-2"><strong>Total de lotes agregados:</strong> <span id="contador-lotes">0</span></div>');
                 
             }
+
+
             
 
             // Función para actualizar contador en pantalla
@@ -213,42 +290,104 @@
             }
 
             // Función que crea y agrega un bloque
-            function agregarBloque() {
+            // function agregarBloque() {
+            //     const bloque = $(`
+            //         <div class="row col-md-12 mb-3 pt-4 lote-item" id=${contadorLotes}>
+            //             <div class="col-md-3 mb-4">
+            //                 <label>Manzana</label>                            
+            //                 <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required style="cursor: pointer;">
+            //                     ${opcionesManzanas}
+            //                 </select>
+            //             </div>
+            //             <div class="col-md-2 mb-4">
+            //                 <label>Lote</label>
+            //                 <select class="form-select form-select-sm loteSelect" name="lote[]" required style="cursor: pointer;">
+            //                     <option value="" disabled selected>Selecciona un lote</option>
+            //                 </select>
+            //             </div>
+            //             <div class="col-md-3 mb-4">
+            //                 <label>Superficie m2</label>
+            //                 <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm" required>
+            //             </div>                      
+            //             <div class="col-md-3 mb-4">
+            //                 <label>Precio</label>
+            //                 <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" required>
+            //             </div>
+            //             <div class="col-md-1 mb-4 d-flex align-items-end">
+            //                 <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
+            //             </div>
+            //         </div>
+            //     `);
+
+            //     // Agregar al contenedor y actualizar contador
+            //     $contenedor.append(bloque);
+            //     contadorLotes++;
+            //     actualizarContador();
+                // agregarTabla();                    
+                
+            // }
+            function agregarBloque(data = null) {
                 const bloque = $(`
-                    <div class="row col-md-12 mb-3 pt-4 lote-item" id=${contadorLotes}>
+                    <div class="row col-md-12 mb-3 pt-4 lote-item" id="bloque_${contadorLotes}">
                         <div class="col-md-3 mb-4">
-                            <label>Manzana</label>                            
-                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required style="cursor: pointer;">
+                            <label>Manzana</label>
+                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required>
                                 ${opcionesManzanas}
                             </select>
                         </div>
+
                         <div class="col-md-2 mb-4">
                             <label>Lote</label>
-                            <select class="form-select form-select-sm loteSelect" name="lote[]" required style="cursor: pointer;">
+                            <select class="form-select form-select-sm loteSelect" name="lote[]" required>
                                 <option value="" disabled selected>Selecciona un lote</option>
                             </select>
                         </div>
+
                         <div class="col-md-3 mb-4">
                             <label>Superficie m2</label>
-                            <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm" required>
-                        </div>                      
+                            <input type="number" min="1" step="0.01" 
+                                name="superficie_m2[]" 
+                                class="form-control form-control-sm superficieInput" required>
+                        </div>
+
                         <div class="col-md-3 mb-4">
                             <label>Precio</label>
-                            <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" required>
+                            <input type="text" step="0.01" 
+                                name="precio[]" 
+                                class="form-control form-control-sm precioInput" required>
                         </div>
+
                         <div class="col-md-1 mb-4 d-flex align-items-end">
-                            <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
+                            <button type="button" class="btn btn-sm btn-danger btn-eliminar">✖</button>
                         </div>
                     </div>
                 `);
 
-                // Agregar al contenedor y actualizar contador
                 $contenedor.append(bloque);
                 contadorLotes++;
                 actualizarContador();
-                // agregarTabla();                    
-                
+                // Si se enviaron datos → rellenar automáticamente
+                if (data) {
+                    setTimeout(() => {
+                        // 1. Seleccionar manzana
+                        bloque.find(".manzanaSelect").val(data.lote.manzana_id).trigger("change");
+                        // 2. Cargar lotes en ese select (debes tener una función que llene los lotes)
+                        bloque.find(".loteSelect").val(data.lote_id).trigger("change");
+                    }, 200);
+                    // 3. Superficie
+                    bloque.find(".superficieInput").val(data.superficie_m2);
+                    // 4. Precio
+                    bloque.find(".precioInput").val(data.precio);
+                }
+                // console.log("Esta es al data ",data);
+                setTimeout(() => {
+                    agregarTabla(data)
+                    
+                }, 300);
+
+               
             }
+
 
             $(document).on('change', '.manzanaSelect', function() {
                 const manzanaId = parseInt($(this).val());
@@ -269,7 +408,6 @@
 
                 
             });
-
 
             // Evento click: agrega 1 bloque por click
             $btn.on('click', function () {
@@ -305,7 +443,71 @@
                 document.getElementById('resumen_compra').style.display = 'none';
             }
 
-           function agregarTabla() {
+            // function agregarTabla() {
+            //     contadorTablas++;
+
+            //     const tabla = $(`
+            //         <div class="row col-md-12 mb-3 tabla-item">                        
+            //             <table class="table table-bordered border-primary mb-0 table">
+            //                 <thead>
+            //                     <tr>
+            //                         <th>Vientos</th>
+            //                         <th>Metros</th>
+            //                         <th>Colindancia</th>
+            //                         <th>Descripción</th>
+            //                     </tr>
+            //                 </thead>
+            //                 <tbody>
+            //                     <tr>
+            //                         <td>${opcionesVientos.viento1}</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" name="colinda1[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                     </tr>
+            //                     <tr>
+            //                         <td>${opcionesVientos.viento2}</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" name="colinda2[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                     </tr>
+            //                     <tr>
+            //                         <td>${opcionesVientos.viento3}</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" name="colinda3[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                     </tr>
+            //                     <tr>
+            //                         <td>${opcionesVientos.viento4}</td>
+            //                         <td>
+            //                             <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                         <td>Colindando con:</td>
+            //                         <td>
+            //                             <input type="text" name="colinda4[]" class="form-control form-control-sm" required>
+            //                         </td>
+            //                     </tr>
+            //                 </tbody>
+            //             </table>
+            //         </div>
+            //     `);
+
+            //     $('#contenedor-tablas').append(tabla);
+            // }
+            function agregarTabla(data = null) {
+                
+                
                 contadorTablas++;
 
                 const tabla = $(`
@@ -322,43 +524,27 @@
                             <tbody>
                                 <tr>
                                     <td>${opcionesVientos.viento1}</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="viento1[]" class="form-control form-control-sm viento1Input" required></td>
                                     <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" name="colinda1[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="colinda1[]" class="form-control form-control-sm colinda1Input" required></td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento2}</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="viento2[]" class="form-control form-control-sm viento2Input" required></td>
                                     <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" name="colinda2[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="colinda2[]" class="form-control form-control-sm colinda2Input" required></td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento3}</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="viento3[]" class="form-control form-control-sm viento3Input" required></td>
                                     <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" name="colinda3[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="colinda3[]" class="form-control form-control-sm colinda3Input" required></td>
                                 </tr>
                                 <tr>
                                     <td>${opcionesVientos.viento4}</td>
-                                    <td>
-                                        <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="viento4[]" class="form-control form-control-sm viento4Input" required></td>
                                     <td>Colindando con:</td>
-                                    <td>
-                                        <input type="text" name="colinda4[]" class="form-control form-control-sm" required>
-                                    </td>
+                                    <td><input type="text" name="colinda4[]" class="form-control form-control-sm colinda4Input" required></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -366,7 +552,23 @@
                 `);
 
                 $('#contenedor-tablas').append(tabla);
+
+                // Si hay datos → rellenar automáticamente
+                if (data) {
+                    tabla.find(".viento1Input").val(data.lindero.viento1);
+                    tabla.find(".colinda1Input").val(data.lindero.colinda1);
+
+                    tabla.find(".viento2Input").val(data.lindero.viento2);
+                    tabla.find(".colinda2Input").val(data.lindero.colinda2);
+
+                    tabla.find(".viento3Input").val(data.lindero.viento3);
+                    tabla.find(".colinda3Input").val(data.lindero.colinda3);
+
+                    tabla.find(".viento4Input").val(data.lindero.viento4);
+                    tabla.find(".colinda4Input").val(data.lindero.colinda4);
+                }
             }
+
 
 
 
@@ -682,7 +884,10 @@
 
             // Detecta cambios en manzana o lote
             $(document).on('change', '.manzanaSelect, .loteSelect', function () {
-                verificarManzanasYLotes();
+                // verificarManzanasYLotes();
+                if (!modoCargando) {
+                    verificarManzanasYLotes();
+                }
             });
 
 
@@ -714,10 +919,10 @@
                 // $('#contenedor-tablas').empty();
                 
                 if (todasIguales && enSecuencia) {
-                    console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
+                    // console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
                     agregarTabla();
                 } else {
-                    console.log('⚠️ Manzanas distintas o lotes no secuenciales → una tabla por registro');
+                    // console.log('⚠️ Manzanas distintas o lotes no secuenciales → una tabla por registro');
                     manzanas.forEach(() => agregarTabla());
                 }
             }
@@ -778,6 +983,8 @@
                     }
                 });
             });
+
+           
             
         });
     </script>

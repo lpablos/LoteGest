@@ -211,4 +211,29 @@ class ClienteController extends Controller
         }
         return abort(404);
     }
+
+    public function continue($solicitudSys)
+    {
+        
+        if (view()->exists('pages.cliente.add')) {
+
+            $corredores = User::select('id', DB::raw('CONCAT(nombre, " ", primer_apellido) AS full_name'))->where('role_id', 4)->get();
+            $estados = CatEntidadFederativa::select('id', 'nom_estado')->get();
+            $mpios = CatMunicipio::select('id', 'nom_mpio')->get();
+            $fraccionamientos = Fraccionamiento::select('id', 'nombre')->get();
+
+            $datosCompra = Compra::where('num_solicitud_sistema',$solicitudSys)->with([
+                            'corredor',
+                            'estado',
+                            'municipio',
+                            'fraccionamiento',
+                            'cliente',
+                            'compralotelinderos.lindero',
+                            'compralotelinderos.lote.manzana'
+                        ])->get();
+                
+            return view('pages.cliente.add', compact('corredores', 'estados', 'mpios', 'fraccionamientos', 'datosCompra'));
+        }
+        return abort(404);
+    }
 }

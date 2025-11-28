@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-3 mb-4">
             <label for="num_solicitud"> Núm. de Solicitud (*)</label>
-            <input type="text" step="0.01" name="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
+            <input type="text" step="0.01" name="num_solicitud" id="num_solicitud" class="form-control form-control-sm" style="text-transform: uppercase;">
         </div>
         <div class="col-md-3 mb-4">
             <label for="corredor"> Corredor (*)</label>
@@ -71,7 +71,7 @@
          <div class="row col-md-12 mb-3 lote-item-venta">
             <div class="col-md-3 mb-4">
                 <label>Superficie Total (m2)</label>
-                <input type="text" name="superficiel_venta" class="form-control form-control-sm" readonly>
+                <input type="text" name="superficiel_venta" id="superficiel_venta" class="form-control form-control-sm" readonly>
             </div>
             <div class="col-md-3 mb-4">
                 <label>Total de Venta (MXN)</label>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <label> % de Enganche </label>
-                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select" require style="cursor: pointer;">
+                <select class="form-select form-select-sm engancheVentaSelect" name="enganche_venta_select" id="enganche_venta_select" require style="cursor: pointer;">
                     <option value="" selected>Selecciona una opción</option>                   
                 </select>
                 

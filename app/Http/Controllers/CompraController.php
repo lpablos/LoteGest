@@ -58,6 +58,13 @@ class CompraController extends Controller
             $compra->fraccionamiento_id = $request['fracc_id'];
             $compra->cliente_id = $request['identyCli']; // Hay que agregarlo en el front
             $compra->estatus_id = 2; // Al dejar una compra pendiente, aún sin generar el contrato
+            $compra->venta_tp = $request['venta_tp'];
+            $compra->superficiel_venta = $request['superficiel_venta'];
+            $compra->total_venta = $request['total_venta'];
+            $compra->enganche_venta_select = $request['enganche_venta_select'];
+            $compra->enganche_venta = $request['enganche_venta'];
+            $compra->mensualidad_venta_select = $request['mensualidad_venta_select'];
+            $compra->pago_mensual_venta = $request['pago_mensual_venta'];
             $compra->save();
             
             $totalLotes = count($request['lote']);
@@ -86,13 +93,16 @@ class CompraController extends Controller
                 if(count($request['viento1']) !== $totalLotes){
                     $campo = 'union';
                 }
+                
                 // las asociacion de la venta
                 $loteLindero = new CompraLoteLindero;
                 $loteLindero->compra_id = $compra->id;
                 $loteLindero->lote_id = $request['lote'][$i];
+                $loteLindero->superficie_m2 = $request['superficie_m2'][$i];
+                $loteLindero->precio = $request['precio'][$i];
                 $loteLindero->lindero_id = $idLindero;
                 $loteLindero->campo = $campo;
-                $loteLindero->descripcion = "demo";
+                // $loteLindero->descripcion = "demo";
                 $loteLindero->save();
                 // Se pone como vendido el lote por que ya se vendio
                 $loteVendido = Lote::findOrFail($request['lote'][$i]);

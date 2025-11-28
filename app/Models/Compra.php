@@ -25,6 +25,14 @@ class Compra extends Model
         'municipio_id',
         'fraccionamiento_id',
         'cliente_id',
+        'venta_tp',
+        'estatus_id',
+        'superficiel_venta',
+        'total_venta',
+        'enganche_venta_select',
+        'enganche_venta',
+        'mensualidad_venta_select',
+        'pago_mensual_venta',
     ];
 
     protected static function booted()
@@ -64,8 +72,13 @@ class Compra extends Model
         return $this->belongsTo(Fraccionamiento::class, 'fraccionamiento_id', 'id');
     }
 
-      public function cliente()
+    public function cliente()
     {
         return $this->belongsTo(Cliente::class, 'fraccionamiento_id', 'id');
+    }
+    
+    public function compralotelinderos()
+    {
+        return $this->hasMany(CompraLoteLindero::class, 'compra_id', 'id');
     }
 }

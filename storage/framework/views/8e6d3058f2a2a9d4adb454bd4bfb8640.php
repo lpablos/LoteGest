@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-    Clientes
+    Compras
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -23,35 +23,28 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Clientes </h2>
+                                    <h2> Compras </h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end">
-                                <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="<?php echo e(route('cliente.create')); ?>" role="button"><i class="mdi mdi-plus me-1"></i> Agregar </a>
-                            </div>
-                        </div><!-- end col-->
                     </div>
                     <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
                                 <th> Núm. cliente </th>
-                                <th> Fecha alta </th>
+                                <th> Núm. de solicitud </th>
                                 <th> Corredor </th>
-                                <th> Estatus </th>
+                                <th> Fecha registro </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $clientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cliente): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__currentLoopData = $compras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $compra): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td><?php echo e($cliente->nombre); ?> <?php echo e($cliente->primer_apellido); ?> <?php echo e($cliente->segundo_apellido); ?></td>
-                                    <td> ZAC-CARMAL-25 </td>
-                                    <td> <?php echo e(Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y')); ?> </td>
-                                    <td> SIN INFORMACIÓN </td>
-                                    <td> SIN INFORMACIÓN </td>
+                                    <td><?php echo e($compra->num_solicitud); ?> </td>
+                                    <td><?php echo e($compra->num_solicitud_sistema); ?> </td>
+                                    <td><?php echo e($compra->corredor); ?> </td>
+                                    <td> <?php echo e(Carbon\Carbon::parse($compra->created_at)->format('d-m-Y')); ?> </td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,9 +52,7 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
-                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
-                                                    <a href="<?php echo e(route('cliente.show', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-receipt font-size-16 text-success me-1"></i> Compras </a>
-                                                    <a href="<?php echo e(route('cliente.contratos', ['idCliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-folder-open font-size-16 text-success me-1"></i> Contratos </a>
+                                                    <a href="<?php echo e(route('cliente.compra.continue', ['solicitudSys' => $compra->num_solicitud_sistema ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Ver detalle </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -74,7 +65,6 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-    
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <!-- Required datatable js -->
@@ -204,4 +194,4 @@
 
 
 
-<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cliente/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /Users/luisjorgepablosartillo/Documents/PROYECTOS/LoteGest/resources/views/pages/cliente/compra/index.blade.php ENDPATH**/ ?>

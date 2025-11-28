@@ -54,7 +54,7 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
-                                                    <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Ver detalle </a>
+                                                    <a href="{{ route('cliente.compra.continue', ['solicitudSys' => $compra->num_solicitud_sistema ])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Ver detalle </a>
                                                 </li>
                                             </ul>
                                         </div>

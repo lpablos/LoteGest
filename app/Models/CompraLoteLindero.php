@@ -22,6 +22,8 @@ class CompraLoteLindero extends Model
         'lindero_id',
         'campo',
         'descripcion',
+        'superficie_m2',
+        'precio',
     ];
 
     // Relaciones
