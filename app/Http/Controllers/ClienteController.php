@@ -241,4 +241,21 @@ class ClienteController extends Controller
         }
         return abort(404);
     }
+
+
+    public function nuevaCompra($idCliente)
+    {
+        
+        if (view()->exists('pages.cliente.add')) {
+
+            $corredores = User::select('id', DB::raw('CONCAT(nombre, " ", primer_apellido) AS full_name'))->where('role_id', 4)->get();
+            $estados = CatEntidadFederativa::select('id', 'nom_estado')->get();
+            $mpios = CatMunicipio::select('id', 'nom_mpio')->get();
+            $fraccionamientos = Fraccionamiento::select('id', 'nombre')->get();
+            $datosCliente = Cliente::find($idCliente);
+            
+            return view('pages.cliente.add', compact('corredores', 'estados', 'mpios', 'fraccionamientos','datosCliente'));
+        }
+        return abort(404);
+    }
 }

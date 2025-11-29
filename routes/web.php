@@ -42,6 +42,7 @@ Route::resource('usuarios', App\Http\Controllers\UserController::class);
 Route::resource('perfiles', App\Http\Controllers\RoleController::class);
 Route::resource('cliente', App\Http\Controllers\ClienteController::class);
 Route::get('cliente-compra/{solicitudSys}', [App\Http\Controllers\ClienteController::class, 'continue'])->name('cliente.compra.continue');
+Route::get('cliente-nueva-compra/{idCliente}', [App\Http\Controllers\ClienteController::class, 'nuevaCompra'])->name('cliente.nueva.compra');
 Route::resource('estatus', App\Http\Controllers\CatEstatusController::class);
 Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
 Route::resource('contratos', App\Http\Controllers\ContratoController::class);

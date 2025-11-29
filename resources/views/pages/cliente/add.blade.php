@@ -169,16 +169,34 @@
     <script>
         
         window.datosCompra =@json($datosCompra ?? []);
+        window.datosCliente =@json($datosCliente ?? null);
     </script>
 
     <script>
         $(document).ready(function () {
 
-             // 👉 Aquí recibes los datos de Laravel
+             
             let datos = window.datosCompra;
+            let registroCliente = window.datosCliente;
+            console.log("esto tienes", registroCliente);
+            
+            
             let modoCargando = false;
 
             let $fraccSelect = $('#fracc_id');
+
+            if(registroCliente){
+                $("#identy").val(registroCliente.id);
+                $("#no_cliente").val(registroCliente.no_cliente)
+                $("#nombre_comprador").val(registroCliente.nombre)
+                $("#primer_ap_comprador").val(registroCliente.primer_apellido)
+                $("#segundo_ap_comprador").val(registroCliente.segundo_apellido)
+                $("#telefono_comprador").val(registroCliente.telefono)
+                $("#fecha_nacimiento").val(registroCliente.fecha_nacimiento.split("T")[0])
+                $("#correo_electronico_comprador").val(registroCliente.email)
+                $("#num_contacto_comprador").val(registroCliente.num_contacto)
+                $("#parentesco_comprador").val(registroCliente.parentesco)
+            }
             
             if(datos.length > 0){
                 console.log("esta es la data -->", datos);
