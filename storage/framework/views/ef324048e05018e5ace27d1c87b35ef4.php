@@ -59,9 +59,10 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li>
-                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a>
-                                                    <a href="<?php echo e(route('cliente.show', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-receipt font-size-16 text-success me-1"></i> Compras </a>
-                                                    <a href="<?php echo e(route('cliente.contratos', ['idCliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-folder-open font-size-16 text-success me-1"></i> Contratos </a>
+                                                    <a href="<?php echo e(route('cliente.edit', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-user font-size-16 text-success me-1"></i> Editar </a>
+                                                     <a href="<?php echo e(route('cliente.show', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-cart font-size-16 text-success me-1"></i>Nueva Compra </a>
+                                                    <a href="<?php echo e(route('cliente.show', ['cliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-list-ol font-size-16 text-success me-1"></i> Compras </a>
+                                                    <a href="<?php echo e(route('cliente.contratos', ['idCliente' => $cliente->id ])); ?>" class="dropdown-item"><i class="bx bx-list-check font-size-16 text-success me-1"></i> Contratos </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -70,6 +71,8 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
+
+                   
                 </div>
             </div>
         </div> <!-- end col -->

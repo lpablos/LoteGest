@@ -63,6 +63,17 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Regresar </a>
+                        </div> <!-- end col -->
+                        <!-- <div class="col-sm-6">
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
+                            </div>
+                        </div>  -->
+                    </div>
                 </div>
             </div>
         </div> <!-- end col -->
