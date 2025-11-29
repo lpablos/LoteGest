@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Contrato;
+use App\Models\Compra;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,7 +29,9 @@ class DocumentosController extends Controller
     public function contratoPDF($registro)
     {
         $contrato = Contrato::find($registro);
-
+        $compra = Compra::find($contrato->compra_id);
+        $compra->estatus_id = 3;
+        $compra->save();
         if (!$contrato) {
             abort(404, 'Contrato no encontrado');
         }

@@ -18,6 +18,8 @@ class CatEstatusProyecto extends Model
         'descripcion',
     ];
 
+    protected $hidden = ['deleted_at', 'created_at', 'updated_at'];
+
      public function proyectos()
     {
         return $this->hasMany(Proyecto::class);

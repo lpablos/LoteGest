@@ -36,6 +36,8 @@
                                 <th> Núm. cliente </th>
                                 <th> Núm. de solicitud </th>
                                 <th> Corredor </th>
+                                <th> Cliente </th>
+                                <th> Estatus </th>
                                 <th> Fecha registro </th>
                                 <th> Acciones </th>
                             </tr>
@@ -45,7 +47,9 @@
                                 <tr>
                                     <td>{{ $compra->num_solicitud }} </td>
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
-                                    <td>{{ $compra->corredor }} </td>
+                                    <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->estatus->nombre }} </td>
                                     <td> {{ Carbon\Carbon::parse($compra->created_at)->format('d-m-Y') }} </td>
                                     <td>
                                         <div class="dropdown">

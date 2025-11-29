@@ -115,14 +115,16 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         
-        $compras = Compra::leftJoin('users', 'compras.corredor_id', 'users.id')
-                            ->select('compras.num_solicitud', 'compras.num_solicitud_sistema', DB::raw('CONCAT(users.nombre," ", users.primer_apellido) AS corredor'))
-                            ->where('cliente_id', $cliente->id)
-                            // ->where('compras.estatus_id', 3)
-                            ->get();
-
-        // dd($compras);
-
+        // $compras = Compra::leftJoin('users', 'compras.corredor_id', 'users.id')
+        //                     ->select('compras.num_solicitud', 'compras.num_solicitud_sistema', DB::raw('CONCAT(users.nombre," ", users.primer_apellido) AS corredor'))
+        //                     ->where('cliente_id', $cliente->id)
+        //                     ->where('compras.estatus_id', 2)
+        //                     ->get();
+        $compras = Compra::with(['cliente','estatus','corredor'])
+                    ->where('cliente_id', $cliente->id)
+                    ->where('estatus_id', 2)
+                    ->get();
+        
         if (view()->exists('pages.cliente.compra.index')) {
 
             return view('pages.cliente.compra.index', compact('cliente', 'compras'));

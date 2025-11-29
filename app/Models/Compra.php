@@ -10,6 +10,7 @@ use App\Models\CatEntidadFederativa;
 use App\Models\CatMunicipio;
 use App\Models\Cliente;
 use App\Models\Contrato;
+use App\Models\CatEstatusProyecto;
 
 
 class Compra extends Model
@@ -86,5 +87,10 @@ class Compra extends Model
     public function contrato()
     {
         return $this->hasOne(Contrato::class);
+    }
+
+    public function estatus()
+    {
+        return $this->belongsTo(CatEstatusProyecto::class, 'estatus_id');
     }
 }

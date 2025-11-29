@@ -34,6 +34,8 @@
                                 <th> Núm. cliente </th>
                                 <th> Núm. de solicitud </th>
                                 <th> Corredor </th>
+                                <th> Cliente </th>
+                                <th> Estatus </th>
                                 <th> Fecha registro </th>
                                 <th> Acciones </th>
                             </tr>
@@ -43,7 +45,9 @@
                                 <tr>
                                     <td><?php echo e($compra->num_solicitud); ?> </td>
                                     <td><?php echo e($compra->num_solicitud_sistema); ?> </td>
-                                    <td><?php echo e($compra->corredor); ?> </td>
+                                    <td><?php echo e($compra->corredor->nombre); ?> <?php echo e($compra->corredor->primer_apellido); ?> <?php echo e($compra->corredor->segundo_apellido); ?></td>
+                                    <td><?php echo e($compra->cliente->nombre); ?> <?php echo e($compra->cliente->primer_apellido); ?> <?php echo e($compra->corredor->segundo_apellido); ?></td>
+                                    <td><?php echo e($compra->estatus->nombre); ?> </td>
                                     <td> <?php echo e(Carbon\Carbon::parse($compra->created_at)->format('d-m-Y')); ?> </td>
                                     <td>
                                         <div class="dropdown">
