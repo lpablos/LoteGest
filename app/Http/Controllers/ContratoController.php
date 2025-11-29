@@ -52,12 +52,13 @@ class ContratoController extends Controller
         
         DB::beginTransaction();
         try {
-                        
+                 
             if(!$request->filled('id_contrato_asc')){
                 $contrato = new Contrato();
             }else{
                 $contrato = Contrato::findOrFail($request['id_contrato_asc']);
             }            
+            // dd($request->all());
             $contrato->vendedor_propietario_asc = $request['vendedor_propietario_asc'];
             $contrato->vendedor_representante_asc = $request['vendedor_representante_asc'];
             $contrato->comprador_nombre_completo_asc = $request['comprador_nombre_completo_asc'];

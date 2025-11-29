@@ -114,10 +114,11 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
+        
         $compras = Compra::leftJoin('users', 'compras.corredor_id', 'users.id')
                             ->select('compras.num_solicitud', 'compras.num_solicitud_sistema', DB::raw('CONCAT(users.nombre," ", users.primer_apellido) AS corredor'))
                             ->where('cliente_id', $cliente->id)
-                            ->where('compras.estatus_id', 2)
+                            // ->where('compras.estatus_id', 3)
                             ->get();
 
         // dd($compras);
@@ -229,9 +230,12 @@ class ClienteController extends Controller
                             'fraccionamiento',
                             'cliente',
                             'compralotelinderos.lindero',
-                            'compralotelinderos.lote.manzana'
+                            'compralotelinderos.lote.manzana',
+                            'contrato'
                         ])->get();
-                
+
+                        // dd($datosCompra);
+                // dd($datosCompra);
             return view('pages.cliente.add', compact('corredores', 'estados', 'mpios', 'fraccionamientos', 'datosCompra'));
         }
         return abort(404);

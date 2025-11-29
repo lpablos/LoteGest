@@ -181,9 +181,9 @@
             if(datos.length > 0){
                 console.log("esta es la data -->", datos);
                 
-                const {cliente, corredor, estado, fraccionamiento, compralotelinderos} = datos[0]
+                const {cliente, corredor, estado, fraccionamiento, compralotelinderos, contrato} = datos[0]
 
-                console.log("Este es el cliente", cliente);
+                
                 // Segmento del clinte
                 $("#identy").val(cliente.id);
                 $("#no_cliente").val(cliente.no_cliente)
@@ -220,7 +220,8 @@
                     }, 1000);
                 }, 1500);
 
-                document.getElementById('resumen_compra').style.display = 'block';
+                // document.getElementById('resumen_compra').style.display = 'block';
+                $("#resumen_compra").slideDown();
 
 
                 // Resumen de compra
@@ -228,14 +229,41 @@
                 $("#total_venta").val(datos[0].total_venta);
                 setTimeout(() => {
                     $("#enganche_venta_select").val(datos[0].enganche_venta_select).trigger("change");
-                    $("#mensualidad_venta_select").val(datos[0].mensualidad_venta_select).trigger("change");
+                    $("#mensualidades_venta_asc").val(datos[0].mensualidad_venta_select).trigger("change");
                     setTimeout(() => {
                         $("#enganche_venta").val(datos[0].enganche_venta);
-                        $("#pago_mensual_venta").val(datos[0].ago_mensual_venta);                                            
+                        $("#pago_mensual_venta").val(datos[0].pago_mensual_venta);                    
+                        
                     }, 200);
                 }, 2000);
 
-                
+                // $("#id_contrato_asc").val();
+                // $("#compra_id").val(datos[0].id);
+
+              
+                setTimeout(() => {
+                    console.log("Este es quien firma ",contrato);
+                    $("#id_contrato_asc").val(contrato.id);
+                    $("#compra_id").val(datos[0].id);
+                    $("#vendedor_propietario_asc").val(contrato.vendedor_propietario_asc);
+                    $("#vendedor_representante_asc").val(contrato.vendedor_representante_asc);
+                    $("#comprador_nombre_completo_asc").val(contrato.comprador_nombre_completo_asc);
+                    $("#propietarios_familia_asc").val(contrato.propietarios_familia_asc);
+                    $("#ubicacion_escritura_asc").val(contrato.ubicacion_escritura_asc);
+                    $("#ubicacion_zona_asc").val(contrato.ubicacion_zona_asc);
+                    $("#municipio_estado_asc").val(contrato.municipio_estado_asc);
+                    $("#textoContrato").val(contrato.textoContrato);
+                    $("#textoContratoSegunda").val(contrato.textoContratoSegunda);
+                    $("#fecha_asc_dato").val(contrato.fecha_asc_dato);
+                    $("#representante_firma").val(contrato.representante_firma);
+                    $("#comprador_firma").val(contrato.comprador_firma);
+                    $("#observaciones").val(contrato.observaciones);
+                    
+                    $("#denominado_como_asc").val(contrato.denominado_como_asc);
+                    $("#html_tablas").val(contrato.html_tablas);  
+                    console.log("Se aplica");
+                                      
+                }, 2100);
                
             }
 

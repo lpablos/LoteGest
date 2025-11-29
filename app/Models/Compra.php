@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\CatEntidadFederativa;
 use App\Models\CatMunicipio;
 use App\Models\Cliente;
+use App\Models\Contrato;
 
 
 class Compra extends Model
@@ -74,11 +75,16 @@ class Compra extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'fraccionamiento_id', 'id');
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
     }
     
     public function compralotelinderos()
     {
         return $this->hasMany(CompraLoteLindero::class, 'compra_id', 'id');
+    }
+
+    public function contrato()
+    {
+        return $this->hasOne(Contrato::class);
     }
 }

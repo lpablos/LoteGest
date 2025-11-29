@@ -54,7 +54,7 @@
                             <form method="GET" id="busquedaResultado" action="<?php echo e(route('lote.index')); ?>">
                                 <div class="mb-3">
                                     <label for="fraccionamiento" class="form-label">Fraccionamiento</label>
-                                    <select class="form-select" id="fraccionamiento" name="identy" required>
+                                    <select class="form-select" id="fraccionamiento" name="identy" required style="cursor: pointer;">
                                         <option value="" disabled <?php echo e(old('identy', $identy ?? '') == '' ? 'selected' : ''); ?>>Selecciona un fraccionamiento</option>
                                         <?php $__currentLoopData = $fraccionamientos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fraccc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($fraccc->id); ?>" <?php echo e((old('identy', $identy ?? '') == $fraccc->id) ? 'selected' : ''); ?>>
@@ -75,7 +75,7 @@
                                 <th> Manzana </th>
                                 <th> # lote</th>
                                 <th> Precio Contado </th>
-                                <th> Precio Credito </th>
+                                <th> Precio Crédito </th>
                                 <th> Disponibilidad</th>
                                 <th> Acciones </th>
                             </tr>
