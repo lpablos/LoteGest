@@ -135,6 +135,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
+        
         if (view()->exists('pages.cliente.edit')) {
 
             return view('pages.cliente.edit', compact('cliente'));

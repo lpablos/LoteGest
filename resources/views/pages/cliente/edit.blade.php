@@ -47,7 +47,7 @@
                             </div>
                              <div class="col-md-3 mb-4">
                                 <label for="fecha_nacimiento">Fecha de nacimiento (*)</label>
-                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" value="{{ $cliente->fecha_nacimiento }}" name="fecha_nacimiento" required>
+                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" value="{{ $cliente->fecha_nacimiento->format('Y-m-d') }}" name="fecha_nacimiento" required>
                             </div>
                             <div class="col-md-3 mb-4">
                                 <label for="email"> Correo Electrónico </label>
