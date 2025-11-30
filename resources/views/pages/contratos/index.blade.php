@@ -63,7 +63,7 @@
                                     <td>{{ $compra->num_solicitud }} </td>
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
                                     <td>{{ $compra->contrato->codigo_valido_contrato }} </td>
-                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
                                     <td>{{ $compra->estatus->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
                                     

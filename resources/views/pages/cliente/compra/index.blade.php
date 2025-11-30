@@ -50,7 +50,7 @@
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
                                     <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
-                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
                                     <td>{{ $compra->estatus->nombre }} </td>
                                     <td> {{ Carbon\Carbon::parse($compra->created_at)->format('d-m-Y') }} </td>
                                     <td>
