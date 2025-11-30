@@ -30,18 +30,61 @@
                             </div>
                         </div>
                     </div>
+                    
+                    @include('pages.cliente.contrato.modals.digital')
                     <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Núm. de venta </th>
-                                <th> Núm. cliente </th>
+                                <th> Núm. Solicitud </th>
+                                <th> Núm. Solicitud Sistema </th>
+                                <th> Cliente </th>
+                                <th> Estatus </th>
                                 <th> Fecha contrato </th>
                                 <th> Fraccionamiento </th>
+                                <th> Corredor </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @foreach ($compras as $compra)
+                                <tr>
+                                    <td>{{ $compra->num_solicitud }} </td>
+                                    <td>{{ $compra->num_solicitud_sistema }} </td>
+                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->estatus->nombre }} </td>
+                                    <td> {{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
+                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
+                                    <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                        <button 
+                                                            type="button" 
+                                                            class="dropdown-item btn-contrato"
+                                                            data-registro="{{ $compra->contrato->id }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#exampleModalScrollable"
+                                                        >
+                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            Contrato Sistema
+                                                        </button>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Archivo Firmado </a>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Adjuntar Archivo </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach                            
                         </tbody>
                     </table>
                     <div class="row">
@@ -85,6 +128,21 @@
     <!-- Datatable init js -->
     <script>
         $(document).ready(function() {
+        
+            $(document).on('click', '.btn-contrato', function () {
+
+                let registro = $(this).data('registro');
+
+                // Laravel crea la URL base con un placeholder
+                let url = "{{ route('constrato.sistema.digital', ['id' => ':id']) }}";
+
+                // Reemplazamos el placeholder por el ID real
+                url = url.replace(':id', registro);
+
+                // Establecemos la URL en el iframe
+                $('#iframeDocumento').attr('src', url);
+            });
+
 
             // Se declara el token global para las peticiones que se vayan a realizar
             $.ajaxSetup({

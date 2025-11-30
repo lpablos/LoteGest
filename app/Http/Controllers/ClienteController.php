@@ -209,9 +209,21 @@ class ClienteController extends Controller
     }
 
     public function verContrato($idCliente) {
+
+        $compras = Compra::select('id', 'num_solicitud','num_solicitud_sistema','fraccionamiento_id','estatus_id','cliente_id','corredor_id')
+                ->with([
+                    'fraccionamiento:id,nombre',
+                    'estatus:id,nombre',
+                    'cliente:id,nombre,primer_apellido,segundo_apellido',
+                    'corredor:id,nombre,primer_apellido,segundo_apellido',
+                    'contrato:id,compra_id,documento_url,created_at',
+                ])
+                ->where('cliente_id', $idCliente)
+                ->where('estatus_id', 3)
+                ->get();
         if (view()->exists('pages.cliente.contrato.index')) {
 
-            return view('pages.cliente.contrato.index');
+            return view('pages.cliente.contrato.index',compact('compras'));
         }
         return abort(404);
     }

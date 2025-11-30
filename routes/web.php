@@ -61,6 +61,7 @@ Route::resource('compra-fraccionamiento-lotes', App\Http\Controllers\CompraContr
 
 Route::get('vista-previa-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
 Route::get('vista-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'contratoPDF']);
+Route::get('ver-documento/{id}', [App\Http\Controllers\DocumentosController::class, 'verDocumento'])->name('constrato.sistema.digital');
 
 
 
