@@ -114,16 +114,17 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        
-        // $compras = Compra::leftJoin('users', 'compras.corredor_id', 'users.id')
-        //                     ->select('compras.num_solicitud', 'compras.num_solicitud_sistema', DB::raw('CONCAT(users.nombre," ", users.primer_apellido) AS corredor'))
-        //                     ->where('cliente_id', $cliente->id)
-        //                     ->where('compras.estatus_id', 2)
-        //                     ->get();
-        $compras = Compra::with(['cliente','estatus','corredor'])
-                    ->where('cliente_id', $cliente->id)
-                    ->where('estatus_id', 2)
-                    ->get();
+        $compras = Compra::select('id', 'num_solicitud','num_solicitud_sistema','fraccionamiento_id','estatus_id','cliente_id','corredor_id')
+            ->with([
+                'fraccionamiento:id,nombre',
+                'estatus:id,nombre',
+                'cliente:id,nombre,primer_apellido,segundo_apellido',
+                'corredor:id,nombre,primer_apellido,segundo_apellido',
+                'contrato:id,compra_id,documento_url,created_at',
+            ])
+            ->where('cliente_id', $cliente->id)
+            ->where('estatus_id', 2)
+            ->get();
         
         if (view()->exists('pages.cliente.compra.index')) {
 
@@ -216,7 +217,7 @@ class ClienteController extends Controller
                     'estatus:id,nombre',
                     'cliente:id,nombre,primer_apellido,segundo_apellido',
                     'corredor:id,nombre,primer_apellido,segundo_apellido',
-                    'contrato:id,compra_id,documento_url,created_at',
+                    // 'contrato:id,compra_id,documento_url,created_at',
                 ])
                 ->where('cliente_id', $idCliente)
                 ->where('estatus_id', 3)

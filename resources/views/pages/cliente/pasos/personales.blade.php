@@ -40,9 +40,9 @@
             <label for="parentesco_comprador"> Parentesco </label>
             <input type="text" class="form-control form-control-sm" name="parentesco" id="parentesco_comprador" placeholder="Ingresa el parentesco">
         </div>
-        <div class="col-md-3 mb-4">
+        <!-- <div class="col-md-3 mb-4">
             <label for="ine"> Identificación INE</label>
             <input class="form-control form-control-sm" type="file" name="ine" id="ine" accept="image/*" capture>
-        </div>
+        </div> -->
     </div>
 </section>

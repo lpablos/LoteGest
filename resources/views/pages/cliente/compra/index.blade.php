@@ -35,6 +35,7 @@
                             <tr>
                                 <th> Núm. cliente </th>
                                 <th> Núm. de solicitud </th>
+                                <th> Fraccionamiento </th>                                
                                 <th> Corredor </th>
                                 <th> Cliente </th>
                                 <th> Estatus </th>
@@ -47,6 +48,7 @@
                                 <tr>
                                     <td>{{ $compra->num_solicitud }} </td>
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
+                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
                                     <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
                                     <td>{{ $compra->estatus->nombre }} </td>
