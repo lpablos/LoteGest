@@ -13,3 +13,10 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# Laravel storage y cache
+/storage/*
+!/storage/.gitignore
+
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
