@@ -75,22 +75,17 @@ class DocumentosController extends Controller
 
     public function verDocumento($id)
     {
-        // Buscar el contrato
         $contrato = Contrato::findOrFail($id);
 
-        // Obtener la ruta guardada: ejemplo "/storage/contratos/contrato-1.pdf"
-        $rutaRelativa = $contrato->documento_url;
+        // Valor almacenado en DB: storage/contratos/archivo.pdf
+        $ruta = storage_path('app/public/' . str_replace('storage/', '', $contrato->documento_url));
 
-        // Convertir a ruta absoluta dentro de /public
-        $rutaCompleta = public_path($rutaRelativa);
-
-        // Verificar que el archivo existe
-        if (!file_exists($rutaCompleta)) {
+        if (!file_exists($ruta)) {
             abort(404, "El documento no existe.");
         }
 
-        // Devolver el archivo al navegador
-        return response()->file($rutaCompleta);
+        return response()->file($ruta);
     }
+
 
 }
