@@ -25,11 +25,11 @@
                         <div class="col-sm-4">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Contratos </h2>
+                                    <h2> Listado de contratos </h2>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <!-- <div class="col-sm-8">
                             <div class="text-sm-end">
                                 <button type="button" 
                                     data-bs-toggle="modal" 
@@ -38,363 +38,67 @@
                                         <i class="mdi mdi-plus me-1"></i> Agregar
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     
-                    <table id="datatable-estatus-proyecto" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> # Venta </th>
-                                <th> # Cliente </th>
-                                <th> Fecha Contrato</th>
-                                <th> Fraccionamiento</th>
-                                <th> # Lonete</th>
+                                <th> Fecha contrato </th>
+                                <th> Fraccionamiento </th>
+                                <th> # Solicitud </th>
+                                <th> # Solicitud Sistema </th>
+                                <th> # Contrato Sistema</th>
+                                <th> Cliente </th>
+                                <th> Estatus </th>
+                                <th> Corredor </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>001</td><td>1001</td><td>2025-01-15</td><td>Villa del Sol</td><td>23</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>002</td><td>1002</td><td>2025-02-20</td><td>Colinas Verdes</td><td>12</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>003</td><td>1003</td><td>2025-03-05</td><td>Altos del Lago</td><td>45</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>004</td><td>1004</td><td>2025-03-22</td><td>El Encino</td><td>19</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>005</td><td>1005</td><td>2025-04-01</td><td>Monte Azul</td><td>8</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>006</td><td>1006</td><td>2025-04-10</td><td>Villa del Sol</td><td>56</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>007</td><td>1007</td><td>2025-04-18</td><td>Colinas Verdes</td><td>33</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>008</td><td>1008</td><td>2025-05-02</td><td>Altos del Lago</td><td>27</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>009</td><td>1009</td><td>2025-05-12</td><td>Monte Azul</td><td>5</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>010</td><td>1010</td><td>2025-05-19</td><td>El Encino</td><td>40</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>011</td><td>1011</td><td>2025-05-27</td><td>Villa del Sol</td><td>18</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>012</td><td>1012</td><td>2025-06-01</td><td>Colinas Verdes</td><td>60</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>013</td><td>1013</td><td>2025-06-03</td><td>Altos del Lago</td><td>13</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>014</td><td>1014</td><td>2025-06-05</td><td>Monte Azul</td><td>21</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>015</td><td>1015</td><td>2025-06-07</td><td>El Encino</td><td>9</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>016</td><td>1016</td><td>2025-06-10</td><td>Villa del Sol</td><td>31</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>017</td><td>1017</td><td>2025-06-11</td><td>Colinas Verdes</td><td>7</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>018</td><td>1018</td><td>2025-06-12</td><td>Altos del Lago</td><td>14</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>019</td><td>1019</td><td>2025-06-13</td><td>Monte Azul</td><td>38</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>
-                            <tr><td>020</td><td>1020</td><td>2025-06-15</td><td>El Encino</td><td>2</td>
-                            <td>
-                                  <div class="dropdown">
-                                        <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="mdi mdi-dots-vertical font-size-18"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-start">
-                                            <li>
-                                                <a href="{{ route('contratos.show', ['contrato' => 5]) }}">
-                                                    <i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar 
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                            </td>
-                            </tr>       
+                            @foreach ($compras as $compra)
+                                <tr>
+                                    <td> {{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
+                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
+                                    <td>{{ $compra->num_solicitud }} </td>
+                                    <td>{{ $compra->num_solicitud_sistema }} </td>
+                                    <td>{{ $compra->contrato->codigo_valido_contrato }} </td>
+                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    <td>{{ $compra->estatus->nombre }} </td>
+                                    <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
+                                    
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="mdi mdi-dots-vertical font-size-18"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-start">
+                                                <li>
+                                                        <button 
+                                                            type="button" 
+                                                            class="dropdown-item btn-contrato"
+                                                            data-registro="{{ $compra->contrato->id }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#exampleModalScrollable"
+                                                        >
+                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            Contrato Sistema
+                                                        </button>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Archivo Firmado </a>
+                                                </li>
+                                                <li>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Adjuntar Archivo </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach                            
                         </tbody>
                     </table>
+                    @include('pages.contratos.modal.digital')
                 </div>
             </div>
         </div> <!-- end col -->
@@ -426,6 +130,20 @@
     <!-- Datatable init js -->
     <script>
         $(document).ready(function() {
+
+             $(document).on('click', '.btn-contrato', function () {
+
+                let registro = $(this).data('registro');
+
+                // Laravel crea la URL base con un placeholder
+                let url = "{{ route('constrato.sistema.digital', ['id' => ':id']) }}";
+
+                // Reemplazamos el placeholder por el ID real
+                url = url.replace(':id', registro);
+
+                // Establecemos la URL en el iframe
+                $('#iframeDocumento').attr('src', url);
+            });
 
             // Se declara el token global para las peticiones que se vayan a realizar
             $.ajaxSetup({

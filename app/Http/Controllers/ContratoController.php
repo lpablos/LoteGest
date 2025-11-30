@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DB, Session;
 use Illuminate\Support\Facades\Log;
 use App\Models\Contrato;
+use App\Models\Compra;
 
 class ContratoController extends Controller
 {
@@ -17,7 +18,6 @@ class ContratoController extends Controller
     public function index()
     {
         //
-
         if (view()->exists('pages.contratos.index')) {
             /*
             $identy = $request->input('identy') && 1; 
@@ -25,13 +25,33 @@ class ContratoController extends Controller
             $fracc = $identy
                 ? $fraccionamientos->firstWhere('id', $identy)
                 : null; 
-            */
-
-            $fracc = Fraccionamiento::orderBy('nombre', 'desc')->get();
+            */   
+            // $fracc = Fraccionamiento::orderBy('nombre', 'desc')->get();
             
-            $estatusDisponibilidad = CatEstatusDisponibilidad::all();
+            // $estatusDisponibilidad = CatEstatusDisponibilidad::all();
+           $compras = Compra::select(
+                        'compras.id',
+                        'compras.num_solicitud',
+                        'compras.num_solicitud_sistema',
+                        'compras.fraccionamiento_id',
+                        'compras.estatus_id',
+                        'compras.cliente_id',
+                        'compras.corredor_id'
+                    )
+                    ->leftJoin('contratos as c', 'c.compra_id', '=', 'compras.id')
+                    ->with([
+                        'fraccionamiento:id,nombre',
+                        'estatus:id,nombre',
+                        'cliente:id,nombre,primer_apellido,segundo_apellido',
+                        'corredor:id,nombre,primer_apellido,segundo_apellido',
+                        'contrato:id,compra_id,codigo_valido_contrato,created_at',
+                    ])
+                    ->where('compras.estatus_id', 3)
+                    ->orderBy('c.created_at', 'desc')
+                    ->get();
 
-            return view('pages.contratos.index', compact('fracc','estatusDisponibilidad'));
+                    
+            return view('pages.contratos.index', compact('compras'));
         }
         return abort(404);
     }
