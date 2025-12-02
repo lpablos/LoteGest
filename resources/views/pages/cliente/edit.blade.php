@@ -21,7 +21,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form method="POST" action="{{ route('cliente.update', ['cliente' => $cliente->id]) }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('cliente.update', ['cliente' => $cliente->id]) }}">
                 @method('PUT')
                 @csrf
                 <div class="card">
@@ -61,6 +61,15 @@
                                 <label for="parentesco"> Parentesco </label>
                                 <input type="text" class="form-control form-control-sm" name="parentesco" value="{{ $cliente->parentesco }}" style="text-transform:lowercase">
                             </div>
+                                @if ($cliente->url_ine)
+                                    <img src="{{ asset('storage/' . $cliente->url_ine) }}" 
+                                        alt="Documento INE" 
+                                        class="img-thumbnail" 
+                                        style="max-width: 300px;">
+                                @else
+                                    <p>No se ha subido documento INE.</p>
+                                @endif
+
                             <div class="col-md-3 b-4">
                                 <label for="fileINE"> Identificación INE </label>
                                 <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture>
