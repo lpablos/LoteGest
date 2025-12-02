@@ -40,6 +40,7 @@
                             <tr>
                                 <th> Nombre </th>
                                 <th> Rol </th>
+                                <th> Correo Electrónico </th>
                                 <th> Fecha alta </th>
                                 <th> Fecha ult. actualización </th>
                                 <th> Estatus </th>
@@ -51,6 +52,7 @@
                                 <tr>
                                     <td>{{ $usuario->nombre }}</td>
                                     <td>{{ $usuario->rol }}</td>
+                                    <td>{{ $usuario->email }}</td>
                                     <td> {{ Carbon\Carbon::parse($usuario->fecha_registro)->format('d-m-Y') }} </td>
                                     <td> {{ Carbon\Carbon::parse($usuario->updated_at)->format('d-m-Y H:i:s') }} </td>
                                     <td>@if($usuario->estatus_id == 1) <span class="badge bg-success font-size-12"> {{ $usuario->estatus }} </span> @else <span class="badge bg-danger font-size-12"> {{ $usuario->estatus }}</span>@endif</td>

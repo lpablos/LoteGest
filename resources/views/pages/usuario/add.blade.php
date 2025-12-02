@@ -57,10 +57,6 @@
                                 <label for="telefono"> Teléfono (*) </label>
                                 <input type="number" class="form-control form-control-sm" id="telefono" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" disabled>
                             </div>
-                            <div class="col-md-3 mb-4" id="divSeudonimo">
-                                <label for="seudonimo"> Seudónimo </label>
-                                <input type="text" class="form-control form-control-sm" id="seudonimo" name="seudonimo" placeholder="Ingresa la información">
-                            </div>
                             <div class="col-md-3 mb-4" id="divEdad">
                                 <label for="edad"> Edad (*) </label>
                                 <input type="number" class="form-control form-control-sm" id="edad" name="edad" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3)" minlength="3" maxlength="3" disabled>
