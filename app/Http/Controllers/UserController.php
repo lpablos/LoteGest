@@ -87,6 +87,13 @@ class UserController extends Controller
         }
 
         DB::beginTransaction();
+            if (isset($request->imagenPerfil)) {
+                if ($request->hasFile('imagenPerfil')) {
+                    $file = $request->file('imagenPerfil');
+                    $filename = 'perfil_' . time() . '.' . $file->getClientOriginalExtension();
+                    $path = $file->storeAs('usuarios', $filename, 'public');
+                } 
+            }
 
         try {
             $usuario = new User();
@@ -97,7 +104,7 @@ class UserController extends Controller
             $usuario->email_verified_at = now();
             $usuario->password = Hash::make("12345678");
             $usuario->dob = '2024-04-01';
-            $usuario->avatar = ($request->imagenPerfil == null) ? 'SIN INFORMACIÓN' : $request->imagenPerfil;
+            $usuario->avatar = ($request->imagenPerfil == null) ? 'SIN INFORMACIÓN' : $path;
             $usuario->role_id = $request->rol_id;
             $usuario->fecha_registro = now();
             $usuario->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono;

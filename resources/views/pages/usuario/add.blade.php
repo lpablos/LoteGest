@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-md-3 mb-4" id="divImagenPerfil">
                                 <label for="imagenPerfil"> Imagen de perfil </label>
-                                <input type="file" id="imagenPerfil" name="imagenPerfil" class="form-control from-control-sm" disabled>
+                                <input type="file" id="imagenPerfil" name="imagenPerfil" class="form-control from-control-sm" disabled accept="image/*">
                             </div>
                             <div class="col-md-3 mb-4" id="divDomicilio">
                                 <label for="domicilio"> Domicilio </label>
