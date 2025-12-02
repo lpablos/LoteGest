@@ -1,7 +1,7 @@
 
     <div class="row mb-3">
         <div class="col-md-12 text-center">
-            <img src="" alt="Imagen del fraccionamiento" id="imgFracc" width="700" height="400">
+            <img src="" alt="Imagen del fraccionamiento" id="imgFracc" width="700" height="400" style="display:none;">
         </div>
     </div>
 

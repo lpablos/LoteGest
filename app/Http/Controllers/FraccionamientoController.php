@@ -96,7 +96,7 @@ class FraccionamientoController extends Controller
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
-            $fraccionamiento->imagen = $validated['imagenAdicional'] ?? null;
+            //$fraccionamiento->imagen = $validated['imagenAdicional'] ?? null;
             // $fraccionamiento->responsable = Helper::capitalizeFirst($validated['responsable']);
             // $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->responsable = ucwords(strtolower($validated['responsable']));
