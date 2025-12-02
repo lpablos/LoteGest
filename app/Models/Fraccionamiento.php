@@ -40,7 +40,7 @@ class Fraccionamiento extends Model
 
     protected $hidden = ['deleted_at', 'created_at', 'updated_at'];
 
-    protected $appends = ['municipio_nombre', 'entidad_nombre','tipo_predio_nombre'];
+    protected $appends = ['municipio_nombre', 'entidad_nombre','tipo_predio_nombre','url_ine_full'];
 
 
     public function getMunicipioNombreAttribute()
@@ -57,6 +57,16 @@ class Fraccionamiento extends Model
     {
         return $this->tipoPredio ? $this->tipoPredio->nombre : null; 
     }
+
+    public function getUrlIneFullAttribute()
+    {
+        if (!$this->imagen) {
+            return null;
+        }
+
+    return asset('storage/' . $this->imagen);
+    }
+
 
     /**
      * Relaciones
