@@ -45,6 +45,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        
         if (view()->exists('pages.usuario.add')) {
             
             $roles = Role::select('id', 'nombre')->get();
@@ -64,15 +65,25 @@ class UserController extends Controller
         $rules = [
             'nombre' => 'required',
             'primer_apellido' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users,email',
             'telefono' => 'required',
         ];
 
-        $validator = Validator::make($input, $rules);
+        $messages = [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'primer_apellido.required' => 'El primer apellido es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico no tiene un formato válido.',
+            'email.unique' => 'El correo electrónico ya está registrado, intenta con otro.',
+            'telefono.required' => 'El número de teléfono es obligatorio.',
+        ];
+        
+        $validator = Validator::make($input, $rules, $messages);
 
         if ($validator->fails()) {
-            Session::flash('error', 'Campos obligatorios incompletos');
-            return redirect()->route('usuarios.create');
+            $mensaje = $validator->errors()->first(); // toma el primer mensaje personalizado
+            Session::flash('error', $mensaje);
+            return redirect()->route('usuarios.create')->withInput();
         }
 
         DB::beginTransaction();
@@ -94,31 +105,43 @@ class UserController extends Controller
             $usuario->estatus_id = 1;
             $usuario->save();
 
-            if($request->rol_id != 4) {    
+            if ($request->rol_id != 4) {    
                 $datosPersonales = new UsuarioDatosPersonales();
-                $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
-                $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
-                $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
+                $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad;
+                $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio;
+                $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades;
                 $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
-                $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
+                $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre;
                 $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
-                $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
-                $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
+                $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto;
+                $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco;
                 $datosPersonales->usuario_id = $usuario->id;
                 $datosPersonales->save();
             }
 
             DB::commit();
 
-            Session::flash('success', '¡Usuario registrado!');
+            Session::flash('success', '¡Usuario registrado exitosamente!');
             return redirect()->route('usuarios.index');
 
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             DB::rollBack();
-            dd($e);
-            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+
+            $error = $e->getMessage();
+            dd($error);
+            if (str_contains($error, 'Duplicate entry') && str_contains($error, 'users_email_unique')) {
+                // Mensaje claro para toastr
+                Session::flash('error', 'El correo ingresado ya está registrado. Por favor usa uno diferente.');
+            } else {
+                // Mensaje genérico si es otro error
+                Session::flash('error', 'Ocurrió un error al registrar el usuario: ' . substr($error, 0, 150));
+            }
+
+            return redirect()->route('usuarios.create')->withInput();
         }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -162,69 +185,197 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, string $id)
+    // {
+    //     $input = $request->all();
+
+    //     $rules = [
+    //         'nombre' => 'required',
+    //         'primer_apellido' => 'required',
+    //         'email' => 'required|email|unique:users,email,' . $id, // 👈 Evita duplicados
+    //         'telefono' => 'required'
+    //     ];
+
+    //     $messages = [
+    //         'nombre.required' => 'El campo nombre es obligatorio.',
+    //         'primer_apellido.required' => 'El primer apellido es obligatorio.',
+    //         'email.required' => 'El correo electrónico es obligatorio.',
+    //         'email.email' => 'El correo electrónico no tiene un formato válido.',
+    //         'email.unique' => 'El correo electrónico ya está registrado, intenta con otro.',
+    //         'telefono.required' => 'El número de teléfono es obligatorio.',
+    //     ];
+        
+    //     $validator = Validator::make($input, $rules, $messages);
+
+    //     if ($validator->fails()) {
+    //         $mensaje = $validator->errors()->first(); // toma el primer mensaje personalizado
+    //         Session::flash('error', $mensaje);
+    //         return redirect()->route('usuarios.create')->withInput();
+    //     }
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         $usuario = User::find($id);
+
+    //         if ($usuario) {
+
+    //             // === Actualizar datos del usuario ===
+    //             $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+    //             $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+    //             $usuario->segundo_apellido = (!is_null($request->segundo_apellido) 
+    //                 ? \Helper::capitalizeFirst($request->segundo_apellido, "1") 
+    //                 : null
+    //             );
+
+    //             $usuario->email = $request->email;
+
+    //             if ($request->password != null) {
+    //                 $usuario->password = Hash::make($request->password);
+    //             }
+
+    //             $usuario->telefono = $request->telefono ?? 'SIN INFORMACIÓN';
+    //             $usuario->seudonimo = $request->seudonimo ?? 'SIN INFORMACIÓN';
+    //             $usuario->save();
+
+
+    //             // === Actualizar datos personales si el rol lo requiere ===
+    //             if ($usuario->role_id != 4) {
+
+    //                 $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first();
+
+    //                 if ($datosPersonales) {
+    //                     $datosPersonales->edad = $request->edad ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->domicilio = $request->domicilio ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->enfermedades = $request->enfermedades ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
+    //                     $datosPersonales->tipo_sangre = $request->tipo_sangre ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
+    //                     $datosPersonales->num_contacto = $request->num_contacto ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->parentesco = $request->parentesco ?? 'SIN INFORMACIÓN';
+    //                     $datosPersonales->save();
+    //                 }
+    //             }
+
+    //             DB::commit();
+    //             Session::flash('success', '¡Usuario actualizado exitosamente!');
+
+    //         } else {
+
+    //             DB::rollBack();
+    //             Session::flash('error', 'Error: el usuario no fue encontrado.');
+    //         }
+
+    //         return redirect()->route('usuarios.index');
+
+    //     } catch (\PDOException $e) {
+    //         DB::rollBack();
+
+    //         Session::flash('error', 'Ocurrió un error al actualizar el usuario. Intente nuevamente.');
+
+    //         // Opcional: guardar en logs
+    //         // Log::error($e->getMessage());
+
+    //         return redirect()->route('usuarios.edit', ["usuario" => $id])->withInput();
+    //     }
+    // }
+    
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
         $input = $request->all();
 
+        // === VALIDACIÓN ===
         $rules = [
-            'nombre' => 'required',
-            'primer_apellido' => 'required',
-            'email' => 'required',
-            'telefono' => 'required'
+            'nombre'           => 'required',
+            'primer_apellido'  => 'required',
+            'email'            => 'required|email|unique:users,email,' . $id,
+            'telefono'         => 'required',
         ];
 
-        $validator = Validator::make($input, $rules);
+        $messages = [
+            'nombre.required'          => 'El nombre es obligatorio.',
+            'primer_apellido.required' => 'El primer apellido es obligatorio.',
+            'email.required'           => 'El correo electrónico es obligatorio.',
+            'email.email'              => 'El correo electrónico no tiene un formato válido.',
+            'email.unique'             => 'El correo electrónico ya está registrado.',
+            'telefono.required'        => 'El número de teléfono es obligatorio.',
+        ];
+
+        $validator = Validator::make($input, $rules, $messages);
 
         if ($validator->fails()) {
-            Session::flash('error', 'Campos obligatorios incompletos');
-            return redirect()->route('usuarios.edit',["usuario" => $id]);
+            $mensaje = $validator->errors()->first();
+            Session::flash('error', $mensaje);
+
+            return redirect()
+                ->route('usuarios.edit', ['usuario' => $id]) // 👈 REGRESAR A EDIT
+                ->withInput();
         }
 
+        // === INICIA TRANSACCIÓN ===
         DB::beginTransaction();
 
         try {
             $usuario = User::find($id);
-            // dd($usuario);
-            if ($usuario) {
-                $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
-                $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
-                $usuario->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
-                $usuario->email = $request->email;
-                if ($request->password != null) {
-                    $usuario->password = Hash::make($request->password);
-                }
-                $usuario->telefono = ($request->telefono == null) ? 'SIN INFORMACIÓN' : $request->telefono ;
-                $usuario->seudonimo = ($request->seudonimo == null) ? 'SIN INFORMACIÓN' : $request->seudonimo ;
-                $usuario->save();
-                if ($usuario->role_id != 4) {
-                    // dd($usuario->id);
-                    $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first();
-                    $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad ;
-                    $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio ;
-                    $datosPersonales->enfermedades = ($request->enfermedades == null) ? 'SIN INFORMACIÓN' : $request->enfermedades ;
+
+            if (!$usuario) {
+                DB::rollBack();
+                Session::flash('error', 'El usuario no fue encontrado.');
+                return redirect()->route('usuarios.index');
+            }
+
+            // === ACTUALIZAR DATOS ===
+            $usuario->nombre = trim(\Helper::capitalizeFirst($request->nombre, "1"));
+            $usuario->primer_apellido = \Helper::capitalizeFirst($request->primer_apellido, "1");
+            $usuario->segundo_apellido = $request->segundo_apellido
+                ? \Helper::capitalizeFirst($request->segundo_apellido, "1")
+                : null;
+
+            $usuario->email = $request->email;
+
+            if ($request->password) {
+                $usuario->password = Hash::make($request->password);
+            }
+
+            $usuario->telefono = $request->telefono ?? 'SIN INFORMACIÓN';
+            $usuario->seudonimo = $request->seudonimo ?? 'SIN INFORMACIÓN';
+            $usuario->save();
+
+            // === ACTUALIZAR DATOS PERSONALES (SI NO ES CLIENTE) ===
+            if ($usuario->role_id != 4) {
+                $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first();
+                
+                if ($datosPersonales) {
+                    $datosPersonales->edad             = $request->edad ?? 'SIN INFORMACIÓN';
+                    $datosPersonales->domicilio        = $request->domicilio ?? 'SIN INFORMACIÓN';
+                    $datosPersonales->enfermedades     = $request->enfermedades ?? 'SIN INFORMACIÓN';
                     $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
-                    $datosPersonales->tipo_sangre = ($request->tipo_sangre == null) ? 'SIN INFORMACIÓN' : $request->tipo_sangre ;
-                    $datosPersonales->fecha_laboral = $request->fecha_inicio_laboral;
-                    $datosPersonales->num_contacto = ($request->num_contacto == null) ? 'SIN INFORMACIÓN' : $request->num_contacto ;
-                    $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco ;
+                    $datosPersonales->tipo_sangre      = $request->tipo_sangre ?? 'SIN INFORMACIÓN';
+                    $datosPersonales->fecha_laboral    = $request->fecha_inicio_laboral;
+                    $datosPersonales->num_contacto     = $request->num_contacto ?? 'SIN INFORMACIÓN';
+                    $datosPersonales->parentesco       = $request->parentesco ?? 'SIN INFORMACIÓN';
                     $datosPersonales->save();
                 }
-    
-                DB::commit();
-    
-                Session::flash('success', '¡Usuario actualizado!');
-            } else {
-                Session::flash('error', '¡Usuario NO encontrado!');
             }
+
+            DB::commit();
+            Session::flash('success', '¡Usuario actualizado exitosamente!');
+
             return redirect()->route('usuarios.index');
 
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
+
             DB::rollBack();
-            dd($e);
-            return back()->withErrors(['Error' => substr($e->getMessage(), 0, 150)]);
+            Session::flash('error', 'Ocurrió un error al actualizar el usuario. Intente nuevamente.');
+
+            // Log::error($e->getMessage());
+
+            return redirect()
+                ->route('usuarios.edit', ['usuario' => $id])
+                ->withInput();
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
