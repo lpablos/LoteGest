@@ -60,24 +60,38 @@ class FraccionamientoController extends Controller
         DB::beginTransaction();
         try {
             // Imagen del mapa
-            if (isset($validated['imagen'])) {
+            /*if (isset($validated['imagen'])) {
                 if ($request->hasFile('imagen')) {
                     $file = $request->file('imagen');
                     $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
                     $path = $file->storeAs('fraccionamientos', $filename, 'public');
                     $validated['imagen'] = $path;
                 } 
-            }
+            }*/
+            if ($request->hasFile('imagen')) {
+                // 1. Eliminar imagen previa si existe
+                if ($fraccionamiento->imagen && Storage::disk('public')->exists($fraccionamiento->imagen)) {
+                    Storage::disk('public')->delete($fraccionamiento->imagen);
+                }
+                // 2. Guardar la nueva imagen
+                $file     = $request->file('imagen');
+                $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension();
+                $path     = $file->storeAs('fraccionamientos', $filename, 'public');
+
+                // Asignar la ruta al array de datos validados
+                // $validated['imagen'] = $path;
+                $fraccionamiento->imagen = $path;
+            }  
 
             // Imagen adicional
-            if (isset($validated['imagenAdicional'])) {
+            /*if (isset($validated['imagenAdicional'])) {
                 if ($request->hasFile('imagenAdicional')) {
                     $file = $request->file('imagenAdicional');
                     $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
                     $path = $file->storeAs('fraccionamientos', $filename, 'public');
                     $validated['imagenAdicional'] = $path;
                 } 
-            }
+            }*/
             
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);

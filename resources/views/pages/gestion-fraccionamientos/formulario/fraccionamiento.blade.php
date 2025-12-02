@@ -55,10 +55,10 @@
             @endforeach
         </select>
     </div>
-    <div class="col-md-4 mt-4">
+    <!--<div class="col-md-4 mt-4">
         <label for="imagenAdicional" class="form-label"> Imagen Adicional (jpg,jpeg,png,webp)</label>
         <input type="file" name="imagenAdicional" id="imagenAdicional" class="form-control" accept="image/*">
-    </div>
+    </div>-->
     <div class="col-md-12 mt-4">
         <label for="ubicacion" class="form-label"> Ubicación (*)</label>
         <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="" required>
