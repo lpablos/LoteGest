@@ -244,8 +244,16 @@
 
             $.get(url, function (data) {
             console.log("El data", data);
-            
+                
                 $('#fracc_id').val(data.id);
+                console.log("esta e sla ruta de la imgen", data);
+                
+                
+                if (data.url_ine_full) {
+                    $('#imgFracc').attr('src', data.url_ine_full).show();
+                } else {
+                    $('#imgFracc').hide();
+                }
                 $('#nombre').val(data.nombre);
                 $('#responsable').val(data.responsable);
                 $('#propietaria').val(data.propietaria);
