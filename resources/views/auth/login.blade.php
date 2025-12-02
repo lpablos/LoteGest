@@ -113,7 +113,7 @@
                                             <div class="mb-3">
                                                 <div class="float-end">
                                                     @if (Route::has('password.request'))
-                                                        <a href="{{ route('password.request') }}" class="text-muted"> ¿Olvidaste tu contraseña? </a>
+                                                        <!-- <a href="{{ route('password.request') }}" class="text-muted"> ¿Olvidaste tu contraseña? </a> -->
                                                     @endif
                                                 </div>
                                                 <label class="form-label"> Contraseña <span class="text-danger">*</span></label>
