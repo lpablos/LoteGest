@@ -13,6 +13,8 @@ use App\Models\Fraccionamiento;
 use App\Models\CatEntidadFederativa;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
 
 class ClienteController extends Controller
 {
@@ -48,6 +50,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        
     
         $input = $request->all();
 
@@ -151,6 +154,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
+        //dd($request->all());
         $input = $request->all();
 
         $rules = [
@@ -179,7 +183,10 @@ class ClienteController extends Controller
             $cliente->email = $request->email;
             $cliente->num_contacto = ($request->num_contacto == null) ? "Sin Información" : $request->num_contacto;
             $cliente->parentesco = ($request->parentesco == null) ? "Sin Información" : $request->parentesco;
-            if ($request->hasFile('fileIne')) {
+            if ($request->hasFile('fileIne')) { 
+                    if ($cliente->url_ine && Storage::disk('public')->exists($cliente->url_ine)) {
+                        Storage::disk('public')->delete($cliente->url_ine);
+                    }
                     $file = $request->file('fileIne');
                     $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
                     $path = $file->storeAs('cliente', $filename, 'public');
