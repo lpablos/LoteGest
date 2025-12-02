@@ -59,6 +59,7 @@ class FraccionamientoController extends Controller
         );
         DB::beginTransaction();
         try {
+            // Imagen del mapa
             if (isset($validated['imagen'])) {
                 if ($request->hasFile('imagen')) {
                     $file = $request->file('imagen');
@@ -67,10 +68,21 @@ class FraccionamientoController extends Controller
                     $validated['imagen'] = $path;
                 } 
             }
+
+            // Imagen adicional
+            if (isset($validated['imagenAdicional'])) {
+                if ($request->hasFile('imagenAdicional')) {
+                    $file = $request->file('imagenAdicional');
+                    $filename = 'fracc_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: fracc_1717288000.jpg
+                    $path = $file->storeAs('fraccionamientos', $filename, 'public');
+                    $validated['imagenAdicional'] = $path;
+                } 
+            }
             
             $fraccionamiento = new Fraccionamiento();
             $fraccionamiento->nombre = Helper::capitalizeFirst($validated['nombre']);
             $fraccionamiento->imagen = $validated['imagen'] ?? null;
+            $fraccionamiento->imagen = $validated['imagenAdicional'] ?? null;
             // $fraccionamiento->responsable = Helper::capitalizeFirst($validated['responsable']);
             // $fraccionamiento->propietaria = Helper::capitalizeFirst($validated['propietaria']);
             $fraccionamiento->responsable = ucwords(strtolower($validated['responsable']));

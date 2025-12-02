@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->nullable();
             $table->string('imagen')->nullable();
+            $table->string('imagenAdicional')->nullable();
             $table->string('responsable')->nullable();
             $table->string('propietaria')->nullable();
             $table->decimal('superficie', 10, 2)->nullable();
