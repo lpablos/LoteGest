@@ -14,7 +14,7 @@
 
     <div class="col-md-4">
         <label for="imagen" class="form-label">Imagen (jpg,jpeg,png,webp)</label>
-        <input type="file" name="imagen" id="imagen" class="form-control">
+        <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
     </div>
     <div class="col-md-4">
         <label for="responsable" class="form-label">Responsable (*)</label>
@@ -47,7 +47,7 @@
         </select>
     </div>
      <div class="col-md-4 mt-4">
-        <label for="municipio_id" class="form-label">Municipio (*)</label>
+        <label for="municipio_id" class="form-label"> Municipio (*)</label>
         <select name="municipio_id" id="municipio_id"  class="form-select" required style="cursor: pointer;">
             <option value="" selected disabled> Selecciona una opción </option>
             @foreach ($catMunicipios as $municipio)
@@ -55,7 +55,10 @@
             @endforeach
         </select>
     </div>
-   
+    <div class="col-md-4 mt-4">
+        <label for="imagenAdicional" class="form-label"> Imagen Adicional (jpg,jpeg,png,webp)</label>
+        <input type="file" name="imagenAdicional" id="imagenAdicional" class="form-control" accept="image/*">
+    </div>
     <div class="col-md-12 mt-4">
         <label for="ubicacion" class="form-label"> Ubicación (*)</label>
         <input type="text" name="ubicacion" id="ubicacion" class="form-control" value="" required>
