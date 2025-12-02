@@ -58,14 +58,6 @@
                                 <label for="telefono"> Teléfono (*) </label>
                                 <input type="number" class="form-control form-control-sm" id="telefono" name="telefono" value="{{ $usuario->telefono }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" disabled>
                             </div>
-                            <div class="col-md-3 mb-4" id="divSeudonimo">
-                                <label for="seudonimo"> Seudónimo </label>
-                                <input type="text" class="form-control form-control-sm" id="seudonimo" name="seudonimo" value="{{ $usuario->seudonimo }}" placeholder="Ingresa la información">
-                            </div>
-                            <div class="col-md-3 mb-4" id="divFechaNacimiento">
-                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $usuario->fecha_nacimiento }}" onchange="claculaEdad()" style="cursor: pointer;" disabled>
-                            </div>
                             <div class="col-md-3 mb-4" id="divEdad">
                                 <label for="edad"> Edad (*) <small> (En años) </small></label>
                                 <input type="number" class="form-control form-control-sm" id="edad" name="edad" value="{{ $usuario->edad }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3)" minlength="3" maxlength="3" disabled>
@@ -82,6 +74,10 @@
                                 <label for="enfermedades"> Enfermedades/Alergias</label>
                                 <input type="text" class="form-control form-control-sm" id="enfermedades" name="enfermedades" value="{{ $usuario->enfermedades }}" placeholder="Ingresa la información" disabled>
                             </div>
+                            <div class="col-md-3 mb-4" id="divFechaNacimiento">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ $usuario->fecha_nacimiento }}" onchange="claculaEdad()" style="cursor: pointer;" disabled>
+                            </div>
                             <div class="col-md-3 mb-4" id="divTipoSangre">
                                 <label for="tipo_sangre"> Tipo de sangre </label>
                                 <input type="text" class="form-control form-control-sm" id="tipo_sangre" name="tipo_sangre" value="{{ $usuario->tipo_sangre }}" placeholder="Ingresa la información" disabled>
@@ -90,43 +86,15 @@
                                 <label for="fecha_inicio_laboral">Fecha de inicio laboral (*) </label>
                                 <input type="date" class="form-control form-control-sm" id="fecha_inicio_laboral" name="fecha_inicio_laboral" value="{{ $usuario->fecha_laboral }}">
                             </div>
-                            <div class="col-md-3 mb-4" id="divAntiguedad">
-                                <label for="antiguedad"> Antigüedad Laboral </label>
-                                <input type="text" class="form-control form-control-sm" id="antiguedad" name="antiguedad" readOnly>
-                            </div>
                             <div class="col-md-3 mb-4" id="divNumContacto">
                                 <label for="num_contacto">Número de contacto </label>
-                                <input type="number" class="form-control form-control-sm" id="num_contacto" name="num_contacto" value="{{ $usuario->num_contacto }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" disabled>
+                                <input type="number" class="form-control form-control-sm" id="num_contacto" name="num_contacto" value="{{ $usuario->num_contacto }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
                             </div>
                             <div class="col-md-3 mb-4" id="divParentesco">
                                 <label for="parentesco"> Parentesco </label>
-                                <input type="text" class="form-control form-control-sm" id="parentesco" name="parentesco" style="text-transform:lowercase" disabled value="{{ $usuario->parentesco }}">
+                                <input type="text" class="form-control form-control-sm" id="parentesco" name="parentesco" style="text-transform:lowercase" value="{{ $usuario->parentesco }}">
                             </div>
                         </div>
-                        {{--  <div class="row col-md-12" id="formCorredor" style="display: none;">
-                            <h4 class="card-title text-center"> Datos Personales </h4>
-                            <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
-                            <div class="col-md-3 mb-4">
-                                <label for="nombreCorredor"> Nombre(s)(*) </label>
-                                <input type="text" class="form-control form-control-sm" id="nombreCorredor" name="nombreCorredor" placeholder="Ingresa el nombre" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="primer_apellido_corredor"> Primer Apellido (*) </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido_corredor" placeholder="Ingresa el primer apellido" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="segundo_apellido_corredor"> Segundo Apellido</label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido_corredor" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email_corredor"> Correo Electrónico (*) </label>
-                                <input type="email" class="form-control form-control-sm" name="email_corredor" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="telefono_corredor"> Teléfono </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono_corredor" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
-                            </div>
-                        </div>  --}}
                     </div>
                 </div>
                 <div class="card" style="display: none;">
