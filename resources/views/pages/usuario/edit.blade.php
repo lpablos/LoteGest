@@ -62,10 +62,10 @@
                                 <label for="edad"> Edad (*) <small> (En años) </small></label>
                                 <input type="number" class="form-control form-control-sm" id="edad" name="edad" value="{{ $usuario->edad }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,3)" minlength="3" maxlength="3" disabled>
                             </div>
-                            <div class="col-md-3 mb-4" id="divImagenPerfil">
+                            <!--<div class="col-md-3 mb-4" id="divImagenPerfil">
                                 <label for="imagenPerfil"> Imagen de perfil </label>
                                 <input type="file" id="imagenPerfil" name="imagenPerfil" class="form-control from-control-sm" disabled>
-                            </div>
+                            </div>-->
                             <div class="col-md-3 mb-4" id="divDomicilio">
                                 <label for="domicilio"> Domicilio </label>
                                 <input type="text" class="form-control form-control-sm" id="domicilio" name="domicilio" value="{{ $usuario->domicilio }}" placeholder="Ingresa la información" disabled>
