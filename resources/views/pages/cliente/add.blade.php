@@ -335,43 +335,7 @@
                 });
             }
 
-            // Función que crea y agrega un bloque
-            // function agregarBloque() {
-            //     const bloque = $(`
-            //         <div class="row col-md-12 mb-3 pt-4 lote-item" id=${contadorLotes}>
-            //             <div class="col-md-3 mb-4">
-            //                 <label>Manzana</label>                            
-            //                 <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required style="cursor: pointer;">
-            //                     ${opcionesManzanas}
-            //                 </select>
-            //             </div>
-            //             <div class="col-md-2 mb-4">
-            //                 <label>Lote</label>
-            //                 <select class="form-select form-select-sm loteSelect" name="lote[]" required style="cursor: pointer;">
-            //                     <option value="" disabled selected>Selecciona un lote</option>
-            //                 </select>
-            //             </div>
-            //             <div class="col-md-3 mb-4">
-            //                 <label>Superficie m2</label>
-            //                 <input type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm" required>
-            //             </div>                      
-            //             <div class="col-md-3 mb-4">
-            //                 <label>Precio</label>
-            //                 <input type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" required>
-            //             </div>
-            //             <div class="col-md-1 mb-4 d-flex align-items-end">
-            //                 <button type="button" class="btn btn-sm btn-danger btn-eliminar" title="Eliminar lote">✖</button>
-            //             </div>
-            //         </div>
-            //     `);
-
-            //     // Agregar al contenedor y actualizar contador
-            //     $contenedor.append(bloque);
-            //     contadorLotes++;
-            //     actualizarContador();
-                // agregarTabla();                    
-                
-            // }
+           
             function agregarBloque(data = null) {
                 const bloque = $(`
                     <div class="row col-md-12 mb-3 pt-4 lote-item" id="bloque_${contadorLotes}">
@@ -489,68 +453,7 @@
                 document.getElementById('resumen_compra').style.display = 'none';
             }
 
-            // function agregarTabla() {
-            //     contadorTablas++;
-
-            //     const tabla = $(`
-            //         <div class="row col-md-12 mb-3 tabla-item">                        
-            //             <table class="table table-bordered border-primary mb-0 table">
-            //                 <thead>
-            //                     <tr>
-            //                         <th>Vientos</th>
-            //                         <th>Metros</th>
-            //                         <th>Colindancia</th>
-            //                         <th>Descripción</th>
-            //                     </tr>
-            //                 </thead>
-            //                 <tbody>
-            //                     <tr>
-            //                         <td>${opcionesVientos.viento1}</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento1[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" name="colinda1[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                     </tr>
-            //                     <tr>
-            //                         <td>${opcionesVientos.viento2}</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento2[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" name="colinda2[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                     </tr>
-            //                     <tr>
-            //                         <td>${opcionesVientos.viento3}</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento3[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" name="colinda3[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                     </tr>
-            //                     <tr>
-            //                         <td>${opcionesVientos.viento4}</td>
-            //                         <td>
-            //                             <input type="text" step="0.01" name="viento4[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                         <td>Colindando con:</td>
-            //                         <td>
-            //                             <input type="text" name="colinda4[]" class="form-control form-control-sm" required>
-            //                         </td>
-            //                     </tr>
-            //                 </tbody>
-            //             </table>
-            //         </div>
-            //     `);
-
-            //     $('#contenedor-tablas').append(tabla);
-            // }
+           
             function agregarTabla(data = null) {
                 
                 
@@ -838,6 +741,8 @@
                 $inputPrecio.val(precio).trigger('change'); // ← aquí se dispara el evento
 
                 // console.log(`Manzana ${manzanaSeleccionada.num_manzana} (${tipoVenta}): ${precio}`);
+
+                actualizarLotesPorManzana()
             });
 
 
@@ -1033,6 +938,58 @@
            
             
         });
+
+
+        $(document).on("change", ".loteSelect, .manzanaSelect", function () {
+            actualizarLotesPorManzana();
+        });
+
+        function actualizarLotesPorManzana() {
+            
+            let combinaciones = [];
+
+            // Guardamos combinaciones manzana + lote seleccionadas
+            $(".lote-item").each(function () {
+
+                let manzana = $(this).find(".manzanaSelect").val();
+                let lote = $(this).find(".loteSelect").val();
+
+                if (manzana && lote) {
+                    combinaciones.push(manzana + "_" + lote);
+                }
+            });
+
+            // Recorremos cada bloque
+            $(".lote-item").each(function () {
+
+                let bloque = $(this);
+                let manzanaActual = bloque.find(".manzanaSelect").val();
+                let loteActual = bloque.find(".loteSelect").val();
+                let selectLote = bloque.find(".loteSelect");
+
+                selectLote.find("option").each(function () {
+
+                    let option = $(this);
+                    let valorOption = option.val();
+
+                    if (!valorOption) return;
+
+                    let clave = manzanaActual + "_" + valorOption;
+
+                    if (
+                        combinaciones.includes(clave) &&
+                        valorOption !== loteActual
+                    ) {
+                        option.prop("disabled", true);
+                    } else {
+                        option.prop("disabled", false);
+                    }
+                });
+
+            });
+        }
+
+
     </script>
 
     @if(Session::has('success'))

@@ -1,4 +1,5 @@
  <h3> Datos de Compra </h3>
+
 <section>
     
     <div class="row col-md-12">
@@ -57,7 +58,7 @@
     </div>
     <div class="row col-md-12 text-center">
         <div class="m-1" id="b_add_lote">
-            <button type="button" id="btn_add_compra" class="btn btn-sm btn-primary btn-small waves-effect waves-light" disabled>
+            <button type="button" id="btn_add_compra" class="btn btn-sm btn-primary btn-small waves-effect waves-light parpadeo" disabled>
                 Agregar Compra
             </button>
         </div>
@@ -106,5 +107,20 @@
     <div class="row mb-1">
         <div id="contenedor-tablas"></div>
     </div>
+
+    <style>
+       @keyframes glow {
+            0% { box-shadow: 0 0 5px #0d6efd; transform: scale(1); }
+            50% { box-shadow: 0 0 20px #0d6efd; transform: scale(1.05); }
+            100% { box-shadow: 0 0 5px #0d6efd; transform: scale(1); }
+        }
+
+        /* Solo cuando esté habilitado */
+        #btn_add_compra:not(:disabled) {
+            animation: glow 1s infinite;
+        }
+
+
+    </style>
 
 </section>

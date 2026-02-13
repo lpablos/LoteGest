@@ -145,7 +145,8 @@ $(function () {
                         if (!$input.val() || $input.val().trim() === "") {
                             isValid = false;
                             $input.addClass("is-invalid");
-                            toastr.warning(`Por favor completa el campo "${$input.attr("name")}" en la fila ${index + 1}`);
+                            let campo = $input.attr("name").replace("[]", "");
+                            toastr.warning(`Por favor completa el campo "${campo}"`);
                         } else {
                             $input.removeClass("is-invalid");
                         }
