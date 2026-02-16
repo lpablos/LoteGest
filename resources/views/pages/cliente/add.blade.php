@@ -199,7 +199,7 @@
             }
             
             if(datos.length > 0){
-                console.log("esta es la data -->", datos);
+                //console.log("esta es la data -->", datos);
                 
                 const {cliente, corredor, estado, fraccionamiento, compralotelinderos, contrato} = datos[0]
 
@@ -380,7 +380,7 @@
                 if (data) {
                     setTimeout(() => {
                         // 1. Seleccionar manzana
-                        bloque.find(".manzanaSelect").val(data.lote.manzana_id).trigger("change");
+                        bloque.find(".").val(data.lote.manzana_id).trigger("change");
                         // 2. Cargar lotes en ese select (debes tener una función que llene los lotes)
                         bloque.find(".loteSelect").val(data.lote_id).trigger("change");
                     }, 200);
@@ -832,51 +832,122 @@
                 }
             });
 
-
-            // Detecta cambios en manzana o lote
+            // Funcion nueva 
             $(document).on('change', '.manzanaSelect, .loteSelect', function () {
-                // verificarManzanasYLotes();
                 if (!modoCargando) {
                     verificarManzanasYLotes();
                 }
             });
 
-
             function verificarManzanasYLotes() {
-                const manzanas = [];
-                const lotes = [];
-                // Limpiamos las tablas previas antes de volver a agregar
+
+                const datosPorManzana = {};
+
                 $('#contenedor-tablas').empty();
-                // Recorremos todos los selects de manzana y lote
+
+                // ============================
+                // 1️⃣ Agrupar lotes por manzana
+                // ============================
+
                 $('.manzanaSelect').each(function (index) {
+
                     const manzanaVal = $(this).val();
                     const loteVal = $('.loteSelect').eq(index).val();
 
                     if (manzanaVal && loteVal) {
-                        manzanas.push(manzanaVal);
-                        lotes.push(Number(loteVal));
+
+                        if (!datosPorManzana[manzanaVal]) {
+                            datosPorManzana[manzanaVal] = [];
+                        }
+
+                        datosPorManzana[manzanaVal].push(Number(loteVal));
                     }
                 });
 
-                if (manzanas.length === 0 || lotes.length === 0) return;
+                if (Object.keys(datosPorManzana).length === 0) return;
 
-                // Verificar si todas las manzanas son iguales
-                const todasIguales = manzanas.every(m => m === manzanas[0]);
+                // ============================
+                // 2️⃣ Procesar cada manzana
+                // ============================
 
-                // Verificar si los lotes son una secuencia válida
-                const enSecuencia = verificarSecuenciaFlexible(lotes);
+                Object.keys(datosPorManzana).forEach(manzana => {
 
-                // // Limpiamos las tablas previas antes de volver a agregar
-                // $('#contenedor-tablas').empty();
-                
-                if (todasIguales && enSecuencia) {
-                    // console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
+                    const lotes = datosPorManzana[manzana];
+
+                    if (lotes.length === 0) return;
+
+                    // Ordenar y eliminar duplicados
+                    const ordenados = [...new Set(lotes)].sort((a, b) => a - b);
+
+                    let grupoActual = [ordenados[0]];
+
+                    for (let i = 1; i < ordenados.length; i++) {
+
+                        if (ordenados[i] === ordenados[i - 1] + 1) {
+
+                            // Sigue la secuencia
+                            grupoActual.push(ordenados[i]);
+
+                        } else {
+
+                            // Se rompió la secuencia → crear tabla
+                            agregarTabla();
+                            grupoActual = [ordenados[i]];
+                        }
+                    }
+
+                    // Agregar último grupo
                     agregarTabla();
-                } else {
-                    // console.log('⚠️ Manzanas distintas o lotes no secuenciales → una tabla por registro');
-                    manzanas.forEach(() => agregarTabla());
-                }
+                });
             }
+
+
+            
+
+            // // Detecta cambios en manzana o lote
+            // $(document).on('change', '.manzanaSelect, .loteSelect', function () {
+            //     // verificarManzanasYLotes();
+            //     if (!modoCargando) {
+            //         verificarManzanasYLotes();
+            //     }
+            // });
+
+
+            // function verificarManzanasYLotes() {
+            //     const manzanas = [];
+            //     const lotes = [];
+            //     // Limpiamos las tablas previas antes de volver a agregar
+            //     $('#contenedor-tablas').empty();
+            //     // Recorremos todos los selects de manzana y lote
+            //     $('.manzanaSelect').each(function (index) {
+            //         const manzanaVal = $(this).val();
+            //         const loteVal = $('.loteSelect').eq(index).val();
+
+            //         if (manzanaVal && loteVal) {
+            //             manzanas.push(manzanaVal);
+            //             lotes.push(Number(loteVal));
+            //         }
+            //     });
+
+            //     if (manzanas.length === 0 || lotes.length === 0) return;
+
+            //     // Verificar si todas las manzanas son iguales
+            //     const todasIguales = manzanas.every(m => m === manzanas[0]);
+
+            //     // Verificar si los lotes son una secuencia válida
+            //     const enSecuencia = verificarSecuenciaFlexible(lotes);
+
+            //     // // Limpiamos las tablas previas antes de volver a agregar
+            //     // $('#contenedor-tablas').empty();
+                
+            //     if (todasIguales && enSecuencia) {
+            //         // console.log('✅ Todas las manzanas iguales y lotes en secuencia → una tabla');
+            //         agregarTabla();
+            //     } else {
+            //         // console.log('⚠️ Manzanas distintas o lotes no secuenciales → una tabla por registro');
+            //         manzanas.forEach(() => agregarTabla());
+            //     }
+            // }
 
 
             function verificarSecuenciaFlexible(lotes) {
