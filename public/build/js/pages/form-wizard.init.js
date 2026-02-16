@@ -42,7 +42,14 @@ $(function () {
             loading: "Cargando..."
         },
         onStepChanging: function (event, currentIndex, newIndex) {
-  // Evita avanzar hacia atrás sin restricciones
+  
+        // 🔒 Si estamos en el último paso (index 4), no permitir retroceder
+        if (currentIndex === 4 && newIndex < currentIndex) {
+            toastr.warning("No puedes regresar después de generar el registro.");
+            return false;
+        }
+        
+        // Permitir retroceso normalmente en otros pasos
         if (newIndex < currentIndex) return true;
 
             let pasoCompletado = false; // 🔹 Controla si el AJAX fue exitoso

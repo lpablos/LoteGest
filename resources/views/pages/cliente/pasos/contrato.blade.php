@@ -16,6 +16,9 @@
 
 <section>
     <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <a href="{{ route('cliente.index') }}" target="_blank" class="btn btn-secondary mb-4 btn-parpadeo">Listado de Clientes</a>
+        </div>
         <div class="col-lg-8">
             <div class="mb-4" id="vista-contrato-load">
                  <img src="{{ asset('images/leaves-6625_128.gif') }}" alt="Cargando..." width="128">
@@ -31,3 +34,15 @@
         </div>
     </div>
 </section>
+
+<style>
+    @keyframes parpadeo {
+        0% { opacity: 1; }
+        50% { opacity: 0.4; }
+        100% { opacity: 1; }
+    }
+
+    .btn-parpadeo {
+        animation: parpadeo 1s infinite;
+    }
+</style>
