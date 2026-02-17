@@ -29,6 +29,18 @@ class DocumentosController extends Controller
     public function contratoPDF($registro)
     {
         $contrato = Contrato::find($registro);
+ 
+        foreach ($contrato->compra->compralotelinderos as $item) {
+            // Aqui cuando se compra un lote
+            // Ya sea de contado o a credito, el lote se marca como 
+            // Indica que se encuentra reservado (reservado con contrato y enganche).
+            // Hasta que no se realize le pago total queda en Vendido (Indica que se encuentra vendido, liquidado en su totalidad.)
+            
+            $item->lote->disponibilidad_id = 3;
+            $item->lote->save();
+        }
+
+        
         $compra = Compra::find($contrato->compra_id);
         $compra->estatus_id = 3;
         $compra->save();

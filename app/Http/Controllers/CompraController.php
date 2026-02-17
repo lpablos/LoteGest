@@ -106,7 +106,7 @@ class CompraController extends Controller
                 $loteLindero->save();
                 // Se pone como vendido el lote por que ya se vendio
                 $loteVendido = Lote::findOrFail($request['lote'][$i]);
-                $loteVendido->disponibilidad_id = 1; // Esta vendido;
+                // $loteVendido->disponibilidad_id = 1; // Esta vendido; // Aplica solo cuando se lleva acabo la venta y el tipo
                 $loteVendido->save();  
             }
             DB::commit();

@@ -16,6 +16,7 @@ class Lote extends Model
     protected $table = 'lotes';
 
     protected $fillable = [
+        'id',
         'num_lote',
         'observaciones',
         'disponibilidad_id',
