@@ -17,7 +17,24 @@
 <section>
     <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
-            <a href="{{ route('cliente.index') }}" target="_blank" class="btn btn-secondary mb-4 btn-parpadeo">Listado de Clientes</a>
+             <h5 class="mb-3">¡Contrato generado correctamente! 🎉</h5>
+    
+            <p class="mb-2">
+                Este documento corresponde al <strong>contrato final del cliente</strong>.
+                El proceso de generación del contrato ha sido finalizado exitosamente.
+            </p>
+
+            <p class="mb-2">
+                Ahora puedes hacer clic en el botón 
+                <strong>“Listado de Clientes”</strong> 
+                para visualizar los clientes registrados.
+            </p>
+
+            <p class="mb-0">
+                Si lo deseas, también podrás registrar un nuevo cliente desde esa sección.
+            </p>
+            <br>
+            <a href="{{ route('cliente.index') }}" target="_blank" class="btn btn-secondary mb-4 btn-parpadeo ">Listado de Clientes</a>
         </div>
         <div class="col-lg-8">
             <div class="mb-4" id="vista-contrato-load">
