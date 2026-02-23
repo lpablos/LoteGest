@@ -23,7 +23,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::select('id', 'nombre', 'primer_apellido', 'segundo_apellido', 'created_at')->get();
+        $clientes = Cliente::select('id','no_cliente', 'nombre', 'primer_apellido', 'segundo_apellido', 'created_at')->get();
 
         return view('pages.cliente.index', compact('clientes'));
     }
@@ -121,7 +121,6 @@ class ClienteController extends Controller
             ->with([
                 'fraccionamiento:id,nombre',
                 'estatus:id,nombre',
-                'cliente:id,nombre,primer_apellido,segundo_apellido',
                 'corredor:id,nombre,primer_apellido,segundo_apellido',
                 'contrato:id,compra_id,documento_url,created_at',
             ])
@@ -130,7 +129,6 @@ class ClienteController extends Controller
             ->get();
         
         if (view()->exists('pages.cliente.compra.index')) {
-
             return view('pages.cliente.compra.index', compact('cliente', 'compras'));
         }
         return abort(404);
@@ -221,17 +219,23 @@ class ClienteController extends Controller
         $compras = Compra::select('id', 'num_solicitud','num_solicitud_sistema','fraccionamiento_id','estatus_id','cliente_id','corredor_id')
                 ->with([
                     'fraccionamiento:id,nombre',
-                    'estatus:id,nombre',
-                    'cliente:id,nombre,primer_apellido,segundo_apellido',
+                    // 'estatus:id,nombre',
+                    // 'cliente:id,nombre,primer_apellido,segundo_apellido',
                     'corredor:id,nombre,primer_apellido,segundo_apellido',
                     // 'contrato:id,compra_id,documento_url,created_at',
                 ])
                 ->where('cliente_id', $idCliente)
                 ->where('estatus_id', 3)
                 ->get();
+
+        // $nombreCliente = $compras->pluck('cliente.nombre')->first();
+       $nombreCompleto = optional($compras->first()->cliente)->nombre . ' ' .
+                  optional($compras->first()->cliente)->primer_apellido . ' ' .
+                  optional($compras->first()->cliente)->segundo_apellido;
+        
         if (view()->exists('pages.cliente.contrato.index')) {
 
-            return view('pages.cliente.contrato.index',compact('compras'));
+            return view('pages.cliente.contrato.index',compact('compras', 'nombreCompleto'));
         }
         return abort(404);
     }

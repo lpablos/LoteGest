@@ -26,19 +26,19 @@
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
                                     <h2> Contratos </h2>
+                                    <h5> Cliente <strong>{{ $nombreCompleto }}</strong> </h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     @include('pages.cliente.contrato.modals.digital')
+                    @include('pages.cliente.contrato.modals.carga-documento')
                     <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Núm. Solicitud </th>
-                                <th> Núm. Solicitud Sistema </th>
-                                <th> Cliente </th>
-                                <th> Estatus </th>
+                                <th> # Solicitud </th>
+                                <th> # Sistema </th>
                                 <th> Fecha contrato </th>
                                 <th> Fraccionamiento </th>
                                 <th> Corredor </th>
@@ -50,8 +50,6 @@
                                 <tr>
                                     <td>{{ $compra->num_solicitud }} </td>
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
-                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
-                                    <td>{{ $compra->estatus->nombre }} </td>
                                     <td> {{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
                                     <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
@@ -69,16 +67,27 @@
                                                             data-registro="{{ $compra->contrato->id }}"
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#exampleModalScrollable"
+                                                            
                                                         >
                                                             <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
                                                             Contrato Sistema
                                                         </button>
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Archivo Firmado </a>
+                                                     <button 
+                                                            type="button" 
+                                                            class="dropdown-item btn-contrato-adjunto"
+                                                            data-registro="{{ $compra->contrato->id }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#modalDocumento"
+                                                        >
+                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            Contrato Adjunto
+                                                        </button>
+                                                    <!-- <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Contrato Adjunto</a> -->
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Adjuntar Archivo </a>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -127,10 +136,10 @@
     <script src="{{ URL::asset('build/js/pages/toastr.init.js') }}"></script>
     <!-- Datatable init js -->
     <script>
-        $(document).ready(function() {
-        
-            $(document).on('click', '.btn-contrato', function () {
+        $(document).ready(function() {   
 
+            $(document).on('click', '.btn-contrato', function () {
+                
                 let registro = $(this).data('registro');
 
                 // Laravel crea la URL base con un placeholder
@@ -142,8 +151,7 @@
                 // Establecemos la URL en el iframe
                 $('#iframeDocumento').attr('src', url);
             });
-
-
+            
             // Se declara el token global para las peticiones que se vayan a realizar
             $.ajaxSetup({
                 headers: {

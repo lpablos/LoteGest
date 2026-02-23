@@ -51,6 +51,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('vista-previa-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'vistaPreviaContrato']);
     Route::get('vista-contrato/{registro}', [App\Http\Controllers\DocumentosController::class, 'contratoPDF']);
     Route::get('ver-documento/{id}', [App\Http\Controllers\DocumentosController::class, 'verDocumento'])->name('constrato.sistema.digital');
+
+    //Contratos digitales
+    Route::post('/contratos/generar', [App\Http\Controllers\ContratoController::class, 'contratoFirmado'])->name('contratos.upload.firmado');
+    Route::get('/contratos/{id}/documento/firmado', [App\Http\Controllers\ContratoController::class,'obtenerDocumentoAsociado'])->name('contratos.documento.obtener.firmado');
 });    
 
 

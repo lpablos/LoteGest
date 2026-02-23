@@ -38,22 +38,18 @@
                     <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Nombre </th>
                                 <th> Núm. cliente </th>
+                                <th> Nombre </th>
                                 <th> Fecha alta </th>
-                                <th> Corredor </th>
-                                <th> Estatus </th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($clientes as $cliente)
                                 <tr>
+                                    <td>{{ $cliente->no_cliente }}</td>
                                     <td>{{ $cliente->nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}</td>
-                                    <td> ZAC-CARMAL-25 </td>
-                                    <td> {{ Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y') }} </td>
-                                    <td> SIN INFORMACIÓN </td>
-                                    <td> SIN INFORMACIÓN </td>
+                                    <td>{{ Carbon\Carbon::parse($cliente->created_at)->format('d-m-Y') }} </td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,8 +59,8 @@
                                                 <li>
                                                     <a href="{{ route('cliente.edit', ['cliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-user font-size-16 text-success me-1"></i> Editar </a>
                                                      <a href="{{ route('cliente.nueva.compra', ['idCliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-cart font-size-16 text-success me-1"></i>Nueva Compra </a>
-                                                    <a href="{{ route('cliente.show', ['cliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-list-ol font-size-16 text-success me-1"></i> Compras </a>
-                                                    <a href="{{ route('cliente.contratos', ['idCliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-list-check font-size-16 text-success me-1"></i> Contratos </a>
+                                                    <a href="{{ route('cliente.show', ['cliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-list-ol font-size-16 text-success me-1"></i>Ver Compras </a>
+                                                    <a href="{{ route('cliente.contratos', ['idCliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-list-check font-size-16 text-success me-1"></i>Ver Contratos </a>
                                                 </li>
                                             </ul>
                                         </div>

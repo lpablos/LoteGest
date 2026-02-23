@@ -26,6 +26,7 @@
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
                                     <h2> Compras </h2>
+                                    <h5> Cliente : <strong>{{ $cliente->nombre }} {{ $cliente->primer_apellido }} {{ $cliente->segundo_apellido }}</strong> </h5>
                                 </div>
                             </div>
                         </div>
@@ -33,11 +34,10 @@
                     <table id="datatable-cliente" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> Núm. cliente </th>
-                                <th> Núm. de solicitud </th>
+                                <th> # Solicitud </th>
+                                <th> # Sistema</th>
                                 <th> Fraccionamiento </th>                                
                                 <th> Corredor </th>
-                                <th> Cliente </th>
                                 <th> Estatus </th>
                                 <th> Fecha registro </th>
                                 <th> Acciones </th>
@@ -50,7 +50,6 @@
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
                                     <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
-                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
                                     <td>{{ $compra->estatus->nombre }} </td>
                                     <td> {{ Carbon\Carbon::parse($compra->created_at)->format('d-m-Y') }} </td>
                                     <td>

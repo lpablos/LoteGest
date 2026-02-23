@@ -10,6 +10,8 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
     @include('layouts.head-css')
 </head>
 

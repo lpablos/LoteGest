@@ -9,6 +9,9 @@ use DB, Session;
 use Illuminate\Support\Facades\Log;
 use App\Models\Contrato;
 use App\Models\Compra;
+use Barryvdh\DomPDF\Facade\Pdf;
+use setasign\Fpdi\Fpdi;
+use Illuminate\Support\Facades\Storage;
 
 class ContratoController extends Controller
 {
@@ -162,4 +165,119 @@ class ContratoController extends Controller
     {
         //
     }
+
+
+
+
+    public function contratoFirmado(Request $request)
+    {
+        $request->validate([
+            'documentos.*' => 'required|file|mimes:jpg,jpeg,png,webp,pdf'
+        ]);
+
+        $contrato = Contrato::findOrFail($request->contrato_id);        
+        $archivos = $request->file('documentos');
+
+        $imagenes = [];
+        $pdfs = [];
+
+        foreach ($archivos as $archivo) {
+
+            if (strtolower($archivo->getClientOriginalExtension()) === 'pdf') {
+                $pdfs[] = $archivo;
+            } else {
+                $imagenes[] = $archivo;
+            }
+        }
+
+        $nombreFinal = 'contrato_' . $contrato->id . '.pdf';
+
+        // 🔥 AQUÍ DEFINIMOS BIEN LA CARPETA
+        $carpeta = 'public/contratosdigital/';
+        $rutaStorage = $carpeta . $nombreFinal;
+        $rutaFinal = storage_path('app/' . $rutaStorage);
+
+        // Crear carpeta si no existe
+        if (!Storage::exists($carpeta)) {
+            Storage::makeDirectory($carpeta);
+        }
+
+        // 🔥 SOLO IMÁGENES
+        if (count($imagenes) > 0 && count($pdfs) == 0) {
+
+            $html = '<html><body style="margin:0;padding:0;">';
+
+            foreach ($imagenes as $img) {
+
+                $base64 = base64_encode(file_get_contents($img->getRealPath()));
+
+                $html .= '
+                    <div style="page-break-after: always;">
+                        <img src="data:image/jpeg;base64,' . $base64 . '" style="width:100%;">
+                    </div>';
+            }
+
+            $html .= '</body></html>';
+
+            $pdf = Pdf::loadHTML($html)->setPaper('a4', 'portrait');
+
+            Storage::put($rutaStorage, $pdf->output());
+        }
+
+        // 🔥 SOLO PDFs
+        elseif (count($pdfs) > 0 && count($imagenes) == 0) {
+
+            $fpdi = new \setasign\Fpdi\Fpdi();
+
+            foreach ($pdfs as $archivo) {
+
+                $pageCount = $fpdi->setSourceFile($archivo->getRealPath());
+
+                for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+                    $template = $fpdi->importPage($pageNo);
+                    $size = $fpdi->getTemplateSize($template);
+
+                    $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                    $fpdi->useTemplate($template);
+                }
+            }
+
+            $fpdi->Output($rutaFinal, 'F');
+        }
+
+        else {
+            return response()->json([
+                'error' => 'No se pueden mezclar imágenes y PDFs'
+            ], 422);
+        }
+
+        // 🔥 GUARDAMOS RUTA CORRECTA EN BD
+        $contrato->digital_url = 'contratosdigital/' . $nombreFinal;
+        $contrato->save();
+
+        return response()->json([
+            'success' => true,
+            'url' => asset('storage/' . $contrato->digital_url)
+        ]);
+    }
+
+
+    
+    public function obtenerDocumentoAsociado($contratoId)
+    {
+        $contrato = Contrato::find($contratoId);
+        
+        if ($contrato && $contrato->digital_url) {
+            return response()->json([
+                'success' => true,
+                'url' => asset('storage/' . $contrato->digital_url)
+            ]);
+        }
+
+        return response()->json([
+            'success' => false
+        ]);
+    }
+
 }

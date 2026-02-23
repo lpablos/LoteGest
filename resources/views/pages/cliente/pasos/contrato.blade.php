@@ -34,7 +34,7 @@
                 Si lo deseas, también podrás registrar un nuevo cliente desde esa sección.
             </p>
             <br>
-            <a href="{{ route('cliente.index') }}" target="_blank" class="btn btn-secondary mb-4 btn-parpadeo ">Listado de Clientes</a>
+            <a href="{{ route('cliente.index') }}" class="btn btn-secondary mb-4 btn-parpadeo ">Listado de Clientes</a>
         </div>
         <div class="col-lg-8">
             <div class="mb-4" id="vista-contrato-load">

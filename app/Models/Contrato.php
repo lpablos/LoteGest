@@ -31,7 +31,8 @@ class Contrato extends Model
         'denominado_como_asc',
         'html_tablas',
         'codigo_valido_contrato',
-        'documento_url' 
+        'documento_url',
+        'digital_url' 
     ];
 
     /**

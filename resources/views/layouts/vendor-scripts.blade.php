@@ -1,4 +1,26 @@
 <!-- JAVASCRIPT -->
+
+
+<!-- **************** -->
+
+<!-- FilePond base -->
+<link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet"/>
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+<!-- Plugin preview imágenes -->
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+
+<!-- Plugin validación tipo archivo -->
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+
+<!-- **************** -->
 <script src="{{ URL::asset('build/libs/jquery/jquery.min.js')}}"></script>
 <script src="{{ URL::asset('build/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ URL::asset('build/libs/metismenu/metisMenu.min.js')}}"></script>
