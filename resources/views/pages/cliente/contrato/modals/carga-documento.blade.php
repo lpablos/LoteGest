@@ -69,7 +69,74 @@
 
 
 
-@section('script')
+<script>
+    document.getElementById('modalDocumento')
+    .addEventListener('shown.bs.modal', function (event) {
+
+        // 🔥 Botón que abrió el modal
+        const button = event.relatedTarget;
+
+        // 🔥 Obtener data-registro
+        const contratoId = button ? button.getAttribute('data-registro') : null;
+
+        // 🔥 Reset FilePond
+        if (typeof pond !== "undefined" && pond) {
+            pond.removeFiles();
+        }
+
+        // 🔥 Ocultar mensaje pendiente
+        const alerta = document.getElementById('pendiente-carga-digital');
+        if (alerta) alerta.style.display = 'none';
+
+        // 🔥 Limpiar iframe
+        const iframe = document.getElementById('iframeDocumentoDigital');
+        if (iframe) iframe.src = '';
+
+        // 🔥 Cargar documento si existe ID
+        if (contratoId) {
+            cargarDocumentoExistente(contratoId);
+        }
+
+    });
+
+    const routeDocumentoFirmado = "{{ route('contratos.documento.obtener.firmado', ':id') }}";
+
+    function cargarDocumentoExistente(id) {
+
+        const loader = document.getElementById('loa-load');
+        const iframe = document.getElementById('iframeDocumentoDigital');
+        const alerta = document.getElementById('pendiente-carga-digital');
+
+        if (loader) loader.style.display = 'inline-block';
+
+        let url = routeDocumentoFirmado.replace(':id', id);
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+
+            if (data.success && data.url) {
+
+                if (iframe) {
+                    iframe.src = data.url + "?v=" + Date.now();
+                }
+
+            } else {
+
+                if (alerta) {
+                    alerta.style.display = 'block';
+                }
+
+            }
+
+        })
+        .finally(() => {
+            if (loader) loader.style.display = 'none';
+        });
+    }
+</script>
+
+
 
 <script>
     let pond;
@@ -98,31 +165,6 @@
             });
 
         }
-
-    });
-</script>
-
-
-<script>
- 
-
-    $('#modalDocumento').on('shown.bs.modal', function (event) {
-        // 🔥 BOTÓN QUE ABRIÓ EL MODAL
-        const button = $(event.relatedTarget);
-        // 🔥 OBTENER data-registro
-        const contratoId = button.data('registro');
-        // 🔥 Reset FilePond
-        if (pond) {
-            pond.removeFiles();
-        }
-        $("#pendiente-carga-digital").hide();
-        // 🔥 Limpiar iframe
-        $('#iframeDocumentoDigital').attr('src', '');
-
-        // 🔥 Ahora cargas documento asociado
-        if (contratoId) {
-            cargarDocumentoExistente(contratoId);
-        }        
 
     });
 
@@ -202,28 +244,13 @@
         iframe.src = "";
     }
 
-    const routeDocumentoFirmado = "{{ route('contratos.documento.obtener.firmado', ':id') }}";
-
-    function cargarDocumentoExistente(id) {
-
-        $("#loa-load").show();
-        let url = routeDocumentoFirmado.replace(':id', id);       
-        
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.url) {
-                    $('#iframeDocumentoDigital').attr('src', data.url + "?v=" + Date.now());
-                }else{
-                    $("#pendiente-carga-digital").show();
-                }
-            })
-            .finally(() => {
-                $("#loa-load").hide();
-            });
-    }
+   
 </script>
 
-@endsection
+
+
+
+
+
 
 

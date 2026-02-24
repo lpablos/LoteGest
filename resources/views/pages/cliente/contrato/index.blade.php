@@ -138,19 +138,21 @@
     <script>
         $(document).ready(function() {   
 
-            $(document).on('click', '.btn-contrato', function () {
+            // $(document).on('click', '.btn-contrato', function () {
                 
-                let registro = $(this).data('registro');
+              
+            // let registro = $(this).data('registro');
 
-                // Laravel crea la URL base con un placeholder
-                let url = "{{ route('constrato.sistema.digital', ['id' => ':id']) }}";
+            //     Laravel crea la URL base con un placeholder
+              
+            //    let url = "{{ route('constrato.sistema.digital', ['id' => ':id']) }}";
 
-                // Reemplazamos el placeholder por el ID real
-                url = url.replace(':id', registro);
+            //     Reemplazamos el placeholder por el ID real
+            //    url = url.replace(':id', registro);
 
-                // Establecemos la URL en el iframe
-                $('#iframeDocumento').attr('src', url);
-            });
+            //     Establecemos la URL en el iframe
+            //     $('#iframeDocumento').attr('src', url);
+            // });
             
             // Se declara el token global para las peticiones que se vayan a realizar
             $.ajaxSetup({
