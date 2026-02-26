@@ -112,7 +112,7 @@ class UserController extends Controller
             $usuario->estatus_id = 1;
             $usuario->save();
 
-            if ($request->rol_id != 4) {    
+            // if ($request->rol_id != 4) {    
                 $datosPersonales = new UsuarioDatosPersonales();
                 $datosPersonales->edad = ($request->edad == null) ? 'SIN INFORMACIÓN' : $request->edad;
                 $datosPersonales->domicilio = ($request->domicilio == null) ? 'SIN INFORMACIÓN' : $request->domicilio;
@@ -124,7 +124,7 @@ class UserController extends Controller
                 $datosPersonales->parentesco = ($request->parentesco == null) ? 'SIN INFORMACIÓN' : $request->parentesco;
                 $datosPersonales->usuario_id = $usuario->id;
                 $datosPersonales->save();
-            }
+            // }
 
             DB::commit();
 
@@ -184,8 +184,9 @@ class UserController extends Controller
                                                 'udp.parentesco',
                                             )->where('users.id', $id)->first();
         // dd($usuario);
-        $roles = Role::select('id', 'nombre')->get();
-
+        $roles = Role::select('id', 'nombre')->get();   
+        
+        
         return view('pages.usuario.edit', compact('usuario', 'roles'));
     }
 
@@ -346,24 +347,29 @@ class UserController extends Controller
 
             $usuario->telefono = $request->telefono ?? 'SIN INFORMACIÓN';
             $usuario->seudonimo = $request->seudonimo ?? 'SIN INFORMACIÓN';
+            $usuario->role_id = $request->rol_id;
             $usuario->save();
 
+            
+            
+
             // === ACTUALIZAR DATOS PERSONALES (SI NO ES CLIENTE) ===
-            if ($usuario->role_id != 4) {
-                $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first();
-                
+            // if ($usuario->role_id != 4) {
+                // $datosPersonales = UsuarioDatosPersonales::where('usuario_id', $usuario->id)->first() ?: new UsuarioDatosPersonales();
+                $datosPersonales = UsuarioDatosPersonales::firstOrNew(['usuario_id' => $usuario->id]);
+                    
                 if ($datosPersonales) {
                     $datosPersonales->edad             = $request->edad ?? 'SIN INFORMACIÓN';
                     $datosPersonales->domicilio        = $request->domicilio ?? 'SIN INFORMACIÓN';
                     $datosPersonales->enfermedades     = $request->enfermedades ?? 'SIN INFORMACIÓN';
                     $datosPersonales->fecha_nacimiento = $request->fecha_nacimiento;
                     $datosPersonales->tipo_sangre      = $request->tipo_sangre ?? 'SIN INFORMACIÓN';
-                    $datosPersonales->fecha_laboral    = $request->fecha_inicio_laboral;
+                    $datosPersonales->fecha_laboral    = $request->fecha_laboral;
                     $datosPersonales->num_contacto     = $request->num_contacto ?? 'SIN INFORMACIÓN';
                     $datosPersonales->parentesco       = $request->parentesco ?? 'SIN INFORMACIÓN';
                     $datosPersonales->save();
                 }
-            }
+            // }
 
             DB::commit();
             Session::flash('success', '¡Usuario actualizado exitosamente!');

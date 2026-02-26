@@ -52,8 +52,6 @@ class ContratoController extends Controller
                     ->where('compras.estatus_id', 3)
                     ->orderBy('c.created_at', 'desc')
                     ->get();
-
-                    
             return view('pages.contratos.index', compact('compras'));
         }
         return abort(404);

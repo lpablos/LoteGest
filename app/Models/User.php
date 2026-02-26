@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'dob', 
         'avatar',
         'fecha_registro',
+        'rol_id'
     ];
 
     /**
@@ -56,6 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->primer_apellido,
             $this->segundo_apellido,
         ])->filter()->join(' ');
+    }
+
+    public function datosPersonales()
+    {
+        return $this->hasOne(UsuarioDatosPersonales::class, 'usuario_id');
     }
 
 }

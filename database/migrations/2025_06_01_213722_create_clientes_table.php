@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('num_contacto')->nullable();
             $table->string('parentesco')->nullable();
             $table->string('url_ine')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

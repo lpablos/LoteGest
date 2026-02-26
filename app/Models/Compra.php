@@ -56,7 +56,7 @@ class Compra extends Model
 
     public function corredor()
     {
-        return $this->belongsTo(User::class, 'corredor_id', 'id');
+        return $this->belongsTo(User::class, 'corredor_id', 'id')->withTrashed();
     }
 
     public function estado()
@@ -76,7 +76,7 @@ class Compra extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id')->withTrashed();
     }
     
     public function compralotelinderos()

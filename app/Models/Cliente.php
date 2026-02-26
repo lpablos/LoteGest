@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
 {
+    use SoftDeletes;
     /**
      * Nombre de la tabla (opcional si sigue convención plural).
      */
@@ -27,7 +29,10 @@ class Cliente extends Model
         'url_ine',
     ];
 
+    
+
     protected $casts = [
         'fecha_nacimiento' => 'date',
+        
     ];
 }

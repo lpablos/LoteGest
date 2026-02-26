@@ -29,28 +29,17 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-8">
-                            <div class="text-sm-end">
-                                <button type="button" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#add_proyecto"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2">
-                                        <i class="mdi mdi-plus me-1"></i> Agregar
-                                </button>
-                            </div>
-                        </div> -->
                     </div>
-                    
+                    @include('pages.cliente.contrato.modals.digital')
+                    @include('pages.cliente.contrato.modals.carga-documento')
                     <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
+                                <th> # Solicitud </th>
+                                <th> # Sistema </th>
                                 <th> Fecha contrato </th>
                                 <th> Fraccionamiento </th>
-                                <th> # Solicitud </th>
-                                <th> # Solicitud Sistema </th>
-                                <th> # Contrato Sistema</th>
                                 <th> Cliente </th>
-                                <th> Estatus </th>
                                 <th> Corredor </th>
                                 <th> Acciones </th>
                             </tr>
@@ -58,16 +47,13 @@
                         <tbody>
                             @foreach ($compras as $compra)
                                 <tr>
-                                    <td> {{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
-                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->num_solicitud }} </td>
                                     <td>{{ $compra->num_solicitud_sistema }} </td>
-                                    <td>{{ $compra->contrato->codigo_valido_contrato }} </td>
+                                    <td>{{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
+                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
                                     <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
-                                    <td>{{ $compra->estatus->nombre }} </td>
                                     <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
-                                    
-                                    <td>
+                                       <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="mdi mdi-dots-vertical font-size-18"></i>
@@ -80,16 +66,27 @@
                                                             data-registro="{{ $compra->contrato->id }}"
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#exampleModalScrollable"
+                                                            
                                                         >
                                                             <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
                                                             Contrato Sistema
                                                         </button>
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Archivo Firmado </a>
+                                                     <button 
+                                                            type="button" 
+                                                            class="dropdown-item btn-contrato-adjunto"
+                                                            data-registro="{{ $compra->contrato->id }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#modalDocumento"
+                                                        >
+                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            Contrato Adjunto
+                                                        </button>
+                                                    <!-- <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Contrato Adjunto</a> -->
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Adjuntar Archivo </a>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
                                                 </li>
                                             </ul>
                                         </div>
