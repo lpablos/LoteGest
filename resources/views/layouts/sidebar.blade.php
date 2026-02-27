@@ -6,17 +6,21 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-pyramid"></i>
-                        <span key="t-dashboards">Gestion de Proyectos</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <!-- <li><a href="{{ route('proyectos.index') }}" key="t-default">Proyectos</a></li> -->
-                        <li><a href="{{ route('fraccionamiento.index') }}" key="t-saas">Fraccionamientos</a></li>
-                        <li><a href="{{ route('lote.index') }}" key="t-crypto">Lotes</a></li>
-                    </ul>
-                </li>
+                @if(in_array(auth()->user()->role_id, [1, 2, 3]))
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-pyramid"></i>
+                            <span key="t-dashboards">Gestion de Proyectos</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <!-- <li><a href="{{ route('proyectos.index') }}" key="t-default">Proyectos</a></li> -->
+                            @if(in_array(auth()->user()->role_id, [1, 2]))
+                                <li><a href="{{ route('fraccionamiento.index') }}" key="t-saas">Fraccionamientos</a></li>
+                            @endif
+                            <li><a href="{{ route('lote.index') }}" key="t-crypto">Lotes</a></li>
+                        </ul>
+                    </li>
+                @endif
                 <li>
                     <a href="{{ route('cliente.index') }}" class="waves-effect">
                         <i class="bx bx-user"></i>
@@ -25,39 +29,41 @@
                 </li>
                 <li>
                     <a href="{{ route('contratos.index') }}" class="waves-effect">
-                        <i class="bx bx-user"></i>
+                        <i class="bx bx bx-edit"></i>
                         <span key="t-chat"> Contratos </span>
                     </a>
                 </li>
-                <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
-                <li>
-                    <a href="{{ route('usuarios.index') }}" class="waves-effect">
-                        <i class="bx bx-user"></i>
-                        <span key="t-chat"> Personal </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-receipt"></i>
-                        <span key="t-dashboards"> Catálogos </span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
-                        <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
-                        <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
-                        <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
-                        <li><a href="{{ route('tipo-de-predios.index') }}" key="t-tui-calendar"> Tipo de Predios </a></li>
-                        <li><a href="{{ route('entidades-federativas.index') }}" key="t-tui-calendar"> Estados del país </a></li>
-                        <li><a href="{{ route('municipios.index') }}" key="t-tui-calendar"> Municipios </a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{ route('configuracion.index') }}" class="waves-effect">
-                        <i class="bx bx-cog"></i>
-                        <span key="t-chat"> Configuración </span>
-                    </a>
-                </li>
-            <div style="display: none">    
+                @if(in_array(auth()->user()->role_id, [1, 2]))
+                    <li class="menu-title" key="t-backend"> ADMINISTRACIÓN </li>
+                    <li>
+                        <a href="{{ route('usuarios.index') }}" class="waves-effect">
+                            <i class="bx bx-user"></i>
+                            <span key="t-chat"> Personal </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-receipt"></i>
+                            <span key="t-dashboards"> Catálogos </span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('estatus.index') }}" key="t-tui-calendar"> Estatus </a></li>
+                            <li><a href="{{ route('estatus-proyectos.index') }}" key="t-tui-calendar"> Estatus Proyecto </a></li>
+                            <li><a href="{{ route('estatus-disponibilidad.index') }}" key="t-tui-calendar"> Estatus Disponibilidad </a></li>
+                            <li><a href="{{ route('perfiles.index') }}" key="t-tui-calendar"> Perfiles </a></li>
+                            <li><a href="{{ route('tipo-de-predios.index') }}" key="t-tui-calendar"> Tipo de Predios </a></li>
+                            <li><a href="{{ route('entidades-federativas.index') }}" key="t-tui-calendar"> Estados del país </a></li>
+                            <li><a href="{{ route('municipios.index') }}" key="t-tui-calendar"> Municipios </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route('configuracion.index') }}" class="waves-effect">
+                            <i class="bx bx-cog"></i>
+                            <span key="t-chat"> Configuración </span>
+                        </a>
+                    </li>
+                @endif
+                <div style="display: none"> 
                 <li class="menu-title" key="t-backend">@lang('translation.backend')</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

@@ -168,67 +168,146 @@
 
     });
 
+    // function enviarImagenes(contratoId) {
+    //     $("#loa-load").show();
+    //     const boton = document.getElementById('btnGenerar');
+    //     const iframe = document.getElementById('iframeDocumentoDigital');
+
+    //     if (!iframe) {
+    //         console.error("No existe iframeDocumento en el DOM");
+    //         return;
+    //     }
+
+    //     boton.disabled = true;
+    //     boton.innerHTML = '<i class="mdi mdi-loading mdi-spin me-1"></i> Generando...';
+
+    //     const formData = new FormData();
+    //     formData.append('contrato_id', contratoId);
+
+    //     pond.getFiles().forEach(fileItem => {
+    //         formData.append('documentos[]', fileItem.file);
+    //     });
+
+    //     fetch("{{ route('contratos.upload.firmado') }}", {
+    //         method: "POST",
+    //         headers: {
+    //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+    //         },
+    //         body: formData
+    //     })
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error("Error al generar el documento");
+    //         }
+    //         $("#loa-load").hide();
+    //         return response.json(); // 🔥 USAMOS JSON
+    //     })
+    //     .then(data => {
+
+    //         console.log("Respuesta del backend:", data);
+
+    //         if (data.success && data.url) {
+
+    //             // 🔥 AQUÍ SE ASIGNA DIRECTO
+    //             iframe.src = data.url + "?v=" + Date.now();
+    //             resetFilePond();
+
+    //         } else {
+    //             console.error("La respuesta no tiene success o url");
+    //         }
+    //         $("#loa-load").hide();
+    //     })
+    //     .catch(error => {
+    //         $("#loa-load").hide();
+    //         console.error(error);
+    //         alert(error.message);
+
+    //     })
+    //     .finally(() => {
+    //         $("#loa-load").hide();
+    //         boton.disabled = false;
+    //         boton.innerHTML = '<i class="mdi mdi-file-pdf-box me-1"></i> Cargar Documentación';
+
+    //     });
+    // }
     function enviarImagenes(contratoId) {
-        $("#loa-load").show();
-        const boton = document.getElementById('btnGenerar');
-        const iframe = document.getElementById('iframeDocumentoDigital');
+        const loader = document.getElementById("loa-load");
+        const boton = document.getElementById("btnGenerar");
+        const iframe = document.getElementById("iframeDocumentoDigital");
 
         if (!iframe) {
-            console.error("No existe iframeDocumento en el DOM");
+            console.error("No existe iframeDocumentoDigital en el DOM");
             return;
+        }
+
+        // Mostrar loader
+        if (loader) {
+            loader.style.display = "block";
         }
 
         boton.disabled = true;
         boton.innerHTML = '<i class="mdi mdi-loading mdi-spin me-1"></i> Generando...';
 
         const formData = new FormData();
-        formData.append('contrato_id', contratoId);
+        formData.append("contrato_id", contratoId);
 
-        pond.getFiles().forEach(fileItem => {
-            formData.append('documentos[]', fileItem.file);
+        pond.getFiles().forEach(function (fileItem) {
+            formData.append("documentos[]", fileItem.file);
         });
 
         fetch("{{ route('contratos.upload.firmado') }}", {
             method: "POST",
             headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                "Accept": "application/json"
             },
             body: formData
         })
-        .then(response => {
+        .then(async function (response) {
 
             if (!response.ok) {
-                throw new Error("Error al generar el documento");
+
+                let message = "Ocurrió un error inesperado";
+
+                try {
+                    const data = await response.json();
+                    message = data.message || data.error || message;
+                } catch (e) {
+                    message = "Error " + response.status + ": " + response.statusText;
+                }
+
+                throw new Error(message);
             }
-            $("#loa-load").hide();
-            return response.json(); // 🔥 USAMOS JSON
+
+            return response.json();
         })
-        .then(data => {
+        .then(function (data) {
 
             console.log("Respuesta del backend:", data);
 
             if (data.success && data.url) {
 
-                // 🔥 AQUÍ SE ASIGNA DIRECTO
                 iframe.src = data.url + "?v=" + Date.now();
                 resetFilePond();
 
             } else {
-                console.error("La respuesta no tiene success o url");
+                throw new Error("La respuesta no contiene success o url");
             }
-            $("#loa-load").hide();
         })
-        .catch(error => {
-            $("#loa-load").hide();
-            console.error(error);
+        .catch(function (error) {
+
+            console.error("Error capturado:", error);
             alert(error.message);
 
         })
-        .finally(() => {
-            $("#loa-load").hide();
-            boton.disabled = false;
-            boton.innerHTML = '<i class="mdi mdi-file-pdf-box me-1"></i> Generar PDF';
+        .finally(function () {
 
+            if (loader) {
+                loader.style.display = "none";
+            }
+
+            boton.disabled = false;
+            boton.innerHTML = '<i class="mdi mdi-file-pdf-box me-1"></i> Cargar Documentación';
         });
     }
 
