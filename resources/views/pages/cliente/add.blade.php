@@ -197,6 +197,7 @@
                 $("#num_contacto_comprador").val(registroCliente.num_contacto)
                 $("#parentesco_comprador").val(registroCliente.parentesco)
             }
+            console.log("Estos son los datos", datos);
             
             if(datos.length > 0){
                 //console.log("esta es la data -->", datos);
@@ -243,7 +244,8 @@
                 // document.getElementById('resumen_compra').style.display = 'block';
                 $("#resumen_compra").slideDown();
 
-
+                // console.log("Esto es lo que pasa -->", datos[0]);
+                
                 // Resumen de compra
                 $("#superficiel_venta").val(datos[0].superficiel_venta);
                 $("#total_venta").val(datos[0].total_venta);
@@ -337,42 +339,45 @@
 
            
             function agregarBloque(data = null) {
+
+                let identificadorTabla = ""
+                if(data){
+                    identificadorTabla = data.campo+'_'+data.lindero_id
+                }
+
                 const bloque = $(`
                     <div class="row col-md-12 mb-3 pt-4 lote-item" id="bloque_${contadorLotes}">
                         <div class="col-md-3 mb-4">
-                            <label>Manzana</label>
-                            <select class="form-select form-select-sm manzanaSelect" name="manzana[]" required>
+                            <label for="manzana_${contadorLotes}">Manzana</label>
+                            <select id="manzana_${contadorLotes}" class="form-select form-select-sm manzanaSelect" name="manzana[]" required>
                                 ${opcionesManzanas}
                             </select>
                         </div>
 
                         <div class="col-md-2 mb-4">
-                            <label>Lote</label>
-                            <select class="form-select form-select-sm loteSelect" name="lote[]" required>
+                            <label for="lote_${contadorLotes}">Lote</label>
+                            <select id="lote_${contadorLotes}" class="form-select form-select-sm loteSelect" name="lote[]" required>
                                 <option value="" disabled selected>Selecciona un lote</option>
                             </select>
                         </div>
 
                         <div class="col-md-3 mb-4">
-                            <label>Superficie m2</label>
-                            <input type="number" min="1" step="0.01" 
-                                name="superficie_m2[]" 
-                                class="form-control form-control-sm superficieInput" required>
+                            <label for="superficie_m2_${contadorLotes}" for="">Superficie m2</label>
+                            <input id="superficie_m2_${contadorLotes}" type="number" min="1" step="0.01" name="superficie_m2[]" class="form-control form-control-sm superficieInput" required>
                         </div>
 
                         <div class="col-md-3 mb-4">
-                            <label>Precio</label>
-                            <input type="text" step="0.01" 
-                                name="precio[]" 
-                                class="form-control form-control-sm precioInput" required>
+                            <label ="precio_${contadorLotes}">Precio</label>
+                            <input ="precio_${contadorLotes}" type="text" step="0.01" name="precio[]" class="form-control form-control-sm precioInput" required>
                         </div>
 
                         <div class="col-md-1 mb-4 d-flex align-items-end">
-                            <button type="button" class="btn btn-sm btn-danger btn-eliminar">✖</button>
+                            <button type="button" class="btn btn-sm btn-danger btn-eliminar" data-target="${identificadorTabla}">✖</button>
                         </div>
                     </div>
                 `);
-
+                
+                
                 $contenedor.append(bloque);
                 contadorLotes++;
                 actualizarContador();
@@ -380,14 +385,16 @@
                 if (data) {
                     setTimeout(() => {
                         // 1. Seleccionar manzana
-                        bloque.find(".").val(data.lote.manzana_id).trigger("change");
+                        bloque.find(".manzanaSelect").val(data.lote.manzana_id).trigger("change");
                         // 2. Cargar lotes en ese select (debes tener una función que llene los lotes)
                         bloque.find(".loteSelect").val(data.lote_id).trigger("change");
+                        setTimeout(() => {
+                            bloque.find(".superficieInput").val(data.superficie_m2);
+                            // 4. Precio
+                            bloque.find(".precioInput").val(data.precio);                            
+                        }, 1000);
                     }, 200);
                     // 3. Superficie
-                    bloque.find(".superficieInput").val(data.superficie_m2);
-                    // 4. Precio
-                    bloque.find(".precioInput").val(data.precio);
                 }
                 // console.log("Esta es al data ",data);
                 setTimeout(() => {
@@ -425,8 +432,11 @@
                 document.getElementById('resumen_compra').style.display = 'block';
             });
 
-            // Delegación: eliminar bloque con botón (disminuye contador)
+            
             $contenedor.on('click', '.btn-eliminar', function () {
+                
+               
+                
                 $(this).closest('.lote-item').remove();
                 contadorLotes = Math.max(0, contadorLotes - 1);
 
@@ -436,9 +446,10 @@
                 actualizarContador();
                 actualizarTotalVenta();
                 verificarManzanasYLotes();
-                
-              
+                toastr.info('Colindancias reiniciadas. Actualice los datos.');
             });
+
+           
 
             function limpiarVentaGenerales(){
                 const contenedor = document.querySelector('.lote-item-venta');
@@ -458,9 +469,13 @@
                 
                 
                 contadorTablas++;
+                let identificadorTabla = ""
+                if(data){
+                    identificadorTabla = data.campo+'_'+data.lindero_id
+                }
 
                 const tabla = $(`
-                    <div class="row col-md-12 mb-3 tabla-item">                        
+                    <div id="${identificadorTabla}" class="row col-md-12 mb-3 tabla-item ${identificadorTabla}">                        
                         <table class="table table-bordered border-primary mb-0 table">
                             <thead>
                                 <tr>
@@ -500,8 +515,7 @@
                     </div>
                 `);
 
-                $('#contenedor-tablas').append(tabla);
-
+                $('#contenedor-tablas').append(tabla); 
                 // Si hay datos → rellenar automáticamente
                 if (data) {
                     tabla.find(".viento1Input").val(data.lindero.viento1);
@@ -516,7 +530,24 @@
                     tabla.find(".viento4Input").val(data.lindero.viento4);
                     tabla.find(".colinda4Input").val(data.lindero.colinda4);
                 }
+                if (data) {
+                    if(data.campo === 'union'){    
+                        setTimeout(() => {
+                            conservarSoloUnaTablaLindero(identificadorTabla)                    
+                        }, 1000);                
+                    }                    
+                }
             }
+
+            function conservarSoloUnaTablaLindero(clase) {
+                const elementos = $('.' + clase);
+                if (elementos.length > 1) {
+                    elementos.not(':first').remove();
+                }
+            }
+
+
+
 
 
 
@@ -843,7 +874,7 @@
 
                 const datosPorManzana = {};
 
-                $('#contenedor-tablas').empty();
+                $('#contenedor-tablas').empty(); 
 
                 // ============================
                 // 1️⃣ Agrupar lotes por manzana

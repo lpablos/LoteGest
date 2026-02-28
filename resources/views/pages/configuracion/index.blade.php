@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
                         <div class="row col-md-12">
                             <h4 class="card-title text-center mb-4"> Configuración de Pagos </h4>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-sm-6">
                         <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
