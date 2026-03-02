@@ -211,11 +211,12 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();        
+        return redirect()->route('cliente.index');
     }
 
     public function verContrato($idCliente) {
-
+        
         $compras = Compra::select('id', 'num_solicitud','num_solicitud_sistema','fraccionamiento_id','estatus_id','cliente_id','corredor_id')
                 ->with([
                     'fraccionamiento:id,nombre',
@@ -227,14 +228,11 @@ class ClienteController extends Controller
                 ->where('cliente_id', $idCliente)
                 ->where('estatus_id', 3)
                 ->get();
-
-        // $nombreCliente = $compras->pluck('cliente.nombre')->first();
-       $nombreCompleto = optional($compras->first()->cliente)->nombre . ' ' .
-                  optional($compras->first()->cliente)->primer_apellido . ' ' .
-                  optional($compras->first()->cliente)->segundo_apellido;
-        
+        $cliente = Cliente::find($idCliente);
+        $nombreCompleto = $cliente
+                        ? trim("{$cliente->nombre} {$cliente->primer_apellido} {$cliente->segundo_apellido}")
+                        : '';
         if (view()->exists('pages.cliente.contrato.index')) {
-
             return view('pages.cliente.contrato.index',compact('compras', 'nombreCompleto'));
         }
         return abort(404);

@@ -68,7 +68,7 @@
                                                             data-bs-target="#exampleModalScrollable"
                                                             
                                                         >
-                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            <i class="mdi mdi-newspaper-variant-outline font-size-16 text-success me-1"></i>
                                                             Contrato Sistema
                                                         </button>
                                                 </li>
@@ -80,13 +80,13 @@
                                                             data-bs-toggle="modal" 
                                                             data-bs-target="#modalDocumento"
                                                         >
-                                                            <i class="mdi mdi-cloud-print-outline font-size-16 text-success me-1"></i>
+                                                            <i class="mdi mdi-newspaper-variant-multiple font-size-16 text-success me-1"></i>
                                                             Contrato Adjunto
                                                         </button>
                                                     <!-- <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Contrato Adjunto</a> -->
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
+                                                    <a href="" class="dropdown-item"><i class="mdi mdi-account-cash-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
                                                 </li>
                                             </ul>
                                         </div>
