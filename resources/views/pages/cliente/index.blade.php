@@ -62,12 +62,15 @@
                                                     <a href="{{ route('cliente.show', ['cliente' => $cliente->id ]) }}" class="dropdown-item"><i class="bx bx-list-ol font-size-16 text-success me-1"></i>Ver Compras </a>
                                                     <a href="{{ route('cliente.contratos', ['idCliente' => $cliente->id ])}}" class="dropdown-item"><i class="bx bx-list-check font-size-16 text-success me-1"></i>Ver Contratos </a>
                                                     @if(in_array(auth()->user()->role_id, [1, 2]))
-                                                        <form action="{{ route('cliente.destroy', $cliente->id) }}" method="POST">
+                                                       <form action="{{ route('cliente.destroy', $cliente->id) }}" 
+                                                            method="POST" 
+                                                            class="form-eliminar-cliente">
+
                                                             @csrf
                                                             @method('DELETE')
 
-                                                            <button type="submit" class="dropdown-item">
-                                                                <i class="bx bx-trash-alt font-size-16 text-danger me-1"></i>
+                                                            <button type="submit" class="dropdown-item text-danger">
+                                                                <i class="bx bx-trash-alt font-size-16 me-1"></i>
                                                                 Eliminar
                                                             </button>
                                                         </form>
@@ -113,6 +116,36 @@
     <script src="{{ URL::asset('build/js/pages/toastr.init.js') }}"></script>
     <!-- Datatable init js -->
     <script>
+        $(document).on('submit', '.form-eliminar-cliente', function (e) {
+
+            e.preventDefault(); // Detiene el envío inmediato
+
+            const form = this;
+
+            Swal.fire({
+                title: '¿Está completamente seguro?',
+                html: `
+                    <p>El cliente será eliminado permanentemente.</p>
+                    <p><strong>También se eliminará el usuario asociado y todos los registros relacionados, 
+                    incluyendo pagos y contratos, si existieran.</strong></p>
+                    <p class="text-danger">Esta acción es irreversible y no podrá deshacerse.</p>
+                `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar definitivamente',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    form.submit(); // Ahora sí envía el formulario
+                }
+
+            });
+
+        });
         $(document).ready(function() {
 
             // Se declara el token global para las peticiones que se vayan a realizar

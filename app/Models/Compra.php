@@ -74,9 +74,14 @@ class Compra extends Model
         return $this->belongsTo(Fraccionamiento::class, 'fraccionamiento_id', 'id');
     }
 
+    // public function cliente()
+    // {
+    //     return $this->belongsTo(Cliente::class, 'cliente_id', 'id')->withTrashed();
+    // }
+
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'cliente_id', 'id')->withTrashed();
+        return $this->belongsTo(Cliente::class, 'cliente_id');
     }
     
     public function compralotelinderos()
