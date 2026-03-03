@@ -82,6 +82,15 @@
                                                             <i class="mdi mdi-plus font-size-16 text-success me-1"></i> Detalle
                                                         </a>
                                                     </li>
+                                                    @if(in_array(auth()->user()->role_id, [1, 2]))
+                                                        <li>
+                                                            <a href="javascript:void(0);" 
+                                                            class="dropdown-item btn-eliminar-fracc text-danger"
+                                                            data-id="{{ $fracc->id }}">
+                                                                <i class="mdi mdi-delete font-size-16 me-1"></i> Eliminar
+                                                            </a>
+                                                        </li>                                                        
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </td> 
@@ -91,7 +100,10 @@
                                 @endforeach           
                         </tbody>
                     </table>
-
+                    <form id="form-eliminar-fracc" method="POST" style="display:none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                     <form id="formDuplicarFraccionamiento" method="POST" action="{{ route('duplicar.fraccionamiento') }}" style="display: none;">
                         @csrf
                         <input type="hidden" name="id" id="inputDuplicarFraccionamientoId">
@@ -124,6 +136,40 @@
 
     <!-- Datatable + Toastr init -->
     <script>
+        $(document).on('click', '.btn-eliminar-fracc', function (e) {
+
+            e.preventDefault();
+
+            const id = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Está completamente seguro?',
+                html: `
+                    <p>Se eliminará el fraccionamiento y todas sus relaciones.</p>
+                    <p><strong>Clientes, compras y contratos asociados serán dados de baja.</strong></p>
+                    <p class="text-danger">Esta acción no se puede deshacer.</p>
+                `,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar definitivamente',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    const form = $('#form-eliminar-fracc');
+                    form.attr('action', `/fraccionamiento/${id}`);
+                    form.submit();
+
+                }
+
+            });
+
+        });
+
         $(document).ready(function () {
             // CSRF token global para peticiones
             $.ajaxSetup({

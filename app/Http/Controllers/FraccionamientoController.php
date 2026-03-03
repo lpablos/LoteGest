@@ -289,17 +289,32 @@ class FraccionamientoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        // try {
+        //     $fraccionamiento = Fraccionamiento::find($id);            
+        //     $proyecto_id = $fraccionamiento->proyecto_id;
+        //     $fraccionamiento->delete();
+        //     return redirect()->route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id])->with('success', 'Fraccionamiento eliminado correctamente');
+        // } catch (\Throwable $th) {
+        //     Log::error('Error al eliminar el fraccionamiento: ' . $th->getMessage());
+        //     return redirect()->back()->with('error', 'No se pudo eliminar el fraccionamiento. Intenta más tarde.');
+        // }
         try {
-            $fraccionamiento = Fraccionamiento::find($id);            
-            $proyecto_id = $fraccionamiento->proyecto_id;
+            $fraccionamiento = Fraccionamiento::findOrFail($id);
             $fraccionamiento->delete();
-            return redirect()->route('proyecto.fraccionamientos', ['proyecto' => $proyecto_id])->with('success', 'Fraccionamiento eliminado correctamente');
+            return redirect()
+                ->route('fraccionamiento.index')
+                ->with('success', 'Fraccionamiento eliminado correctamente');
+
         } catch (\Throwable $th) {
+
             Log::error('Error al eliminar el fraccionamiento: ' . $th->getMessage());
-            return redirect()->back()->with('error', 'No se pudo eliminar el fraccionamiento. Intenta más tarde.');
+            return redirect()
+                ->route('fraccionamiento.index')
+                ->with('error', 'No se pudo eliminar el fraccionamiento. Intenta más tarde.');
         }
     }
+    
 
     public function createFraccionamiento(string $id)
     {

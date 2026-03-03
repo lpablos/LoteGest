@@ -126,6 +126,7 @@ class ClienteController extends Controller
             ])
             ->where('cliente_id', $cliente->id)
             ->where('estatus_id', 2)
+            ->whereHas('fraccionamiento')
             ->get();
         
         if (view()->exists('pages.cliente.compra.index')) {
@@ -227,6 +228,7 @@ class ClienteController extends Controller
                 ])
                 ->where('cliente_id', $idCliente)
                 ->where('estatus_id', 3)
+                ->whereHas('fraccionamiento')
                 ->get();
         $cliente = Cliente::find($idCliente);
         $nombreCompleto = $cliente

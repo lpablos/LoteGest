@@ -51,6 +51,7 @@ class ContratoController extends Controller
                         'contrato:id,compra_id,codigo_valido_contrato,created_at',
                     ])
                     ->where('compras.estatus_id', 3)
+                    ->whereHas('fraccionamiento')
                     ->orderBy('c.created_at', 'desc')
                     ->get();
             return view('pages.contratos.index', compact('compras'));
