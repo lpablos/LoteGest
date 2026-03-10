@@ -1,8 +1,15 @@
 <form method="POST" 
-      action="{{ route('pagos.store', ['solicitud' => $compra->num_solicitud_sistema]) }}"
+      action="{{ isset($pago)
+            ?route('pagos.update', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])
+            :route('pagos.store', ['solicitud' => $compra->num_solicitud_sistema]) 
+      }}"
       enctype="multipart/form-data">
 
 @csrf
+
+@isset($pago)
+    @method('PUT')
+@endisset
 
 <div class="row">
 
@@ -57,7 +64,7 @@
 
      <!-- MONTO -->
     
-    @if ($pago && $pago->saldo_despues)
+    @if (isset($pago) && $pago->saldo_despues)
         <div class="col-md-6">
             <div class="mb-3">
                 <label class="form-label">Saldo Pendiente</label>

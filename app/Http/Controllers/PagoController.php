@@ -123,4 +123,41 @@ class PagoController extends Controller
         $usuarios = User::all();
         return view('pages.pagos.edit', compact('compra', 'contrato', 'cliente', 'pago', 'usuarios'));
     }
+
+    public function update(Request $request, $solicitud, $pagoId)
+    {
+        try {
+            
+            $request->validate([
+                'fecha_pago' => 'required|date',
+                'concepto' => 'required',
+                'metodo_pago' => 'required',
+                'monto' => 'required|numeric|min:1',
+            ]);
+
+            $compra = Compra::where('num_solicitud_sistema', $solicitud)->firstOrFail();
+            $pago = Pago::findOrFail($pagoId);
+            
+            // Actualizar campos editables
+            $pago->update([
+                'fecha_pago' => $request->fecha_pago,
+                'concepto' => $request->concepto,
+                'metodo_pago' => $request->metodo_pago,
+                'monto' => $request->monto,
+                'referencia' => $request->referencia,
+                'observaciones' => $request->observaciones,
+                'recibido_por' => auth()->id(),
+            ]);
+
+            return redirect()
+                ->route('pagos.show', ['solicitud' => $solicitud, 'pago' => $pago->id])
+                ->with('success', 'Pago actualizado exitosamente.');
+
+        } catch (\Throwable $th) {
+            
+            return redirect()
+                ->route('pagos.show', ['solicitud' => $solicitud, 'pago' => $pagoId])
+                ->with('error', 'Error al actualizar el pago.');
+        }
+    }
 }

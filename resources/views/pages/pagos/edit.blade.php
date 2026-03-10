@@ -29,5 +29,11 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('script')
+    <!-- toastr plugin -->
+    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
+
+    @include('pages.pagos.section.mensaje')
 @endsection

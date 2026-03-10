@@ -36,9 +36,6 @@
 
     <div class="row">
         <div class="col-12">
-            @include('pages.pagos.section.resumen')
-        </div>
-        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
@@ -46,9 +43,7 @@
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
                                     <h2> Pagos </h2>
-                                    <h6> Cliente: {{ $cliente->nombre ?: '' }} {{ $cliente->primer_apellido ?: '' }} {{ $cliente->segundo_apellido ?: '' }} </h6>
-                                    <h6> Compra : {{ $compra->num_solicitud_sistema }}</h6>
-                                    <h6> Contrato: {{ $contrato->codigo_valido_contrato }} </h6>
+                                    @include('pages.pagos.section.resumen')
                                 </div>
                             </div>
                         </div>
@@ -102,6 +97,8 @@
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
+
+    
     {{--  @include('usuario.add')  --}}
 @endsection
 
@@ -116,6 +113,9 @@
     <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+     <!-- toastr plugin -->
+    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
+    
 
     <!-- Responsive examples -->
     <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -210,25 +210,9 @@
                 })
             });
         });
+        @include('pages.pagos.section.mensaje')
     </script>
-    @if(Session::has('success'))
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.success("{{ session('success') }}");
-        </script>
-    @endif
-    @if(Session::has('error'))
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.warning("{{ session('error') }}");
-        </script>
-    @endif
+    
 @endsection
 
 

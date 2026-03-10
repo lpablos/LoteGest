@@ -20,6 +20,7 @@
                         </div>
                     </div>
                 </div>
+                
                 @include('pages.pagos.section.form-pagos')
 
             </div>
@@ -27,4 +28,8 @@
     </div>
 </div>
 
+
+ @include('pages.pagos.section.mensaje')
+
 @endsection
+
