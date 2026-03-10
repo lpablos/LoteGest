@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Estatus de Proyectos
+    Pagos
 @endsection
 
 @section('css')
@@ -13,95 +13,98 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
     <!-- Sweet Alert-->
     <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        @keyframes glowPulse {
+            0% {
+                box-shadow: 0 0 5px rgba(25, 135, 84, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(25, 135, 84, 0.9);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(25, 135, 84, 0.5);
+            }
+        }
+
+        .btn-parpadeo {
+            animation: glowPulse 1.5s infinite;
+        }
+    </style>
 @endsection
 
 @section('content')
 
     <div class="row">
         <div class="col-12">
+            @include('pages.pagos.section.resumen')
+        </div>
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
-                                    <h2> Listado de contratos </h2>
+                                    <h2> Pagos </h2>
+                                    <h6> Cliente: {{ $cliente->nombre ?: '' }} {{ $cliente->primer_apellido ?: '' }} {{ $cliente->segundo_apellido ?: '' }} </h6>
+                                    <h6> Compra : {{ $compra->num_solicitud_sistema }}</h6>
+                                    <h6> Contrato: {{ $contrato->codigo_valido_contrato }} </h6>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <div class="text-sm-end">
+                                 <!-- <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('usuarios.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Anexar pago </a> -->
+                                <div class="text-sm-end">
+                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2 btn-parpadeo"
+                                    href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
+                                    role="button">
+                                        <i class="mdi mdi-plus me-1"></i> Pago
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- end col-->
                     </div>
-                    @include('pages.cliente.contrato.modals.digital')
-                    @include('pages.cliente.contrato.modals.carga-documento')
-                    <table id="datatable-cliente-contratos" class="table table-bordered dt-responsive nowrap w-100">
+                    <table id="datatable-usuario" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th> # Solicitud </th>
-                                <th> # Sistema </th>
-                                <th> Fecha contrato </th>
-                                <th> Fraccionamiento </th>
-                                <th> Cliente </th>
-                                <th> Corredor </th>
+                                <th> Fecha Pago </th>
+                                <th> Concepto</th>
+                                <th> Metodo </th>                                
+                                <th> monto </th>
+                                <th> Saldo</th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($compras as $compra)
+                            @foreach ($pagos as $pago)
                                 <tr>
-                                    <td>{{ $compra->num_solicitud }} </td>
-                                    <td>{{ $compra->num_solicitud_sistema }} </td>
-                                    <td>{{ Carbon\Carbon::parse($compra->contrato->created_at)->format('d-m-Y') }} </td>
-                                    <td>{{ $compra->fraccionamiento->nombre }} </td>
-                                    <td>{{ $compra->cliente->nombre }} {{ $compra->cliente->primer_apellido }} {{ $compra->cliente->segundo_apellido }}</td>
-                                    <td>{{ $compra->corredor->nombre }} {{ $compra->corredor->primer_apellido }} {{ $compra->corredor->segundo_apellido }}</td>
-                                       <td>
+                                    <td>{{ Carbon\Carbon::parse($pago->fecha_pago)->format('d-m-Y') }}</td>
+                                    <td>{{ $pago->concepto }}</td>
+                                    <td>{{ $pago->metodo_pago }}</td>
+                                    <td>{{ $pago->monto }}</td>
+                                    <td>{{ $pago->saldo_despues }}</td>
+                                    <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="mdi mdi-dots-vertical font-size-18"></i>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
-                                                <li>
-                                                        <button 
-                                                            type="button" 
-                                                            class="dropdown-item btn-contrato"
-                                                            data-registro="{{ $compra->contrato->id }}"
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#exampleModalScrollable"
-                                                            
-                                                        >
-                                                            <i class="mdi mdi-newspaper-variant-outline font-size-16 text-success me-1"></i>
-                                                            Contrato Sistema
-                                                        </button>
-                                                </li>
-                                                <li>
-                                                     <button 
-                                                            type="button" 
-                                                            class="dropdown-item btn-contrato-adjunto"
-                                                            data-registro="{{ $compra->contrato->id }}"
-                                                            data-bs-toggle="modal" 
-                                                            data-bs-target="#modalDocumento"
-                                                        >
-                                                            <i class="mdi mdi-newspaper-variant-multiple font-size-16 text-success me-1"></i>
-                                                            Contrato Adjunto
-                                                        </button>
-                                                    <!-- <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Contrato Adjunto</a> -->
-                                                </li>
-                                                <li>
-                                                    <a href="{{ route('pagos.index', $compra->num_solicitud_sistema) }}" class="dropdown-item"><i class="mdi mdi-account-cash-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
-                                                </li>
+                                                <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach                            
+                            @endforeach
                         </tbody>
                     </table>
-                    @include('pages.contratos.modal.digital')
                 </div>
             </div>
         </div> <!-- end col -->
     </div> <!-- end row -->
-   
+    {{--  @include('usuario.add')  --}}
 @endsection
+
 @section('script')
     <!-- Required datatable js -->
     <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -128,20 +131,6 @@
     <script>
         $(document).ready(function() {
 
-             $(document).on('click', '.btn-contrato', function () {
-
-                let registro = $(this).data('registro');
-
-                // Laravel crea la URL base con un placeholder
-                let url = "{{ route('constrato.sistema.digital', ['id' => ':id']) }}";
-
-                // Reemplazamos el placeholder por el ID real
-                url = url.replace(':id', registro);
-
-                // Establecemos la URL en el iframe
-                $('#iframeDocumento').attr('src', url);
-            });
-
             // Se declara el token global para las peticiones que se vayan a realizar
             $.ajaxSetup({
                 headers: {
@@ -150,7 +139,7 @@
             });
         
             //Buttons examples
-            var table = $('#datatable-estatus-proyecto').DataTable({
+            var table = $('#datatable-usuario').DataTable({
                 language: {
                     "lengthMenu": "Mostrar _MENU_ registros por página",
                     "zeroRecords": "Sin resultados",
@@ -166,9 +155,60 @@
                 lengthChange: true
             });
         
-            table.buttons().container().appendTo('#datatable-estatus-proyecto_wrapper .col-md-6:eq(0)');
+            table.buttons().container().appendTo('#datatable-usuario_wrapper .col-md-6:eq(0)');
         
             $(".dataTables_length select").addClass('form-select form-select-sm');
+
+           //Ajax
+            $('.des_activar_usuario').click(function () {
+                var id = $(this).attr('data-id');
+                var estatus = $(this).attr('data-estatus');
+                var estado = '';
+                if(estatus == 1){
+                    estado = 'desactivar';
+                } else {
+                    estado = 'activar';
+                }
+                Swal.fire({
+                    title: '¿Seguro de '+estado+' este usuario?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Aceptar',
+                    showLoaderOnConfirm: true,
+                    confirmButtonColor: "#556ee6",
+                    cancelButtonColor: "#f46a6a",
+                    preConfirm: function (email) {
+                        return new Promise(function (resolve, reject) {
+                            setTimeout(function () {
+                                resolve()
+                            }, 2000)
+                        })
+                    },
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'delete',
+                            url: '/usuarios/'+id,
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    toastr.options = {
+                                        "closeButton" : false,
+                                        "progressBar" : false
+                                    }
+                                    toastr.success(data.msg);
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 2000);
+                                }
+
+                            },
+                            error: function (data) {
+                                // console.log(data);
+                            }
+                        });
+                    }
+                })
+            });
         });
     </script>
     @if(Session::has('success'))
@@ -189,15 +229,6 @@
             toastr.warning("{{ session('error') }}");
         </script>
     @endif
-    @if ($errors->any())
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            };
-            @foreach ($errors->all() as $error)
-                toastr.error("{{ $error }}");
-            @endforeach
-        </script>
-    @endif
 @endsection
+
+

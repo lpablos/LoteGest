@@ -98,4 +98,9 @@ class Compra extends Model
     {
         return $this->belongsTo(CatEstatusProyecto::class, 'estatus_id');
     }
+
+    public function pagos()
+    {
+        return $this->hasMany(Pago::class);
+    }
 }

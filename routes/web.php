@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Contratos digitales
     Route::post('/contratos/generar', [App\Http\Controllers\ContratoController::class, 'contratoFirmado'])->name('contratos.upload.firmado');
     Route::get('/contratos/{id}/documento/firmado', [App\Http\Controllers\ContratoController::class,'obtenerDocumentoAsociado'])->name('contratos.documento.obtener.firmado');
+    Route::resource('/contrato/{solicitud}/pagos', App\Http\Controllers\PagoController::class);
 });    
 
 

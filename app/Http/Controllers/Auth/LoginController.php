@@ -43,6 +43,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         // 🔹 Modificar sesión
+        Session::put('identy', $user->id);
         Session::put('role_id', $user->role_id);
         Session::put('tipo', $user->nombre);
         Session::put('nombre_usuario', $user->name);

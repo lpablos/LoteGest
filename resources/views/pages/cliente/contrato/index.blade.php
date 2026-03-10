@@ -87,7 +87,7 @@
                                                     <!-- <a href="" class="dropdown-item"><i class="mdi mdi-clipboard-file-outline font-size-16 text-success me-1 disabled"></i>Contrato Adjunto</a> -->
                                                 </li>
                                                 <li>
-                                                    <a href="" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
+                                                    <a href="{{ route('pagos.index', $compra->num_solicitud_sistema) }}" class="dropdown-item"><i class="mdi mdi-cloud-upload-outline font-size-16 text-success me-1 disabled"></i> Ver Pagos </a>
                                                 </li>
                                             </ul>
                                         </div>
