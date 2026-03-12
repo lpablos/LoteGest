@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
             $table->foreignId('recibido_por')->nullable()->constrained('users');
             $table->text('motivo_baja')->nullable();
+            $table->string('comprobante_url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

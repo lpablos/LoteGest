@@ -22,7 +22,9 @@ class Pago extends Model
         'folio_recibo',
         'referencia',
         'observaciones',
-        'recibido_por'
+        'recibido_por',
+        'comprobante_url'
+
     ];
 
     public function compra()

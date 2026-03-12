@@ -1,6 +1,10 @@
 <!-- JAVASCRIPT -->
 
+    <!-- TOASTR CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
 
+    <!-- TOASTR JS -->
+    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
 <!-- **************** -->
 
 <!-- FilePond base -->

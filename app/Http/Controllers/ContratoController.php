@@ -181,19 +181,11 @@ class ContratoController extends Controller
         $request->validate([
             'documentos.*' => 'required|file|mimes:jpg,jpeg,png,webp,pdf'
         ]);
-
-    //    if ($validator->fails()) {        
-    //         return response()->json([
-    //             'success' => false,
-    //             'errors' => $validator->errors()
-    //         ], 422);
-    //     }
         $validator = Validator::make($request->all(), [
             'documentos' => 'required',
             'documentos.*' => 'file|mimes:jpg,jpeg,png,webp,pdf|max:20480' // 20MB
         ], [
-            // 'documentos.*.max' => 'Cada archivo no puede superar los 20MB.',
-            // 'documentos.*.mimes' => 'Solo se permiten imágenes o PDFs.'
+            
             'documentos.required' => 'Debe adjuntar al menos un archivo.',
             'documentos.array' => 'El formato de los archivos es inválido.',
             'documentos.*.max' => 'Cada archivo no puede superar los 20MB.',
