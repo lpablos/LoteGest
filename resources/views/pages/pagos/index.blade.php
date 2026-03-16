@@ -43,14 +43,34 @@
                             <div class="search-box me-2 mb-2 d-inline-block">
                                 <div class="position-relative">
                                     <h2> Pagos </h2>
-                                    @include('pages.pagos.section.resumen')
+                                  
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                          @include('pages.pagos.section.resumen')
+                        <!-- <div class="col-sm-12"> -->
+                        <div class="d-flex justify-content-between align-items-center">
+
+                                <!-- BOTON IZQUIERDA -->
+                                <a href="{{ route('contratos.index') }}" 
+                                class="btn text-muted btn-link">
+                                    <i class="mdi mdi-arrow-left me-1"></i> Cancelar
+                                </a>
+
+                                <!-- BOTON DERECHA -->
+                                <a class="btn btn-success btn-rounded waves-effect waves-light btn-parpadeo"
+                                href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
+                                role="button">
+                                    <i class="mdi mdi-plus me-1"></i> Pago
+                                </a>
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12">
                             <div class="text-sm-end">
-                                 <!-- <a class="btn btn-success btn-rounded waves-effect waves-light mb-2" href="{{ route('usuarios.create')}}" role="button"><i class="mdi mdi-plus me-1"></i> Anexar pago </a> -->
-                                <div class="text-sm-end">
+                                <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
+                               
+                               
                                     <a class="btn btn-success btn-rounded waves-effect waves-light mb-2 btn-parpadeo"
                                     href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
                                     role="button">
@@ -58,7 +78,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div><!-- end col-->
+                        </div> -->
                     </div>
                     <table id="datatable-usuario" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
@@ -103,6 +123,11 @@
 @endsection
 
 @section('script')
+
+ <script src="{{ URL::asset('build/libs/jquery-knob/jquery.knob.min.js') }}"></script>
+    <script src="{{ URL::asset('build/js/pages/jquery-knob.init.js') }}"></script>
+
+    <script src="{{ URL::asset('build/js/pages/jquery-knob.init.js') }}"></script>
     <!-- Required datatable js -->
     <script src="{{ URL::asset('build/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>

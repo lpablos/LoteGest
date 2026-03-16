@@ -13,8 +13,7 @@
                     <div class="col-sm-12">
                         <div class="search-box me-2 mb-2 d-inline-block">
                             <div class="position-relative mb-4">
-                                <h3 class="mb-3">Registro de Pago</h3>                                
-                                @include('pages.pagos.section.resumen')
+                                <h3 class="mb-3">Registro de Pago</h3>   
                             </div>
                         
                         </div>

@@ -1,93 +1,71 @@
 
-<div class="table-responsive d-flex justify-content-center align-items-center">
- 
-    <table class="table table-bordered table-sm w-100 align-middle text-nowrap">
-        <tbody>
+<div class="row">
 
-            <!-- ================= ESTADO FINANCIERO ================= -->
-            <tr class="table-secondary">
-                <th colspan="8">Estado Financiero del Contrato</th>
-            </tr>
+    <!-- 70% TABLA -->
+    <div class="col-md-12 mx-auto">
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm w-100 align-middle">
+            <tbody>
 
-            <tr>
-                <th>Saldo Actual</th>
-                <td class="fw-bold text-danger">
-                    $ {{ number_format($saldo_actual ?? 0, 2) }}
-                </td>
+                <!-- ESTADO FINANCIERO -->
+                <tr class="table-secondary">
+                    <th colspan="6">Estado Financiero del Contrato</th>
+                </tr>
 
-                <th>Total Pagado</th>
-                <td class="fw-bold text-success">
-                    $ {{ number_format($total_pagado ?? 0, 2) }}
-                </td>
+                <tr>
+                    <th>Total Venta</th>
+                    <td>
+                        $ {{ number_format($compra->total_venta, 2) }}
+                    </td>
+                    <th>Saldo Actual</th>
+                    <td class="fw-bold text-danger">
+                        $ {{ number_format($saldoActual ?? 0, 2) }}
+                    </td>
 
-                <th>Total Venta</th>
-                <td>
-                    $ {{ number_format($compra->total_venta, 2) }}
-                </td>
+                    <th>Total Pagado</th>
+                    <td class="fw-bold text-success">
+                        $ {{ number_format($totalPagos ?? 0, 2) }}
+                    </td>
 
-                <th>Enganche</th>
-                <td>
-                    $ {{ number_format($compra->enganche_venta, 2) }}
-                </td>
-            </tr>
+                   
+                </tr>
 
-            <!-- ================= PLAN DE PAGOS ================= -->
-            <tr class="table-secondary">
-                <th colspan="8">Plan de Pagos</th>
-            </tr>
+                <!-- PLAN DE PAGOS -->
+                <tr class="table-secondary">
+                    <th colspan="6">Plan de Pagos</th>
+                </tr>
 
-            <tr>
-                <th>Pago Mensual</th>
-                <td class="fw-bold">
-                    $ {{ number_format($compra->pago_mensual_venta ?? 0, 2) }}
-                </td>
+                <tr>
+                    <th>Pago Mensual</th>
+                    <td>$ {{ number_format($compra->pago_mensual_venta ?? 0, 2) }}</td>
 
-                <th>Mensualidades</th>
-                <td>
-                    {{ $compra->mensualidad_venta_select }}
-                </td>
+                    <th>Mensualidades</th>
+                    <td>{{ $compra->mensualidad_venta_select }}</td>
 
-                <th>Mensualidades Pagadas</th>
-                <td>
-                    {{ $mensualidades_pagadas ?? 0 }}
-                </td>
+                    <th>Num Pagos</th>
+                    <td> {{ $numPagos ?? 0 }} Registros</td>
+                </tr>
 
-                <th>Monto Mensual</th>
-                <td>
-                    $ {{ number_format($monto_mensual ?? 0, 2) }}
-                </td>
-            </tr>
+                <!-- DATOS DEL CONTRATO -->
+                <tr class="table-secondary">
+                    <th colspan="6">Datos del Contrato</th>
+                </tr>
 
-            <!-- ================= DATOS DEL CONTRATO ================= -->
-            <tr class="table-secondary">
-                <th colspan="8">Datos del Contrato</th>
-            </tr>
+                <tr>
+                    <th>Cliente</th>
+                    <td>{{ $cliente->nombre ?? '' }} {{ $cliente->primer_apellido ?? '' }}</td>
 
-            <tr>
-                <th>Cliente</th>
-                <td>
-                    {{ $cliente->nombre ?? '' }}
-                    {{ $cliente->primer_apellido ?? '' }}
-                    {{ $cliente->segundo_apellido ?? '' }}
-                </td>
+                    <th>Solicitud</th>
+                    <td>{{ $compra->num_solicitud_sistema }}</td>
 
-                <th>Solicitud</th>
-                <td>
-                    {{ $compra->num_solicitud_sistema }}
-                </td>
+                    <th>Contrato</th>
+                    <td>{{ $contrato->codigo_valido_contrato }}</td>
+                </tr>
 
-                <th>Contrato</th>
-                <td>
-                    {{ $contrato->codigo_valido_contrato }}
-                </td>
+            </tbody>
+        </table>
+        </div>
+    </div>
 
-                <th>Estado</th>
-                <td>
-                    <span class="badge bg-success">Activo</span>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
 
 </div>

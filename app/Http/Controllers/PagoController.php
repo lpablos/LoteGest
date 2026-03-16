@@ -21,7 +21,10 @@ class PagoController extends Controller
         $contrato = $compra->contrato()->first(); 
         $cliente = $compra->cliente()->first();     
         $pagos = $compra->pagos()->orderBy('fecha_pago', 'desc')->get();
-        return view('pages.pagos.index', compact('compra', 'contrato', 'cliente', 'pagos'));
+        $numPagos = count($pagos);
+        $totalPagos = $pagos->sum('monto');
+        $saldoActual = $compra->total_venta - $totalPagos;
+        return view('pages.pagos.index', compact('compra', 'contrato', 'cliente', 'pagos', 'numPagos', 'totalPagos', 'saldoActual'));
     }
 
     public function create($solicitud)
