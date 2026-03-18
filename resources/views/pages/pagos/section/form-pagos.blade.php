@@ -13,7 +13,6 @@
 
 <div class="row">
 
-    <!-- FECHA -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Fecha Pago</label>
@@ -22,7 +21,6 @@
         </div>
     </div>
 
-    <!-- CONCEPTO -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Concepto</label>
@@ -36,7 +34,6 @@
         </div>
     </div>
 
-    <!-- METODO -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Método de Pago</label>
@@ -50,7 +47,6 @@
         </div>
     </div>
 
-    <!-- MONTO -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Monto</label>
@@ -62,8 +58,6 @@
         </div>
     </div>
 
-     <!-- MONTO -->
-    
     @if (isset($pago) && $pago->saldo_despues)
         <div class="col-md-6">
             <div class="mb-3">
@@ -78,7 +72,6 @@
         </div>        
     @endif
 
-    <!-- REFERENCIA -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Referencia</label>
@@ -87,7 +80,6 @@
         </div>
     </div>
 
-    <!-- USUARIO -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Registrado por</label>
@@ -103,7 +95,6 @@
         </div>
     </div>
 
-    <!-- IMAGEN -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Comprobante de Pago</label>
@@ -115,14 +106,12 @@
         </div>
     </div>
 
-    <!-- OBSERVACIONES -->
     <div class="col-md-12">
         <div class="mb-3">
             <label class="form-label">Observaciones</label>
             <textarea name="observaciones" class="form-control">{{ $pago->observaciones ?? '' }}</textarea>
         </div>
     </div>
-
 </div>
 
 <div class="text-end">

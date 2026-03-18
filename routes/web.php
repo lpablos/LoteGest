@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/contratos/generar', [App\Http\Controllers\ContratoController::class, 'contratoFirmado'])->name('contratos.upload.firmado');
     Route::get('/contratos/{id}/documento/firmado', [App\Http\Controllers\ContratoController::class,'obtenerDocumentoAsociado'])->name('contratos.documento.obtener.firmado');
     Route::resource('/contrato/{solicitud}/pagos', App\Http\Controllers\PagoController::class);
+    Route::get('/contrato/pago/{pago}/recibo', [App\Http\Controllers\PagoController::class, 'reciboPago'])->name('contrato.pagos.recibo');
 });    
 
 

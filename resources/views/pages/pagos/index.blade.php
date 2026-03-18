@@ -48,6 +48,7 @@
                             </div>
                         </div>
                           @include('pages.pagos.section.resumen')
+                          
                         <!-- <div class="col-sm-12"> -->
                         <div class="d-flex justify-content-between align-items-center">
 
@@ -106,6 +107,9 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
+                                                <!-- <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo </a></li> -->
+                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg"><i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo</button>
+                                                
                                             </ul>
                                         </div>
                                     </td>
@@ -116,6 +120,7 @@
                 </div>
             </div>
         </div> <!-- end col -->
+        @include('pages.pagos.modal.recibo')
     </div> <!-- end row -->
 
     

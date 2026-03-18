@@ -33,11 +33,7 @@
 
 @section('script')
 
-    <!-- TOASTR CSS -->
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
 
-    <!-- TOASTR JS -->
-    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
     @include('pages.pagos.section.mensaje')
 

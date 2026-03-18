@@ -346,4 +346,15 @@ class PagoController extends Controller
                 ->with('error', 'Error al actualizar el pago.');
         }
     }
+
+    public function reciboPago($pago)
+    {
+        
+        $pago = Pago::findOrFail($pago);
+        $compra = $pago->compra()->first();
+        $contrato = $compra->contrato()->first(); 
+        $cliente = $compra->cliente()->first();   
+        $pdf = Pdf::loadView('pages.pagos.section.recibo', compact('pago', 'compra', 'contrato', 'cliente'));
+        return $pdf->stream('recibo.pdf'); // mostrar en navegador
+    }
 }
