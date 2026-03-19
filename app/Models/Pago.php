@@ -31,4 +31,9 @@ class Pago extends Model
     {
         return $this->belongsTo(Compra::class);
     }
+
+    public function cobrador()
+    {
+        return $this->belongsTo(User::class, 'recibido_por');
+    }
 }

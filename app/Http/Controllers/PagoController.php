@@ -350,11 +350,13 @@ class PagoController extends Controller
     public function reciboPago($pago)
     {
         
-        $pago = Pago::findOrFail($pago);
+        //$pago = Pago::findOrFail($pago);
+        $pago = Pago::findOrFail(10);
         $compra = $pago->compra()->first();
         $contrato = $compra->contrato()->first(); 
+        $cobrador = $pago->cobrador()->first();
         $cliente = $compra->cliente()->first();   
-        $pdf = Pdf::loadView('pages.pagos.section.recibo', compact('pago', 'compra', 'contrato', 'cliente'));
+        $pdf = Pdf::loadView('pages.pagos.section.recibo', compact('pago', 'compra', 'contrato', 'cliente', 'cobrador'));
         return $pdf->stream('recibo.pdf'); // mostrar en navegador
     }
 }

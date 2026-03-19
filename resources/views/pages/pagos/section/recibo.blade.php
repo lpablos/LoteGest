@@ -1,195 +1,236 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
-            color: #333;
-        }
-
-        .recibo {
-            width: 100%;
-            max-width: 680px;
-            margin: 0 auto;
-            border: 1px solid #444;
-            border-radius: 6px;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        td {
-            vertical-align: top;
-            padding: 4px;
-            word-wrap: break-word;
-        }
-
-        .header {
-            border-bottom: 2px solid #2f5fa5;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-        }
-
-        .titulo {
-            background: #2f5fa5;
-            color: #fff;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 13px;
-            border-radius: 4px;
-        }
-
-        .empresa {
-            text-align: center;
-            font-size: 10px;
-        }
-
-        .folio {
-            text-align: right;
-            font-size: 14px;
-            font-weight: bold;
-            color: #c62828;
-        }
-
-        .label {
-            font-weight: bold;
-        }
-
-        .linea {
-            border-bottom: 1px solid #999;
-            padding: 2px 4px;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .firma {
-            margin-top: 35px;
-            text-align: right;
-        }
-
-        .linea-firma {
-            border-top: 1px solid #000;
-            width: 180px;
-            margin-left: auto;
-            text-align: center;
-            font-size: 10px;
-            padding-top: 3px;
-        }
-    </style>
-</head>
-<body>
-
 @php
-    $nombreCompleto = $cliente->nombre . ' ' . $cliente->primer_apellido . ' ' . $cliente->segundo_apellido;
-    $adeudo = $pago->saldo_despues ?? 0;
+    $nombreCompleto = trim(($cliente->nombre ?? '') . ' ' . ($cliente->primer_apellido ?? '') . ' ' . ($cliente->segundo_apellido ?? ''));
 
     function numeroALetras($numero) {
         $formatter = new \NumberFormatter("es", \NumberFormatter::SPELLOUT);
         return ucfirst($formatter->format($numero)) . ' pesos';
     }
+    $montoPagado = $compra->total_venta - $pago->saldo_despues;
 @endphp
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+.
+0..<style>
+body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.recibo {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border: 1.5px solid #2c3e50;
+    border-radius: 16px;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+/* TABLA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* 50 / 50 */
+colgroup col {
+    width: 16.66%;
+}
+
+/* 🔥 CELDAS DINÁMICAS Y CENTRADAS */
+td {
+    border: 1px solid #e0e0e0;
+    padding: 8px 10px;
+    vertical-align: middle; /* 🔥 clave */
+
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* ALINEACIONES */
+.center { text-align: center; }
+.left { text-align: left; }
+
+/* HEADER */
+.header-dark {
+    background: #2f3e52;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* SUB */
+.subheader {
+    background: #f1f3f5;
+    font-weight: 600;
+}
+
+/* LABEL */
+.gris {
+    background: #f7f9fb;
+    font-weight: 600;
+    color: #5a6b7b;
+}
+
+/* TEXTO */
+.wrap {
+    line-height: 1.5;
+}
+
+/* FOLIO */
+.folio {
+    color: #c0392b;
+    font-weight: 700;
+}
+
+/* IMPORTE */
+.importe {
+    font-weight: 600;
+}
+
+/* FIRMA */
+.firma-box {
+    height: 110px;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+.firma-linea {
+    border-top: 1px solid #555;
+    width: 75%;
+    margin: 0 auto;
+    padding-top: 4px;
+    font-size: 10px;
+    color: #555;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    font-size: 10px;
+    margin-top: 10px;
+    color: #7a7a7a;
+}
+</style>
+
+</head>
+
+<body>
 
 <div class="recibo">
 
-    <!-- HEADER -->
-    <table class="header">
-        <tr>
-            <td style="width: 25%;">
-                <span class="titulo">RECIBO</span>
-            </td>
+<table>
 
-            <td class="empresa" style="width: 50%;">
-                <strong>Recibo de Pago</strong><br>
-                Sistema de Ventas
-            </td>
+    <colgroup>
+        <col><col><col><col><col><col>
+    </colgroup>
 
-            <td class="folio" style="width: 25%;">
-                No. {{ $pago->id }}
-            </td>
-        </tr>
-    </table>
+    <!-- TITULO -->
+    <tr>
+        <td colspan="6" class="header-dark center">
+            RECIBO DE FRACCIONAMIENTOS
+        </td>
+    </tr>
 
-    <!-- FECHA / CLIENTE -->
-    <table>
-        <tr>
-            <td>
-                <span class="label">Fecha:</span><br>
-                <span class="linea">
-                    {{ \Carbon\Carbon::parse($pago->created_at)->format('d/m/Y') }}
-                </span>
-            </td>
+    <!-- SUB -->
+    <tr>
+        <td colspan="3" class="subheader center">Datos de Pago</td>
+        <td colspan="3" class="subheader center">Datos de compra</td>
+    </tr>
 
-            <td>
-                <span class="label">Recibí de:</span><br>
-                <span class="linea">
-                    {{ $nombreCompleto }}
-                </span>
-            </td>
-        </tr>
-    </table>
+    <!-- FOLIO -->
+    <tr>
+        <td class="gris">Folio</td>
+        <td colspan="2" class="folio left">
+            {{ $pago->folio_recibo ?? 'N/A' }}
+        </td>
+        <td class="gris">Fecha</td>
+        <td colspan="2">
+            {{ $pago->fecha_pago ? \Carbon\Carbon::parse($pago->fecha_pago)->translatedFormat('d \\d\\e F \\d\\e\\l Y') : '' }}
+        </td>
+       
+    </tr>
 
-    <!-- IMPORTE + LETRAS (🔥 CORREGIDO) -->
-    <div style="margin-top:10px;">
-        <span class="label">Importe:</span><br>
-        <span class="linea">
-            ${{ number_format($pago->monto, 2) }} 
-            ({{ numeroALetras($pago->monto) }})
-        </span>
-    </div>
+    <!-- CLIENTE -->
+    <tr>
+        <td class="gris">Recibo de</td>
+        <td colspan="2" class="wrap left">
+            {{ $nombreCompleto }}
+        </td>
+
+        <td class="gris">Nombre del predio</td>
+        <td colspan="2" class="wrap left">
+            {{ $contrato->denominado_como_asc ?? '' }}
+        </td>
+    </tr>
+
+    <!-- IMPORTE -->
+    <tr>
+        <td class="gris">Importe</td>
+        <td colspan="2" class="importe wrap left">
+            ${{ number_format($pago->monto ?? 0, 2) }}
+            ({{ numeroALetras($pago->monto ?? 0) }})
+        </td>
+
+        <td class="gris">Ubicación</td>
+        <td colspan="2" class="wrap left">
+            {{ ($contrato->ubicacion_zona_asc ?? '') . ', ' . ($contrato->municipio_estado_asc ?? '') }}
+        </td>
+    </tr>
 
     <!-- CONCEPTO -->
-    <div style="margin-top:10px;">
-        <span class="label">Concepto:</span><br>
-        <span class="linea">
-            Pago de {{ $compra->venta_tp ?? 'crédito' }} 
-            del contrato {{ $contrato->denominado_como_asc ?? '' }}
-        </span>
-    </div>
+    <tr>
+        <td class="gris">Concepto</td>
+        <td colspan="2" class="wrap left">
+            {{ $pago->concepto ?? '' }}
+        </td>
 
-    <!-- MÉTODO / ESTADO -->
-    <table style="margin-top:10px;">
-        <tr>
-            <td>
-                <span class="label">Método de pago:</span><br>
-                <span class="linea">
-                    {{ ucfirst($pago->metodo_pago) }}
-                </span>
-            </td>
+        <td class="gris">Tipo</td>
+        <td colspan="2" class="left">
+            {{ ucfirst($pago->metodo_pago ?? '') }}
+        </td>
+    </tr>
 
-            <td>
-                <span class="label">Estado:</span><br>
-                <span class="linea">
-                    Pagado
-                </span>
-            </td>
+    <!-- PAGOS -->
+    <tr>
+        <td class="gris">Pagado</td>
+        
+        <td colspan="2">$ **{{ number_format( $montoPagado ?? 0, 2) }}</td>
 
-            <td>
-                <span class="label">Adeudo:</span><br>
-                <span class="linea">
-                    ${{ number_format($adeudo, 2) }}
-                </span>
-            </td>
-        </tr>
-    </table>
-    @if(!empty($pago->observaciones))
-        <div style="margin-top:10px;">
-            <span class="label">Observaciones:</span><br>
-            <span class="linea">
-                {{ $pago->observaciones }}
-            </span>
-        </div>
-    @endif
+        <td rowspan="3" colspan="3" class="firma-box">
+            <div class="firma-linea">
+                {{ $cobrador ? ($cobrador->nombre . ' ' . $cobrador->primer_apellido) : 'Firma' }}
+            </div>
+        </td>
+    </tr>
 
-    <!-- FIRMA -->
-    <div class="firma">
-        <div class="linea-firma">Firma</div>
-    </div>
+    <tr>
+        <td class="gris">Adeudo</td>
+        <td colspan="2" class="left">
+            ${{ number_format($pago->saldo_despues ?? 0, 2) }}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="gris">Observaciones</td>
+        <td colspan="2" class="wrap left">
+            {{ $pago->observaciones ?? '' }}
+        </td>
+    </tr>
+
+</table>
+
+<div class="footer">
+    Este recibo no es un comprobante fiscal. Consérvelo como comprobante parcial de pago.
+</div>
 
 </div>
 
