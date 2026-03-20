@@ -13,8 +13,7 @@
 <head>
 <meta charset="utf-8">
 
-.
-0..<style>
+<style>
 body {
     font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     font-size: 12px;
@@ -203,7 +202,7 @@ td {
     <tr>
         <td class="gris">Pagado</td>
         
-        <td colspan="2">$ **{{ number_format( $montoPagado ?? 0, 2) }}</td>
+        <td colspan="2">$ {{ number_format( $montoPagado ?? 0, 2) }}</td>
 
         <td rowspan="3" colspan="3" class="firma-box">
             <div class="firma-linea">

@@ -66,20 +66,7 @@
                                 </a>
 
                             </div>
-                        </div>
-                        <!-- <div class="col-sm-12">
-                            <div class="text-sm-end">
-                                <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
-                               
-                               
-                                    <a class="btn btn-success btn-rounded waves-effect waves-light mb-2 btn-parpadeo"
-                                    href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
-                                    role="button">
-                                        <i class="mdi mdi-plus me-1"></i> Pago
-                                    </a>
-                                </div>
-                            </div>
-                        </div> -->
+                        </div>                     
                     </div>
                     <table id="datatable-usuario" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
@@ -89,17 +76,19 @@
                                 <th> Metodo </th>                                
                                 <th> monto </th>
                                 <th> Saldo</th>
+                                <th> Fecha Captura</th>
                                 <th> Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pagos as $pago)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{ Carbon\Carbon::parse($pago->fecha_pago)->format('d-m-Y') }}</td>
                                     <td>{{ $pago->concepto }}</td>
                                     <td>{{ $pago->metodo_pago }}</td>
                                     <td>{{ $pago->monto }}</td>
                                     <td>{{ $pago->saldo_despues }}</td>
+                                    <td>{{ Carbon\Carbon::parse($pago->created_at)->format('d-m-Y') }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <a href="javascript: void(0);" class="dropdown-toggle card-drop px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -108,7 +97,15 @@
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
                                                 <!-- <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo </a></li> -->
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target=".bs-example-modal-lg"><i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo</button>
+                                                <button 
+                                                    type="button" 
+                                                    class="dropdown-item btn-recibo"
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target=".bs-example-modal-lg"
+                                                    data-id="{{ $pago->id }}"
+                                                >
+                                                    <i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo
+                                                </button>
                                                 
                                             </ul>
                                         </div>
@@ -124,7 +121,7 @@
     </div> <!-- end row -->
 
     
-    {{--  @include('usuario.add')  --}}
+    @include('pages.pagos.section.mensaje')
 @endsection
 
 @section('script')
@@ -241,6 +238,33 @@
             });
         });
         @include('pages.pagos.section.mensaje')
+    </script>
+
+    <script>
+        
+        const baseUrlDetalle = "{{ route('contrato.pagos.recibo', ['pago' => ':pago']) }}";
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const modal = document.querySelector('.bs-example-modal-lg');
+
+            modal.addEventListener('show.bs.modal', function (event) {
+                
+                const button = event.relatedTarget;
+
+                const id = button.getAttribute('data-id');
+                
+                
+                // 🔥 Generas la URL dinámica
+                
+                
+                const url = baseUrlDetalle.replace(':pago', id);
+                
+
+                document.getElementById('iframe-recibo').src = url;
+            });
+
+        });
     </script>
     
 @endsection

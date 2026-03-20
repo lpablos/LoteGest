@@ -20,7 +20,7 @@ class PagoController extends Controller
         $compra = Compra::where('num_solicitud_sistema', $solicitud)->firstOrFail() ;  
         $contrato = $compra->contrato()->first(); 
         $cliente = $compra->cliente()->first();     
-        $pagos = $compra->pagos()->orderBy('fecha_pago', 'desc')->get();
+        $pagos = $compra->pagos()->orderBy('fecha_pago', 'asc')->get();
         $numPagos = count($pagos);
         $totalPagos = $pagos->sum('monto');
         $saldoActual = $compra->total_venta - $totalPagos;
@@ -43,9 +43,6 @@ class PagoController extends Controller
     public function store(Request $request, $solicitud)
     {
         try {
-            // Conecta la lap pporfa
-            //si yaaaaa byeeeeee
-            // sale bsitos 
 
             $request->validate([
                 'fecha_pago' => 'required|date',
@@ -87,8 +84,8 @@ class PagoController extends Controller
             // =============================
 
             $ultimoFolio = Pago::max('id') + 1;
-            $folioRecibo = 'REC-' . str_pad($ultimoFolio, 6, '0', STR_PAD_LEFT);
-
+            list($tipo, $fecha, $folio) = explode('-', $solicitud);
+            $folioRecibo = 'REC' . str_pad($ultimoFolio, 4, '0', STR_PAD_LEFT).'-'.$tipo.$folio;
             // =============================
             // CREAR PAGO
             // =============================
@@ -185,15 +182,28 @@ class PagoController extends Controller
                 $pago->save();
             }
 
-            return redirect()
-                ->route('pagos.show', ['solicitud' => $solicitud, 'pago' => $pago->id])
-                ->with('success', 'Pago registrado exitosamente.');
-
-        } catch (\Throwable $th) {
+            // return redirect()
+            //     ->route('pagos.index', ['solicitud' => $solicitud, 'pago' => $pago->id])
+            //     ->with('success', 'Pago registrado exitosamente.');
 
             return redirect()
                 ->route('pagos.index', ['solicitud' => $solicitud])
-                ->with('error', 'Error al registrar el pago.');
+                ->with([
+                    'message' => 'Pago registrado exitosamente.',
+                    'type' => 'success'
+                ]);
+
+        } catch (\Throwable $th) {
+
+            // return redirect()
+            //     ->route('pagos.index', ['solicitud' => $solicitud])
+            //     ->with('error', 'Error al registrar el pago.');
+            return redirect()
+                ->route('pagos.index', ['solicitud' => $solicitud])
+                ->with([
+                    'message' => 'Error al registrar el pago.',
+                    'type' => 'error'
+                ]);
         }
     }
 
@@ -350,8 +360,7 @@ class PagoController extends Controller
     public function reciboPago($pago)
     {
         
-        //$pago = Pago::findOrFail($pago);
-        $pago = Pago::findOrFail(10);
+        $pago = Pago::findOrFail($pago);
         $compra = $pago->compra()->first();
         $contrato = $compra->contrato()->first(); 
         $cobrador = $pago->cobrador()->first();
