@@ -1,8 +1,9 @@
 @extends('layouts.master')
-
 @section('title')
     Pagos
 @endsection
+
+
 
 @section('content')
 <div class="row">
@@ -24,17 +25,19 @@
                     <div class="col-7">@include('pages.pagos.section.documento')</div>
                 </div>
                 
+                
 
             </div>
         </div>
     </div>
 </div>
 @endsection
+@include('layouts.vendor-scripts')
+@push('scripts')
 
-@section('script')
-
-
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
     @include('pages.pagos.section.mensaje')
+@endpush
 
-@endsection
+
+
+

@@ -60,8 +60,8 @@
 
                                 <!-- BOTON DERECHA -->
                                 <a class="btn btn-success btn-rounded waves-effect waves-light btn-parpadeo"
-                                href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
-                                role="button">
+                                    href="{{ route('pagos.create', ['solicitud' => $compra->num_solicitud_sistema]) }}"
+                                    role="button">
                                     <i class="mdi mdi-plus me-1"></i> Pago
                                 </a>
 
@@ -96,7 +96,6 @@
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-start">
                                                 <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Editar </a></li>
-                                                <!-- <li><a href="{{route('pagos.show', ['solicitud' => $compra->num_solicitud_sistema, 'pago' => $pago->id])}}" class="dropdown-item"><i class="mdi mdi-receipt font-size-16 text-success me-1"></i> Recibo </a></li> -->
                                                 <button 
                                                     type="button" 
                                                     class="dropdown-item btn-recibo"
@@ -179,7 +178,8 @@
                         next: 'Siguiente'
                     }
                 },
-                lengthChange: true
+                lengthChange: true,
+                order: [[4, 'asc']]
             });
         
             table.buttons().container().appendTo('#datatable-usuario_wrapper .col-md-6:eq(0)');
@@ -255,7 +255,7 @@
                 const id = button.getAttribute('data-id');
                 
                 
-                // 🔥 Generas la URL dinámica
+                
                 
                 
                 const url = baseUrlDetalle.replace(':pago', id);

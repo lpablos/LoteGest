@@ -1,17 +1,26 @@
 @if(session('message'))
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
 
-    toastr.options = {
-        closeButton: false,
-        progressBar: true
-    };
+    function mostrarToast() {
+        if (typeof toastr !== 'undefined') {
+            toastr.options = {
+                closeButton: false,
+                progressBar: true
+            };
 
-    const type = "{{ session('type', 'info') }}";
-    const message = @json(session('message'));
+            toastr["{{ session('type', 'info') }}"](@json(session('message')));
+        }
+    }
 
-    toastr[type](message);
+    // 🔥 Si el DOM ya cargó → ejecuta directo
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        mostrarToast();
+    } else {
+        // 🔥 Si aún no → espera
+        document.addEventListener("DOMContentLoaded", mostrarToast);
+    }
 
-});
+})();
 </script>
 @endif

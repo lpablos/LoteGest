@@ -20,7 +20,8 @@ class PagoController extends Controller
         $compra = Compra::where('num_solicitud_sistema', $solicitud)->firstOrFail() ;  
         $contrato = $compra->contrato()->first(); 
         $cliente = $compra->cliente()->first();     
-        $pagos = $compra->pagos()->orderBy('fecha_pago', 'asc')->get();
+        $pagos = $compra->pagos()->orderBy('created_at', 'desc')->get();
+        
         $numPagos = count($pagos);
         $totalPagos = $pagos->sum('monto');
         $saldoActual = $compra->total_venta - $totalPagos;
@@ -347,14 +348,24 @@ class PagoController extends Controller
 
             return redirect()
                 ->route('pagos.show', ['solicitud' => $solicitud, 'pago' => $pago->id])
-                ->with('success', 'Pago actualizado exitosamente.');
+                 ->with([
+                    'message' => 'Pago actualizado correctamente.',
+                    'type' => 'success'
+                ]);
 
         } catch (\Throwable $th) {
 
             return redirect()
                 ->route('pagos.show', ['solicitud' => $solicitud, 'pago' => $pagoId])
-                ->with('error', 'Error al actualizar el pago.');
+               ->with([
+                    'message' => 'Error al actualizar el pago.',
+                    'type' => 'error'
+                ]);
         }
+
+
+     
+
     }
 
     public function reciboPago($pago)

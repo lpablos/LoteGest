@@ -13,11 +13,14 @@
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <!-- JAVASCRIPT -->
 
+
+
     <!-- TOASTR CSS -->
     <link rel="stylesheet" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
 
     <!-- TOASTR JS -->
     <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
+
     @include('layouts.head-css')
 </head>
 
@@ -52,6 +55,8 @@
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
     @stack('scripts')
+
+    
 </body>
 
 </html>
