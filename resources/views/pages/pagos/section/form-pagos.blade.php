@@ -97,12 +97,17 @@
 
     <div class="col-md-6">
         <div class="mb-3">
-            <label class="form-label">Comprobante de Pago</label>
+            
+            <label class="form-label">Comprobantes</label>
+          
             <input type="file" 
                 name="documentos[]" 
                 class="form-control"
                 accept="image/png,image/jpeg,image/jpg,application/pdf"
                 multiple>
+            <small class="text-muted d-block">
+                Puedes subir uno o varios documentos (imágenes o PDF)
+            </small>
         </div>
     </div>
 
