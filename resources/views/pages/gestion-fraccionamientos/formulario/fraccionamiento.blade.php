@@ -12,10 +12,10 @@
         <input type="text" name="nombre" id="nombre" class="form-control" required>
     </div>
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <label for="imagen" class="form-label">Imagen (jpg,jpeg,png,webp)</label>
         <input type="file" name="imagen" id="imagen" class="form-control" accept="image/*">
-    </div>
+    </div> -->
     <div class="col-md-4">
         <label for="responsable" class="form-label">Responsable (*)</label>
         <input type="text" name="responsable" id="responsable" class="form-control" required>
