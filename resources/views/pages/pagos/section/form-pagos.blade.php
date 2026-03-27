@@ -12,7 +12,13 @@
 @endisset
 
 <div class="row">
-
+    <!-- <div class="col-lg-12"> -->
+        <div class="card border border-primary">
+            <div class="card-body">
+                <p class="card-text text-center"><i class="mdi mdi-bullseye-arrow me-3"></i> La edición de algunos campos está restringida según el nivel de jerarquía.</p>
+            </div>
+        </div>
+    <!-- </div> -->
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Fecha Pago</label>

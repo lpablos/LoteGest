@@ -16,7 +16,7 @@
                             <div class="position-relative mb-4">
                                 <h3 class="mb-3">Detalle del Pago</h3>                                
                             </div>
-                        
+                            
                         </div>
                     </div>
                 </div>
