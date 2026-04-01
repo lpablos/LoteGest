@@ -99,7 +99,40 @@
 
     });
 
-    const routeDocumentoFirmado = "{{ route('contratos.documento.obtener.firmado', ':id') }}";
+    const routeDocumentoFirmado = "{{ route('contratos.digitalizado.ver.asociado', ':id') }}";
+
+    // function cargarDocumentoExistente(id) {
+
+    //     const loader = document.getElementById('loa-load');
+    //     const iframe = document.getElementById('iframeDocumentoDigital');
+    //     const alerta = document.getElementById('pendiente-carga-digital');
+
+    //     if (loader) loader.style.display = 'inline-block';
+    //     // console.log("Esta es la ruta",routeDocumentoFirmado);
+        
+    //     let url = routeDocumentoFirmado.replace(':id', id);
+        
+    //     iframe.src = url + "?v=" + Date.now();   
+    //     // fetch(url)
+    //     // .then(response => response.json())
+    //     // .then(data => {
+    //     //     console.log("Este es el data ", data);
+            
+    //     //     if (data.success && data.url) {
+    //     //         if (iframe) {
+    //     //             iframe.src = data.url + "?v=" + Date.now();
+    //     //         }
+    //     //     } else {
+    //     //         if (alerta) {
+    //     //             alerta.style.display = 'block';
+    //     //         }
+    //     //     }
+
+    //     // })
+    //     // .finally(() => {
+    //     //     if (loader) loader.style.display = 'none';
+    //     // });
+    // }
 
     function cargarDocumentoExistente(id) {
 
@@ -111,24 +144,34 @@
 
         let url = routeDocumentoFirmado.replace(':id', id);
 
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
+        // 🔥 VALIDAMOS SI EXISTE
+        fetch(url, { method: 'HEAD' }) // 👈 solo valida, no descarga PDF
+        .then(response => {
 
-            if (data.success && data.url) {
-
+            if (response.ok) {
+                // ✅ EXISTE → mostrar PDF
                 if (iframe) {
-                    iframe.src = data.url + "?v=" + Date.now();
+                    iframe.src = url + "?v=" + Date.now();
+                }
+                if (alerta) {
+                    alerta.style.display = 'none';
                 }
 
             } else {
-
+                // ❌ NO EXISTE → mostrar mensaje
+                if (iframe) {
+                    iframe.src = '';
+                }
                 if (alerta) {
                     alerta.style.display = 'block';
                 }
-
             }
 
+        })
+        .catch(() => {
+            // ❌ ERROR → tratar como no existente
+            if (iframe) iframe.src = '';
+            if (alerta) alerta.style.display = 'block';
         })
         .finally(() => {
             if (loader) loader.style.display = 'none';
@@ -168,68 +211,7 @@
 
     });
 
-    // function enviarImagenes(contratoId) {
-    //     $("#loa-load").show();
-    //     const boton = document.getElementById('btnGenerar');
-    //     const iframe = document.getElementById('iframeDocumentoDigital');
-
-    //     if (!iframe) {
-    //         console.error("No existe iframeDocumento en el DOM");
-    //         return;
-    //     }
-
-    //     boton.disabled = true;
-    //     boton.innerHTML = '<i class="mdi mdi-loading mdi-spin me-1"></i> Generando...';
-
-    //     const formData = new FormData();
-    //     formData.append('contrato_id', contratoId);
-
-    //     pond.getFiles().forEach(fileItem => {
-    //         formData.append('documentos[]', fileItem.file);
-    //     });
-
-    //     fetch("{{ route('contratos.upload.firmado') }}", {
-    //         method: "POST",
-    //         headers: {
-    //             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-    //         },
-    //         body: formData
-    //     })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error("Error al generar el documento");
-    //         }
-    //         $("#loa-load").hide();
-    //         return response.json(); // 🔥 USAMOS JSON
-    //     })
-    //     .then(data => {
-
-    //         console.log("Respuesta del backend:", data);
-
-    //         if (data.success && data.url) {
-
-    //             // 🔥 AQUÍ SE ASIGNA DIRECTO
-    //             iframe.src = data.url + "?v=" + Date.now();
-    //             resetFilePond();
-
-    //         } else {
-    //             console.error("La respuesta no tiene success o url");
-    //         }
-    //         $("#loa-load").hide();
-    //     })
-    //     .catch(error => {
-    //         $("#loa-load").hide();
-    //         console.error(error);
-    //         alert(error.message);
-
-    //     })
-    //     .finally(() => {
-    //         $("#loa-load").hide();
-    //         boton.disabled = false;
-    //         boton.innerHTML = '<i class="mdi mdi-file-pdf-box me-1"></i> Cargar Documentación';
-
-    //     });
-    // }
+  
     function enviarImagenes(contratoId) {
         const loader = document.getElementById("loa-load");
         const boton = document.getElementById("btnGenerar");

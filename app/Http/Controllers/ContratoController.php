@@ -314,18 +314,38 @@ class ContratoController extends Controller
 
 
      
+    // public function verDocumentoDigitalizado($id)
+    // {
+    //     $contrato = Contrato::findOrFail($id);
+    //     // Valor almacenado en DB: storage/contratos/archivo.pdf
+        
+    //     $ruta = storage_path('app/public/' . str_replace('storage/', '', $contrato->digital_url));
+        
+    //     if (!file_exists($ruta)) {
+    //         abort(404, "El documento no existe.");
+    //     }
+
+    //     return response()->file($ruta);
+    // }
+
     public function verDocumentoDigitalizado($id)
     {
         $contrato = Contrato::findOrFail($id);
-        // Valor almacenado en DB: storage/contratos/archivo.pdf
-        
-        $ruta = storage_path('app/public/' . str_replace('storage/', '', $contrato->digital_url));
-        
-        if (!file_exists($ruta)) {
-            abort(404, "El documento no existe.");
+
+        if (!$contrato->digital_url) {
+            return response('', 404); // 🔥 respuesta limpia
         }
 
-        return response()->file($ruta);
+        $ruta = storage_path('app/public/' . str_replace('storage/', '', $contrato->digital_url));
+
+        if (!file_exists($ruta)) {
+            return response('', 404); // 🔥 sin HTML
+        }
+
+        return response()->file($ruta, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="contrato.pdf"',
+        ]);
     }
 
     
