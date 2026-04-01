@@ -57,6 +57,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contratos/{id}/documento/firmado', [App\Http\Controllers\ContratoController::class,'obtenerDocumentoAsociado'])->name('contratos.documento.obtener.firmado');
     Route::resource('/contrato/{solicitud}/pagos', App\Http\Controllers\PagoController::class);
     Route::get('/contrato/pago/{pago}/recibo', [App\Http\Controllers\PagoController::class, 'reciboPago'])->name('contrato.pagos.recibo');
+
+    //contratos digitales - vista previa
+    Route::get('/contrato/ver/digitalizado/{id}', [App\Http\Controllers\ContratoController::class, 'verDocumentoDigitalizado'])->name('contratos.digitalizado.ver.asociado');
 });    
 
 
