@@ -73,6 +73,7 @@
                                                         </button>
                                                 </li>
                                                 <li>
+                                                    {{ $compra->contrato->id }}
                                                      <button 
                                                             type="button" 
                                                             class="dropdown-item btn-contrato-adjunto"
