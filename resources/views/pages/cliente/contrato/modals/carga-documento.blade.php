@@ -33,6 +33,7 @@
 
                             <div class="d-grid mt-3">
                                 <button type="button"
+                                        
                                         onclick="enviarImagenes(1)"
                                         id="btnGenerar"
                                         class="btn btn-primary">
@@ -78,11 +79,20 @@
 
         // 🔥 Obtener data-registro
         const contratoId = button ? button.getAttribute('data-registro') : null;
+        console.log("Este es el contrato ", contratoId);
 
+        // 🔥 CAMBIAR EL onclick DINÁMICAMENTE
+        const btnGenerar = document.getElementById('btnGenerar');
+        if (btnGenerar && contratoId) {
+            btnGenerar.setAttribute('onclick', 'enviarImagenes(' + contratoId + ')');
+        }
+        
         // 🔥 Reset FilePond
         if (typeof pond !== "undefined" && pond) {
             pond.removeFiles();
         }
+
+        
 
         // 🔥 Ocultar mensaje pendiente
         const alerta = document.getElementById('pendiente-carga-digital');
