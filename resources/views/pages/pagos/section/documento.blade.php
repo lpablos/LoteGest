@@ -7,7 +7,7 @@
     </iframe>
 @else
     <div class="p-4 text-center text-muted">
-        Sin documento cargado
+        Sin ningun documento cargado
     </div>
 @endif
 
