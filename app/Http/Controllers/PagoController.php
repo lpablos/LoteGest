@@ -11,6 +11,7 @@ use setasign\Fpdi\Fpdi;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
 class PagoController extends Controller
 {
     //
@@ -90,7 +91,7 @@ class PagoController extends Controller
             // =============================
             // CREAR PAGO
             // =============================
-
+            dd($request->registrado_por);
             $pago = $compra->pagos()->create([
                 'fecha_pago' => $request->fecha_pago,
                 'concepto' => $request->concepto,
@@ -101,7 +102,7 @@ class PagoController extends Controller
                 'folio_recibo' => $folioRecibo,
                 'referencia' => $request->referencia,
                 'observaciones' => $request->observaciones,
-                'recibido_por' => auth()->id(),
+                'recibido_por' => $request->registrado_por,
             ]);
 
             // =============================
@@ -244,7 +245,7 @@ class PagoController extends Controller
                 'monto' => $request->monto,
                 'referencia' => $request->referencia,
                 'observaciones' => $request->observaciones,
-                'recibido_por' => auth()->id(),
+                'recibido_por' => $request->registrado_por,
             ]);
             
             // =============================
@@ -378,5 +379,17 @@ class PagoController extends Controller
         $cliente = $compra->cliente()->first();   
         $pdf = Pdf::loadView('pages.pagos.section.recibo', compact('pago', 'compra', 'contrato', 'cliente', 'cobrador'));
         return $pdf->stream('recibo.pdf'); // mostrar en navegador
+    }
+
+
+    public function verComprobante($id)
+    {
+        $pago = Pago::findOrFail($id);
+        // Si no hay comprobante o no existe físicamente
+        if (!$pago->comprobante_url || !Storage::disk('public')->exists($pago->comprobante_url)) {
+            return response('', 204); // iframe en blanco
+        }
+        // Devuelve el archivo correctamente
+        return Storage::disk('public')->response($pago->comprobante_url);
     }
 }

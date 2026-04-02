@@ -89,11 +89,14 @@
     <div class="col-md-6">
         <div class="mb-3">
             <label class="form-label">Registrado por</label>
-            <select name="registrado_por" class="form-select">
+            <select name="registrado_por" class="form-select" required>
                 <option value="">Seleccione un usuario</option>
                 @foreach($usuarios as $usuario)
                     <option value="{{ $usuario->id }}"
-                        {{ session('identy') == $usuario->id ? 'selected' : '' }}>
+                        @if (isset($pago->recibido_por))
+                            {{ $pago->recibido_por == $usuario->id ? 'selected' : '' }}
+                        @endif
+                        >
                         {{ $usuario->nombre }} {{ $usuario->primer_apellido }} {{ $usuario->segundo_apellido }}
                     </option>
                 @endforeach

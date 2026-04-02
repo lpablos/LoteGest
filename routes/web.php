@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //contratos digitales - vista previa
     Route::get('/contrato/ver/digitalizado/{id}', [App\Http\Controllers\ContratoController::class, 'verDocumentoDigitalizado'])->name('contratos.digitalizado.ver.asociado');
+    Route::get('/comprobante/documentacion/{id}/pago', [App\Http\Controllers\PagoController::class, 'verComprobante'])->name('comprobante.documentacion.ver');
 });    
 
 
