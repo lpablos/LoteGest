@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('configuracion', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre_empresa');
+            $table->string('direccion');
+            $table->string('telefono'); 
+            $table->string('email');
             $table->timestamps();
         });
     }

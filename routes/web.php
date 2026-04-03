@@ -36,7 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('proyectos', App\Http\Controllers\ProyectoController::class);
     Route::resource('contratos', App\Http\Controllers\ContratoController::class);
     Route::resource('municipios', App\Http\Controllers\CatMunicipioController::class);
-    Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
+    // Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
     Route::resource('tipo-de-predios', App\Http\Controllers\CatTipoPredioController::class);
     Route::resource('fraccionamiento', App\Http\Controllers\FraccionamientoController::class);
     Route::get('fraccionamiento-detalle/{idFracc}', [App\Http\Controllers\FraccionamientoController::class, 'detFracc'])->name('fracc.detalle.registro');
@@ -61,6 +61,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //contratos digitales - vista previa
     Route::get('/contrato/ver/digitalizado/{id}', [App\Http\Controllers\ContratoController::class, 'verDocumentoDigitalizado'])->name('contratos.digitalizado.ver.asociado');
     Route::get('/comprobante/documentacion/{id}/pago', [App\Http\Controllers\PagoController::class, 'verComprobante'])->name('comprobante.documentacion.ver');
+
+    Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
 });    
 
 

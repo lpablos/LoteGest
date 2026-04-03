@@ -16,69 +16,94 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <form action="{{ route('usuarios.store') }}" method="post"  enctype="multipart/form-data">
+   <div class="row">
+    <div class="col-12">
+        <form action="{{ route('configuracion.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-                <div class="card">
-                    <div class="card-body">
-                       <div class="row col-md-12">
-                            <h4 class="card-title text-center mb-4"> Configuración de Parámetros </h4>
-                            <div class="col-md-3 mb-4">
-                                <label for="nombre"> Nombre de la Empresa </label>
-                                <input type="text" class="form-control form-control-sm" name="nombre" placeholder="Ingresa el nombre" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="primer_apellido"> Dueño </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido" placeholder="Ingresa el primer apellido" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 b-4">
-                                <label for="segundo_apellido"> Logo </label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" placeholder="Ingresa el segundo apellido" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="telefono"> Teléfono </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Correo Electrónico </label>
-                                <input type="email" class="form-control form-control-sm" name="email" placeholder="Ingresa el correo electrónico" style="text-transform:lowercase" required>
-                            </div>
+
+            <input type="hidden" name="id" value="{{ $configuracion->id ?? '' }}">   
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+
+                        <h4 class="card-title text-center mb-4 w-100">Configuración de Parámetros</h4>
+                        <input type="hidden" name="id" value="{{ optional($configuracion)->id }}">
+                        <div class="col-md-3 mb-4">
+                            <label for="nombre_empresa">Nombre de la Empresa</label>
+                            <input 
+                                type="text" 
+                                id="nombre_empresa"
+                                value="{{ optional($configuracion)->nombre_empresa }}" 
+                                class="form-control form-control-sm" 
+                                name="nombre_empresa" 
+                                placeholder="Ingresa el nombre"
+                                oninput="this.value = this.value.toLowerCase()"
+                                required>
                         </div>
+
+                        <div class="col-md-3 mb-4">
+                            <label for="direccion">Dirección</label>
+                            <input 
+                                type="text" 
+                                id="direccion"
+                                value="{{ optional($configuracion)->direccion }}" 
+                                class="form-control form-control-sm" 
+                                name="direccion" 
+                                placeholder="Ingresa la dirección"
+                                oninput="this.value = this.value.toLowerCase()"
+                                required>
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+                            <label for="telefono">Teléfono</label>
+                            <input 
+                                type="text" 
+                                id="telefono"
+                                value="{{ optional($configuracion)->telefono }}" 
+                                class="form-control form-control-sm" 
+                                name="telefono"
+                                oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)"
+                                maxlength="10"
+                                placeholder="10 dígitos"
+                                required>
+                        </div>
+
+                        <div class="col-md-3 mb-4">
+                            <label for="email">Correo Electrónico</label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                value="{{ optional($configuracion)->email }}" 
+                                class="form-control form-control-sm" 
+                                name="email" 
+                                placeholder="Ingresa el correo electrónico"
+                                oninput="this.value = this.value.toLowerCase()"
+                                required>
+                        </div>
+
                     </div>
                 </div>
-                <!-- <div class="card">
-                    <div class="card-body">
-                        <div class="row col-md-12">
-                            <h4 class="card-title text-center mb-4"> Configuración de Pagos </h4>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Cantidad para reservar </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Tiempo de Reservación (días) </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Plazo de Liquidación (meses- pago de contado) </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10" required>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
-                    </div> <!-- end col -->
-                    <div class="col-sm-6">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
-                        </div>
-                    </div> 
+            </div>
+       
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- <a href="{{ route('usuarios.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link">
+                        <i class="mdi mdi-arrow-left me-1"></i> Cancelar 
+                    </a> -->
                 </div>
-            </form>
-        </div>
+                <div class="col-sm-6">
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">
+                            <i class="mdi mdi-check me-1"></i> Guardar 
+                        </button>
+                    </div>
+                </div> 
+            </div>
+
+        </form>
     </div>
+</div>
 @endsection
 @section('script')
     <!-- Required datatable js -->

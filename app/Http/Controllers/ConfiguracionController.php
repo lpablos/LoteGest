@@ -12,7 +12,8 @@ class ConfiguracionController extends Controller
      */
     public function index()
     {   
-        return view('pages.configuracion.index');
+        $configuracion = Configuracion::first();
+        return view('pages.configuracion.index', compact('configuracion'));
     }
 
     /**
@@ -29,6 +30,25 @@ class ConfiguracionController extends Controller
     public function store(Request $request)
     {
         //
+        
+        
+        if($request->input('id') == null){
+            $configuracion = Configuracion::create([
+                'nombre_empresa' => $request->input('nombre_empresa'),
+                'direccion' => $request->input('direccion'),
+                'telefono' => $request->input('telefono'),
+                'email' => $request->input('email')
+            ]); 
+        }else{
+            $configuracion = Configuracion::find($request->input('id'));
+            $configuracion->update([
+                'nombre_empresa' => $request->input('nombre_empresa'),
+                'direccion' => $request->input('direccion'),
+                'telefono' => $request->input('telefono'),
+                'email' => $request->input('email')
+            ]); 
+        }
+        return redirect()->route('configuracion.index')->with('success', 'Configuración guardada exitosamente.');
     }
 
     /**
