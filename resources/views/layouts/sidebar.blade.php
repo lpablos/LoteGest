@@ -62,6 +62,12 @@
                             <span key="t-chat"> Configuración </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('manual.index') }}" class="waves-effect">
+                            <i class="bx bx-book"></i>
+                            <span key="t-chat"> Manual </span>
+                        </a>
+                    </li>
                 @endif
                 <div style="display: none"> 
                 <li class="menu-title" key="t-backend">@lang('translation.backend')</li>

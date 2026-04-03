@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/comprobante/documentacion/{id}/pago', [App\Http\Controllers\PagoController::class, 'verComprobante'])->name('comprobante.documentacion.ver');
 
     Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
+    Route::resource('manual', App\Http\Controllers\ManualController::class);
 });    
 
 
