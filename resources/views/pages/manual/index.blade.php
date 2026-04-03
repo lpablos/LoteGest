@@ -24,7 +24,7 @@
                     <h4>Manual de Usuario</h4>
                     <br>
                     <iframe 
-                        src="{{ asset('manuales/manual.pdf') }}" 
+                        src="{{ asset('manuales/Manual.pdf') }}" 
                         width="100%" 
                         height="500px"
                         style="border: none;">
