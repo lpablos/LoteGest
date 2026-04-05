@@ -66,12 +66,45 @@ class CompraController extends Controller
             $compra->mensualidad_venta_select = $request['mensualidad_venta_select'];
             $compra->pago_mensual_venta = $request['pago_mensual_venta'];
             $compra->save();
+
+            
+
+            // 🔴 VALIDACIÓN ÚNICA (SIN REPETICIONES)
+            $lotesIds = $request['lote'];
+
+            $lotes = Lote::whereIn('id', $lotesIds)
+                ->lockForUpdate()
+                ->get()
+                ->keyBy('id'); // 🔥 importante
+
+            if ($lotes->count() != count($lotesIds)) {
+                DB::rollBack();
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Uno o más lotes no existen.'
+                ], 400);
+            }
+
+            foreach ($lotes as $lote) {
+                if ($lote->disponibilidad_id != 2) {
+                    DB::rollBack();
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "El lote {$lote->num_lote} ya no está disponible. Intenta con otro lote. o verifica que el lote no se haya vendido en otra compra."
+                    ], 400);
+                }
+            }
+
+            
+
+
+
+
             
             $totalLotes = count($request['lote']);
-
             $idLindero;
             $campo = 'individual';
-            
+
             for ($i=0; $i <= $totalLotes - 1;$i++) { 
                 
                 // if($request['viento1'][$i]){ 

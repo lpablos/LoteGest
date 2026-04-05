@@ -191,9 +191,19 @@ $(function () {
                         datosVededorCliente()
                     },
                     error: function (xhr) {
-                        toastr.error("Error al guardar el paso 2");
+                        // toastr.error("Error al guardar el paso 2");
+                        // console.error(xhr.responseText);
+                        // pasoCompletado = false;
+                        let mensaje = "Error al guardar el paso 2";
+
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            mensaje = xhr.responseJSON.message;
+                        }
+
+                        toastr.error(mensaje);
                         console.error(xhr.responseText);
                         pasoCompletado = false;
+                        
                     }
                 });
 
