@@ -91,7 +91,7 @@ class PagoController extends Controller
             // =============================
             // CREAR PAGO
             // =============================
-            dd($request->registrado_por);
+            
             $pago = $compra->pagos()->create([
                 'fecha_pago' => $request->fecha_pago,
                 'concepto' => $request->concepto,
