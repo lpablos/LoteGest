@@ -576,7 +576,8 @@
                 });
             });
 
-            function vientosFraccionamiento(fraccIdd) {              
+            function vientosFraccionamiento(fraccIdd) { 
+                //alert("Cambio")   //************************          ************************          ************************          
                 const fraccId = fraccIdd;
                 if (!fraccId) return;
 
@@ -588,13 +589,47 @@
                     dataType: 'json',
                     success: function (data) {
                         opcionesVientos = data[0];
-                        // console.log("Esto es --> ", opcionesVientos);                        
+                        // console.log("Esto es --> ", opcionesVientos);    
+                        reiniciarTodo();                   
                     },
                     error: function (xhr, status, error) {
                         console.error('Error al obtener los vientos:', error);
                     }
                 });
             }
+
+            function reiniciarTodo(){
+                // Elimina todos los lotes
+                $('.lote-item').remove();
+
+                // Reinicia el contador correctamente
+                contadorLotes = 0;
+
+                // Limpia datos generales
+                limpiarVentaGenerales();
+
+                // Actualizaciones
+                actualizarContador();
+                actualizarTotalVenta();
+                verificarManzanasYLotes();
+
+                toastr.info('Cambio de Fraccionamiento, se han reiniciado las colindancias. Actualice los datos.');
+            }
+
+            // function reiniciarTodo(){
+            //     // alert("se reinicio funcion nueva");
+            //     // $(this).closest('.lote-item').remove();
+            //     $('.lote-item').remove();
+            //     contadorLotes = Math.max(0, contadorLotes - 1);
+
+            //     if(contadorLotes === 0){
+            //         limpiarVentaGenerales()
+            //     }
+            //     actualizarContador();
+            //     actualizarTotalVenta();
+            //     verificarManzanasYLotes();
+            //     toastr.info('Colindancias reiniciadas. Actualice los datos.');
+            // }
 
 
 
