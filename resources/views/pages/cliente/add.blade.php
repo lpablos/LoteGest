@@ -613,7 +613,15 @@
                 actualizarTotalVenta();
                 verificarManzanasYLotes();
 
-                toastr.info('Cambio de Fraccionamiento, se han reiniciado las colindancias. Actualice los datos.');
+                // toastr.info('Ya seleccionaste un fraccionamiento. Da clic en ‘Agregar Compra’ para ver los lotes.');
+                toastr.info(
+                    'Ya seleccionaste un fraccionamiento. Da clic en ‘Agregar Compra’ para ver los lotes.',
+                    null,
+                    {
+                        timeOut: 8000,        // tiempo visible (8 segundos)
+                        extendedTimeOut: 3000 // tiempo extra si pasa el mouse
+                    }
+                );
             }
 
             // function reiniciarTodo(){
