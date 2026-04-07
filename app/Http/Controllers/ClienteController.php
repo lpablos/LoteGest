@@ -445,27 +445,24 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
 
-        // if (!$cliente->url_ine) {
-        //     abort(404, 'El cliente no tiene documento.');
-        // }
-
-        // if (!Storage::disk('public')->exists($cliente->url_ine)) {
-        //     abort(404, 'El documento no existe.');
-        // }
-
-        // return Storage::disk('public')->response($cliente->url_ine);
-
-
-        
-
-        
-        $ruta = storage_path('app/public/' . str_replace('storage/', '', $cliente->documento_url));
-
-        if (!file_exists($ruta)) {
-            abort(404, "El cliente no tiene documento.");
+        // Si no hay documento → respuesta limpia (sin HTML)
+        if (!$cliente->url_ine) {
+            return response('', 404);
         }
 
-        return response()->file($ruta);
+        // 👇 IMPORTANTE: tu DB guarda "ine/archivo.pdf"
+        $ruta = storage_path('app/public/' . $cliente->url_ine);
+
+        // Validar existencia real
+        if (!file_exists($ruta)) {
+            return response('', 404);
+        }
+
+        // 👇 Igual que tu método funcional
+        return response()->file($ruta, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="ine.pdf"',
+        ]);
     }
    
 }
