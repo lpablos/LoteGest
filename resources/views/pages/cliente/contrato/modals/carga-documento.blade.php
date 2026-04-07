@@ -56,17 +56,8 @@
                         <div class="alert alert-info mb-0" role="alert" id="pendiente-carga-digital" style="display:none;">
                             Aun no se ha anexado el documento digital
                         </div>
-                        <iframe 
-                            src="https://arquitectosconsultores.mx/cliente/1/documento"
-                            width="100%" 
-                            height="500px"
-                            style="border: none;">
-                        </iframe> 
-                        <!-- <iframe 
-                            src="{{ route('cliente.documento', $cliente->id) }}"
-                            style="width:100%; height:500px; border-radius:8px;" 
-                            frameborder="0">
-                        </iframe> -->
+                        <iframe id="iframeDocumentoDigital" style="width:100%; height:500px; border-radius:8px;" frameborder="0">
+                        </iframe>
                     </div>
 
                 </div>
