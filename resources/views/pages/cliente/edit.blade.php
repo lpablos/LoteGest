@@ -87,9 +87,9 @@
     <!-- BOTÓN VER DOCUMENTO -->
     @if ($cliente->url_ine)
     <div class="col-md-12 text-center mt-2">
-        <a href="{{ asset('storage/' . $cliente->url_ine) }}" 
-           target="_blank" 
-           class="btn btn-primary btn-parpadeo">
+        <a href="{{ asset($cliente->url_ine) }}" 
+        target="_blank" 
+        class="btn btn-primary btn-parpadeo">
             📄 Ver documento cargado
         </a>
     </div>
