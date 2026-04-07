@@ -57,7 +57,7 @@
                             Aun no se ha anexado el documento digital
                         </div>
                         <iframe 
-                            src="https://arquitectosconsultores.mx/cliente/1/documento#toolbar=0"
+                            src="https://arquitectosconsultores.mx/cliente/1/documento"
                             width="100%" 
                             height="500px"
                             style="border: none;">
