@@ -445,36 +445,27 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
 
-        if (!$cliente->url_ine) {
-            abort(404, 'El cliente no tiene documento.');
+        // if (!$cliente->url_ine) {
+        //     abort(404, 'El cliente no tiene documento.');
+        // }
+
+        // if (!Storage::disk('public')->exists($cliente->url_ine)) {
+        //     abort(404, 'El documento no existe.');
+        // }
+
+        // return Storage::disk('public')->response($cliente->url_ine);
+
+
+        
+
+        
+        $ruta = storage_path('app/public/' . str_replace('storage/', '', $cliente->documento_url));
+
+        if (!file_exists($ruta)) {
+            abort(404, "El cliente no tiene documento.");
         }
 
-        if (!Storage::disk('public')->exists($cliente->url_ine)) {
-            abort(404, 'El documento no existe.');
-        }
-
-        return Storage::disk('public')->response($cliente->url_ine);
+        return response()->file($ruta);
     }
-    // public function mostrarDocumentoCliente($id)
-    // {
-    //     $cliente = Cliente::findOrFail($id);
-
-    //     // Validar que exista documento
-    //     if (!$cliente->url_ine) {
-    //         abort(404, 'El cliente no tiene documento.');
-    //     }
-
-    //     // Construir ruta física
-    //     $ruta = storage_path('app/public/' . $cliente->url_ine);
-
-    //     // Validar existencia del archivo
-    //     if (!file_exists($ruta)) {
-    //         abort(404, 'El documento no existe.');
-    //     }
-
-    //     // Retornar archivo (PDF inline)
-    //     return response()->file($ruta, [
-    //         'Content-Type' => 'application/pdf',
-    //     ]);
-    // }
+   
 }
