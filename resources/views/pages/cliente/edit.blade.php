@@ -5,216 +5,146 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
-    <link href="{{ URL::asset('build/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ URL::asset('build/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ URL::asset('build/libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ URL::asset('build/libs/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet"
-        type="text/css">
-    <link href="{{ URL::asset('build/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet"
-        type="text/css" />
-    <link rel="stylesheet" href="{{ URL::asset('build/libs/@chenfengyuan/datepicker/datepicker.min.css') }}">
-    <link href="{{ URL::asset('build/libs/dropzone/dropzone.css') }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('build/libs/toastr/build/toastr.min.css') }}">
+<link href="{{ URL::asset('build/libs/select2/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-12">
-            <form method="POST" enctype="multipart/form-data" action="{{ route('cliente.update', ['cliente' => $cliente->id]) }}">
-                @method('PUT')
-                @csrf
-                <div class="card">
-    <div class="card-body">
-        <div class="row">
+<div class="row">
+<div class="col-12">
 
-            <!-- FORMULARIO (60%) -->
-            <div class="col-md-6">
-                <h4 class="text-center mb-3">Datos Personales</h4>
-                <p class="text-muted">Todos los campos marcados con * son obligatorios</p>
+<form method="POST" enctype="multipart/form-data" action="{{ route('cliente.update', ['cliente' => $cliente->id]) }}">
+@method('PUT')
+@csrf
 
-                <div class="row">
+<div class="card shadow-sm">
+<div class="card-body">
 
-                    <!-- Nombre -->
-                    <div class="col-md-6 mb-3">
-                        <label>Nombre(s) (*)</label>
-                        <input type="text" 
-                               class="form-control form-control-sm" 
-                               name="nombre"
-                               value="{{ $cliente->nombre }}" 
-                               style="text-transform:lowercase" 
-                               required>
-                    </div>
+<h4 class="text-center mb-3">Datos Personales</h4>
+<p class="text-muted text-center">Campos con * son obligatorios</p>
 
-                    <!-- Primer apellido -->
-                    <div class="col-md-6 mb-3">
-                        <label>Primer Apellido (*)</label>
-                        <input type="text" 
-                               class="form-control form-control-sm" 
-                               name="primer_apellido"
-                               value="{{ $cliente->primer_apellido }}" 
-                               style="text-transform:lowercase" 
-                               required>
-                    </div>
+<div class="row">
 
-                    <!-- Segundo apellido -->
-                    <div class="col-md-6 mb-3">
-                        <label>Segundo Apellido</label>
-                        <input type="text" 
-                               class="form-control form-control-sm" 
-                               name="segundo_apellido"
-                               value="{{ $cliente->segundo_apellido }}" 
-                               style="text-transform:lowercase">
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Nombre(s) *</label>
+        <input type="text" class="form-control form-control-sm"
+               name="nombre" value="{{ $cliente->nombre }}" required>
+    </div>
 
-                    <!-- Teléfono -->
-                    <div class="col-md-6 mb-3">
-                        <label>Teléfono</label>
-                        <input type="number" 
-                               class="form-control form-control-sm" 
-                               name="telefono"
-                               value="{{ $cliente->telefono }}"
-                               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Primer Apellido *</label>
+        <input type="text" class="form-control form-control-sm"
+               name="primer_apellido" value="{{ $cliente->primer_apellido }}" required>
+    </div>
 
-                    <!-- Fecha de nacimiento -->
-                    <div class="col-md-6 mb-3">
-                        <label>Fecha de nacimiento (*)</label>
-                        <input type="date" 
-                               class="form-control form-control-sm"
-                               name="fecha_nacimiento"
-                               value="{{ $cliente->fecha_nacimiento->format('Y-m-d') }}" 
-                               required>
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Segundo Apellido</label>
+        <input type="text" class="form-control form-control-sm"
+               name="segundo_apellido" value="{{ $cliente->segundo_apellido }}">
+    </div>
 
-                    <!-- Email -->
-                    <div class="col-md-6 mb-3">
-                        <label>Correo Electrónico</label>
-                        <input type="email" 
-                               class="form-control form-control-sm" 
-                               name="email"
-                               value="{{ $cliente->email }}" 
-                               style="text-transform:lowercase">
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Teléfono</label>
+        <input type="number" class="form-control form-control-sm"
+               name="telefono" value="{{ $cliente->telefono }}">
+    </div>
 
-                    <!-- Número de contacto -->
-                    <div class="col-md-6 mb-3">
-                        <label>Número de contacto</label>
-                        <input type="number" 
-                               class="form-control form-control-sm" 
-                               name="num_contacto"
-                               value="{{ $cliente->num_contacto }}"
-                               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Fecha de nacimiento *</label>
+        <input type="date" class="form-control form-control-sm"
+               name="fecha_nacimiento"
+               value="{{ $cliente->fecha_nacimiento->format('Y-m-d') }}"
+               required>
+    </div>
 
-                    <!-- Parentesco -->
-                    <div class="col-md-6 mb-3">
-                        <label>Parentesco</label>
-                        <input type="text" 
-                               class="form-control form-control-sm" 
-                               name="parentesco"
-                               value="{{ $cliente->parentesco }}" 
-                               style="text-transform:lowercase">
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Email</label>
+        <input type="email" class="form-control form-control-sm"
+               name="email" value="{{ $cliente->email }}">
+    </div>
 
-                    <!-- INE -->
-                    <div class="col-md-12 mb-3">
-                        <label>Identificación INE</label>
-                        <input class="form-control" 
-                               type="file" 
-                               name="fileIne" 
-                               id="fileIne" 
-                               accept="image/*">
-                        <small class="text-danger">
-                            Cargar nuevo archivo solo si desea actualizarlo
-                        </small>
-                    </div>
+    <div class="col-md-6 mb-3">
+        <label>Número de contacto</label>
+        <input type="number" class="form-control form-control-sm"
+               name="num_contacto" value="{{ $cliente->num_contacto }}">
+    </div>
 
-                </div>
-            </div>
+    <div class="col-md-6 mb-3">
+        <label>Parentesco</label>
+        <input type="text" class="form-control form-control-sm"
+               name="parentesco" value="{{ $cliente->parentesco }}">
+    </div>
 
-            <!-- IMAGEN (40%) -->
-            <div class="col-md-6 d-flex align-items-center justify-content-center">
-               <iframe 
-                    src="{{ asset('storage/' . $cliente->url_ine) }}"
-                    width="100%" 
-                    height="400px"
-                    style="border: 1px solid #ddd; border-radius: 8px;">
-                </iframe>
-            </div>
-           
+    <div class="col-md-12 mb-3">
+        <label>Identificación INE</label>
+        <input type="file" class="form-control"
+               name="fileIne" accept="image/*,application/pdf">
+        <small class="text-danger">
+            Suba archivo solo si desea actualizar
+        </small>
+    </div>
 
-        </div>
+    <!-- BOTÓN VER DOCUMENTO -->
+    @if ($cliente->url_ine)
+    <div class="col-md-12 text-center mt-2">
+        <a href="{{ asset('storage/' . $cliente->url_ine) }}" 
+           target="_blank" 
+           class="btn btn-primary btn-parpadeo">
+            📄 Ver documento cargado
+        </a>
+    </div>
+    @endif
+
+</div>
+</div>
+</div>
+
+<!-- BOTONES -->
+<div class="row mt-3">
+    <div class="col-sm-6">
+        <a href="{{ route('cliente.index') }}" class="btn btn-link text-muted">
+            ← Cancelar
+        </a>
+    </div>
+
+    <div class="col-sm-6 text-end">
+        <button type="submit" class="btn btn-success">
+            Guardar
+        </button>
     </div>
 </div>
 
-<!-- OPCIONAL: MEJOR ESTILO -->
-<style>
-    .img-thumbnail {
-        border-radius: 10px;
-        padding: 5px;
-        background-color: #fff;
-    }
-
-    .card {
-        border-radius: 10px;
-    }
-</style>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>
-                    </div> <!-- end col -->
-                    <div class="col-sm-6">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success"><i class="mdi mdi-check me-1"></i> Guardar </button>
-                        </div>
-                    </div> 
-                </div>
-            </form>
-        </div>
-    </div>
+</form>
+</div>
+</div>
 @endsection
+
 @section('script')
-    <!-- toastr plugin -->
-    <script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
-    <!-- toastr init -->
-    <script src="{{ URL::asset('build/js/pages/toastr.init.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/select2/js/select2.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/spectrum-colorpicker2/spectrum.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/@chenfengyuan/datepicker/datepicker.min.js') }}"></script>
-    <!-- form repeater js -->
-    <script src="{{ URL::asset('build/libs/jquery.repeater/jquery.repeater.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/pages/form-repeater.int.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/dropzone/dropzone-min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/toastr/build/toastr.min.js') }}"></script>
 
-    <!-- Form file upload init js -->
-    <script src="{{ URL::asset('build/js/pages/form-file-upload.init.js') }}"></script>
+@if(Session::has('success'))
+<script>
+toastr.success("{{ session('success') }}");
+</script>
+@endif
 
-    <!-- form advanced init -->
-    <script src="{{ URL::asset('build/js/pages/form-advanced.init.js') }}"></script>
-    @if(Session::has('success'))
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.success("{{ session('success') }}");
-        </script>
-    @endif
-    @if(Session::has('error'))
-        <script>
-            toastr.options = {
-                "closeButton" : false,
-                "progressBar" : true
-            }
-            toastr.warning("{{ session('error') }}");
-        </script>
-    @endif
-    
+@if(Session::has('error'))
+<script>
+toastr.warning("{{ session('error') }}");
+</script>
+@endif
+
 @endsection
 
+<style>
+/* BOTÓN PARPADEO SUAVE */
+.btn-parpadeo {
+    animation: parpadeo 1.3s infinite;
+}
 
+@keyframes parpadeo {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+</style>
