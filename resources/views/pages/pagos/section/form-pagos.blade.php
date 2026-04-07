@@ -140,3 +140,17 @@
 </div>
 
 </form>
+
+<script>
+document.querySelector('form').addEventListener('submit', function() {
+
+    const btn = document.getElementById('btnGuardar');
+
+    // Evita múltiples clicks
+    btn.disabled = true;
+
+    // Cambia texto (feedback visual)
+    btn.innerHTML = 'Guardando... ⏳';
+
+});
+</script>
