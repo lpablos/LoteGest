@@ -25,59 +25,154 @@
                 @method('PUT')
                 @csrf
                 <div class="card">
-                    <div class="card-body">
-                       <div class="row col-md-12">
-                            <h4 class="card-title text-center"> Datos Personales </h4>
-                            <p class="card-title-desc"> Todos los campos marcados con * son obligatorios </p>
-                            <div class="col-md-3 mb-4">
-                                <label for="nombre"> Nombre(s)(*) </label>
-                                <input type="text" class="form-control form-control-sm" name="nombre" value="{{ $cliente->nombre }}" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="primer_apellido"> Primer Apellido (*) </label>
-                                <input type="text" class="form-control form-control-sm" name="primer_apellido" value="{{ $cliente->primer_apellido }}" style="text-transform:lowercase" required>
-                            </div>
-                            <div class="col-md-3 b-4">
-                                <label for="segundo_apellido"> Segundo Apellido</label>
-                                <input type="text" class="form-control form-control-sm" name="segundo_apellido" value="{{ $cliente->segundo_apellido }}" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="telefono"> Teléfono </label>
-                                <input type="number" class="form-control form-control-sm" name="telefono" value="{{ $cliente->telefono }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
-                            </div>
-                             <div class="col-md-3 mb-4">
-                                <label for="fecha_nacimiento">Fecha de nacimiento (*)</label>
-                                <input type="date" class="form-control form-control-sm" id="fecha_nacimiento" value="{{ $cliente->fecha_nacimiento->format('Y-m-d') }}" name="fecha_nacimiento" required>
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="email"> Correo Electrónico </label>
-                                <input type="email" class="form-control form-control-sm" name="email" value="{{ $cliente->email }}" style="text-transform:lowercase">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="num_contacto">Número de contacto </label>
-                                <input type="number" class="form-control form-control-sm" name="num_contacto" value="{{ $cliente->num_contacto }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" minlength="10" maxlength="10">
-                            </div>
-                            <div class="col-md-3 mb-4">
-                                <label for="parentesco"> Parentesco </label>
-                                <input type="text" class="form-control form-control-sm" name="parentesco" value="{{ $cliente->parentesco }}" style="text-transform:lowercase">
-                            </div>
-                                @if ($cliente->url_ine)
-                                    <img src="{{ asset('storage/' . $cliente->url_ine) }}" 
-                                        alt="Documento INE" 
-                                        class="img-thumbnail" 
-                                        style="max-width: 300px;">
-                                @else
-                                    <p>No se ha subido documento INE.</p>
-                                @endif
+    <div class="card-body">
+        <div class="row">
 
-                            <div class="col-md-3 b-4">
-                                <label for="fileINE"> Identificación INE </label>
-                                <input class="form-control" type="file" name="fileIne" id="fileIne" accept="image/*" capture>
-                                <small style="color: red;"> Cargar nuevo archivo sólo si desea actualizarlo</small>
-                            </div>
-                        </div>
+            <!-- FORMULARIO (60%) -->
+            <div class="col-md-6">
+                <h4 class="text-center mb-3">Datos Personales</h4>
+                <p class="text-muted">Todos los campos marcados con * son obligatorios</p>
+
+                <div class="row">
+
+                    <!-- Nombre -->
+                    <div class="col-md-6 mb-3">
+                        <label>Nombre(s) (*)</label>
+                        <input type="text" 
+                               class="form-control form-control-sm" 
+                               name="nombre"
+                               value="{{ $cliente->nombre }}" 
+                               style="text-transform:lowercase" 
+                               required>
                     </div>
+
+                    <!-- Primer apellido -->
+                    <div class="col-md-6 mb-3">
+                        <label>Primer Apellido (*)</label>
+                        <input type="text" 
+                               class="form-control form-control-sm" 
+                               name="primer_apellido"
+                               value="{{ $cliente->primer_apellido }}" 
+                               style="text-transform:lowercase" 
+                               required>
+                    </div>
+
+                    <!-- Segundo apellido -->
+                    <div class="col-md-6 mb-3">
+                        <label>Segundo Apellido</label>
+                        <input type="text" 
+                               class="form-control form-control-sm" 
+                               name="segundo_apellido"
+                               value="{{ $cliente->segundo_apellido }}" 
+                               style="text-transform:lowercase">
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="col-md-6 mb-3">
+                        <label>Teléfono</label>
+                        <input type="number" 
+                               class="form-control form-control-sm" 
+                               name="telefono"
+                               value="{{ $cliente->telefono }}"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                    </div>
+
+                    <!-- Fecha de nacimiento -->
+                    <div class="col-md-6 mb-3">
+                        <label>Fecha de nacimiento (*)</label>
+                        <input type="date" 
+                               class="form-control form-control-sm"
+                               name="fecha_nacimiento"
+                               value="{{ $cliente->fecha_nacimiento->format('Y-m-d') }}" 
+                               required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6 mb-3">
+                        <label>Correo Electrónico</label>
+                        <input type="email" 
+                               class="form-control form-control-sm" 
+                               name="email"
+                               value="{{ $cliente->email }}" 
+                               style="text-transform:lowercase">
+                    </div>
+
+                    <!-- Número de contacto -->
+                    <div class="col-md-6 mb-3">
+                        <label>Número de contacto</label>
+                        <input type="number" 
+                               class="form-control form-control-sm" 
+                               name="num_contacto"
+                               value="{{ $cliente->num_contacto }}"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                    </div>
+
+                    <!-- Parentesco -->
+                    <div class="col-md-6 mb-3">
+                        <label>Parentesco</label>
+                        <input type="text" 
+                               class="form-control form-control-sm" 
+                               name="parentesco"
+                               value="{{ $cliente->parentesco }}" 
+                               style="text-transform:lowercase">
+                    </div>
+
+                    <!-- INE -->
+                    <div class="col-md-12 mb-3">
+                        <label>Identificación INE</label>
+                        <input class="form-control" 
+                               type="file" 
+                               name="fileIne" 
+                               id="fileIne" 
+                               accept="image/*">
+                        <small class="text-danger">
+                            Cargar nuevo archivo solo si desea actualizarlo
+                        </small>
+                    </div>
+
                 </div>
+            </div>
+
+            <!-- IMAGEN (40%) -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                @if ($cliente->url_ine)
+                    <iframe 
+                        src="{{ route('cliente.documento', $cliente->id) }}"
+                        width="100%" 
+                        height="400px"
+                        style="border: 1px solid #ddd; border-radius: 8px;">
+                    </iframe>
+                @else
+                    <p class="text-muted">No se ha subido documento INE.</p>
+                @endif
+            </div>
+            <!-- <div class="col-md-5 d-flex align-items-center justify-content-center">
+                @if ($cliente->url_ine)
+                    <img src="{{ asset('storage/' . $cliente->url_ine) }}" 
+                         alt="Documento INE"
+                         class="img-fluid img-thumbnail shadow-sm"
+                         style="max-height: 350px;">
+                @else
+                    <p class="text-muted">No se ha subido documento INE.</p>
+                @endif
+            </div> -->
+
+        </div>
+    </div>
+</div>
+
+<!-- OPCIONAL: MEJOR ESTILO -->
+<style>
+    .img-thumbnail {
+        border-radius: 10px;
+        padding: 5px;
+        background-color: #fff;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+</style>
                 <div class="row">
                     <div class="col-sm-6">
                         <a href="{{ route('cliente.index') }}" class="btn text-muted d-none d-sm-inline-block btn-link"><i class="mdi mdi-arrow-left me-1"></i> Cancelar </a>

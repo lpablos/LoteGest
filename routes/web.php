@@ -64,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('configuracion', App\Http\Controllers\ConfiguracionController::class);
     Route::resource('manual', App\Http\Controllers\ManualController::class);
+
+    Route::get('/cliente/{id}/documento', [App\Http\Controllers\ClienteController::class, 'mostrarDocumentoCliente'])->name('cliente.documento');
 });    
 
 

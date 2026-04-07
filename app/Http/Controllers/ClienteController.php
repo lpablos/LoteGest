@@ -14,6 +14,8 @@ use App\Models\CatEntidadFederativa;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
+use setasign\Fpdi\Fpdi;
 
 
 class ClienteController extends Controller
@@ -182,23 +184,177 @@ class ClienteController extends Controller
             $cliente->email = $request->email;
             $cliente->num_contacto = ($request->num_contacto == null) ? "Sin Información" : $request->num_contacto;
             $cliente->parentesco = ($request->parentesco == null) ? "Sin Información" : $request->parentesco;
-            if ($request->hasFile('fileIne')) { 
-                    if ($cliente->url_ine && Storage::disk('public')->exists($cliente->url_ine)) {
-                        Storage::disk('public')->delete($cliente->url_ine);
+            // if ($request->hasFile('fileIne')) { 
+            //         if ($cliente->url_ine && Storage::disk('public')->exists($cliente->url_ine)) {
+            //             Storage::disk('public')->delete($cliente->url_ine);
+            //         }
+            //         $file = $request->file('fileIne');
+            //         $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
+            //         $path = $file->storeAs('cliente', $filename, 'public');
+            // } else {
+            //     $path = null;
+            // }
+
+            // if ($request->hasFile('documentos')) {
+                
+            //     $archivos = $request->file('documentos');
+
+            //     $imagenes = [];
+            //     $pdfs = [];
+
+            //     foreach ($archivos as $archivo) {
+
+            //         if (strtolower($archivo->getClientOriginalExtension()) === 'pdf') {
+            //             $pdfs[] = $archivo;
+            //         } else {
+            //             $imagenes[] = $archivo;
+            //         }
+            //     }
+
+            //     $nombreFinal = 'pago_' . $pago->id . '.pdf';
+                
+            //     $carpeta = 'public/comprobantes_pagos/';
+            //     $rutaStorage = $carpeta . $nombreFinal;
+            //     $rutaFinal = storage_path('app/' . $rutaStorage);
+
+            //     if (!Storage::exists($carpeta)) {
+            //         Storage::makeDirectory($carpeta);
+            //     }
+
+            //     // SOLO IMAGENES
+            //     if (count($imagenes) > 0 && count($pdfs) == 0) {
+
+            //         $html = '<html><body style="margin:0;padding:0;">';
+
+            //         foreach ($imagenes as $img) {
+
+            //             $base64 = base64_encode(file_get_contents($img->getRealPath()));
+
+            //             $html .= '
+            //             <div style="page-break-after: always;">
+            //                 <img src="data:image/jpeg;base64,' . $base64 . '" style="width:100%;">
+            //             </div>';
+            //         }
+
+            //         $html .= '</body></html>';
+
+            //         $pdf = Pdf::loadHTML($html)->setPaper('a4', 'portrait');
+
+            //         Storage::put($rutaStorage, $pdf->output());
+            //     }
+
+            //     // SOLO PDF
+            //     elseif (count($pdfs) > 0 && count($imagenes) == 0) {
+
+            //         $fpdi = new \setasign\Fpdi\Fpdi();
+
+            //         foreach ($pdfs as $archivo) {
+
+            //             $pageCount = $fpdi->setSourceFile($archivo->getRealPath());
+
+            //             for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+            //                 $template = $fpdi->importPage($pageNo);
+            //                 $size = $fpdi->getTemplateSize($template);
+
+            //                 $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+            //                 $fpdi->useTemplate($template);
+            //             }
+            //         }
+
+            //         $fpdi->Output($rutaFinal, 'F');
+            //     }
+
+            //     // GUARDAR RUTA
+            //     $pago->comprobante_url = 'comprobantes_pagos/' . $nombreFinal;
+            //     $pago->save();
+            // }
+            // $cliente->url_ine = $path;
+            // $cliente->save();
+            if ($request->hasFile('fileIne')) {
+
+                // 🧹 1. ELIMINAR ARCHIVO ANTERIOR SI EXISTE
+                if ($cliente->url_ine && Storage::disk('public')->exists($cliente->url_ine)) {
+                    Storage::disk('public')->delete($cliente->url_ine);
+                }
+
+                // 📥 2. OBTENER ARCHIVO
+                $archivo = $request->file('fileIne');
+
+                // 📂 3. DEFINIR NOMBRE Y RUTAS
+                $nombreFinal = 'ine_' . $cliente->id . '_' . time() . '.pdf';
+                $carpeta = 'public/ine/';
+                $rutaStorage = $carpeta . $nombreFinal;
+                $rutaFinal = storage_path('app/' . $rutaStorage);
+
+                // 📁 4. CREAR CARPETA SI NO EXISTE
+                if (!Storage::exists($carpeta)) {
+                    Storage::makeDirectory($carpeta);
+                }
+
+                // 🔍 5. VALIDAR TIPO DE ARCHIVO
+                $extension = strtolower($archivo->getClientOriginalExtension());
+
+                // =========================================================
+                // 🖼️ CASO 1: ES IMAGEN → CONVERTIR A PDF
+                // =========================================================
+                if (in_array($extension, ['jpg', 'jpeg', 'png', 'webp'])) {
+
+                    $base64 = base64_encode(file_get_contents($archivo->getRealPath()));
+
+                    $html = '
+                    <html>
+                        <body style="margin:0;padding:0;">
+                            <div>
+                                <img src="data:image/' . $extension . ';base64,' . $base64 . '" style="width:100%;">
+                            </div>
+                        </body>
+                    </html>';
+
+                    $pdf = Pdf::loadHTML($html)->setPaper('a4', 'portrait');
+
+                    Storage::put($rutaStorage, $pdf->output());
+                }
+
+                // =========================================================
+                // 📄 CASO 2: ES PDF → NORMALIZAR (REESCRIBIR)
+                // =========================================================
+                elseif ($extension === 'pdf') {
+
+                    $fpdi = new Fpdi();
+
+                    $pageCount = $fpdi->setSourceFile($archivo->getRealPath());
+
+                    for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+
+                        $template = $fpdi->importPage($pageNo);
+                        $size = $fpdi->getTemplateSize($template);
+
+                        $fpdi->AddPage($size['orientation'], [$size['width'], $size['height']]);
+                        $fpdi->useTemplate($template);
                     }
-                    $file = $request->file('fileIne');
-                    $filename = 'ine_' . time() . '.' . $file->getClientOriginalExtension(); // ejemplo: ine_1717288000.jpg
-                    $path = $file->storeAs('cliente', $filename, 'public');
-            } else {
-                $path = null;
+
+                    $fpdi->Output($rutaFinal, 'F');
+                }
+
+                // =========================================================
+                // ❌ CASO 3: FORMATO NO PERMITIDO
+                // =========================================================
+                else {
+                    return back()->with('error', 'Formato de archivo no permitido. Solo imágenes o PDF.');
+                }
+
+                // 💾 6. GUARDAR RUTA EN BD (SIN "public/")
+                $cliente->url_ine = 'ine/' . $nombreFinal;
             }
-            $cliente->url_ine = $path;
+
             $cliente->save();
 
             DB::commit();
 
             Session::flash('success', '¡Cliente actualizado!');
-            return redirect()->route('cliente.index');
+            return back()->with('success', 'Cliente actualizado correctamente');
+            // return redirect()->route('cliente.index');
 
         }catch (\PDOException $e){
             DB::rollBack();
@@ -283,5 +439,29 @@ class ClienteController extends Controller
             return view('pages.cliente.add', compact('corredores', 'estados', 'mpios', 'fraccionamientos','datosCliente'));
         }
         return abort(404);
+    }
+
+
+    public function mostrarDocumentoCliente($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+
+        // Validar que exista documento
+        if (!$cliente->url_ine) {
+            abort(404, 'El cliente no tiene documento.');
+        }
+
+        // Construir ruta física
+        $ruta = storage_path('app/public/' . $cliente->url_ine);
+
+        // Validar existencia del archivo
+        if (!file_exists($ruta)) {
+            abort(404, 'El documento no existe.');
+        }
+
+        // Retornar archivo (PDF inline)
+        return response()->file($ruta, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }
