@@ -449,13 +449,11 @@ class ClienteController extends Controller
             abort(404, 'El cliente no tiene documento.');
         }
 
-        $ruta = storage_path('app/public/' . $cliente->url_ine);
-
-        if (!file_exists($ruta)) {
+        if (!Storage::disk('public')->exists($cliente->url_ine)) {
             abort(404, 'El documento no existe.');
         }
 
-        return response()->file($ruta);
+        return Storage::disk('public')->response($cliente->url_ine);
     }
     // public function mostrarDocumentoCliente($id)
     // {
