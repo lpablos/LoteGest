@@ -441,27 +441,42 @@ class ClienteController extends Controller
         return abort(404);
     }
 
-
     public function mostrarDocumentoCliente($id)
     {
         $cliente = Cliente::findOrFail($id);
 
-        // Validar que exista documento
         if (!$cliente->url_ine) {
             abort(404, 'El cliente no tiene documento.');
         }
 
-        // Construir ruta física
         $ruta = storage_path('app/public/' . $cliente->url_ine);
 
-        // Validar existencia del archivo
         if (!file_exists($ruta)) {
             abort(404, 'El documento no existe.');
         }
 
-        // Retornar archivo (PDF inline)
-        return response()->file($ruta, [
-            'Content-Type' => 'application/pdf',
-        ]);
+        return response()->file($ruta);
     }
+    // public function mostrarDocumentoCliente($id)
+    // {
+    //     $cliente = Cliente::findOrFail($id);
+
+    //     // Validar que exista documento
+    //     if (!$cliente->url_ine) {
+    //         abort(404, 'El cliente no tiene documento.');
+    //     }
+
+    //     // Construir ruta física
+    //     $ruta = storage_path('app/public/' . $cliente->url_ine);
+
+    //     // Validar existencia del archivo
+    //     if (!file_exists($ruta)) {
+    //         abort(404, 'El documento no existe.');
+    //     }
+
+    //     // Retornar archivo (PDF inline)
+    //     return response()->file($ruta, [
+    //         'Content-Type' => 'application/pdf',
+    //     ]);
+    // }
 }
