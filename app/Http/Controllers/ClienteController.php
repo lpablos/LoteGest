@@ -449,17 +449,20 @@ class ClienteController extends Controller
             abort(404);
         }
 
-        if (!Storage::disk('public')->exists($cliente->url_ine)) {
+        $path = storage_path('app/public/' . $cliente->url_ine);
+
+        if (!file_exists($path)) {
             abort(404);
         }
 
-        $path = storage_path('app/public/' . $cliente->url_ine);
-
-        return response()->file($path, [
+        return response()->stream(function () use ($path) {
+            readfile($path);
+        }, 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="documento.pdf"',
-            'X-Frame-Options' => 'ALLOWALL'
+            'X-Frame-Options' => 'ALLOWALL',
         ]);
-        }
+
+    }
    
 }
