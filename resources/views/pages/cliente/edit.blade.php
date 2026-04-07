@@ -135,27 +135,14 @@
 
             <!-- IMAGEN (40%) -->
             <div class="col-md-6 d-flex align-items-center justify-content-center">
-                @if ($cliente->url_ine)
-                    <iframe 
-                        src="{{ route('cliente.documento', $cliente->id) }}"
-                        width="100%" 
-                        height="400px"
-                        style="border: 1px solid #ddd; border-radius: 8px;">
-                    </iframe>
-                @else
-                    <p class="text-muted">No se ha subido documento INE.</p>
-                @endif
+               <iframe 
+                    src="{{ asset('storage/' . $cliente->url_ine) }}"
+                    width="100%" 
+                    height="400px"
+                    style="border: 1px solid #ddd; border-radius: 8px;">
+                </iframe>
             </div>
-            <!-- <div class="col-md-5 d-flex align-items-center justify-content-center">
-                @if ($cliente->url_ine)
-                    <img src="{{ asset('storage/' . $cliente->url_ine) }}" 
-                         alt="Documento INE"
-                         class="img-fluid img-thumbnail shadow-sm"
-                         style="max-height: 350px;">
-                @else
-                    <p class="text-muted">No se ha subido documento INE.</p>
-                @endif
-            </div> -->
+           
 
         </div>
     </div>
