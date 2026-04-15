@@ -97,6 +97,17 @@
                                 <label for="parentesco"> Parentesco </label>
                                 <input type="text" class="form-control form-control-sm" id="parentesco" name="parentesco" style="text-transform:lowercase">
                             </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="password">Contraseña (*)</label>
+                                <input 
+                                    type="password" 
+                                    class="form-control form-control-sm" 
+                                    id="password" 
+                                    name="password"
+                                    placeholder="Ingresa la contraseña"
+                                    required
+                                >
+                            </div>
                         </div>
                         {{--  <div class="row col-md-12" id="formCorredor" style="display: none;">
                             <h4 class="card-title text-center"> Datos Personales </h4>

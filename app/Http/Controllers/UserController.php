@@ -102,7 +102,8 @@ class UserController extends Controller
             $usuario->segundo_apellido = (!is_null($request->segundo_apellido) ? \Helper::capitalizeFirst($request->segundo_apellido, "1") : null );
             $usuario->email = $request->email;
             $usuario->email_verified_at = now();
-            $usuario->password = Hash::make("12345678");
+            // $usuario->password = Hash::make("12345678");
+            $usuario->password = Hash::make($request->password);
             $usuario->dob = '2024-04-01';
             $usuario->avatar = ($request->imagenPerfil == null) ? 'SIN INFORMACIÓN' : $path;
             $usuario->role_id = $request->rol_id;
@@ -340,14 +341,12 @@ class UserController extends Controller
                 : null;
 
             $usuario->email = $request->email;
-
-            if ($request->password) {
-                $usuario->password = Hash::make($request->password);
-            }
-
             $usuario->telefono = $request->telefono ?? 'SIN INFORMACIÓN';
             $usuario->seudonimo = $request->seudonimo ?? 'SIN INFORMACIÓN';
             $usuario->role_id = $request->rol_id;
+            if($request->password){
+                $usuario->password = Hash::make($request->password);
+            }
             $usuario->save();
 
             

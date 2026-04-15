@@ -94,6 +94,17 @@
                                 <label for="parentesco"> Parentesco </label>
                                 <input type="text" class="form-control form-control-sm" id="parentesco" name="parentesco" style="text-transform:lowercase" value="{{ $usuario->parentesco }}">
                             </div>
+                            <div class="col-md-3 mb-4">
+                                <label for="password">Contraseña</label>
+                                <input 
+                                    type="password" 
+                                    class="form-control form-control-sm" 
+                                    id="password" 
+                                    name="password"
+                                    placeholder="Ingresa la contraseña"
+                                >
+                                <small>opcional si se desea actualizar la contraseña</small>
+                            </div>
                         </div>
                     </div>
                 </div>
